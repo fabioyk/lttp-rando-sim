@@ -1,0 +1,17 @@
+<p>
+  <app-tracker-node
+    *ngFor='let itemName of itemsToTrack'
+    [isItem]='true'
+    [itemName]='itemName'
+    [value]='items[itemName]'
+  ></app-tracker-node>
+  <app-tracker-node
+    *ngFor='let dungeonData of _gameService.dungeonsData'
+    [isItem]='false'
+    [items]='items'
+    [config]='config'
+    [dungeonData]='dungeonData'
+  >
+
+  </app-tracker-node>
+</p>

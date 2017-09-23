@@ -1,0 +1,8 @@
+<div class='node' *ngIf='isItem'
+  [ngStyle]="{'background-image': getBgImg()}"
+  [ngClass]="isTransparent()">
+</div>
+<div class='dungeon-node' *ngIf='!isItem && dungeonData.name !== "Aga Tower" && dungeonData.name !== "Ganons Tower"'
+>--- {{dungeonData.name}} 
+<span *ngIf='shouldShowCrystal()'>({{dungeonData.dungeonPrize}})</span>
+{{items.getDungeonItems(dungeonData.name).itemsLeft}} <span *ngIf='shouldShowMedallion()'>{{medallionName}}</span> ---</div>

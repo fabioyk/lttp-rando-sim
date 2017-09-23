@@ -1,0 +1,24 @@
+<div>
+  <app-item-tracker
+    [items]='items'
+    [config]='config'
+  ></app-item-tracker>
+  <div class='container'>
+    <app-map 
+      [items]='items'
+      [config]='config'
+      [(currentMap)]='currentMap'
+      (addedItem)='onAddedItem($event, "get")'
+      (viewItem)='onAddedItem($event, "view")'
+    ></app-map>
+    <app-item-log
+      [itemLogList]='itemLog'></app-item-log>
+    <app-options></app-options>
+  </div>
+  
+  <app-game-menu
+    [items]='items'
+    [currentMap]='currentMap'
+    ></app-game-menu>
+  
+</div>

@@ -1,0 +1,12 @@
+.node {
+  width: 64px;
+  height: 64px;
+}
+
+.off {
+  opacity: 0.25;
+}
+
+div {
+  color: white;
+}

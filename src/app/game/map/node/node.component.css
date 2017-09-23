@@ -1,0 +1,79 @@
+.node {
+  position: absolute;
+}
+
+.open-state {
+  background-color: lightgreen;
+}
+.view-state {
+  background-color: yellow;
+}
+.opened-state {
+  background-color: grey;
+}
+.dungeon-state {
+  background-color: blue;
+}
+.dungeon-defeated {
+  background-color: lightblue;
+}
+.dungeon-cleared {
+  background-color: grey;
+}
+
+.overworld-type {
+  width: 20px;
+  height: 20px;
+  margin: -10px -10px;
+}
+.dungeon-type {
+  width: 40px;
+  height: 40px;
+  margin: -20px -20px;
+}
+
+.open-door {
+  background-image: url('/assets/node-icons/open_door.png');
+}
+.sk-door {
+  background-image: url('/assets/node-icons/key_door.png');  
+}
+.bk-door {
+  background-image: url('/assets/node-icons/big_door.png');  
+}
+.closed-chest {
+  background-image: url('/assets/node-icons/closed_chest.png');  
+}
+.open-chest {
+  background-image: url('/assets/node-icons/open_chest.png');  
+}
+.big-chest {
+  background-image: url('/assets/node-icons/closed_big_chest.png');  
+}
+.open-big-chest {
+  background-image: url('/assets/node-icons/open_big_chest.png');  
+}
+.spare-key {
+  background-image: url('/assets/node-icons/small_key.png');  
+}
+.blind {
+  background-image: url('/assets/node-icons/blind.png');  
+}
+.switch-blue {
+  background-image: url('/assets/node-icons/switch_blue.png');  
+}
+.switch-red {
+  background-image: url('/assets/node-icons/switch_red.png');  
+}
+.water-switch-off {
+  background-image: url('/assets/node-icons/water_switch_off.png');  
+}
+.water-switch-on {
+  background-image: url('/assets/node-icons/water_switch_on.png');  
+}
+.tt-floor {
+  background-image: url('/assets/node-icons/tt_floor_closed.png');  
+}
+.tt-floor-open {
+  background-image: url('/assets/node-icons/tt_floor_open.png');  
+}

@@ -1,0 +1,38 @@
+{{currentMap}}
+<div class="map"
+  [ngStyle]="{'background-image': currentBackgroundImage}">
+  <div *ngIf='!currentDungeon'>
+    <app-node *ngFor='let lwNode of gameService.getAccessibleNodes(items, currentMap)'
+        nodeType='overworld'
+        [nodeInfo]='lwNode'
+        (click)='onNodeClick(lwNode)'
+        (mouseleave)='onMouseLeave(lwNode)'>
+    </app-node>
+    <app-node *ngFor='let dun of gameService.getAccessibleDungeons(items, currentMap)'
+        nodeType='dungeon'
+        [nodeInfo]='dun'
+        [dungeonItems]='items.getDungeonItems(dun.tooltip)'
+        (click)='onDungeonClick(dun)'
+        (mouseleave)='onMouseLeave(dun)'>
+    </app-node>
+  </div>
+  <div *ngIf='currentDungeon'>
+    <app-node *ngFor='let dunNode of loadMap()'
+        nodeType='inside-dungeon'
+        [nodeInfo]='dunNode'
+        (click)='onDungeonNodeClick(dunNode)'
+        (mouseleave)='onMouseLeave(dunNode)'>
+    </app-node>    
+  </div>  
+</div>
+{{tooltip}}
+<div *ngIf='currentDungeonItems'>
+  <app-dungeon-items
+    [dungeonItems]='currentDungeonItems'
+  >
+
+  </app-dungeon-items>
+</div>
+<button (click)='onWarpClicked()'>
+  Warp
+</button>
