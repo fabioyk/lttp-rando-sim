@@ -6,6 +6,7 @@ import { ItemLogModule } from './item-log/item-log.module';
 import { ItemTrackerModule } from './item-tracker/item-tracker.module';
 import { MapModule } from './map/map.module';
 import { OptionsModule } from './options/options.module';
+import { EndStatsComponent } from './end-stats/end-stats.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { OptionsModule } from './options/options.module';
     MapModule,
     OptionsModule
   ],
-  declarations: [GameComponent],
+  declarations: [GameComponent, EndStatsComponent],
   exports: [GameComponent]
 })
 export class GameModule { }

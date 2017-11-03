@@ -1,7 +1,8 @@
-<div>
+<div class='container' *ngIf='gameState === "playing"'>
   <app-item-tracker
     [items]='items'
     [config]='config'
+    [dungeonsData]='dungeonsData'
   ></app-item-tracker>
   <div class='container'>
     <app-map 
@@ -10,6 +11,7 @@
       [(currentMap)]='currentMap'
       (addedItem)='onAddedItem($event, "get")'
       (viewItem)='onAddedItem($event, "view")'
+      (onGameFinished)='onGameFinished()'
     ></app-map>
     <app-item-log
       [itemLogList]='itemLog'></app-item-log>
@@ -21,4 +23,12 @@
     [currentMap]='currentMap'
     ></app-game-menu>
   
+</div>
+<div class='container' *ngIf='gameState === "finished"'>
+  Woo
+  <app-end-stats
+    [items]='items'
+    [config]='config'
+  >
+  </app-end-stats>
 </div>

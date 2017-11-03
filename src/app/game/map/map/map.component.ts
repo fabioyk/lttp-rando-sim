@@ -19,6 +19,7 @@ export class MapComponent implements OnInit {
   @Input() config: Config;
   @Output() addedItem = new EventEmitter<MapNode>();
   @Output() viewItem = new EventEmitter<MapNode>();
+  @Output() onGameFinished = new EventEmitter<string>();
   tooltip:string;
 
   currentDungeonMap: DungeonMapData;
@@ -46,9 +47,16 @@ export class MapComponent implements OnInit {
     var nodes:MapNode[] = [];
 
     this.currentDungeonMap.nodes.forEach((eachNode, index) => {
+      var tempX = eachNode.x, tempY = 20;
+      if (tempX === 0) {
+        tempX = 10 + index*10;
+      } else {
+        tempX = Math.floor(eachNode.x / 256 * 100);
+        tempY = Math.floor(eachNode.y / 256 * 100);
+      }
       nodes.push({
-        x: 10 + index*10,
-        y: 20,
+        x: tempX,
+        y: tempY,
         tooltip: eachNode.location,
         id: eachNode.content,
         status: eachNode.status.toString(),
@@ -80,6 +88,9 @@ export class MapComponent implements OnInit {
           nodeClicked.originalNode.isOpened = true;
         }
         nodeClicked.status = 'opened'
+        if (nodeClicked.tooltip === 'Ganon') {
+          this.onGameFinished.emit('');
+        }
         break;
       case 'viewable':
         this.viewItem.emit(nodeClicked);
@@ -117,7 +128,7 @@ export class MapComponent implements OnInit {
         }
       });
       if (nextPlace) {
-        this.currentDungeonMap = nextPlace;
+        this.currentDungeonMap = nextPlace;        
         this.changeMap(nextPlace.id);
       }
     }    
@@ -155,6 +166,7 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.BIG_CHEST:
           if (this.currentDungeonItems.hasBigKey) {
             this.addPrizes(dungeonNode, this.currentDungeon.name);
+            this.items.stats.bigChests++;
             dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_BIG_CHEST.toString();
           }
           console.log('Big Chest! Need BK for '+dungeonNode.prize);
@@ -182,7 +194,8 @@ export class MapComponent implements OnInit {
           console.log('Boss fight with '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.GROUND_KEY:
-          this.currentDungeonItems.smallKeys++;
+          //this.currentDungeonItems.smallKeys++;
+          this.items.add('Small Key', this.currentDungeon.name);      
           dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
           console.log('Small Key on the ground');
           break;
@@ -274,6 +287,44 @@ export class MapComponent implements OnInit {
       this.currentBackgroundImage = 'url(assets/light-world.png)';
     } else if (this.currentMap === 'dark-world') {
       this.currentBackgroundImage = 'url(assets/dark-world.png)';      
+    } else {
+      this.currentBackgroundImage = 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'.png")';
+      console.log(this.currentBackgroundImage);
     }
+  }
+
+  getAll() {
+    this.items.add('Progressive Sword', 'light-world');
+    this.items.add('Progressive Sword', 'light-world');
+    this.items.add('Progressive Glove', 'light-world');
+    this.items.add('Progressive Glove', 'light-world');
+    this.items.add('Bow', 'light-world');
+    this.items.add('Moon Pearl', 'light-world');
+    this.items.add('Hookshot', 'light-world');
+    this.items.add('Fire Rod', 'light-world');
+    this.items.add('Ice Rod', 'light-world');
+    this.items.add('Bombos', 'light-world');
+    this.items.add('Ether', 'light-world');
+    this.items.add('Quake', 'light-world');
+    this.items.add('Lamp', 'light-world');
+    this.items.add('Hammer', 'light-world');
+    this.items.add('Flute', 'light-world');
+    this.items.add('Cane Of Somaria', 'light-world');
+    this.items.add('Book Of Mudora', 'light-world');
+    this.items.add('Magic Cape', 'light-world');
+    this.items.add('Magic Mirror', 'light-world');
+    this.items.add('Pegasus Boots', 'light-world');
+    this.items.add('Flippers', 'light-world');
+    this.items.add('Crystal 1', 'light-world');
+    this.items.add('Crystal 2', 'light-world');
+    this.items.add('Crystal 3', 'light-world');
+    this.items.add('Crystal 4', 'light-world');
+    this.items.add('Crystal 5', 'light-world');
+    this.items.add('Crystal 6', 'light-world');
+    this.items.add('Crystal 7', 'light-world');
+    this.items.add('Pendant Of Courage', 'light-world');
+    this.items.add('Pendant Of Power', 'light-world');
+    this.items.add('Pendant Of Wisdom', 'light-world');
+    this.items.add('Agahnim 2', 'light-world');
   }
 }

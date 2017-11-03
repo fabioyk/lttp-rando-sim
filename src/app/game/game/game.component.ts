@@ -4,6 +4,7 @@ import { Items } from '../game-data/items';
 import { MapNode } from '../game-data/map-node';
 import { ItemLogEntry } from '../item-log/item-log-entry';
 import { Config } from '../game-data/config';
+import { DungeonData } from '../game-data/dungeon-data';
 
 @Component({
   selector: 'app-game',
@@ -16,6 +17,9 @@ export class GameComponent implements OnInit {
   items:Items;
   config:Config;
   itemLog: ItemLogEntry[];
+  dungeonsData:DungeonData[];
+
+  gameState:string;
 
   constructor(private gameService:GameService) { }
 
@@ -25,6 +29,8 @@ export class GameComponent implements OnInit {
     this.config = new Config();
     this.itemLog = [];
     console.log(this.gameService.config);
+    this.dungeonsData = this.gameService.dungeonsData;
+    this.gameState = 'playing';
   }
 
   ngOnChanges() {
@@ -50,5 +56,9 @@ export class GameComponent implements OnInit {
         });
       }      
     });
+  }
+
+  onGameFinished() {
+    this.gameState = 'finished';
   }
 }

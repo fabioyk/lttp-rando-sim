@@ -6,7 +6,7 @@
     [value]='items[itemName]'
   ></app-tracker-node>
   <app-tracker-node
-    *ngFor='let dungeonData of _gameService.dungeonsData'
+    *ngFor='let dungeonData of dungeonsData'
     [isItem]='false'
     [items]='items'
     [config]='config'

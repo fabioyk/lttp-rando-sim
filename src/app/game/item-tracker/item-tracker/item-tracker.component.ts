@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Items } from '../../game-data/items';
 import { GameService } from '../../game-data/game-service.service';
 import { Config } from '../../game-data/config';
+import { DungeonData } from '../../game-data/dungeon-data';
 
 @Component({
   selector: 'app-item-tracker',
@@ -11,13 +12,13 @@ import { Config } from '../../game-data/config';
 export class ItemTrackerComponent implements OnInit {
   @Input() items:Items;
   @Input() config:Config;
-  itemsToTrack:string[];  
+  @Input() dungeonsData:DungeonData[];
+  itemsToTrack:string[];
 
   constructor(private _gameService:GameService) { }
 
   ngOnInit() {
-    this.itemsToTrack = ['tunic', 'sword', 'shield', 'moonPearl', 'bow', 'boomerang',
-      'magicBoomerang', 'hookshot', 'shovel', 'mushroom', 'powder', 'fireRod', 
+    this.itemsToTrack = ['tunic', 'sword', 'shield', 'moonPearl', 'bow', 'hookshot', 'shovel', 'mushroom', 'powder', 'fireRod', 
       'iceRod', 'bombos', 'ether', 'quake', 'lamp', 'hammer', 'flute', 'book', 'bottle',
       'somaria', 'byrna', 'cape', 'mirror', 'boots', 'glove', 'flippers', 'halfMagic', 'crystal1', 
       'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7', 'agahnim', 

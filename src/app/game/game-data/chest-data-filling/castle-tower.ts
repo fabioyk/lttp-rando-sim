@@ -15,17 +15,17 @@ export class CastleTower {
 
     var entrance = new DungeonMapData('ct-entry', 'Entrance', '');
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 33, 136, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'exit'));
     entrance.nodes.push(new DungeonNode(
-      'Dark Maze. Requires Lamp', 0, 0, DungeonNodeStatus.SK_LOCKED,
+      'Dark Maze. Requires Lamp', 128, 50, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasLightsource(config);
     }, 'ct-maze'));
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      '', 185, 181, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[95]));
@@ -33,17 +33,17 @@ export class CastleTower {
 
     var maze = new DungeonMapData('ct-maze', 'Dark Maze', '');
     maze.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 192, 24, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ct-entry'));
     maze.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.SK_LOCKED,
+      '', 111, 196, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ct-top'));
     maze.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      '', 28, 107, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[96]));
@@ -51,12 +51,12 @@ export class CastleTower {
 
     var top = new DungeonMapData('ct-top', 'Top of Tower', '');
     top.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 216, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ct-maze'));
     top.nodes.push(new DungeonNode(
-      'Agahnim\'s Fight Room. Requires a Sword', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      'Agahnim\'s Fight Room. Requires a Sword', 128, 40, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.sword;
     }, 'ct-aga'));
@@ -64,7 +64,7 @@ export class CastleTower {
 
     var aga = new DungeonMapData('ct-aga', 'Aganim\'s Fight Room', '');
     aga.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.BOSS,
+      '', 128, 98, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, 'Agahnim'));

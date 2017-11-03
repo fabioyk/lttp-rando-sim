@@ -39,7 +39,7 @@ export class NodeComponent implements OnInit {
     } else if (this.nodeType === 'dungeon') {
       return 'dungeon-type';
     } else {
-      return 'overworld-type';
+      return 'in-dungeon-type';
     }
   }
 

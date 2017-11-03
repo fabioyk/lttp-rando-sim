@@ -15,27 +15,27 @@ export class TowerHera {
 
     var entrance = new DungeonMapData('toh-entry', 'Entrance', '');
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 228, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'exit'));
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 72, 172, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'toh-sk'));
     entrance.nodes.push(new DungeonNode(
-      'Entrance Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Entrance Chest', 128, 62, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[90]));
     entrance.nodes.push(new DungeonNode(
-      'Basement. Requires Lamp or Fire Rod', 0, 0, DungeonNodeStatus.SK_LOCKED,
+      'Basement. Requires Lamp or Fire Rod', 64, 36, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasFiresource();
     }, 'toh-basement'));
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.BK_LOCKED,
+      '', 184, 172, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'toh-upstairs'));
@@ -43,12 +43,12 @@ export class TowerHera {
 
     var skRoom = new DungeonMapData('toh-sk', 'Small Key Room', '');
     skRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 144, 65, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'toh-entry'));
     skRoom.nodes.push(new DungeonNode(
-      'Freestanding Item', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Freestanding Item', 136, 169, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[89]));
@@ -56,12 +56,12 @@ export class TowerHera {
 
     var basement = new DungeonMapData('toh-basement', 'Basement', '');
     basement.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 48, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'toh-entry'));
     basement.nodes.push(new DungeonNode(
-      'Basement Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Basement Chest', 128, 165, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[88]));
@@ -69,22 +69,22 @@ export class TowerHera {
 
     var upstairs = new DungeonMapData('toh-upstairs', 'Big Room', '');
     upstairs.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 224, 64, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'toh-entry'));
     upstairs.nodes.push(new DungeonNode(
-      'Center Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Center Chest', 128, 146, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[91]));
     upstairs.nodes.push(new DungeonNode(
-      'Big Chest', 0, 0, DungeonNodeStatus.BIG_CHEST,
+      'Big Chest', 128, 40, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[92]));
     upstairs.nodes.push(new DungeonNode(
-      'Moldorm Room. Requires either Sword or Hammer', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      'Moldorm Room. Requires either Sword or Hammer', 32, 64, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.sword || items.hammer;
     }, 'toh-moldorm'));
@@ -92,7 +92,7 @@ export class TowerHera {
 
     var moldormRoom = new DungeonMapData('toh-moldorm', 'Moldorm Room', '');
     moldormRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.BOSS,
+      '', 132, 132, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, l[93]));

@@ -16,17 +16,17 @@ export class EasternPalace {
 
     var entrance = new DungeonMapData('ep-entry', 'Big Ball Room', '');
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 238, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'exit'));    
     entrance.nodes.push(new DungeonNode(
-      'Ball Room Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Ball Room Chest', 207, 147, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[62]));
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 13, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-fork'));
@@ -34,17 +34,17 @@ export class EasternPalace {
 
     var fork = new DungeonMapData('ep-fork', 'First Fork', '');
     fork.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 234, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-entry'));    
     fork.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 243, 124, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-map'));
     fork.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 15, 124, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-compass'));
@@ -52,12 +52,12 @@ export class EasternPalace {
 
     var mapRoom = new DungeonMapData('ep-map', 'Map Room', '');
     mapRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 10, 128, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-fork'));    
     mapRoom.nodes.push(new DungeonNode(
-      'Map Room Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Map Room Chest', 222, 188, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[64]));
@@ -65,17 +65,17 @@ export class EasternPalace {
 
     var compassRoom = new DungeonMapData('ep-compass', 'Compass Room', '');
     compassRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 227, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-fork'));    
     compassRoom.nodes.push(new DungeonNode(
-      'Compass Room Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Compass Room Chest', 111, 71, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[60]));
     compassRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 206, 135, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-bc'));
@@ -83,22 +83,22 @@ export class EasternPalace {
 
     var bigChestRoom = new DungeonMapData('ep-bc', 'Big Chest Room', '');
     bigChestRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 26, 58, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-compass'));    
     bigChestRoom.nodes.push(new DungeonNode(
-      'Big Chest', 0, 0, DungeonNodeStatus.BIG_CHEST,
+      'Big Chest', 128, 99, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[61]));
     bigChestRoom.nodes.push(new DungeonNode(
-      'Armos Room. Bow and Lamp Required', 0, 0, DungeonNodeStatus.BK_LOCKED,
+      'Armos Room. Bow and Lamp Required', 128, 14, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasBow() && items.hasLightsource(config);
     }, 'ep-armos'));
     bigChestRoom.nodes.push(new DungeonNode(
-      'Big Key Room. Lamp Required', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      'Big Key Room. Lamp Required', 232, 58, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasLightsource(config);
     }, 'ep-bk'));
@@ -106,17 +106,17 @@ export class EasternPalace {
 
     var bigKeyRoom = new DungeonMapData('ep-bk', 'Big Key Room', '');
     bigKeyRoom.nodes.push(new DungeonNode(
-      'Lamp Required', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      'Lamp Required', 225, 128, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.hasLightsource(config);
     }, 'ep-bc'));    
     bigKeyRoom.nodes.push(new DungeonNode(
-      'Big Key Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest', 128, 124, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[63]));
     bigKeyRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 118, 32, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-bc'));
@@ -124,7 +124,7 @@ export class EasternPalace {
 
     var armosRoom = new DungeonMapData('ep-armos', 'Armos Room', '');
     armosRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.BOSS,
+      '', 128, 152, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, l[65]));

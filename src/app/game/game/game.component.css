@@ -1,3 +1,6 @@
 .container {
   display: flex;
 }
+app-item-tracker {
+  width: 30%;
+}

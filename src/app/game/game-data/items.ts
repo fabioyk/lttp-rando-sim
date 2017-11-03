@@ -72,6 +72,33 @@ export class Items {
   ganon = false;
 
   dungeonItemsArray = [];
+
+  stats = {
+    totalCount: 0,
+    overworldCount: 0,
+    dungeonCount: 0,
+    capacityUpgrades: 0,
+    heartPieces: 0,
+    heartContainers: 0,
+    maps: 0,
+    compasses: 0,
+    sks: 0,
+    bks: 0,
+    bigChests: 0,
+    bosses: 0,
+    itemsPreGTBK: 0,
+    sword0B: 0,
+    sword1B: 0,
+    sword2B: 0,
+    sword3B: 0,
+    sword4B: 0,
+    preBoots: 0,
+    preMirror: 0,
+    preDW: 0,
+    preGo: 0,
+    startTime: 0
+  }
+  gtChestCount = 0;
   
   setup() {
     this.tunic = 1;
@@ -144,9 +171,62 @@ export class Items {
     this.agahnim = false;
     this.agahnim2 = false;
     this.ganon = false;
+
+    this.stats = {
+      totalCount: 0,
+      overworldCount: 0,
+      dungeonCount: 0,
+      capacityUpgrades: 0,
+      heartPieces: 0,
+      heartContainers: 0,
+      maps: 0,
+      compasses: 0,
+      sks: 0,
+      bks: 0,
+      bigChests: 0,
+      bosses: 0,
+      itemsPreGTBK: 0,
+      sword0B: 0,
+      sword1B: 0,
+      sword2B: 0,
+      sword3B: 0,
+      sword4B: 0,
+      preBoots: 0,
+      preMirror: 0,
+      preDW: 0,
+      preGo: 0,
+      startTime: Date.now()
+    };
+    this.gtChestCount = 0;
   }
 
   add(itemName:string, region:string) {
+    var notItemLocation = ['flood', 'blind', 'tt-bomb', 'switch', 
+      'Crystal 1', 'Crystal 2', 'Crystal 3', 'Crystal 4', 'Crystal 5', 'Crystal 6', 'Crystal 7',
+      'Pendant Of Courage', 'Pendant Of Power', 'Pendant Of Wisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
+    var bossItems = ['Crystal 1', 'Crystal 2', 'Crystal 3', 'Crystal 4', 'Crystal 5', 'Crystal 6', 'Crystal 7',
+    'Pendant Of Courage', 'Pendant Of Power', 'Pendant Of Wisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
+
+    if (notItemLocation.indexOf(itemName) === -1) {
+      this.stats.totalCount++;
+      if (region === 'light-world' || region === 'dark-world') {
+        this.stats.overworldCount++;
+      } else {
+        this.stats.dungeonCount++;
+      }
+    }
+
+    if (bossItems.indexOf(itemName) > -1) {
+      this.stats.bosses++;
+      switch(this.sword) {
+        case 0: this.stats.sword0B++; break;
+        case 1: this.stats.sword1B++; break;
+        case 2: this.stats.sword2B++; break;
+        case 3: this.stats.sword3B++; break;
+        case 4: this.stats.sword4B++; break;
+      }
+    }
+
     switch(itemName) {
       case 'Bombos': this.bombos = true; break;
       case 'Book Of Mudora': this.book = true; break;
@@ -172,11 +252,11 @@ export class Items {
       case 'Ice Rod': this.iceRod = true; break;
       case 'Lamp': this.lamp = true; break;
       case 'Magic Cape': this.cape = true; break;
-      case 'Magic Mirror': this.mirror = true; break;
+      case 'Magic Mirror': this.mirror = true; this.stats.preMirror = this.stats.totalCount; break;
       case 'Magic Powder': this.powder = true; break;
       case 'Moon Pearl': this.moonPearl = true; break;
       case 'Mushroom': this.mushroom = true; break;
-      case 'Pegasus Boots': this.boots = true; break;
+      case 'Pegasus Boots': this.boots = true; this.stats.preBoots = this.stats.totalCount; break;
       case 'Pendant Of Courage': this.pendantCourage = true; break;
       case 'Pendant Of Power': this.pendantPower = true; break;
       case 'Pendant Of Wisdom': this.pendantWisdom = true; break;
@@ -185,13 +265,15 @@ export class Items {
       case 'Silver Arrows Upgrade': this.bow += 1; break;
       case 'Boomerang': this.boomerang = true; break;
       case 'Magical Boomerang': this.magicBoomerang = true; break;
-      case 'Progressive Armor': this.tunic++; break;
-      case 'Progressive Glove': this.glove++; break;
-      case 'Progressive Shield': this.shield++; break;
-      case 'Progressive Sword': this.sword++; break;
+      case 'Progressive Armor': this.tunic++; this.tunic = this.tunic > 3 ? 3 : this.tunic; break;
+      case 'Progressive Glove': this.glove++; this.glove = this.glove > 2 ? 2 : this.glove; break;
+      case 'Progressive Shield': this.shield++; this.shield = this.shield > 3 ? 3 : this.shield; break;
+      case 'Progressive Sword': this.sword++; this.sword = this.sword > 4 ? 4 : this.sword; break;
       case 'Agahnim': this.agahnim = true; break;
       case 'Agahnim 2': this.agahnim2 = true; break;
       case 'Ganon': this.ganon = true; break;
+      case 'Piece Of Heart': this.stats.heartPieces++; break;
+      case 'Heart Container': this.stats.heartContainers++; break;
       case 'flood': this.spFlooded = true; break;
       case 'blind': this.ttBlindDelivered = true; break;
       case 'tt-bomb': this.ttBombableFloor = true; break;
@@ -204,16 +286,36 @@ export class Items {
         break;
       case 'Key': 
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].smallKeys++;
+        this.stats.sks++;
         break;
       case 'Big Key': 
-        this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasBigKey = true;;
+        this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasBigKey = true;
+        this.stats.bks++;
         break;
       case 'Map': 
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasMap = true;
+        this.stats.maps++;
         break;
       case 'Compass': 
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasCompass = true;
+        this.stats.compasses++;
         break;      
+    }
+
+    if (this.stats.preDW === 0 && this.moonPearl && 
+        (this.agahnim || (this.hammer && this.glove) || (this.glove === 2))) {
+      this.stats.preDW = this.stats.totalCount;
+    }
+
+    if (region === 'Ganons Tower' && this.stats.itemsPreGTBK === 0) {
+      this.gtChestCount++;
+      if (itemName === 'Big Key') {
+        this.stats.itemsPreGTBK = this.gtChestCount;
+      }
+    }
+
+    if (itemName.indexOf('Upgrade (') > -1) {
+      this.stats.capacityUpgrades++;
     }
 
     const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'Key', 'Big Key', 'Map', 'Compass'];

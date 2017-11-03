@@ -1,6 +1,7 @@
 .node {
   width: 64px;
   height: 64px;
+  background-size: cover;
 }
 
 .off {
