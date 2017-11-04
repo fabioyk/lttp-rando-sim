@@ -195,7 +195,7 @@ export class MapComponent implements OnInit {
           break;
         case DungeonNodeStatus.GROUND_KEY:
           //this.currentDungeonItems.smallKeys++;
-          this.items.add('Small Key', this.currentDungeon.name);      
+          this.items.add('Key', this.currentDungeon.name);      
           dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
           console.log('Small Key on the ground');
           break;

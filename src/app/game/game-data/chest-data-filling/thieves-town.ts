@@ -131,7 +131,7 @@ export class ThievesTown {
         return true;
     }, 'tt-fork2'));
     blindCell.nodes.push(new DungeonNode(
-      '', 156, 48, DungeonNodeStatus.CLOSED_CHEST,
+      'Blind Cell Chest', 156, 48, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[165]));
@@ -162,7 +162,7 @@ export class ThievesTown {
         return true;
     }, 'tt-hellway'));
     bombableFloor.nodes.push(new DungeonNode(
-      '', 58, 69, DungeonNodeStatus.CLOSED_CHEST,
+      'Bombable Floor Chest', 58, 69, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[159]));

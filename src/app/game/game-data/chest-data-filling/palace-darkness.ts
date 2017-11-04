@@ -43,7 +43,7 @@ export class PalaceDarkness {
         return true;
     }, 'pod-entry'));
     leftRoom.nodes.push(new DungeonNode(
-      '', 201, 181, DungeonNodeStatus.CLOSED_CHEST,
+      'Shooter Room Chest', 201, 181, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[124]));
@@ -174,22 +174,22 @@ export class PalaceDarkness {
 
     var maze = new DungeonMapData('pod-maze', 'Dark Maze', '');
     maze.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 159, 60, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'pod-fork2'));
     maze.nodes.push(new DungeonNode(
-      'Maze Top Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Maze Top Chest', 49, 28, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[135]));
     maze.nodes.push(new DungeonNode(
-      'Maze Bottom Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Maze Bottom Chest', 146, 215, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[136]));
     maze.nodes.push(new DungeonNode(
-      'Big Chest', 0, 0, DungeonNodeStatus.BIG_CHEST,
+      'Big Chest', 214, 124, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[130]));

@@ -26,9 +26,8 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.items = new Items();
     this.items.setup();
-    this.config = new Config();
+    this.config = this.gameService.config;
     this.itemLog = [];
-    console.log(this.gameService.config);
     this.dungeonsData = this.gameService.dungeonsData;
     this.gameState = 'playing';
   }

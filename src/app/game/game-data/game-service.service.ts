@@ -45,6 +45,8 @@ export class GameService {
     this.config.mmMedallion = medallions[logObj.mmMedallion];
     this.config.trMedallion = medallions[logObj.trMedallion];
 
+    console.log('Medallions:',this.config.mmMedallion,this.config.trMedallion);
+
     this.dungeonsData = [];
     this.dungeonsData.push(EasternPalace.setup(logObj.locations, this.config));
     this.dungeonsData.push(DesertPalace.setup(logObj.locations, this.config));

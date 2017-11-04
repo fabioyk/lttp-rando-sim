@@ -16,22 +16,22 @@ export class TurtleRock {
 
     var entrance = new DungeonMapData('tr-entry', 'Entrance', '');
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 192, 239, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'exit'));
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 65, 239, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-compass'));
     entrance.nodes.push(new DungeonNode(
-      'Map Room. Requires Fire Rod', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      'Map Room. Requires Fire Rod', 241, 68, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.fireRod;
     }, 'tr-map'));
     entrance.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.SK_LOCKED,
+      '', 65, 25, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.fireRod;
     }, 'tr-chain-chomp'));
@@ -39,12 +39,12 @@ export class TurtleRock {
 
     var compass = new DungeonMapData('tr-compass', 'Compass Room', '');
     compass.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 25, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-entry'));
     compass.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      '', 128, 178, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[187]));
@@ -52,17 +52,17 @@ export class TurtleRock {
 
     var mapRoom = new DungeonMapData('tr-map', 'Map Room', '');
     mapRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 241, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-entry'));
     mapRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      '', 117, 44, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[188]));
     mapRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      '', 140, 44, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[189]));
@@ -70,17 +70,17 @@ export class TurtleRock {
 
     var chainChomp = new DungeonMapData('tr-chain-chomp', 'Chain Chomp Room', '');
     chainChomp.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.SK_LOCKED,
+      '', 128, 222, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-entry'));
     chainChomp.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.SK_LOCKED,
+      '', 128, 49, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-pipe-room'));
     chainChomp.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      '', 128, 86, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[186]));
@@ -88,17 +88,17 @@ export class TurtleRock {
 
     var pipeRoom = new DungeonMapData('tr-pipe-room', 'Pipe Room', '');
     pipeRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 240, 67, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-chain-chomp'));
     pipeRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 16, 67, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-pokey-key'));
     pipeRoom.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 63, 240, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-double-pokey'));
@@ -106,17 +106,17 @@ export class TurtleRock {
 
     var pokeyKey = new DungeonMapData('tr-pokey-key', 'Pokey Key Room', '');
     pokeyKey.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 176, 67, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-pipe-room'));
     pokeyKey.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.SK_LOCKED,
+      '', 176, 196, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-bk'));
     pokeyKey.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.GROUND_KEY,
+      '', 116, 175, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return true;
     }, ''));
@@ -124,17 +124,17 @@ export class TurtleRock {
 
     var bk = new DungeonMapData('tr-bk', 'Big Key Room', '');
     bk.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 17, 196, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-pokey-key'));
     bk.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 241, 196, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-pipe-room'));
     bk.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      '', 108, 97, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[191]));
@@ -142,17 +142,17 @@ export class TurtleRock {
 
     var doubPokey = new DungeonMapData('tr-double-pokey', 'Double Pokey Room', '');
     doubPokey.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 129, 48, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-pipe-room'));
     doubPokey.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 225, 136, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-big-door'));
     doubPokey.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 130, 223, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-outside'));
@@ -160,17 +160,17 @@ export class TurtleRock {
 
     var outside = new DungeonMapData('tr-outside', 'Ledge Outside', '');
     outside.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 30, 132, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-double-pokey'));
     outside.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 222, 132, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-bc'));
     outside.nodes.push(new DungeonNode(
-      'Mimic Cave. Requires Mirror', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      'Mimic Cave. Requires Mirror', 222, 177, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.mirror;
     }, 'tr-mimic'));
@@ -178,12 +178,12 @@ export class TurtleRock {
 
     var mimic = new DungeonMapData('tr-mimic', 'Mimic Cave', '');
     mimic.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 239, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-outside'));
     mimic.nodes.push(new DungeonNode(
-      'Mimic Cave Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Mimic Cave Chest', 128, 62, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hammer;
     }, l[79]));
@@ -191,17 +191,17 @@ export class TurtleRock {
 
     var bc = new DungeonMapData('tr-bc', 'Big Chest Room', '');
     bc.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 224, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-outside'));
     bc.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 48, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-big-door'));
     bc.nodes.push(new DungeonNode(
-      'Mimic Cave Chest', 0, 0, DungeonNodeStatus.BIG_CHEST,
+      'Big Chest', 128, 97, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[190]));
@@ -209,12 +209,12 @@ export class TurtleRock {
 
     var bigDoor = new DungeonMapData('tr-big-door', 'Big Door Room', '');
     bigDoor.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 31, 135, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-double-pokey'));
     bigDoor.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.BK_LOCKED,
+      '', 128, 48, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-roller-switch'));
@@ -222,17 +222,17 @@ export class TurtleRock {
 
     var rollerSwitch = new DungeonMapData('tr-roller-switch', 'Roller Switch Room', '');
     rollerSwitch.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 225, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-big-door'));
     rollerSwitch.nodes.push(new DungeonNode(
-      'Mini Helma Bridge. Requires Lamp', 0, 0, DungeonNodeStatus.SK_LOCKED,
+      'Mini Helma Bridge. Requires Lamp', 128, 50, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasLightsource(config);
     }, 'tr-helma-bridge'));
     rollerSwitch.nodes.push(new DungeonNode(
-      'Roller Switch Chest', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Roller Switch Chest', 57, 134, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[192]));
@@ -240,17 +240,17 @@ export class TurtleRock {
 
     var helmaBridge = new DungeonMapData('tr-helma-bridge', 'Mini Helma Bridge', '');
     helmaBridge.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 23, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-roller-switch'));
     helmaBridge.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.SK_LOCKED,
+      '', 81, 195, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-before-tri'));
     helmaBridge.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 240, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-laser-bridge'));
@@ -258,27 +258,27 @@ export class TurtleRock {
 
     var laserBridge = new DungeonMapData('tr-laser-bridge', 'Laser Bridge', '');
     laserBridge.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 24, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-helma-bridge'));
     laserBridge.nodes.push(new DungeonNode(
-      'Laser Bridge Chest 1', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Laser Bridge Chest 1', 164, 59, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config);
     }, l[196]));
     laserBridge.nodes.push(new DungeonNode(
-      'Laser Bridge Chest 2', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Laser Bridge Chest 2', 92, 91, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config);
     }, l[195]));
     laserBridge.nodes.push(new DungeonNode(
-      'Laser Bridge Chest 3', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Laser Bridge Chest 3', 164, 124, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config);
     }, l[194]));
     laserBridge.nodes.push(new DungeonNode(
-      'Laser Bridge Chest 4', 0, 0, DungeonNodeStatus.CLOSED_CHEST,
+      'Laser Bridge Chest 4', 92, 156, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config);
     }, l[193]));
@@ -286,12 +286,12 @@ export class TurtleRock {
 
     var beforeTri = new DungeonMapData('tr-before-tri', 'Room Before Trinexx', '');
     beforeTri.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.OPEN_DOOR,
+      '', 186, 246, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tr-helma-bridge'));
     beforeTri.nodes.push(new DungeonNode(
-      'Trinexx Room. Requires Fire Rod and Ice Rod', 0, 0, DungeonNodeStatus.BK_LOCKED,
+      'Trinexx Room. Requires Fire Rod and Ice Rod', 117, 10, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.fireRod && items.iceRod;
     }, 'tr-trinexx'));
@@ -299,7 +299,7 @@ export class TurtleRock {
 
     var trinexx = new DungeonMapData('tr-trinexx', 'Trinexx Room', '');
     trinexx.nodes.push(new DungeonNode(
-      '', 0, 0, DungeonNodeStatus.BOSS,
+      '', 129, 129, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, l[197]));

@@ -25,7 +25,7 @@ export class CastleTower {
         return items.hasLightsource(config);
     }, 'ct-maze'));
     entrance.nodes.push(new DungeonNode(
-      '', 185, 181, DungeonNodeStatus.CLOSED_CHEST,
+      'Aga Tower First Chest', 185, 181, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[95]));
@@ -43,7 +43,7 @@ export class CastleTower {
         return true;
     }, 'ct-top'));
     maze.nodes.push(new DungeonNode(
-      '', 28, 107, DungeonNodeStatus.CLOSED_CHEST,
+      'Aga Tower Dark Chest', 28, 107, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[96]));

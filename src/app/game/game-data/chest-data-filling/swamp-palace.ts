@@ -21,7 +21,7 @@ export class SwampPalace {
         return true;
     }, 'exit'));
     entrance.nodes.push(new DungeonNode(
-      '', 92, 50, DungeonNodeStatus.CLOSED_CHEST,
+      'Swamp Palace First Chest', 92, 50, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[139]));

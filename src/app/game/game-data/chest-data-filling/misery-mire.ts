@@ -9,7 +9,7 @@ export class MiseryMire {
   static setup (l:string[], config:Config):DungeonData {
     var mmData = new DungeonData('Misery Mire', l[185],
       function(items:Items, config:Config) {
-        return items.moonPearl && items.canMire() && items.hasMedallion('mire', config)
+        return items.moonPearl && items.canMire() && items.hasMedallion('mm', config)
             && (items.boots || items.hookshot);
       }, 11.6, 82.9
     );
@@ -77,7 +77,7 @@ export class MiseryMire {
         return true;
     }, 'mm-west-spike'));
     bridge.nodes.push(new DungeonNode(
-      '', 120, 70, DungeonNodeStatus.CLOSED_CHEST,
+      'Bridge Chest', 120, 70, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[181]));
@@ -135,7 +135,7 @@ export class MiseryMire {
     mapRoom.nodes.push(new DungeonNode(
       'Map Chest', 100, 64, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasInvincibilityItem(config);
+        return items.mmSwitch;
     }, l[182]));
     mmData.dungeonMaps.push(mapRoom);
 
@@ -249,7 +249,7 @@ export class MiseryMire {
         return items.mmSwitch;
     }, 'mm-map'));
     bigChest.nodes.push(new DungeonNode(
-      '', 128, 31, DungeonNodeStatus.BIG_CHEST,
+      'Misery Mire Big Chest', 128, 31, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[177]));
