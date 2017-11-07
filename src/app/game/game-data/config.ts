@@ -14,9 +14,9 @@ export class Config {
   mode: string;
 
   constructor() {
-    this.canFakeFlipper = false;
-    this.canDarkRoom = false;
-    this.canPassThroughSpikes = false;
+    this.canFakeFlipper = true;
+    this.canDarkRoom = true;
+    this.canPassThroughSpikes = true;
 
     this.trMedallion = 'ether';
     this.mmMedallion = 'ether';

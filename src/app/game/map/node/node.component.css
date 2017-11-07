@@ -22,42 +22,61 @@
 }
 
 .overworld-type {
-  width: 20px;
-  height: 20px;
-  margin: -10px -10px;
+  width: 18px;
+  height: 18px;
+  margin: -9px -9px;
+  border: 3px solid black;
 }
 .dungeon-type {
   width: 40px;
   height: 40px;
   margin: -20px -20px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border: 5px solid black;
 }
 .in-dungeon-type {
   width: 40px;
   height: 40px;
   margin: -20px -20px;
   background-size: cover;
+  border: 3px solid black;  
 }
 
 .open-door {
   background-image: url('/assets/node-icons/open_door.png');
+  width: 32px;
+  height: 16px;
 }
 .sk-door {
-  background-image: url('/assets/node-icons/key_door.png');  
+  background-image: url('/assets/node-icons/key_door.png');
+  width: 32px;
+  height: 16px;
 }
 .bk-door {
   background-image: url('/assets/node-icons/big_door.png');  
+  width: 32px;
+  height: 16px;
 }
 .closed-chest {
   background-image: url('/assets/node-icons/closed_chest.png');  
+  width: 32px;
+  height: 32px;
 }
 .open-chest {
-  background-image: url('/assets/node-icons/open_chest.png');  
+  background-image: url('/assets/node-icons/open_chest.png');
+  width: 32px;
+  height: 32px;
 }
 .big-chest {
   background-image: url('/assets/node-icons/closed_big_chest.png');  
+  width: 36px;
+  height: 28px;
 }
 .open-big-chest {
   background-image: url('/assets/node-icons/open_big_chest.png');  
+  width: 36px;
+  height: 28px;
 }
 .spare-key {
   background-image: url('/assets/node-icons/small_key.png');  

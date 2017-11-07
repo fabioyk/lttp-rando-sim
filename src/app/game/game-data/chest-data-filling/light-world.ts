@@ -311,7 +311,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Zora River Ledge', 47.7, 17.3,
       function(items:Items, config:Config) {
-        return items.flippers;
+        return items.flippers || (config.canFakeFlipper && items.boots);
       },
       function(items:Items, config:Config) {
         return items.glove || config.canFakeFlipper;
@@ -331,7 +331,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Waterfall Fairy', 45, 19.3,
       function(items:Items, config:Config) {
-        return items.flippers || (config.canFakeFlipper && items.moonPearl);
+        return items.flippers || (config.canFakeFlipper && items.moonPearl) || (config.canFakeFlipper && items.boots);
       },
       null,
       [l[50], l[51]]

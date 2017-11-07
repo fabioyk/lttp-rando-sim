@@ -43,6 +43,15 @@ export class NodeComponent implements OnInit {
     }
   }
 
+  getDungeonBg() {
+    if (this.nodeType === 'dungeon') {
+      var duns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 
+      'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower', 'Ganons Tower'];
+  
+      return 'url("./assets/dungeon-tracker-icons/boss' + duns.indexOf(this.nodeInfo.tooltip) + '2.png")';
+    }
+  }
+
   getNodeState() {
     if (this.nodeType === 'inside-dungeon') {
       switch(+this.nodeInfo.status) {

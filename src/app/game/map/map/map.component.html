@@ -10,7 +10,7 @@
     </app-node>
     <app-node *ngFor='let dun of gameService.getAccessibleDungeons(items, currentMap)'
         nodeType='dungeon'
-        [nodeInfo]='dun'
+        [nodeInfo]='dun'        
         [dungeonItems]='items.getDungeonItems(dun.tooltip)'
         (click)='onDungeonClick(dun)'
         (mouseleave)='onMouseLeave(dun)'>

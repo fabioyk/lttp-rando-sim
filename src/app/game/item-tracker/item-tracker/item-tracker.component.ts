@@ -18,11 +18,10 @@ export class ItemTrackerComponent implements OnInit {
   constructor(private _gameService:GameService) { }
 
   ngOnInit() {
-    this.itemsToTrack = ['tunic', 'sword', 'shield', 'moonPearl', 'bow', 'hookshot', 'shovel', 'mushroom', 'powder', 'fireRod', 
+    this.itemsToTrack = 
+    ['tunic', 'sword', 'shield', 'moonPearl', 'bow', 'hookshot', 'shovel', 'mushroom', 'powder', 'fireRod', 
       'iceRod', 'bombos', 'ether', 'quake', 'lamp', 'hammer', 'flute', 'book', 'bottle',
-      'somaria', 'byrna', 'cape', 'mirror', 'boots', 'glove', 'flippers', 'halfMagic', 'crystal1', 
-      'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7', 'agahnim', 
-      'pendantCourage', 'pendantPower', 'pendantWisdom'];
+      'somaria', 'byrna', 'cape', 'mirror', 'boots', 'glove', 'flippers', 'halfMagic', 'agahnim'];
   }
 
 }

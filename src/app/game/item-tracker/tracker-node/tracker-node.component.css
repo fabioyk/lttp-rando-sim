@@ -11,3 +11,35 @@
 div {
   color: white;
 }
+
+.dungeon-node {
+  width: 64px;
+  height: 128px;
+}
+
+.dungeon-node-bg {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dungeon-chest {
+  width: 64px;
+  height: 64px;  
+}
+
+.dungeon-prize {
+  width: 50%;
+  height: 50%;
+}
+
+.dungeon-medallion {
+  width: 50%;
+  height: 50%;
+}
+
+.dungeon-block {
+  width: 50%;
+  height: 50%;
+}

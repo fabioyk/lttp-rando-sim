@@ -13,7 +13,7 @@ export class GanonsTower {
             && items.crystal1 && items.crystal2 && items.crystal3
             && items.crystal4 && items.crystal5 && items.crystal6
             && items.crystal7;
-      }, 62, 5.5
+      }, 55, 4.5
     );
 
     var entrance = new DungeonMapData('gt-entry', 'Entrance', '');

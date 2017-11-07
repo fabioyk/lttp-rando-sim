@@ -42,6 +42,54 @@ export class TrackerNodeComponent implements OnInit {
     }
   }
 
+  getDungeonBg() {
+    var duns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 
+      'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock'];
+
+    return 'url("./assets/dungeon-tracker-icons/boss' + duns.indexOf(this.dungeonData.name) 
+      + (this.items.getDungeonItems(this.dungeonData.name).isBossDefeated ? '2' : '') + '.png")';
+  }
+
+  getDungeonChestCountBg() {
+    return 'url("./assets/dungeon-tracker-icons/chest' + this.items.getDungeonItems(this.dungeonData.name).itemsLeft + '.png")';
+  }
+
+  getDungeonPrizeBg() {
+    if (!this.shouldShowCrystal()) {
+      return 'url("./assets/dungeon-tracker-icons/dungeon0.png")';    
+    } else {
+      switch(this.dungeonData.dungeonPrize) {
+        case 'Crystal 5':
+        case 'Crystal 6':
+          return 'url("./assets/dungeon-tracker-icons/dungeon2.png")';
+        case 'Pendant Of Courage':
+          return 'url("./assets/dungeon-tracker-icons/dungeon3.png")';
+        case 'Pendant Of Power':
+        case 'Pendant Of Wisdom':
+          return 'url("./assets/dungeon-tracker-icons/dungeon4.png")';
+        default:
+          return 'url("./assets/dungeon-tracker-icons/dungeon1.png")';
+      }
+    }
+  }
+
+  getDungeonMedallionBg() {
+    if (this.isMedallionDungeon()) {
+      if (!this.shouldShowMedallion()) {
+        return 'url("./assets/dungeon-tracker-icons/medallion0.png")';
+      } else {
+        var medallions = ['bombos', 'ether', 'quake'];
+        return 'url("./assets/dungeon-tracker-icons/medallion' + (medallions.indexOf(this.medallionName) + 1) + '.png")';
+      }
+    } else {
+      return '';
+    }    
+  }
+
+  isMedallionDungeon() {
+    return this.dungeonData.name == 'Misery Mire' || this.dungeonData.name == 'Turtle Rock';      
+  }
+
   isTransparent() {
     if ((typeof this.value === 'boolean' && !this.value) || (this.value === 0)) {
       return 'off';

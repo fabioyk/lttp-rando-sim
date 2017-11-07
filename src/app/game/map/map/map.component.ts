@@ -81,15 +81,19 @@ export class MapComponent implements OnInit {
     this.tooltip = mapNode.tooltip;
   }
   onNodeClick(nodeClicked:MapNode) {
+    
     switch (nodeClicked.status) {
+
       case 'getable':
-        this.addPrizes(nodeClicked, this.currentMap);
-        if (nodeClicked.originalNode) {
-          nodeClicked.originalNode.isOpened = true;
-        }
-        nodeClicked.status = 'opened'
-        if (nodeClicked.tooltip === 'Ganon') {
-          this.onGameFinished.emit('');
+        if (!nodeClicked.originalNode.isOpened) {
+          this.addPrizes(nodeClicked, this.currentMap);
+          if (nodeClicked.originalNode) {
+            nodeClicked.originalNode.isOpened = true;
+          }
+          nodeClicked.status = 'opened'
+          if (nodeClicked.tooltip === 'Ganon') {
+            this.onGameFinished.emit('');
+          }
         }
         break;
       case 'viewable':
@@ -195,7 +199,7 @@ export class MapComponent implements OnInit {
           break;
         case DungeonNodeStatus.GROUND_KEY:
           //this.currentDungeonItems.smallKeys++;
-          this.items.add('Key', this.currentDungeon.name);      
+          this.items.add('Key', this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
           console.log('Small Key on the ground');
           break;

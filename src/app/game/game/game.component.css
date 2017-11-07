@@ -4,3 +4,15 @@
 app-item-tracker {
   width: 30%;
 }
+
+@media (max-width: 768px) {
+  .container {
+    flex-wrap: wrap;
+  }
+  app-item-tracker {
+    width: max-content;
+  }
+  app-map {
+    
+  }
+}

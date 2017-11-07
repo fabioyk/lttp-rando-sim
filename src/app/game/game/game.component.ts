@@ -49,7 +49,7 @@ export class GameComponent implements OnInit {
       if (itemsToTrack.indexOf(prizeName) > -1) {
         this.itemLog.unshift({
           item: prizeName,
-          location: mapNode.tooltip,
+          location: mapNode.tooltip ? mapNode.tooltip : mapNode.id,
           region: mapNode.id,
           type: type      
         });
