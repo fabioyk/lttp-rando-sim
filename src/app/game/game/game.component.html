@@ -1,4 +1,7 @@
-<div class='container' *ngIf='gameState === "playing"'>
+<div class='container' *ngIf='gameState === "loading"'>
+  Loading...
+</div>
+<div class='container' *ngIf='gameState === "playing"'>  
   <app-item-tracker
     [items]='items'
     [config]='config'
@@ -26,9 +29,15 @@
 </div>
 <div class='container' *ngIf='gameState === "finished"'>
   Woo
-  <app-end-stats
-    [items]='items'
-    [config]='config'
-  >
-  </app-end-stats>
+  <div>
+    <app-end-stats
+      [items]='items'
+      [config]='config'
+    >
+    </app-end-stats>
+  </div>
+  <div>
+    <button (click)='onContinuePlaying()'>Continue Playing</button>
+    <button (click)='onBackMainMenu()'>Return to Main Menu</button>
+  </div>  
 </div>

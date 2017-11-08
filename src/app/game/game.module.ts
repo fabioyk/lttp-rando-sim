@@ -7,6 +7,9 @@ import { ItemTrackerModule } from './item-tracker/item-tracker.module';
 import { MapModule } from './map/map.module';
 import { OptionsModule } from './options/options.module';
 import { EndStatsComponent } from './end-stats/end-stats.component';
+import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -14,8 +17,14 @@ import { EndStatsComponent } from './end-stats/end-stats.component';
     GameMenuModule,
     ItemLogModule,
     ItemTrackerModule,
+    FormsModule,
     MapModule,
-    OptionsModule
+    OptionsModule,
+    SharedModule,
+    RouterModule.forChild([
+      { path: 'standard', component: GameComponent },
+      { path: 'open', component: GameComponent },
+    ])
   ],
   declarations: [GameComponent, EndStatsComponent],
   exports: [GameComponent]

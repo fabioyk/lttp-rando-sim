@@ -83,19 +83,21 @@ export class SpoilerLog {
     return output;
   }
 
-  public convertShortToNormal(log:string) {
+  public convertShortToNormal(log:string, seedNumber:number) {
     var obj:any = {};
     var itemNames = new ItemNames();
     
-    obj.seed = log.substr(0, 9);
-    obj.difficulty = log.substr(9, 1);
-    obj.variation = log.substr(10, 1);
-    obj.logic = log.substr(11, 1);
-    obj.goal = log.substr(12, 1);
-    obj.mode = log.substr(13, 1);
-    obj.mmMedallion = log.substr(14, 1);
-    obj.trMedallion = log.substr(15, 1);
-    var locStr = log.substr(29);
+    var buffer = seedNumber.toString().length;
+
+    obj.seed = log.substr(0, buffer);
+    obj.difficulty = log.substr(buffer, 1);
+    obj.variation = log.substr(buffer+1, 1);
+    obj.logic = log.substr(buffer+2, 1);
+    obj.goal = log.substr(buffer+3, 1);
+    obj.mode = log.substr(buffer+4, 1);
+    obj.mmMedallion = log.substr(buffer+5, 1);
+    obj.trMedallion = log.substr(buffer+6, 1);
+    var locStr = log.substr(buffer+20);
     var locArr = [];
     for (var i = 0; i < locStr.length / 3; i++) {
       locArr.push(itemNames.getItem(+locStr.substr(i*3, 3)));

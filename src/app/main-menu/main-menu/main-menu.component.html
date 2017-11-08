@@ -1,0 +1,27 @@
+<div>
+  <div>
+    Game Mode:
+    <div class="radio">
+      <label>
+        <input type="radio" name="modeSelect" value="standard" checked="checked"
+          [(ngModel)]="modeSelected">
+        Standard
+      </label>
+      <label>
+        <input type="radio" name="modeSelect" value="open"
+        [(ngModel)]="modeSelected">
+        Open
+      </label>
+    </div>
+
+    
+    <div class="seed">
+      Seed:
+      <input type="text" name="seedSelect"  
+          placeholder="Random" maxlength="10" [(ngModel)]="seedNum">
+    </div>
+    
+    
+    <button (click)="onSubmit($event)">Play</button>
+  </div>
+</div>

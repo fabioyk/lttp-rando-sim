@@ -169,7 +169,7 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.canNorthEastDarkWorld() && items.agahnim2 && items.crystal1 &&
           items.crystal2 && items.crystal3 && items.crystal4 && items.crystal5 && items.crystal6
-          && items.crystal7;
+          && items.crystal7 && items.sword >= 2 && (items.lamp || items.fireRod);
       },
       null,
       ['Ganon']

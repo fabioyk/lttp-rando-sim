@@ -26,16 +26,16 @@ export class GameService {
 
   constructor() { }
 
-  loadSeed(log:string) {
+  loadSeed(log:string, seedNumber: number) {
     var spoilerLogManager = new SpoilerLog();
-    var logObj = spoilerLogManager.convertShortToNormal(log);
+    var logObj = spoilerLogManager.convertShortToNormal(log, seedNumber);
 
     this.config = new Config();
 
     this.config.difficulty = logObj.difficulty;
     this.config.goal = logObj.goal === '0' ? 'ganon' : 'other';
     this.config.logic = logObj.logic;
-    this.config.mode = 'standard';
+    this.config.mode = logObj.mode === '0' ? 'standard' : 'open';
     this.config.variation = logObj.variation;
     this.config.vtSeedNumber = logObj.seed;
 

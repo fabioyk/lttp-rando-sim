@@ -349,7 +349,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Bombable Wall in Escape', 26.8, 32.4,
       function(items:Items, config:Config) {
-        return true;
+        return config.mode === 'standard' ? true : (items.glove || ((items.lamp || config.canDarkRoom) && items.hcItems.smallKeys > 0));
       },
       null,
       [l[53], l[54], l[55]]
