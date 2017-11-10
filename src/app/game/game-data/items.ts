@@ -1,6 +1,7 @@
 import { DungeonItems } from "./dungeon-items";
 import { Config } from "./config";
 import { DungeonData } from "./dungeon-data";
+import { ItemNamesService } from "../../log-parse/item-names.service";
 
 export class Items {
   tunic = 1;
@@ -67,7 +68,7 @@ export class Items {
   pendantPower = false;
   pendantWisdom = false;
 
-  agahnim = false;
+  agahnim = 0;
   agahnim2 = false;
   ganon = false;
 
@@ -141,19 +142,19 @@ export class Items {
     this.crystal6 = false;
     this.crystal7 = false;
 
-    this.hcItems = new DungeonItems(6);
-    this.epItems = new DungeonItems(3);
-    this.dpItems = new DungeonItems(2);
-    this.tohItems = new DungeonItems(2);
-    this.ctItems = new DungeonItems(1);
-    this.podItems = new DungeonItems(5);
-    this.spItems = new DungeonItems(6);
-    this.swItems = new DungeonItems(2);
-    this.ttItems = new DungeonItems(4);
-    this.ipItems = new DungeonItems(3);
-    this.mmItems = new DungeonItems(2);
-    this.trItems = new DungeonItems(6);
-    this.gtItems = new DungeonItems(21);
+    this.hcItems = new DungeonItems('Hyrule Castle', 6);
+    this.epItems = new DungeonItems('Eastern Palace', 3);
+    this.dpItems = new DungeonItems('Desert Palace', 2);
+    this.tohItems = new DungeonItems('Tower of Hera', 2);
+    this.ctItems = new DungeonItems('Aga Tower', 1);
+    this.podItems = new DungeonItems('Palace of Darkness', 5);
+    this.spItems = new DungeonItems('Swamp Palace', 6);
+    this.swItems = new DungeonItems('Skull Woods', 2);
+    this.ttItems = new DungeonItems('Thieves Town', 4);
+    this.ipItems = new DungeonItems('Ice Palace', 3);
+    this.mmItems = new DungeonItems('Misery Mire', 2);
+    this.trItems = new DungeonItems('Turtle Rock', 6);
+    this.gtItems = new DungeonItems('Ganons Tower', 21);
     this.dungeonItemsArray = [this.hcItems, this.epItems, this.dpItems, this.tohItems,
       this.ctItems, this.podItems, this.spItems, this.swItems, this.ttItems,
       this.ipItems, this.mmItems, this.trItems, this.gtItems];
@@ -168,7 +169,7 @@ export class Items {
     this.pendantPower = false;
     this.pendantWisdom = false;
   
-    this.agahnim = false;
+    this.agahnim = 0;
     this.agahnim2 = false;
     this.ganon = false;
 
@@ -201,11 +202,12 @@ export class Items {
   }
 
   add(itemName:string, region:string) {
+    
     var notItemLocation = ['flood', 'blind', 'tt-bomb', 'switch', 
-      'Crystal 1', 'Crystal 2', 'Crystal 3', 'Crystal 4', 'Crystal 5', 'Crystal 6', 'Crystal 7',
-      'Pendant Of Courage', 'Pendant Of Power', 'Pendant Of Wisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
-    var bossItems = ['Crystal 1', 'Crystal 2', 'Crystal 3', 'Crystal 4', 'Crystal 5', 'Crystal 6', 'Crystal 7',
-    'Pendant Of Courage', 'Pendant Of Power', 'Pendant Of Wisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
+      'crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7',
+      'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
+    var bossItems = ['crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7',
+    'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
 
     if (notItemLocation.indexOf(itemName) === -1) {
       this.stats.totalCount++;
@@ -216,7 +218,7 @@ export class Items {
       }
     }
 
-    if (bossItems.indexOf(itemName) > -1) {
+    if (bossItems.indexOf(itemName) > -1 && !this[itemName]) {
       this.stats.bosses++;
       switch(this.sword) {
         case 0: this.stats.sword0B++; break;
@@ -228,78 +230,49 @@ export class Items {
     }
 
     switch(itemName) {
-      case 'Bombos': this.bombos = true; break;
-      case 'Book Of Mudora': this.book = true; break;
-      case 'Bottle': this.bottle++; break;
-      case 'Bow': this.bow += 2; break;
-      case 'Bug Catching Net': this.net = true; break;
-      case 'Cane Of Byrna': this.byrna = true; break;
-      case 'Cane Of Somaria': this.somaria = true; break;
-      case 'Crystal 1': this.crystal1 = true; break;
-      case 'Crystal 2': this.crystal2 = true; break;
-      case 'Crystal 3': this.crystal3 = true; break;
-      case 'Crystal 4': this.crystal4 = true; break;
-      case 'Crystal 5': this.crystal5 = true; break;
-      case 'Crystal 6': this.crystal6 = true; break;
-      case 'Crystal 7': this.crystal7 = true; break;
-      case 'Ether': this.ether = true; break;
-      case 'Fire Rod': this.fireRod = true; break;
-      case 'Flippers': this.flippers = true; break;
-      case 'Flute': this.flute = true; break;
-      case 'Half Magic': this.halfMagic = true; break;
-      case 'Hammer': this.hammer = true; break;
-      case 'Hookshot': this.hookshot = true; break;
-      case 'Ice Rod': this.iceRod = true; break;
-      case 'Lamp': this.lamp = true; break;
-      case 'Magic Cape': this.cape = true; break;
-      case 'Magic Mirror': this.mirror = true; this.stats.preMirror = this.stats.totalCount; break;
-      case 'Magic Powder': this.powder = true; break;
-      case 'Moon Pearl': this.moonPearl = true; break;
-      case 'Mushroom': this.mushroom = true; break;
-      case 'Pegasus Boots': this.boots = true; this.stats.preBoots = this.stats.totalCount; break;
-      case 'Pendant Of Courage': this.pendantCourage = true; break;
-      case 'Pendant Of Power': this.pendantPower = true; break;
-      case 'Pendant Of Wisdom': this.pendantWisdom = true; break;
-      case 'Quake': this.quake = true; break;
-      case 'Shovel': this.shovel = true; break;
-      case 'Silver Arrows Upgrade': this.bow += 1; break;
-      case 'Boomerang': this.boomerang = true; break;
-      case 'Magical Boomerang': this.magicBoomerang = true; break;
-      case 'Progressive Armor': this.tunic++; this.tunic = this.tunic > 3 ? 3 : this.tunic; break;
-      case 'Progressive Glove': this.glove++; this.glove = this.glove > 2 ? 2 : this.glove; break;
-      case 'Progressive Shield': this.shield++; this.shield = this.shield > 3 ? 3 : this.shield; break;
-      case 'Progressive Sword': this.sword++; this.sword = this.sword > 4 ? 4 : this.sword; break;
-      case 'Agahnim': this.agahnim = true; break;
+      case 'bottle': this.bottle++; break;
+      case 'bow': this.bow += 2; break;
+      case 'mirror': this.mirror = true; this.stats.preMirror = this.stats.totalCount; break;
+      case 'boots': this.boots = true; this.stats.preBoots = this.stats.totalCount; break;
+      case 'silvers': this.bow += 1; break;
+      case 'tunic': this.tunic++; break;
+      case 'glove': this.glove++; break;
+      case 'shield': this.shield++; break;
+      case 'sword': this.sword++; break;
+      case 'Agahnim': this.agahnim = 1; break;
       case 'Agahnim 2': this.agahnim2 = true; break;
-      case 'Ganon': this.ganon = true; break;
-      case 'Piece Of Heart': this.stats.heartPieces++; break;
-      case 'Heart Container': this.stats.heartContainers++; break;
+      case 'pieceHeart': this.stats.heartPieces++; break;
+      case 'heartContainer': this.stats.heartContainers++; break;
       case 'flood': this.spFlooded = true; break;
       case 'blind': this.ttBlindDelivered = true; break;
       case 'tt-bomb': this.ttBombableFloor = true; break;
       case 'switch':
-        if (region === 'Swamp Palace') {
-          this.spSwitch = !this.spSwitch;
-        } else {
-          this.mmSwitch = !this.mmSwitch;
-        }
-        break;
-      case 'Key': 
+      if (region === 'Swamp Palace') {
+        this.spSwitch = !this.spSwitch;
+      } else {
+        this.mmSwitch = !this.mmSwitch;
+      }
+      break;
+      case 'smallKey': 
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].smallKeys++;
         this.stats.sks++;
         break;
-      case 'Big Key': 
+      case 'bigKey': 
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasBigKey = true;
         this.stats.bks++;
         break;
-      case 'Map': 
+      case 'map': 
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasMap = true;
         this.stats.maps++;
         break;
-      case 'Compass': 
+      case 'compass': 
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasCompass = true;
         this.stats.compasses++;
-        break;      
+        break;
+      default:
+        if (this[itemName] !== undefined) {
+          this[itemName] = true;
+        }        
     }
 
     if (this.stats.preDW === 0 && this.moonPearl && 
@@ -309,17 +282,20 @@ export class Items {
 
     if (region === 'Ganons Tower' && this.stats.itemsPreGTBK === 0) {
       this.gtChestCount++;
-      if (itemName === 'Big Key') {
+      if (itemName === 'bigKey') {
         this.stats.itemsPreGTBK = this.gtChestCount;
       }
     }
 
-    if (itemName.indexOf('Upgrade (') > -1) {
+    if (itemName.indexOf('Upgrade') > -1) {
       this.stats.capacityUpgrades++;
     }
 
-    const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'Key', 'Big Key', 'Map', 'Compass'];
-    if (itemName.indexOf('Crystal') === -1 && itemName.indexOf('Pendant') === -1 && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {
+    const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'smallKey', 'bigKey', 'map', 'compass'];
+    if (itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
+        && itemName.indexOf('Agahnim') === -1 && itemName.indexOf('Ganon') === -1
+        && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {
+      console.log('removing dungeon count because '+itemName);
       this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;      
     }
   } 

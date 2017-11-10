@@ -111,12 +111,12 @@ export class SwampPalace {
       'Switch', 104, 105, DungeonNodeStatus.SWITCH,
     function(items:Items, config:Config) {
         return true;
-    }, ''));
+    }, 'switch'));
     switchRoom.nodes.push(new DungeonNode(
       'Water Switch', 72, 101, DungeonNodeStatus.WATER_SWITCH,
     function(items:Items, config:Config) {
         return true;
-    }, ''));
+    }, 'flood'));
     switchRoom.nodes.push(new DungeonNode(
       'South of Switch Room. Requires Switch on Blue', 128, 225, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

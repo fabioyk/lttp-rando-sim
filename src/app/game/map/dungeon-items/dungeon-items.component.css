@@ -1,0 +1,19 @@
+p {  
+  background-color: rgba(50, 50, 50, 0.5);
+  color: white;
+  margin: 0;
+  padding: 5px;
+  border-radius: 5px;
+  padding-right: 13px;
+}
+
+.icon {
+  height: 32px;
+  width: 32px;
+}
+
+.key-text {
+  margin-left: -5px;
+  float: right;
+  margin-top: 10px;
+}

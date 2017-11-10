@@ -154,7 +154,7 @@ export class MiseryMire {
       '', 89, 108, DungeonNodeStatus.SWITCH,
     function(items:Items, config:Config) {
         return true;
-    }, ''));
+    }, 'switch'));
     switchRoom.nodes.push(new DungeonNode(
       '', 57, 150, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {

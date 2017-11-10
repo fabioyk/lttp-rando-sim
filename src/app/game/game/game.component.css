@@ -1,8 +1,10 @@
 .container {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 app-item-tracker {
-  width: 30%;
+  width: 450px;
 }
 
 @media (max-width: 768px) {

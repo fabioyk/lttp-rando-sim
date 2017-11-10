@@ -14,10 +14,12 @@
       [(currentMap)]='currentMap'
       (addedItem)='onAddedItem($event, "get")'
       (viewItem)='onAddedItem($event, "view")'
+      (finishedDungeon)='onDungeonFinished($event)'
       (onGameFinished)='onGameFinished()'
     ></app-map>
     <app-item-log
-      [itemLogList]='itemLog'></app-item-log>
+      [itemLogList]='itemLog'
+      [items]='items'></app-item-log>
     <app-options></app-options>
   </div>
   

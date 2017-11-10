@@ -1,12 +1,14 @@
 export class DungeonItems {
+  dungeonName:string;
   hasBigKey:boolean;
   smallKeys:number;
   hasCompass:boolean;
   hasMap:boolean;
   itemsLeft:number;
-  isBossDefeated: boolean;
+  isBossDefeated: boolean;  
 
-  constructor(itemCount:number) {
+  constructor(dungeonName:string, itemCount:number) {
+    this.dungeonName = dungeonName;
     this.hasBigKey = false;
     this.smallKeys = 0;
     this.hasCompass = false;

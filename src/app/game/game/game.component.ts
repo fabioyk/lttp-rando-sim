@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Seed } from '../../shared/seed';
 import { SeedApiService } from '../../shared/seed-api.service';
+import { ItemNamesService } from '../../log-parse/item-names.service';
 
 @Component({
   selector: 'app-game',
@@ -36,6 +37,7 @@ export class GameComponent implements OnInit {
               private _router: Router,
               private gameService:GameService,
               private _seedService: SeedApiService,
+              private _itemNamesService: ItemNamesService,
               private _location: Location) { }
 
   ngOnInit() {
@@ -120,23 +122,32 @@ export class GameComponent implements OnInit {
     }
   }
 
-  onAddedItem(mapNode:MapNode, type:string) {
-    const itemsToTrack = ['Progressive Armor', 'Progressive Sword', 'Progressive Shield', 'Moon Pearl', 'Bow', 'Boomerang',
-    'Magic Boomerang', 'Hookshot', 'Shovel', 'Mushroom', 'Magic Powder', 'Fire Rod', 
-    'Ice Rod', 'Bombos', 'Ether', 'Quake', 'Lamp', 'Hammer', 'Flute', 'Book Of Mudora', 'Bottle',
-    'Cane Of Somaria', 'Cane Of Byrna', 'Magic Cape', 'Magic Mirror', 'Pegasus Boots', 'Progressive Glove', 'Flippers', 'Half Magic', 'Crystal 1', 
-    'Crystal 2', 'Crystal 3', 'Crystal 4', 'Crystal 5', 'Crystal 6', 'Crystal 7', 'Agahnim', 
-    'Pendant Of Courage', 'Pendant Of Power', 'Pendant Of Wisdom', 'Key', 'Big Key', 'Map', 'Compass'];
-    mapNode.prize.forEach((prizeName) => {
-      if (itemsToTrack.indexOf(prizeName) > -1) {
+  onAddedItem([mapNode, region], type:string) {
+    mapNode.prize.forEach((prize, i) => {
+      setTimeout(() => {
+        if (type !== 'view') {
+          this.items.add(this._itemNamesService.getItemById(prize).shortName, region);
+        }        
         this.itemLog.unshift({
-          item: prizeName,
+          item: prize,
           location: mapNode.tooltip ? mapNode.tooltip : mapNode.id,
-          region: mapNode.id,
+          region: region,
           type: type      
         });
-      }      
+      }, 1*i);
     });
+  }
+
+  onDungeonFinished([prizeName, mapName]) {
+    this.items.add(
+      this._itemNamesService.getItemById(prizeName).shortName, 
+      mapName);
+    this.itemLog.unshift({
+        item: prizeName,
+        location: mapName + '\'s Boss',
+        region: mapName,
+        type: 'get'      
+      });
   }
 
   onGameFinished() {

@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { Config } from '../../game-data/config';
 import { Items } from '../../game-data/items';
 import { DungeonData } from '../../game-data/dungeon-data';
+import { ItemNamesService } from '../../../log-parse/item-names.service';
 
 @Component({
   selector: 'app-tracker-node',
@@ -20,7 +21,7 @@ export class TrackerNodeComponent implements OnInit {
 
   medallionName:string;
 
-  constructor() { }
+  constructor(private _itemNamesService:ItemNamesService) { }
 
   ngOnInit() {
     if (!this.isItem) {
@@ -58,14 +59,14 @@ export class TrackerNodeComponent implements OnInit {
     if (!this.shouldShowCrystal()) {
       return 'url("./assets/dungeon-tracker-icons/dungeon0.png")';    
     } else {
-      switch(this.dungeonData.dungeonPrize) {
-        case 'Crystal 5':
-        case 'Crystal 6':
+      switch(this._itemNamesService.getItemById(this.dungeonData.dungeonPrize).shortName) {
+        case 'crystal5':
+        case 'crystal6':
           return 'url("./assets/dungeon-tracker-icons/dungeon2.png")';
-        case 'Pendant Of Courage':
+        case 'pendantCourage':
           return 'url("./assets/dungeon-tracker-icons/dungeon3.png")';
-        case 'Pendant Of Power':
-        case 'Pendant Of Wisdom':
+        case 'pendantPower':
+        case 'pendantWisdom':
           return 'url("./assets/dungeon-tracker-icons/dungeon4.png")';
         default:
           return 'url("./assets/dungeon-tracker-icons/dungeon1.png")';

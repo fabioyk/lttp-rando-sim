@@ -1,5 +1,7 @@
 import { Component, OnInit, DoCheck, Input, IterableDiffers, IterableDiffer } from '@angular/core';
 import { ItemLogEntry } from '../item-log-entry';
+import { Items } from '../../game-data/items';
+import { ItemNamesService } from '../../../log-parse/item-names.service';
 
 @Component({
   selector: 'app-item-log',
@@ -8,6 +10,9 @@ import { ItemLogEntry } from '../item-log-entry';
 })
 export class ItemLogComponent implements OnInit {
   @Input() itemLogList:ItemLogEntry[];
+  @Input() items:Items;
+
+  static isOnlyImportantShown;
 
   iterableDiffer:IterableDiffer<{}>;
 
@@ -16,6 +21,7 @@ export class ItemLogComponent implements OnInit {
   }
 
   ngOnInit() {
+    ItemLogComponent.isOnlyImportantShown = false;
   }
 
   ngDoCheck() {
@@ -23,6 +29,23 @@ export class ItemLogComponent implements OnInit {
     if (changes) {
       console.log(this.itemLogList);
     }
+  }
+
+  onToggleImportant() {
+    ItemLogComponent.isOnlyImportantShown = !ItemLogComponent.isOnlyImportantShown;
+  }
+
+  filterList(logEntry:ItemLogEntry) {
+    if (ItemLogComponent.isOnlyImportantShown) {
+      if (logEntry.type === 'view') {
+        return true;
+      } else {
+        return (ItemNamesService.isTrackableItem(+logEntry.item));  
+      }      
+    } else {
+      return true;
+    }
+    
   }
 
 }

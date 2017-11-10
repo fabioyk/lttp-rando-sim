@@ -139,7 +139,7 @@ export class ThievesTown {
       '', 140, 50, DungeonNodeStatus.BLIND_RESCUE,
     function(items:Items, config:Config) {
         return true;
-    }, ''));
+    }, 'blind'));
     ttData.dungeonMaps.push(blindCell);
 
     var bigChest = new DungeonMapData('tt-bc', 'Big Chest', '');
@@ -170,7 +170,7 @@ export class ThievesTown {
       'Bomb the Floor', 129, 96, DungeonNodeStatus.TT_BOMB_FLOOR,
     function(items:Items, config:Config) {
         return true;
-    }, ''));
+    }, 'tt-bomb'));
     ttData.dungeonMaps.push(bombableFloor);
 
     var blindRoom = new DungeonMapData('tt-blind', 'Blind Room', '');

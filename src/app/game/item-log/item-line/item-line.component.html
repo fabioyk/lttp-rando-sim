@@ -1,3 +1,5 @@
 <p>
-  {{itemLogEntry.location}}: {{itemLogEntry.type}} {{itemLogEntry.item}}
+  <img class='icon' [src]="'assets/item-icons/'+shortName+'.png'">
+
+  {{itemLogEntry.region}} / {{itemLogEntry.location}}: {{itemLogEntry.type}} {{longName}}
 </p>

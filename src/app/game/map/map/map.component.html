@@ -1,4 +1,3 @@
-{{currentMap}}
 <div class="map"
   [ngStyle]="{'background-image': currentBackgroundImage}">
   <div *ngIf='!currentDungeon'>
@@ -23,14 +22,16 @@
         (click)='onDungeonNodeClick(dunNode)'
         (mouseleave)='onMouseLeave(dunNode)'>
     </app-node>    
-  </div>  
+  </div>
+
+  <div *ngIf='currentDungeonItems'>
+    <app-dungeon-items
+      [dungeonItems]='currentDungeonItems'
+    >
+    </app-dungeon-items>
+  </div>
 </div>
-<div *ngIf='currentDungeonItems'>
-  <app-dungeon-items
-    [dungeonItems]='currentDungeonItems'
-  >
-  </app-dungeon-items>
-</div>
+
 <button (click)='onWarpClicked()'>
   Warp
 </button>

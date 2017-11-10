@@ -1,5 +1,9 @@
-<ul>
-  <li *ngFor='let entry of itemLogList'>
-    <app-item-line [itemLogEntry]='entry'></app-item-line>
-  </li>
-</ul>
+<div class='item-log'>
+  <button (click)='onToggleImportant()'>Show Important</button>
+  <ul>
+    <li *ngFor='let entry of itemLogList.filter(filterList)'>
+      <app-item-line [itemLogEntry]='entry'
+        [items]='items'></app-item-line>
+    </li>
+  </ul>
+</div>

@@ -7,6 +7,7 @@ import { DungeonData } from '../../game-data/dungeon-data';
 import { Config } from '../../game-data/config';
 import { DungeonNodeStatus } from '../../game-data/dungeon-node-status.enum';
 import { DungeonItems } from '../../game-data/dungeon-items';
+import { ItemNamesService } from '../../../log-parse/item-names.service';
 
 @Component({
   selector: 'app-map',
@@ -17,8 +18,9 @@ export class MapComponent implements OnInit {
   @Input() items: Items;
   @Input() currentMap: string;
   @Input() config: Config;
-  @Output() addedItem = new EventEmitter<MapNode>();
-  @Output() viewItem = new EventEmitter<MapNode>();
+  @Output() addedItem = new EventEmitter<[MapNode, string]>();
+  @Output() viewItem = new EventEmitter<[MapNode, string]>();
+  @Output() finishedDungeon = new EventEmitter<[string, string]>();
   @Output() onGameFinished = new EventEmitter<string>();
   tooltip:string;
 
@@ -28,7 +30,8 @@ export class MapComponent implements OnInit {
 
   currentBackgroundImage:string = 'assets/map.png';
 
-  constructor(private gameService:GameService) { }
+  constructor(private gameService:GameService,
+              private itemNameService:ItemNamesService) { }
 
   ngOnInit() {    
     this.currentBackgroundImage = 'url(assets/light-world.png)';
@@ -80,8 +83,7 @@ export class MapComponent implements OnInit {
     console.log('left');
     this.tooltip = mapNode.tooltip;
   }
-  onNodeClick(nodeClicked:MapNode) {
-    
+  onNodeClick(nodeClicked:MapNode) {    
     switch (nodeClicked.status) {
 
       case 'getable':
@@ -97,7 +99,7 @@ export class MapComponent implements OnInit {
         }
         break;
       case 'viewable':
-        this.viewItem.emit(nodeClicked);
+        this.viewItem.emit([nodeClicked, this.currentMap]);
         break;      
     }
     
@@ -105,11 +107,8 @@ export class MapComponent implements OnInit {
     //nodeClicked.originalNode.isOpened = true;
   }
 
-  addPrizes(node:MapNode, region:string) {
-    node.prize.forEach((prize) => {
-      this.items.add(prize, region);
-    });
-    this.addedItem.emit(node);    
+  addPrizes(node:MapNode, region:string) {    
+    this.addedItem.emit([node, region]);
   }
 
   onDungeonClick(dungeonClicked:MapNode) {
@@ -198,8 +197,7 @@ export class MapComponent implements OnInit {
           console.log('Boss fight with '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.GROUND_KEY:
-          //this.currentDungeonItems.smallKeys++;
-          this.items.add('Key', this.currentDungeon.name);
+          this.items.add('smallKey', this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
           console.log('Small Key on the ground');
           break;
@@ -207,24 +205,24 @@ export class MapComponent implements OnInit {
           console.log('Already got this small key');
           break;
         case DungeonNodeStatus.SWITCH:
-          this.items.add('switch', this.currentDungeon.name);
+          this.addPrizes(dungeonNode, this.currentDungeon.name);
           console.log('Switch');
           break;
         case DungeonNodeStatus.WATER_SWITCH:
-          this.items.add('flood', this.currentDungeon.name);
+        this.addPrizes(dungeonNode, this.currentDungeon.name);
           console.log('Water Switch');
           break;
         case DungeonNodeStatus.BLIND_RESCUE:
-          this.items.add('blind', this.currentDungeon.name);
+        this.addPrizes(dungeonNode, this.currentDungeon.name);
           console.log('Blind');
           break;
         case DungeonNodeStatus.TT_BOMB_FLOOR:
-          this.items.add('tt-bomb', this.currentDungeon.name);
+        this.addPrizes(dungeonNode, this.currentDungeon.name);
           console.log('Bomb floor on TT');
           break;
       }
     } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()) {
-      this.viewItem.emit(dungeonNode);
+      this.viewItem.emit([dungeonNode, this.currentMap]);
     }
     // TODO check if viewable but not obtainable
     console.log(dungeonNode);
@@ -244,7 +242,7 @@ export class MapComponent implements OnInit {
   }
 
   defeatDungeon(isDefeatAga = false) {
-    this.items.add(this.currentDungeon.dungeonPrize, this.currentDungeon.name);
+    this.finishedDungeon.emit([this.currentDungeon.dungeonPrize, this.currentDungeon.name]);    
     this.currentDungeonItems.isBossDefeated = true;
     this.leaveDungeon(isDefeatAga);
   }

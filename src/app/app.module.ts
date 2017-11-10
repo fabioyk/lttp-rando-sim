@@ -11,6 +11,7 @@ import { MainMenuModule } from './main-menu/main-menu.module';
 import { SharedModule } from './shared/shared.module';
 import { SeedApiService } from './shared/seed-api.service';
 import { HttpModule } from '@angular/http';
+import { ItemNamesService } from './log-parse/item-names.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { HttpModule } from '@angular/http';
       { path: 'open', component: GameComponent },  
     ])
   ],
-  providers: [GameService, SeedApiService],
+  providers: [GameService, SeedApiService, ItemNamesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
