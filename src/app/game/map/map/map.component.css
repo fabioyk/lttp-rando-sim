@@ -2,9 +2,17 @@
   position: relative;
   height: 512px;
   width: 512px;
-  background-size: cover;
+  background-size: contain;
 }
 
 app-dungeon-items {
   position: absolute;
+}
+
+@media (max-width: 768px) {
+  .map {
+    height: 400px;
+    width: 400px;
+  }
+
 }

@@ -43,6 +43,25 @@
   border: 3px solid black;  
 }
 
+@media (max-width: 768px) {
+  .overworld-type {
+    width: 10px;
+    height: 10px;
+    margin: -5px -5px;
+  }
+  .dungeon-type {
+    width: 30px;
+    height: 30px;
+    margin: -15px -15px;
+  }
+  .in-dungeon-type {
+    width: 30px;
+    height: 30px;
+    margin: -15px -15px;
+  }
+
+}
+
 .open-door {
   background-image: url('/assets/node-icons/open_door.png');
   width: 32px;
