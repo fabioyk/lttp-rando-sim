@@ -33,7 +33,7 @@ export class TurtleRock {
     entrance.nodes.push(new DungeonNode(
       '', 65, 25, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.fireRod;
+        return true;
     }, 'tr-chain-chomp'));
     trData.dungeonMaps.push(entrance);
 
