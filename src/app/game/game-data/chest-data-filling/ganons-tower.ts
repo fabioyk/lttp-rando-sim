@@ -457,7 +457,7 @@ export class GanonsTower {
       'Agahnim 2', 129, 113, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return items.hookshot;
-    }, 'Agahnim 2'));
+    }, null));
     gtData.dungeonMaps.push(aga2);
 
     gtData.startingMap = entrance;

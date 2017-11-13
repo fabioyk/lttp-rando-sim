@@ -32,10 +32,23 @@
   </div>
 </div>
 
-<button (click)='onWarpClicked()'>
-  Warp
-</button>
-<button (click)='getAll()'>
-  Get All
-</button>
+<div class='menu-buttons'>
+  <button (click)='onWarpClicked()' *ngIf='canWarp()'>
+    Warp
+  </button>
+  <button (click)='onCheckMap("lw")' *ngIf='!items.lwMapOpen'>
+    Check LW Map
+  </button>
+  <button (click)='onCheckMap("dw")' *ngIf='!items.dwMapOpen && canViewDarkWorldMap()'>
+    Check DW Map
+  </button>
+  <button (click)='checkMedallion("tr")' *ngIf='!items.trMedallionChecked && canViewTRMedallion()'>
+    Check TR Medallion
+  </button>
+  <button (click)='checkMedallion("mm")' *ngIf='!items.mmMedallionChecked && canViewMMMedallion()'>
+    Check MM Medallion
+  </button>
+</div>
+
+
 {{tooltip}}

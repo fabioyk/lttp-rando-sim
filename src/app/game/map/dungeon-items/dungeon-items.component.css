@@ -4,8 +4,7 @@ p {
   margin: 0;
   padding: 5px;
   border-radius: 5px;
-  padding-right: 13px;
-  margin-top: -50px;
+  padding-right: 13px;  
 }
 
 .icon {
@@ -17,4 +16,11 @@ p {
   margin-left: -5px;
   float: right;
   margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  p {
+    margin-top: -50px;
+  }
+
 }

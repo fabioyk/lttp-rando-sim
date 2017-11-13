@@ -72,6 +72,11 @@ export class Items {
   agahnim2 = false;
   ganon = false;
 
+  lwMapOpen = false;
+  dwMapOpen = false;
+  mmMedallionChecked = false;
+  trMedallionChecked = false;
+
   dungeonItemsArray = [];
 
   stats = {
@@ -173,6 +178,11 @@ export class Items {
     this.agahnim2 = false;
     this.ganon = false;
 
+    this.lwMapOpen = false;
+    this.dwMapOpen = false;
+    this.mmMedallionChecked = false;
+    this.trMedallionChecked = false;
+
     this.stats = {
       totalCount: 0,
       overworldCount: 0,
@@ -202,6 +212,7 @@ export class Items {
   }
 
   add(itemName:string, region:string) {
+    if (!itemName) return;
     
     var notItemLocation = ['flood', 'blind', 'tt-bomb', 'switch', 
       'crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7',
@@ -339,11 +350,16 @@ export class Items {
     return this.cape || this.byrna || config.canPassThroughSpikes;
   }
   hasMedallion(dungeon:string, config:Config) {
-    if (dungeon === 'mm') {
-      return this[config.mmMedallion];
+    if (this.ether && this.bombos && this.quake) {
+      return true;
     } else {
-      return this[config.trMedallion];
+      if (dungeon === 'mm' && this.mmMedallionChecked) {
+        return this[config.mmMedallion];
+      } else if (dungeon === 'tr' && this.trMedallionChecked) {
+        return this[config.trMedallion];
+      }
     }
+    return false;    
   }
 
 

@@ -283,6 +283,47 @@ export class MapComponent implements OnInit {
     }    
   }
 
+  canWarp() {
+    if (this.currentMap === 'light-world'
+    && (this.items.agahnim
+      || (this.items.hammer && this.items.glove && this.items.moonPearl)
+      || (this.items.glove === 2 && this.items.moonPearl))) {
+        return true;
+    } else {
+      return this.currentDungeon || this.currentMap === 'dark-world';
+    }
+  }
+
+  onCheckMap(mapName:string) {
+    if (mapName === 'lw') {
+      this.items.lwMapOpen = true;
+    } else if (this.canViewDarkWorldMap()) {
+      this.items.dwMapOpen = true;
+    }
+  }
+
+  canViewDarkWorldMap() {
+    return this.items.canWestDeathMountain(this.config) 
+        || (this.items.glove && this.items.hammer) || this.items.glove === 2
+        || this.items.agahnim;
+  }
+
+  checkMedallion(dunName:string) {
+    if (dunName === 'tr' && this.canViewTRMedallion()) {
+      this.items.trMedallionChecked = true;
+    }
+    if (dunName === 'mm' && this.canViewMMMedallion()) {
+      this.items.mmMedallionChecked = true;
+    }
+  }
+
+  canViewTRMedallion() {
+    return this.items.canDarkEastDeathMountain(this.config);
+  }
+  canViewMMMedallion() {
+    return this.items.canMire();
+  }
+
   changeMap(newMap:string) {
     this.currentMap = newMap;
     if (this.currentMap === 'light-world') {

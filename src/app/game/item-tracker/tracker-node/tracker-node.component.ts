@@ -56,9 +56,14 @@ export class TrackerNodeComponent implements OnInit {
   }
 
   getDungeonPrizeBg() {
-    if (!this.shouldShowCrystal()) {
-      return 'url("./assets/dungeon-tracker-icons/dungeon0.png")';    
+    var shouldShow = false;
+    if (DungeonData.lwDungeons.indexOf(this.dungeonData.name) > -1) {
+      shouldShow = this.items.lwMapOpen;
     } else {
+      shouldShow = this.items.dwMapOpen;
+    }
+
+    if (shouldShow) {
       switch(this._itemNamesService.getItemById(this.dungeonData.dungeonPrize).shortName) {
         case 'crystal5':
         case 'crystal6':
@@ -71,6 +76,8 @@ export class TrackerNodeComponent implements OnInit {
         default:
           return 'url("./assets/dungeon-tracker-icons/dungeon1.png")';
       }
+    } else {
+      return 'url("./assets/dungeon-tracker-icons/dungeon0.png")';          
     }
   }
 
@@ -97,14 +104,6 @@ export class TrackerNodeComponent implements OnInit {
     }
   }
 
-  shouldShowCrystal() {
-    if (DungeonData.lwDungeons.indexOf(this.dungeonData.name) === -1) {
-      return this.canViewDarkWorldMap();      
-    } else {
-      return true;
-    }
-  }
-
   canViewDarkWorldMap() {
     return this.items.canWestDeathMountain(this.config) 
         || (this.items.glove && this.items.hammer) || this.items.glove === 2
@@ -112,19 +111,11 @@ export class TrackerNodeComponent implements OnInit {
   }
 
   shouldShowMedallion() {
-    if (!this.isItem && this.dungeonData.name === 'Turtle Rock' && this.canViewTRMedallion()) {
+    if (!this.isItem && this.dungeonData.name === 'Turtle Rock' && this.items.trMedallionChecked) {
       return true;
-    } else if (!this.isItem && this.dungeonData.name === 'Misery Mire' && this.canViewMMMedallion()) {
+    } else if (!this.isItem && this.dungeonData.name === 'Misery Mire' && this.items.mmMedallionChecked) {
       return true;
     }
     return false;
   }
-
-  canViewTRMedallion() {
-    return this.items.canDarkEastDeathMountain(this.config);
-  }
-  canViewMMMedallion() {
-    return this.items.canMire();
-  }
-
 }
