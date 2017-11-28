@@ -1,8 +1,4 @@
 export class Config {
-  canFakeFlipper: boolean;
-  canDarkRoom: boolean;
-  canPassThroughSpikes: boolean;
-
   trMedallion: string;
   mmMedallion: string;
   
@@ -12,11 +8,11 @@ export class Config {
   logic: string;
   goal: string;
   mode: string;
+  
+  canGlitch: boolean;
 
   constructor() {
-    this.canFakeFlipper = true;
-    this.canDarkRoom = true;
-    this.canPassThroughSpikes = true;
+    this.canGlitch = false;
 
     this.trMedallion = 'ether';
     this.mmMedallion = 'ether';

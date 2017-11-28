@@ -42,8 +42,6 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.gameState = 'loading';
-    console.log('game component');
-    console.log(this._router.url);
     this._seedService.ping();
 
     var gameMode = '';
@@ -55,19 +53,19 @@ export class GameComponent implements OnInit {
 
     this.sub = this._route.queryParams.subscribe(
       params => {
+        console.log(params);
+        var canGlitch = false;
+        if (params.minorGlitches) {
+          canGlitch = true;
+          console.log('glitches allowed');
+        }
         if (params.seed && +params.seed === this._seedService.lastSeedNum) {
           console.log('in cache!');
-          this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum);
-        } else if (params.seed) {
+          this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch);
+        } else {
           this._seedService.getSeed(gameMode, +params.seed)
             .subscribe((seed) => {
-              this.gameInit(seed.data, seed.seed);
-            });
-        } else {
-          this._seedService.getRandomSeed(gameMode)
-            .subscribe((seed) => {
-              this._location.go(gameMode + '?seed=' + seed.seed);
-              this.gameInit(seed.data, seed.seed);
+              this.gameInit(seed.data, seed.seed, canGlitch);
             });
         }
       }
@@ -80,37 +78,11 @@ export class GameComponent implements OnInit {
     }
   }
 
-  /// MAIN MENU
-  onSubmit() {
-    console.log(this.modeSelected);
-    console.log(this.seedNum);
-
-    if (this.seedNum) {
-      this._seedService.getSeed(this.modeSelected, +this.seedNum)
-        .subscribe(this.getSeed);
-    } else {
-      this._seedService.getRandomSeed(this.modeSelected)
-        .subscribe(this.getSeed);
-    }
-    
-  }
-
-  getSeed(seed:Seed) {
-    if (seed.error) {
-      console.log(seed);
-      this.errorMessage = seed.error;
-    } else {
-      this.gameInit(seed.data, seed.seed);
-      console.log(seed);
-    }
-  }
-
-
   /// GAMEPLAY
 
-  gameInit(seedData:string, seedNumber:number) {
+  gameInit(seedData:string, seedNumber:number, canGlitch:boolean) {
     if (seedData) {
-      this.gameService.loadSeed(seedData, seedNumber);
+      this.gameService.loadSeed(seedData, seedNumber, canGlitch);
       this.items = new Items();
       this.items.setup();
       this.config = this.gameService.config;

@@ -23,20 +23,12 @@ export class SeedApiService {
     this._http.get(this._apiUrl);
   }
 
-  getRandomSeed(mode:String):Observable<Seed> {
-    let queryUrl = this._apiUrl + 'api/seed?mode=' + mode;
-    return this._http.get(queryUrl)
-      .map((response: Response) => {
-        var seed = <Seed> response.json();
-        this.lastSeedData = seed.data;
-        this.lastSeedNum = seed.seed;
-        return seed;
-      })
-      .catch(this.handleError);
-  }
-
   getSeed(mode:String, seed:Number):Observable<Seed> {
-    let queryUrl = this._apiUrl + 'api/seed?mode=' + mode + '&seed=' + seed;
+    let queryUrl = this._apiUrl + 'api/seed?mode=' + mode;
+    if (seed) {
+      queryUrl += '&seed=' + seed;
+    }
+    
     return this._http.get(queryUrl)
       .map((response: Response) => {
         var seed = <Seed> response.json();

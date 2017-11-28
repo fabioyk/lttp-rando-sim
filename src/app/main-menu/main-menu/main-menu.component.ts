@@ -31,30 +31,21 @@ export class MainMenuComponent implements OnInit {
     this.lockedMode = this.modeSelected;
     this.lockedGlitch = this.glitchSelected;
 
-    if (this.seedNum) {
-      this._seedService.getSeed(this.modeSelected, +this.seedNum)
-        .subscribe(this.getSeed);
-    } else {
-      this._seedService.getRandomSeed(this.modeSelected)
-        .subscribe((seed) => {
-          if (seed && !seed.error) {
-            this._router.navigate(['/' + this.modeSelected], {queryParams: {seed: seed.seed}});
-          } else {
-            this.errorMessage = seed.error;
-            this.shouldDisablePlay = false;
-          }          
-        });
-    }
-    
-  }
-
-  getSeed(seed:Seed) {
-    if (!seed || seed.error) {
-      this.errorMessage = seed.error;
-      this.shouldDisablePlay = false;
-    } else {
-      this._router.navigate(['/' + this.lockedMode, seed]);
-    }
+    this._seedService.getSeed(this.modeSelected, +this.seedNum)
+      .subscribe((seed) => {
+        if (!seed || seed.error) {
+          this.errorMessage = seed.error;
+          this.shouldDisablePlay = false;
+        } else {
+          var queryParams:any = {
+            seed: seed.seed
+          };
+          if (this.lockedGlitch === 'yes') {
+            queryParams.minorGlitches = true;
+          } 
+          this._router.navigate(['/' + this.lockedMode], {queryParams: queryParams});
+        }
+      });
   }
 
 }

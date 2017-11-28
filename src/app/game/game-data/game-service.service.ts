@@ -26,7 +26,7 @@ export class GameService {
 
   constructor() { }
 
-  loadSeed(log:string, seedNumber: number) {
+  loadSeed(log:string, seedNumber:number, canGlitch:boolean) {
     var spoilerLogManager = new SpoilerLog();
     var logObj = spoilerLogManager.convertShortToNormal(log, seedNumber);
 
@@ -38,6 +38,7 @@ export class GameService {
     this.config.mode = logObj.mode === '0' ? 'standard' : 'open';
     this.config.variation = logObj.variation;
     this.config.vtSeedNumber = logObj.seed;
+    this.config.canGlitch = canGlitch;
 
     console.log('Loaded up seed '+this.config.vtSeedNumber);
     
