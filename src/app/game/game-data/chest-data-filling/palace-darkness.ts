@@ -170,6 +170,13 @@ export class PalaceDarkness {
     function(items:Items, config:Config) {
         return items.hasLightsource(config);
     }, 'pod-maze'));
+    if (config.canGlitch) {
+      fork2.nodes.push(new DungeonNode(
+        'Hammer Jump to Dark Maze', 82, 167, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'pod-maze'));
+    }
     podData.dungeonMaps.push(fork2);
 
     var maze = new DungeonMapData('pod-maze', 'Dark Maze', '');

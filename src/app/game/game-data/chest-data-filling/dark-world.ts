@@ -27,7 +27,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Hookshot Cave (3 top chests)', 91.6, 3.4,
       function(items:Items, config:Config) {
-        return items.canDarkEastDeathMountain(config) && items.hookshot;
+        return items.canDarkEastDeathMountain(config) && (items.hookshot || (items.boots && config.canGlitch));
       },
       null,
       [l[100], l[101], l[102]]

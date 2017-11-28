@@ -173,7 +173,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Hobo', 35.4, 69.7,
       function(items:Items, config:Config) {
-        return items.flippers || config.canFakeFlipper;
+        return items.flippers || config.canGlitch;
       },
       null,
       [l[32]]
@@ -194,7 +194,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'King Zora', 47.7, 12.1,
       function(items:Items, config:Config) {
-        return items.flippers || items.glove || config.canFakeFlipper;
+        return items.flippers || items.glove || config.canGlitch;
       },
       null,
       [l[34]]
@@ -311,10 +311,10 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Zora River Ledge', 47.7, 17.3,
       function(items:Items, config:Config) {
-        return items.flippers || (config.canFakeFlipper && items.boots);
+        return items.flippers || (config.canGlitch && items.boots);
       },
       function(items:Items, config:Config) {
-        return items.glove || config.canFakeFlipper;
+        return items.glove || config.canGlitch;
       },
       [l[48]]
     ));
@@ -331,7 +331,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Waterfall Fairy', 45, 19.3,
       function(items:Items, config:Config) {
-        return items.flippers || (config.canFakeFlipper && items.moonPearl) || (config.canFakeFlipper && items.boots);
+        return items.flippers || (config.canGlitch && items.moonPearl) || (config.canGlitch && items.boots);
       },
       null,
       [l[50], l[51]]
@@ -349,7 +349,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Bombable Wall in Escape', 26.8, 32.4,
       function(items:Items, config:Config) {
-        return config.mode === 'standard' ? true : (items.glove || ((items.lamp || config.canDarkRoom) && items.hcItems.smallKeys > 0));
+        return config.mode === 'standard' ? true : (items.glove || ((items.lamp || config.canGlitch) && items.hcItems.smallKeys > 0));
       },
       null,
       [l[53], l[54], l[55]]
@@ -367,7 +367,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Escape Dark Room Chest', 24.9, 45.8,
       function(items:Items, config:Config) {
-        return config.mode === 'standard' ? true : (items.lamp || config.canDarkRoom);
+        return config.mode === 'standard' ? true : (items.lamp || config.canGlitch);
       },
       null,
       [l[56]]

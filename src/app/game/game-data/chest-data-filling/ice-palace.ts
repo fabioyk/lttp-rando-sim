@@ -9,7 +9,7 @@ export class IcePalace {
   static setup (l:string[], config:Config):DungeonData {
     var ipData = new DungeonData('Ice Palace', l[176],
       function(items:Items, config:Config) {
-        return (items.flippers || config.canFakeFlipper) && items.moonPearl
+        return (items.flippers || config.canGlitch) && items.moonPearl
             && items.glove === 2 && items.hasMeltyPower();
       }, 79.6, 85.8
     );
@@ -23,14 +23,26 @@ export class IcePalace {
     entrance.nodes.push(new DungeonNode(
       '', 128, 226, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
+        return items.hasMeltyPower();
+    }, 'ip-first-fork'));
+
+    var firstFork = new DungeonMapData('ip-first-fork', 'First Fork', '');
+    firstFork.nodes.push(new DungeonNode(
+      '', 30, 138, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'ip-entry'));
+    firstFork.nodes.push(new DungeonNode(
+      '', 128, 226, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
         return true;
     }, 'ip-compass'));
-    entrance.nodes.push(new DungeonNode(
+    firstFork.nodes.push(new DungeonNode(
       '', 128, 49, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-plus'));
-    ipData.dungeonMaps.push(entrance);
+    ipData.dungeonMaps.push(firstFork);
 
     var compass = new DungeonMapData('ip-compass', 'Compass Room', '');
     compass.nodes.push(new DungeonNode(
@@ -84,25 +96,40 @@ export class IcePalace {
     function(items:Items, config:Config) {
         return true;
     }, 'ip-bc'));
+    if (config.canGlitch) {
+      doubFreez.nodes.push(new DungeonNode(
+        '', 172, 170, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'ip-tall-room'));
+    }
     ipData.dungeonMaps.push(doubFreez);
 
-    var doubFreez = new DungeonMapData('ip-tall-room', 'Tall Icy Room', '');
-    doubFreez.nodes.push(new DungeonNode(
-      '', 80, 196, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'ip-bc'));
-    doubFreez.nodes.push(new DungeonNode(
+    var tallRoom = new DungeonMapData('ip-tall-room', 'Tall Icy Room', '');
+    if (config.canGlitch) {
+      tallRoom.nodes.push(new DungeonNode(
+        '', 80, 196, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'ip-double-freezor'));
+    } else {
+      tallRoom.nodes.push(new DungeonNode(
+        '', 80, 196, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'ip-bc'));
+    }    
+    tallRoom.nodes.push(new DungeonNode(
       'Spike Room. Requires Hookshot', 176, 67, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hookshot;
+        return items.hookshot || config.canGlitch;
     }, 'ip-spike-room'));
-    doubFreez.nodes.push(new DungeonNode(
+    tallRoom.nodes.push(new DungeonNode(
       '', 128, 240, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-double-jelly'));
-    ipData.dungeonMaps.push(doubFreez);
+    ipData.dungeonMaps.push(tallRoom);
 
     var spikeRoom = new DungeonMapData('ip-spike-room', 'Spike Room', '');
     spikeRoom.nodes.push(new DungeonNode(

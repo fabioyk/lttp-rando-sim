@@ -323,7 +323,7 @@ export class Items {
   }
 
   hasLightsource(config:Config) {
-    return this.lamp || config.canDarkRoom;
+    return this.lamp || config.canGlitch;
   }
   hasBottle() {
     return this.bottle > 0;
@@ -335,7 +335,7 @@ export class Items {
     return this.lamp || this.fireRod;
   }
   hasMagicExtension(config:Config) {
-    return this.halfMagic || this.bottle > 0 || config.canPassThroughSpikes;
+    return this.halfMagic || this.bottle > 0 || config.canGlitch;
   }
   hasSilvers() {
     return this.bow >= 3;
@@ -344,10 +344,10 @@ export class Items {
     return this.fireRod || this.bombos;
   }
   hasBeamReflection(config:Config) {
-    return this.cape || this.byrna || this.shield === 3 || config.canPassThroughSpikes;
+    return this.cape || this.byrna || this.shield === 3 || config.canGlitch;
   }
   hasInvincibilityItem(config:Config) {
-    return this.cape || this.byrna || config.canPassThroughSpikes;
+    return this.cape || this.byrna || config.canGlitch;
   }
   hasMedallion(dungeon:string, config:Config) {
     if (this.ether && this.bombos && this.quake) {
