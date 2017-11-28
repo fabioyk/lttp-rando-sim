@@ -1,27 +1,35 @@
-<div>
-  <div>
-    Game Mode:
-    <div class="radio">
-      <label>
-        <input type="radio" name="modeSelect" value="standard" checked="checked"
-          [(ngModel)]="modeSelected">
-        Standard
-      </label>
-      <label>
-        <input type="radio" name="modeSelect" value="open"
-        [(ngModel)]="modeSelected">
-        Open
-      </label>
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="game-mode" class="col-sm-4 control-label">Game Mode</label>    
+    <div class="btn-group" id="game-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="modeSelected" name="standard-button"
+        btnRadio="standard">Standard</label>
+      <label class="btn btn-default" [(ngModel)]="modeSelected" name="open-button"
+        btnRadio="open">Open</label>
     </div>
-
-    
-    <div class="seed">
-      Seed:
-      <input type="text" name="seedSelect"  
-          placeholder="Random" maxlength="10" [(ngModel)]="seedNum">
-    </div>
-    
-    
-    <button (click)="onSubmit()">Play</button>
   </div>
-</div>
+
+  <div class="form-group">
+      <label for="game-mode" class="col-sm-4 control-label">Minor Glitches and Sequence Breaking</label>    
+      <div class="btn-group" id="game-mode" class="col-sm-8">
+        <label class="btn btn-default" [(ngModel)]="glitchSelected" name="no-breaking-button"
+          btnRadio="no">Not Allowed</label>
+        <label class="btn btn-default" [(ngModel)]="glitchSelected" name="yes-breaking-button"
+          btnRadio="yes">Allowed</label>
+      </div>
+    </div>
+  
+  <div class="form-group">
+    <label for="seed-num-input" class="col-sm-4 control-label">Seed</label>
+    <div class="col-sm-8">
+        <input type="text" name="seedSelect" class="form-control" id="seed-num-input"
+        placeholder="Random" maxlength="10" [(ngModel)]="seedNum">
+    </div>
+    
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <button class="btn btn-primary" (click)="onSubmit()" type="button" [disabled]='shouldDisablePlay'>Play</button>
+    </div>
+  </div>
+</form>

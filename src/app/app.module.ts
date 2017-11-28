@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AlertModule } from 'ngx-bootstrap';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { AppComponent } from './app.component';
 import { GameService } from './game/game-data/game-service.service';
@@ -18,6 +20,8 @@ import { ItemNamesService } from './log-parse/item-names.service';
     AppComponent
   ],
   imports: [
+    AlertModule.forRoot(),
+    ButtonsModule.forRoot(),
     BrowserModule, 
     GameModule,
     MainMenuModule,

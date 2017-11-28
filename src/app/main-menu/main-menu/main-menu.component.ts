@@ -9,9 +9,14 @@ import { Seed } from '../../shared/seed';
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent implements OnInit {
+  shouldDisablePlay = false;
   modeSelected = 'standard';
+  glitchSelected = 'yes';
   seedNum = '';
   errorMessage = '';
+
+  lockedMode;
+  lockedGlitch;  
 
   constructor(private _seedService: SeedApiService,
               private _router: Router,
@@ -19,16 +24,12 @@ export class MainMenuComponent implements OnInit {
 
   ngOnInit() {
     this._seedService.ping();
-    console.log('main menu');
-  }
-
-  onRadioChange(newMode) {
-    this.modeSelected = newMode;
   }
 
   onSubmit() {
-    console.log(this.modeSelected);
-    console.log(this.seedNum);
+    this.shouldDisablePlay = true;
+    this.lockedMode = this.modeSelected;
+    this.lockedGlitch = this.glitchSelected;
 
     if (this.seedNum) {
       this._seedService.getSeed(this.modeSelected, +this.seedNum)
@@ -36,23 +37,23 @@ export class MainMenuComponent implements OnInit {
     } else {
       this._seedService.getRandomSeed(this.modeSelected)
         .subscribe((seed) => {
-          console.log(seed);
-          console.log(this._router);
-          this._router.navigate(['/' + this.modeSelected], {queryParams: {seed: seed.seed}});
-      
+          if (seed && !seed.error) {
+            this._router.navigate(['/' + this.modeSelected], {queryParams: {seed: seed.seed}});
+          } else {
+            this.errorMessage = seed.error;
+            this.shouldDisablePlay = false;
+          }          
         });
     }
     
   }
 
   getSeed(seed:Seed) {
-    if (seed.error) {
-      console.log(seed);
+    if (!seed || seed.error) {
       this.errorMessage = seed.error;
+      this.shouldDisablePlay = false;
     } else {
-      console.log(seed);
-      console.log(this._router);
-      this._router.navigate(['/standard', seed]);
+      this._router.navigate(['/' + this.lockedMode, seed]);
     }
   }
 
