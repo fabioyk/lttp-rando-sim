@@ -21,11 +21,12 @@ export class ItemLineComponent implements OnInit {
       var res = this._itemNamesService.getItemById(this.itemLogEntry.item);
       this.shortName = res.shortName;
       this.longName = res.longName;
+      var modifier = this.itemLogEntry.type === 'view' ? 1 : 0;
 
       if (this.longName.indexOf('Progressive') > -1) {
         switch (this.shortName) {
           case 'glove':
-            switch(this.items.glove) {
+            switch(this.items.glove + modifier) {
               case 1:
                 this.longName = 'Power Gloves';
                 break;
@@ -33,10 +34,10 @@ export class ItemLineComponent implements OnInit {
                 this.longName = 'Titan Mitts';
                 break;
             }
-            this.shortName = 'glove' + this.items.glove;
+            this.shortName = 'glove' + (this.items.glove + modifier);
             break;
           case 'sword':
-            switch(this.items.sword) {
+            switch(this.items.sword + modifier) {
               case 1:
                 this.longName = 'Fighter Sword';
                 break;
@@ -50,10 +51,10 @@ export class ItemLineComponent implements OnInit {
                 this.longName = 'Golden Sword';
                 break;
             }
-            this.shortName = 'sword' + this.items.sword;
+            this.shortName = 'sword' + (this.items.sword + modifier);
             break;
           case 'tunic':
-            switch(this.items.tunic) {
+            switch(this.items.tunic + modifier) {
               case 2:
                 this.longName = 'Blue Mail';
                 break;
@@ -61,10 +62,10 @@ export class ItemLineComponent implements OnInit {
                 this.longName = 'Red Mail';
                 break;
             }
-            this.shortName = 'tunic' + this.items.tunic;
+            this.shortName = 'tunic' + (this.items.tunic + modifier);
             break;
           case 'shield':
-            switch(this.items.shield) {
+            switch(this.items.shield + modifier) {
               case 1:
                 this.longName = 'Blue Shield';
                 break;
@@ -75,13 +76,16 @@ export class ItemLineComponent implements OnInit {
                 this.longName = 'Mirror Shield';
                 break;
             }
-            this.shortName = 'shield' + this.items.shield;
+            this.shortName = 'shield' + (this.items.shield + modifier);
             break;
         }
       }
 //TODO gotta change if it's a view
-      if (this.shortName === 'bow' || this.shortName === 'silvers') {
-        this.shortName = 'bow' + this.items.bow;
+      if (this.shortName === 'bow') {
+        this.shortName = 'bow' + (this.items.bow + modifier*2);
+      }
+      if (this.shortName === 'silvers') {
+        this.shortName = 'bow' + (this.items.bow + modifier);
       }
 
       if (this.shortName.indexOf('Agahnim') > -1) {

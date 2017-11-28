@@ -5,6 +5,10 @@
 .open-state {
   background-color: lightgreen;
 }
+.unavailable-state {
+  background-color: lightcoral;
+  opacity: 0.5;
+}
 .view-state {
   background-color: yellow;
 }
@@ -19,6 +23,10 @@
 }
 .dungeon-cleared {
   background-color: grey;
+}
+.dungeon-unavailable {
+  background-color: lightcoral;
+  opacity: 0.5;
 }
 
 .overworld-type {
@@ -39,8 +47,11 @@
   width: 40px;
   height: 40px;
   margin: -20px -20px;
-  background-size: cover;
-  border: 3px solid black;  
+  
+  background-position: center center;
+  background-repeat: no-repeat;
+  border: 3px solid black;
+  background-color: lightblue;
 }
 
 @media (max-width: 768px) {
@@ -64,18 +75,18 @@
 
 .open-door {
   background-image: url('/assets/node-icons/open_door.png');
-  width: 32px;
-  height: 16px;
+  width: 40px;
+  height: 24px;
 }
 .sk-door {
   background-image: url('/assets/node-icons/key_door.png');
-  width: 32px;
-  height: 16px;
+  width: 40px;
+  height: 24px;
 }
 .bk-door {
   background-image: url('/assets/node-icons/big_door.png');  
-  width: 32px;
-  height: 16px;
+  width: 40px;
+  height: 24px;
 }
 .closed-chest {
   background-image: url('/assets/node-icons/closed_chest.png');  

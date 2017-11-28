@@ -72,56 +72,37 @@ export class GameService {
   getAccessibleNodes(items:Items, mapName:string):MapNode[] {
     var accNodes:MapNode[] = [];
 
+    var locationsArray;
+    var offset = 0;
     if (mapName === 'light-world') {
-      this.overworldData.lwLocations.forEach((location) => {
-        if (!location.canGet || location.canGet(items, this.config)) {
-          accNodes.push({
-            x: location.x*2,
-            y: location.y,
-            tooltip: location.location,
-            id: location.location,
-            status: 'getable',
-            prize: location.item,
-            originalNode: location
-          })
-        } else if (location.canView && location.canView(items, this.config)) {
-          accNodes.push({
-            x: location.x*2,
-            y: location.y,
-            tooltip: location.location,
-            id: location.location,
-            status: 'viewable',
-            prize: location.item,
-            originalNode: location
-          })
-        }
-      });
+      locationsArray = this.overworldData.lwLocations;
     } else if (mapName === 'dark-world') {
-      this.overworldData.dwLocations.forEach((location) => {
-        if (!location.canGet || location.canGet(items, this.config)) {
-          accNodes.push({
-            x: (location.x-50)*2,
-            y: location.y,
-            tooltip: location.location,
-            id: location.location,
-            status: 'getable',
-            prize: location.item,
-            originalNode: location
-          })
-        } else if (location.canView && location.canView(items, this.config)) {
-          accNodes.push({
-            x: (location.x-50)*2,
-            y: location.y,
-            tooltip: location.location,
-            id: location.location,
-            status: 'viewable',
-            prize: location.item,
-            originalNode: location
-          })
-        }
-      });
+      locationsArray = this.overworldData.dwLocations;
+      offset = 50;
     }
 
+    if (locationsArray) {
+      locationsArray.forEach((location) => {
+        var status = '';
+        if (!location.canGet || location.canGet(items, this.config)) {
+          status = 'getable';
+        } else if (location.canView && location.canView(items, this.config)) {
+          status = 'viewable';
+        } else {
+          status = 'unavailable';
+        }
+        accNodes.push({
+          x: (location.x - offset)*2,
+          y: location.y,
+          tooltip: location.location,
+          id: location.location,
+          status: status,
+          prize: location.item,
+          originalNode: location
+        });
+      });
+    }
+ 
     return accNodes;
   }
 
@@ -132,31 +113,39 @@ export class GameService {
 
     if (world === 'light-world') {
       this.dungeonsData.forEach((dungeon) => {
-        if (lwDuns.indexOf(dungeon.name) > -1 && dungeon.canEnter(items, this.config)) {
+        if (lwDuns.indexOf(dungeon.name) > -1) {
+          var status = 'unavailable';
+          if (dungeon.canEnter(items, this.config)) {
+            status = 'getable';
+          }
           accNodes.push({
             x: dungeon.x,
             y: dungeon.y,
             tooltip: dungeon.name,
             id: dungeon.startingMap.id,
-            status: 'getable',
+            status: status,
             prize: [],
             originalNode: dungeon
           });
-        }
+        }        
       })
     } else if (world === 'dark-world') {
       this.dungeonsData.forEach((dungeon) => {
-        if (lwDuns.indexOf(dungeon.name) === -1 && dungeon.canEnter(items, this.config)) {
+        if (lwDuns.indexOf(dungeon.name) === -1) {
+          var status = 'unavailable';
+          if (dungeon.canEnter(items, this.config)) {
+            status = 'getable';
+          }
           accNodes.push({
             x: dungeon.x,
             y: dungeon.y,
             tooltip: dungeon.name,
             id: dungeon.startingMap.id,
-            status: 'getable',
+            status: status,
             prize: [],
             originalNode: dungeon
           });
-        }
+        }   
       })
     }
 

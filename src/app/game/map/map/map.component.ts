@@ -85,7 +85,6 @@ export class MapComponent implements OnInit {
   }
   onNodeClick(nodeClicked:MapNode) {    
     switch (nodeClicked.status) {
-
       case 'getable':
         if (!nodeClicked.originalNode.isOpened) {
           this.addPrizes(nodeClicked, this.currentMap);
@@ -112,12 +111,16 @@ export class MapComponent implements OnInit {
   }
 
   onDungeonClick(dungeonClicked:MapNode) {
-    console.log('Can I enter ' + dungeonClicked.id);
-    console.log(dungeonClicked.originalNode);
-    this.currentDungeon = dungeonClicked.originalNode;
-    this.currentDungeonMap = this.currentDungeon.startingMap;
-    this.changeMap(this.currentDungeonMap.id);
-    this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);
+    if (!dungeonClicked.originalNode.canEnter || 
+      dungeonClicked.originalNode.canEnter(this.items, this.config)) {
+        console.log('Can I enter ' + dungeonClicked.id);
+        console.log(dungeonClicked.originalNode);
+        this.currentDungeon = dungeonClicked.originalNode;
+        this.currentDungeonMap = this.currentDungeon.startingMap;
+        this.changeMap(this.currentDungeonMap.id);
+        this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);
+      }
+    
   }
 
   changeMapInDungeon(destination:string) {
@@ -283,14 +286,14 @@ export class MapComponent implements OnInit {
     }    
   }
 
-  canWarp() {
+  canWarp():boolean {
     if (this.currentMap === 'light-world'
     && (this.items.agahnim
       || (this.items.hammer && this.items.glove && this.items.moonPearl)
       || (this.items.glove === 2 && this.items.moonPearl))) {
         return true;
     } else {
-      return this.currentDungeon || this.currentMap === 'dark-world';
+      return this.currentDungeon !== null || this.currentMap === 'dark-world';
     }
   }
 
@@ -302,10 +305,10 @@ export class MapComponent implements OnInit {
     }
   }
 
-  canViewDarkWorldMap() {
+  canViewDarkWorldMap():boolean {
     return this.items.canWestDeathMountain(this.config) 
         || (this.items.glove && this.items.hammer) || this.items.glove === 2
-        || this.items.agahnim;
+        || this.items.agahnim > 0;
   }
 
   checkMedallion(dunName:string) {
@@ -317,10 +320,10 @@ export class MapComponent implements OnInit {
     }
   }
 
-  canViewTRMedallion() {
+  canViewTRMedallion():boolean {
     return this.items.canDarkEastDeathMountain(this.config);
   }
-  canViewMMMedallion() {
+  canViewMMMedallion():boolean {
     return this.items.canMire();
   }
 
