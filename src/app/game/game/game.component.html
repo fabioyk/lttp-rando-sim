@@ -1,29 +1,30 @@
 <div class='container' *ngIf='gameState === "loading"'>
   Loading...
 </div>
-<div class='container' *ngIf='gameState === "playing"'>  
+<div class='container-fluid' *ngIf='gameState === "playing"'>
   <app-item-tracker
+    class='col-sm-3'
     [items]='items'
     [config]='config'
     [dungeonsData]='dungeonsData'
   ></app-item-tracker>
-  <div class='container'>
-    <app-map 
-      [items]='items'
-      [config]='config'
-      [(currentMap)]='currentMap'
-      (addedItem)='onAddedItem($event, "get")'
-      (viewItem)='onAddedItem($event, "view")'
-      (finishedDungeon)='onDungeonFinished($event)'
-      (onGameFinished)='onGameFinished()'
-    ></app-map>
-    <app-item-log
-      [itemLogList]='itemLog'
-      [items]='items'></app-item-log>
-    <app-options></app-options>
-  </div>
-  
+  <app-map 
+    class='col-sm-9'
+    [items]='items'
+    [config]='config'
+    [(currentMap)]='currentMap'
+    (addedItem)='onAddedItem($event, "get")'
+    (viewItem)='onAddedItem($event, "view")'
+    (finishedDungeon)='onDungeonFinished($event)'
+    (onGameFinished)='onGameFinished()'
+  ></app-map>
+  <app-item-log
+    class='col-sm-6'
+    [itemLogList]='itemLog'
+    [items]='items'></app-item-log>
+  <app-options></app-options>  
   <app-game-menu
+    class='col-sm-6'
     [items]='items'
     [currentMap]='currentMap'
     ></app-game-menu>

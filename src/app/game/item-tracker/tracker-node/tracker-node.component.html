@@ -3,7 +3,7 @@
   [ngClass]="isTransparent()">
 </div>
 <div class='dungeon-node' 
-    *ngIf='!isItem && dungeonData.name !== "Aga Tower" && dungeonData.name !== "Ganons Tower"'
+    *ngIf='!isItem'
     >
   <div class='dungeon-node-bg'
     [ngStyle]="{'background-image': getDungeonBg()}">

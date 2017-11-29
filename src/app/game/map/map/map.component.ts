@@ -83,7 +83,8 @@ export class MapComponent implements OnInit {
     console.log('left');
     this.tooltip = mapNode.tooltip;
   }
-  onNodeClick(nodeClicked:MapNode) {    
+  onNodeClick(nodeClicked:MapNode) {
+    this.onNodeMouseEnter(nodeClicked);
     switch (nodeClicked.status) {
       case 'getable':
         if (!nodeClicked.originalNode.isOpened) {
@@ -111,6 +112,7 @@ export class MapComponent implements OnInit {
   }
 
   onDungeonClick(dungeonClicked:MapNode) {
+    this.onNodeMouseEnter(dungeonClicked);
     if (!dungeonClicked.originalNode.canEnter || 
       dungeonClicked.originalNode.canEnter(this.items, this.config)) {
         console.log('Can I enter ' + dungeonClicked.id);
@@ -141,6 +143,7 @@ export class MapComponent implements OnInit {
   }
 
   onDungeonNodeClick(dungeonNode:MapNode) {
+    this.onNodeMouseEnter(dungeonNode);
     if (dungeonNode.originalNode.canOpen(this.items, this.config)) {
       switch(+dungeonNode.status) {
         case DungeonNodeStatus.OPEN_DOOR:

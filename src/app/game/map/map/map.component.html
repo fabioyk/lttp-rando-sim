@@ -5,22 +5,20 @@
         nodeType='overworld'
         [nodeInfo]='lwNode'
         (click)='onNodeClick(lwNode)'
-        (mouseleave)='onMouseLeave(lwNode)'>
+    >
     </app-node>
     <app-node *ngFor='let dun of gameService.getAccessibleDungeons(items, currentMap)'
         nodeType='dungeon'
         [nodeInfo]='dun'        
         [dungeonItems]='items.getDungeonItems(dun.tooltip)'
-        (click)='onDungeonClick(dun)'
-        (mouseleave)='onMouseLeave(dun)'>
+        (click)='onDungeonClick(dun)'>
     </app-node>
   </div>
   <div *ngIf='currentDungeon'>
     <app-node *ngFor='let dunNode of loadMap()'
         nodeType='inside-dungeon'
         [nodeInfo]='dunNode'
-        (click)='onDungeonNodeClick(dunNode)'
-        (mouseleave)='onMouseLeave(dunNode)'>
+        (click)='onDungeonNodeClick(dunNode)'>
     </app-node>    
   </div>
 

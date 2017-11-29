@@ -1,5 +1,6 @@
 .node {
   position: absolute;
+  z-index: 2;
 }
 
 .open-state {
@@ -30,84 +31,70 @@
 }
 
 .overworld-type {
-  width: 18px;
-  height: 18px;
-  margin: -9px -9px;
-  border: 3px solid black;
+  width: 5%;
+  height: 5%;
+  margin: -2.5% -2.5%;
+  border: solid black;
 }
 .dungeon-type {
-  width: 40px;
-  height: 40px;
-  margin: -20px -20px;
+  width: 9%;
+  height: 9%;
+  margin: -4.5% -4.5%;
   background-size: 100%;
   background-repeat: no-repeat;
-  border: 5px solid black;
+  border: solid black;
 }
 .in-dungeon-type {
-  width: 40px;
-  height: 40px;
-  margin: -20px -20px;
+  width: 9%;
+  height: 9%;
+  margin: -4.5% -4.5%;
   
   background-position: center center;
   background-repeat: no-repeat;
-  border: 3px solid black;
+  border: solid black;
   background-color: lightblue;
 }
 
-@media (max-width: 768px) {
-  .overworld-type {
-    width: 10px;
-    height: 10px;
-    margin: -5px -5px;
-  }
-  .dungeon-type {
-    width: 30px;
-    height: 30px;
-    margin: -15px -15px;
-  }
-  .in-dungeon-type {
-    width: 30px;
-    height: 30px;
-    margin: -15px -15px;
-  }
-
+.open-door, .sk-door, .bk-door {
+  width: 9%;
+  height: 5%;
 }
 
 .open-door {
   background-image: url('/assets/node-icons/open_door.png');
-  width: 40px;
-  height: 24px;
 }
 .sk-door {
   background-image: url('/assets/node-icons/key_door.png');
-  width: 40px;
-  height: 24px;
 }
 .bk-door {
   background-image: url('/assets/node-icons/big_door.png');  
-  width: 40px;
-  height: 24px;
 }
+
+.closed-chest, .open-chest {
+  width: 6%;
+  height: 6%;
+}
+
 .closed-chest {
-  background-image: url('/assets/node-icons/closed_chest.png');  
-  width: 32px;
-  height: 32px;
+  background-image: url('/assets/node-icons/closed_chest.png');   
 }
 .open-chest {
   background-image: url('/assets/node-icons/open_chest.png');
-  width: 32px;
-  height: 32px;
 }
+
+.big-chest, .open-big-chest {
+  width: 7%;
+  height: 6%;
+}
+
 .big-chest {
   background-image: url('/assets/node-icons/closed_big_chest.png');  
-  width: 36px;
-  height: 28px;
+  
 }
 .open-big-chest {
   background-image: url('/assets/node-icons/open_big_chest.png');  
-  width: 36px;
-  height: 28px;
 }
+
 .spare-key {
   background-image: url('/assets/node-icons/small_key.png');  
 }

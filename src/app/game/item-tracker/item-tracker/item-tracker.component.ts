@@ -30,4 +30,8 @@ export class ItemTrackerComponent implements OnInit {
       'Pendant Of Courage', 'Pendant Of Power', 'Pendant Of Wisdom', 'Key', 'Big Key', 'Map', 'Compass'];
   }
 
+  filterDungeons(dungeon:DungeonData) {
+    return dungeon.name !== "Aga Tower" && dungeon.name !== "Ganons Tower";
+  }
+
 }

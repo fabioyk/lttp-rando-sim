@@ -1,6 +1,6 @@
 .node {
-  width: 64px;
-  height: 64px;
+  width: 100%;
+  padding-top: 100%;
   background-size: cover;
 }
 
@@ -13,20 +13,21 @@ div {
 }
 
 .dungeon-node {
-  width: 64px;
-  height: 128px;
+  width: 100%;
 }
 
 .dungeon-node-bg {
-  width: 64px;
-  height: 64px;
+  width: 100%;
+  padding-top: 100%;
+  background-size: cover;
   display: flex;
   flex-wrap: wrap;
 }
 
 .dungeon-chest {
-  width: 64px;
-  height: 64px;  
+  width: 100%;
+  padding-top: 100%;
+  background-size: cover;
 }
 
 .dungeon-prize {
