@@ -14,6 +14,7 @@ export class MainMenuComponent implements OnInit {
   glitchSelected = 'yes';
   seedNum = '';
   errorMessage = '';
+  dailySeed = false;
 
   lockedMode;
   lockedGlitch;  
@@ -25,13 +26,21 @@ export class MainMenuComponent implements OnInit {
   ngOnInit() {
     this._seedService.ping();
   }
+ 
+  onDailySeedClick() {
+    if (this.dailySeed) {
+      this.seedNum = 'Today\'s Daily Seed';
+    } else {
+      this.seedNum = '';
+    }
+  }
 
   onSubmit() {
     this.shouldDisablePlay = true;
     this.lockedMode = this.modeSelected;
     this.lockedGlitch = this.glitchSelected;
 
-    this._seedService.getSeed(this.modeSelected, +this.seedNum)
+    this._seedService.getSeed(this.lockedMode, +this.seedNum, this.dailySeed)
       .subscribe((seed) => {
         if (!seed || seed.error) {
           this.errorMessage = seed.error;

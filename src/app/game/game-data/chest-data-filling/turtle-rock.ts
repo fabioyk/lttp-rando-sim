@@ -44,7 +44,7 @@ export class TurtleRock {
         return true;
     }, 'tr-entry'));
     compass.nodes.push(new DungeonNode(
-      '', 128, 178, DungeonNodeStatus.CLOSED_CHEST,
+      'Compass Chest', 128, 178, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[187]));
@@ -57,12 +57,12 @@ export class TurtleRock {
         return true;
     }, 'tr-entry'));
     mapRoom.nodes.push(new DungeonNode(
-      '', 117, 44, DungeonNodeStatus.CLOSED_CHEST,
+      'Map Room Left Chest', 117, 44, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[188]));
     mapRoom.nodes.push(new DungeonNode(
-      '', 140, 44, DungeonNodeStatus.CLOSED_CHEST,
+      'Map Room Right Chest', 140, 44, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[189]));
@@ -80,7 +80,7 @@ export class TurtleRock {
         return true;
     }, 'tr-pipe-room'));
     chainChomp.nodes.push(new DungeonNode(
-      '', 128, 86, DungeonNodeStatus.CLOSED_CHEST,
+      'Chain Chomps Chest', 128, 86, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[186]));
@@ -134,7 +134,7 @@ export class TurtleRock {
         return true;
     }, 'tr-pipe-room'));
     bk.nodes.push(new DungeonNode(
-      '', 108, 97, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest', 108, 97, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[191]));

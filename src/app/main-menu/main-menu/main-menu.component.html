@@ -21,9 +21,12 @@
   
   <div class="form-group">
     <label for="seed-num-input" class="col-sm-4 control-label">Seed</label>
-    <div class="col-sm-8">
+    <div class="col-sm-8 form-inline">
         <input type="text" name="seedSelect" class="form-control" id="seed-num-input"
-        placeholder="Random" maxlength="10" [(ngModel)]="seedNum">
+        placeholder="Random" maxlength="10" [(ngModel)]="seedNum" [disabled]='dailySeed'>
+        <button type="button" class="btn btn-default" 
+          [(ngModel)]="dailySeed" (click)='onDailySeedClick()'
+          name="dailyButton" btnCheckbox>Daily Seed</button>
     </div>
     
   </div>

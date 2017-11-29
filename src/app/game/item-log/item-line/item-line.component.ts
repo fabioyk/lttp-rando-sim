@@ -96,6 +96,12 @@ export class ItemLineComponent implements OnInit {
       if (this.shortName === 'silvers') {
         this.shortName = 'bow' + (this.items.bow + modifier);
       }
+      if (this.shortName === 'boomerang') {
+        this.shortName = 'boomerang1';
+      }
+      if (this.shortName === 'magicBoomerang') {
+        this.shortName = 'boomerang2';
+      }
 
       if (this.shortName.indexOf('Agahnim') > -1) {
         this.shortName = 'agahnim1';

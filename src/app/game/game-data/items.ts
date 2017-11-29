@@ -9,8 +9,7 @@ export class Items {
   shield = 0;
   moonPearl = false;
   bow = 0;
-  boomerang = false;
-  magicBoomerang = false;
+  boomerang = 0;
   hookshot = false;
   bombs = true;
   shovel = false;
@@ -112,8 +111,7 @@ export class Items {
     this.shield = 0;
     this.moonPearl = false;
     this.bow = 0;
-    this.boomerang = false;
-    this.magicBoomerang = false;
+    this.boomerang = 0;
     this.hookshot = false;
     this.bombs = true;
     this.shovel = false;
@@ -243,6 +241,8 @@ export class Items {
     switch(itemName) {
       case 'bottle': this.bottle++; break;
       case 'bow': this.bow += 2; break;
+      case 'boomerang': this.boomerang++; break;
+      case 'magicBoomerang': this.boomerang += 2; break;
       case 'mirror': this.mirror = true; this.stats.preMirror = this.stats.totalCount; break;
       case 'boots': this.boots = true; this.stats.preBoots = this.stats.totalCount; break;
       case 'silvers': this.bow += 1; break;

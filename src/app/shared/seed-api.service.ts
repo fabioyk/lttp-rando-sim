@@ -23,10 +23,15 @@ export class SeedApiService {
     this._http.get(this._apiUrl);
   }
 
-  getSeed(mode:String, seed:Number):Observable<Seed> {
-    let queryUrl = this._apiUrl + 'api/seed?mode=' + mode;
-    if (seed) {
-      queryUrl += '&seed=' + seed;
+  getSeed(mode:String, seed:Number, isDailySeed:boolean=false):Observable<Seed> {
+    let queryUrl;
+    if (isDailySeed) {
+      queryUrl = this._apiUrl + 'api/daily?mode=' + mode;
+    } else {
+      queryUrl = this._apiUrl + 'api/seed?mode=' + mode;
+      if (seed) {
+        queryUrl += '&seed=' + seed;
+      }
     }
     
     return this._http.get(queryUrl)
