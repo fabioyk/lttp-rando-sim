@@ -1,5 +1,9 @@
-<p>
-  <img class='icon' [src]="'assets/item-icons/'+shortName+'.png'">
-
-  {{itemLogEntry.region}} / {{itemLogEntry.location}}: {{itemLogEntry.type}} {{longName}}
-</p>
+<div class='panel panel-default'>
+  <div class='panel-heading'>
+    {{itemLogEntry.region}}
+  </div>
+  <div class='panel-body'>
+    <img class='icon' [src]="'assets/item-icons/'+shortName+'.png'">      
+    {{actionType}} {{longName}} in {{itemLogEntry.location}}
+  </div>
+</div>

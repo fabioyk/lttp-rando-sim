@@ -1,5 +1,19 @@
+.panel {
+  margin-bottom: 5px;
+}
+
+.panel-heading {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.panel-body {
+  padding: 8px;
+}
+
 .icon {
   width: 32px;
   height: 32px;
   background-color: lightgray;
+  border-radius: 5px;
 }

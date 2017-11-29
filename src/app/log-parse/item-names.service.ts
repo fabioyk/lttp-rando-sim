@@ -34,7 +34,7 @@ export class ItemNamesService {
     this.itemNames.push({
       id: 4,
       shortName: '5bombUpgrade',
-      longName: 'Arrow Upgrade (5)'
+      longName: 'Bomb Upgrade (5)'
     });
     this.itemNames.push({
       id: 6,

@@ -11,8 +11,10 @@ import { ItemNamesService } from '../../../log-parse/item-names.service';
 export class ItemLogComponent implements OnInit {
   @Input() itemLogList:ItemLogEntry[];
   @Input() items:Items;
-
-  static isOnlyImportantShown;
+  filterArgs = {
+    onlyImportantShown: false,
+    searchQuery: ''
+  };
 
   iterableDiffer:IterableDiffer<{}>;
 
@@ -21,31 +23,18 @@ export class ItemLogComponent implements OnInit {
   }
 
   ngOnInit() {
-    ItemLogComponent.isOnlyImportantShown = false;
+
   }
 
   ngDoCheck() {
     let changes = this.iterableDiffer.diff(this.itemLogList);
     if (changes) {
       console.log(this.itemLogList);
+      console.log(this.filterArgs);
     }
   }
 
   onToggleImportant() {
-    ItemLogComponent.isOnlyImportantShown = !ItemLogComponent.isOnlyImportantShown;
+    this.filterArgs.onlyImportantShown = !this.filterArgs.onlyImportantShown;
   }
-
-  filterList(logEntry:ItemLogEntry) {
-    if (ItemLogComponent.isOnlyImportantShown) {
-      if (logEntry.type === 'view') {
-        return true;
-      } else {
-        return (ItemNamesService.isTrackableItem(+logEntry.item));  
-      }      
-    } else {
-      return true;
-    }
-    
-  }
-
 }

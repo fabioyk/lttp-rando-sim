@@ -12,7 +12,8 @@ export class ItemLineComponent implements OnInit {
   @Input() itemLogEntry:ItemLogEntry;
   @Input() items:Items;
   shortName:string;
-  longName:string;  
+  longName:string;
+  actionType:string; 
 
   constructor(private _itemNamesService:ItemNamesService) { }
 
@@ -22,6 +23,14 @@ export class ItemLineComponent implements OnInit {
       this.shortName = res.shortName;
       this.longName = res.longName;
       var modifier = this.itemLogEntry.type === 'view' ? 1 : 0;
+      switch(this.itemLogEntry.type) {
+        case 'get':
+          this.actionType = 'Got';
+          break;
+        case 'view':
+          this.actionType = 'Saw';
+          break;
+      }
 
       if (this.longName.indexOf('Progressive') > -1) {
         switch (this.shortName) {

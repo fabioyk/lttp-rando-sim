@@ -1,9 +1,21 @@
-<div class='item-log'>
-  <button (click)='onToggleImportant()'>Show Important</button>
-  <ul>
-    <li *ngFor='let entry of itemLogList.filter(filterList)'>
-      <app-item-line [itemLogEntry]='entry'
-        [items]='items'></app-item-line>
-    </li>
-  </ul>
+<div class='panel panel-info'>
+  <div class='panel-heading'>
+    <h3 class='panel-title'>Item Log</h3>
+    <hr>
+    <form class='form-inline'>
+      <div class='form-group'>
+        <button class='btn btn-default' type='button' name='showImportantButton' 
+            [(ngModel)]='filterArgs.onlyImportantShown' btnCheckbox>Only Show Important</button>
+      </div>
+      <div class='form-group'>
+        <input type='text' class='form-control' name='searchForm' 
+          [(ngModel)]='filterArgs.searchQuery' placeholder='Search'>
+      </div>
+    </form>
+  </div>
+  <div class='panel-body item-log-body' *ngIf='itemLogList.length > 0'>
+    <app-item-line *ngFor='let entry of (itemLogList | logSearch:filterArgs)'
+      [itemLogEntry]='entry' [items]='items'>
+    </app-item-line>
+  </div>
 </div>
