@@ -1,7 +1,10 @@
-.node {
+.node, .dungeon-node-bg, .dungeon-chest, .dungeon-prize, .dungeon-medallion {
+  background-size: cover;
+}
+
+.node, .dungeon-node-bg, .dungeon-chest {
   width: 100%;
   padding-top: 100%;
-  background-size: cover;
 }
 
 .off {
@@ -16,31 +19,17 @@ div {
   width: 100%;
 }
 
-.dungeon-node-bg {
-  width: 100%;
-  padding-top: 100%;
-  background-size: cover;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.dungeon-chest {
-  width: 100%;
-  padding-top: 100%;
-  background-size: cover;
+.dungeon-prize, .dungeon-medallion {
+  position: absolute;  
+  top: 25%;
+  width: 50%;
+  height: 25%;
 }
 
 .dungeon-prize {
-  width: 50%;
-  height: 50%;
+  left: 50%;
 }
 
 .dungeon-medallion {
-  width: 50%;
-  height: 50%;
-}
-
-.dungeon-block {
-  width: 50%;
-  height: 50%;
+  left: 0;
 }
