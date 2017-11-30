@@ -1,164 +1,49 @@
-<h2>Quest Performance</h2>
-<h3>Item Locations Checked</h3>
-<div class='stat-container'>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Overworld
-    </span>
-    <span class='stat-right-column'>
-      {{items.stats.overworldCount}}/XXX
-    </span>
-  </div>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Dungeons
-    </span>
-    <span class='stat-right-column'>
-      {{items.stats.dungeonCount}}/XXX
-    </span>
-  </div>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Total
-    </span>
-    <span class='stat-right-column'>
-      {{items.stats.totalCount}}/XXX
-    </span>
-  </div>
-</div>
+<h2>GG, you saved the world, etc.</h2>
 
-<h3>Item Completion</h3>
-<div class='stat-container'>
-    <div class='stat-line'>
-      <span class='stat-left-column'>
-        Y Items
-      </span>
-      <span class='stat-right-column'>
-        {{getYItemCount()}}/26
-      </span>
+<accordion>
+  <accordion-group heading='Quest Performance' isOpen='true'>
+    <div *ngFor='let data of getQuestPerformanceTables()'>
+        <h3>{{data[0]}}</h3>
+        <table class='table table-striped'>
+          <tr *ngFor='let line of data[1]'>
+            <td class='col-xs-6'>
+              {{line[0]}}
+            </td>
+            <td class='col-xs-6'>
+              {{line[1]}}
+            </td>
+          </tr>
+        </table>
     </div>
-    <div class='stat-line'>
-      <span class='stat-left-column'>
-        A Items
-      </span>
-      <span class='stat-right-column'>
-        {{getOtherItemCount()}}/6
-      </span>
+  </accordion-group>
+  <accordion-group heading='Dungeon Info'>
+    <div *ngFor='let data of getDungeonInfoTables()'>
+        <h3>{{data[0]}}</h3>
+        <table class='table table-striped'>
+          <tr *ngFor='let line of data[1]'>
+            <td class='col-xs-6'>
+              {{line[0]}}
+            </td>
+            <td class='col-xs-6'>
+              {{line[1]}}
+            </td>
+          </tr>
+        </table>
     </div>
-    <div class='stat-line'>
-      <span class='stat-left-column'>
-        Swords
-      </span>
-      <span class='stat-right-column'>
-        {{items.sword}}/4
-      </span>
+  </accordion-group>
+  <accordion-group heading='Item Info'>
+    <div *ngFor='let data of getItemInfoTables()'>
+        <h3>{{data[0]}}</h3>
+        <table class='table table-striped'>
+          <tr *ngFor='let line of data[1]'>
+            <td class='col-xs-6'>
+              {{line[0]}}
+            </td>
+            <td class='col-xs-6'>
+              {{line[1]}}
+            </td>
+          </tr>
+        </table>
     </div>
-    <div class='stat-line'>
-      <span class='stat-left-column'>
-        Shields
-      </span>
-      <span class='stat-right-column'>
-        {{items.shield}}/4
-      </span>
-    </div>
-    <div class='stat-line'>
-      <span class='stat-left-column'>
-        Mails
-      </span>
-      <span class='stat-right-column'>
-        {{items.tunic}}/3
-      </span>
-    </div>
-    <div class='stat-line'>
-      <span class='stat-left-column'>
-        Capacity Upgrades
-      </span>
-      <span class='stat-right-column'>
-        {{items.stats.capacityUpgrades}}/15
-      </span>
-    </div>
-    <div class='stat-line'>
-      <span class='stat-left-column'>
-        Heart Pieces
-      </span>
-      <span class='stat-right-column'>
-        {{items.stats.heartPieces}}/24
-      </span>
-    </div>
-    <div class='stat-line'>
-      <span class='stat-left-column'>
-        Heart Containers
-      </span>
-      <span class='stat-right-column'>
-        {{items.stats.heartContainers}}/11
-      </span>
-    </div>
-  </div>
-
-<h3>Dungeon Completion</h3>
-<div class='stat-container'>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Maps
-    </span>
-    <span class='stat-right-column'>
-      {{items.stats.maps}}/12
-    </span>
-  </div>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Compasses
-    </span>
-    <span class='stat-right-column'>
-      {{items.stats.compasses}}/11
-    </span>
-  </div>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Small Keys
-    </span>
-    <span class='stat-right-column'>
-      {{items.stats.sks}}/61
-    </span>
-  </div>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Big Keys
-    </span>
-    <span class='stat-right-column'>
-      {{items.stats.bks}}/12
-    </span>
-  </div>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Big Chests
-    </span>
-    <span class='stat-right-column'>
-      {{items.stats.bigChests}}/11
-    </span>
-  </div>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Pendants
-    </span>
-    <span class='stat-right-column'>
-      {{getPendantCount()}}/3
-    </span>
-  </div>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Crystals
-    </span>
-    <span class='stat-right-column'>
-      {{getCrystalCount()}}/7
-    </span>
-  </div>
-  <div class='stat-line'>
-    <span class='stat-left-column'>
-      Bosses
-    </span>
-    <span class='stat-right-column'>
-      {{items.stats.bosses}}/13
-    </span>
-  </div>
-</div>
+  </accordion-group>
+</accordion>

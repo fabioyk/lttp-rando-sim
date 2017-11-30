@@ -99,52 +99,26 @@ export class Items {
     sword4B: 0,
     preBoots: 0,
     preMirror: 0,
+    preFlute: 0,
+    preMitts: 0,
+    preBow: 0,
+    preHammer: 0,
+    preMS: 0,
+    preFireRod: 0,
+    preIceRod: 0,
+    preHook: 0,
+    preLamp: 0,
+    preSomaria: 0,
+    preFlippers: 0,
     preDW: 0,
     preGo: 0,
     startTime: 0
   }
   gtChestCount = 0;
+
+  startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];
   
   setup() {
-    this.tunic = 1;
-    this.sword = 0;
-    this.shield = 0;
-    this.moonPearl = false;
-    this.bow = 0;
-    this.boomerang = 0;
-    this.hookshot = false;
-    this.bombs = true;
-    this.shovel = false;
-    this.mushroom = false;
-    this.powder = false;
-    this.fireRod = false;
-    this.iceRod = false;
-    this.bombos = false;
-    this.ether = false;
-    this.quake = false;
-    this.lamp = false;
-    this.hammer = false;
-    this.flute = false;
-    this.net = false;
-    this.book = false;
-    this.bottle = 0;
-    this.somaria = false;
-    this.byrna = false;
-    this.cape = false;
-    this.mirror = false;
-    this.boots = false;
-    this.glove = 0;
-    this.flippers = false;
-    this.halfMagic = false;
-  
-    this.crystal1 = false;
-    this.crystal2 = false;
-    this.crystal3 = false;
-    this.crystal4 = false;
-    this.crystal5 = false;
-    this.crystal6 = false;
-    this.crystal7 = false;
-
     this.hcItems = new DungeonItems('Hyrule Castle', 6);
     this.epItems = new DungeonItems('Eastern Palace', 3);
     this.dpItems = new DungeonItems('Desert Palace', 2);
@@ -162,51 +136,7 @@ export class Items {
       this.ctItems, this.podItems, this.spItems, this.swItems, this.ttItems,
       this.ipItems, this.mmItems, this.trItems, this.gtItems];
 
-    this.spSwitch = false;
-    this.spFlooded = false;
-    this.ttBlindDelivered = false;
-    this.ttBombableFloor = false;
-    this.mmSwitch = false;
-      
-    this.pendantCourage = false;
-    this.pendantPower = false;
-    this.pendantWisdom = false;
-  
-    this.agahnim = 0;
-    this.agahnim2 = false;
-    this.ganon = false;
-
-    this.lwMapOpen = false;
-    this.dwMapOpen = false;
-    this.mmMedallionChecked = false;
-    this.trMedallionChecked = false;
-
-    this.stats = {
-      totalCount: 0,
-      overworldCount: 0,
-      dungeonCount: 0,
-      capacityUpgrades: 0,
-      heartPieces: 0,
-      heartContainers: 0,
-      maps: 0,
-      compasses: 0,
-      sks: 0,
-      bks: 0,
-      bigChests: 0,
-      bosses: 0,
-      itemsPreGTBK: 0,
-      sword0B: 0,
-      sword1B: 0,
-      sword2B: 0,
-      sword3B: 0,
-      sword4B: 0,
-      preBoots: 0,
-      preMirror: 0,
-      preDW: 0,
-      preGo: 0,
-      startTime: Date.now()
-    };
-    this.gtChestCount = 0;
+    this.stats.startTime = Date.now();
   }
 
   add(itemName:string, region:string) {
@@ -240,16 +170,24 @@ export class Items {
 
     switch(itemName) {
       case 'bottle': this.bottle++; break;
-      case 'bow': this.bow += 2; break;
+      case 'bow': this.bow += 2; this.stats.preBow = this.stats.totalCount; break;
       case 'boomerang': this.boomerang++; break;
       case 'magicBoomerang': this.boomerang += 2; break;
       case 'mirror': this.mirror = true; this.stats.preMirror = this.stats.totalCount; break;
       case 'boots': this.boots = true; this.stats.preBoots = this.stats.totalCount; break;
+      case 'flute': this.flute = true; this.stats.preFlute = this.stats.totalCount; break;
+      case 'hammer': this.hammer = true; this.stats.preHammer = this.stats.totalCount; break;
+      case 'fireRod': this.fireRod = true; this.stats.preFireRod = this.stats.totalCount; break;
+      case 'iceRod': this.iceRod = true; this.stats.preIceRod = this.stats.totalCount; break;
+      case 'flippers': this.flippers = true; this.stats.preFlippers = this.stats.totalCount; break;
+      case 'somaria': this.somaria = true; this.stats.preSomaria = this.stats.totalCount; break;
+      case 'lamp': this.lamp = true; this.stats.preLamp = this.stats.totalCount; break;
+      case 'hookshot': this.hookshot = true; this.stats.preHook = this.stats.totalCount; break;
       case 'silvers': this.bow += 1; break;
       case 'tunic': this.tunic++; break;
-      case 'glove': this.glove++; break;
+      case 'glove': this.glove++; if (this.glove === 2) this.stats.preMitts = this.stats.totalCount; break;
       case 'shield': this.shield++; break;
-      case 'sword': this.sword++; break;
+      case 'sword': this.sword++; if (this.sword === 2) this.stats.preMS = this.stats.totalCount;  break;
       case 'Agahnim': this.agahnim = 1; break;
       case 'Agahnim 2': this.agahnim2 = true; break;
       case 'pieceHeart': this.stats.heartPieces++; break;
@@ -305,8 +243,7 @@ export class Items {
     const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'smallKey', 'bigKey', 'map', 'compass'];
     if (itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
         && itemName.indexOf('Agahnim') === -1 && itemName.indexOf('Ganon') === -1
-        && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {
-      console.log('removing dungeon count because '+itemName);
+        && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {      
       this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;      
     }
   } 

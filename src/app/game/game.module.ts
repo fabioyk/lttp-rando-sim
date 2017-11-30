@@ -10,10 +10,12 @@ import { EndStatsComponent } from './end-stats/end-stats.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 @NgModule({
   imports: [
     CommonModule,
+    AccordionModule.forRoot(),
     GameMenuModule,
     ItemLogModule,
     ItemTrackerModule,

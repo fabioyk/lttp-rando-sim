@@ -31,7 +31,6 @@
   
 </div>
 <div class='container' *ngIf='gameState === "finished"'>
-  Woo
   <div>
     <app-end-stats
       [items]='items'
@@ -40,7 +39,11 @@
     </app-end-stats>
   </div>
   <div>
-    <button (click)='onContinuePlaying()'>Continue Playing</button>
-    <button (click)='onBackMainMenu()'>Return to Main Menu</button>
+    <button class='btn btn-primary' type='button' (click)='onBackMainMenu()'>
+      Return to Main Menu</button>
+    <button class='btn btn-primary' type='button' (click)='onContinuePlaying()'>
+      Continue Playing</button>
   </div>  
 </div>
+
+<button (click)='onCreditWarp()'>Credits Warp</button>

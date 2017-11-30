@@ -72,6 +72,10 @@ export class GameComponent implements OnInit {
     );
   }
 
+  onCreditWarp() {
+    this.gameState = 'finished';
+  }
+
   ngOnChanges() {
     if (this.currentMap === 'light-world' || this.currentMap === 'dark-world') {
       this.lastWorld = this.currentMap;
