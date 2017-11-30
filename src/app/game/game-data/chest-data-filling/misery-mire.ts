@@ -36,12 +36,12 @@ export class MiseryMire {
         return true;
     }, 'mm-west-spike'));
     entrance.nodes.push(new DungeonNode(
-      '', 241, 196, DungeonNodeStatus.OPEN_DOOR,
+      '', 230, 196, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-bc'));
     entrance.nodes.push(new DungeonNode(
-      'Map Room. Requires Switch on Blue', 241, 68, DungeonNodeStatus.SK_LOCKED,
+      'Map Room. Requires Switch on Blue', 230, 68, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.mmSwitch;
     }, 'mm-map'));
@@ -54,17 +54,17 @@ export class MiseryMire {
 
     var westSpike = new DungeonMapData('mm-west-spike', 'West of Spike Room', '');
     westSpike.nodes.push(new DungeonNode(
-      '', 130, 222, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 226, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-entry'));
     westSpike.nodes.push(new DungeonNode(
-      '', 130, 46, DungeonNodeStatus.OPEN_DOOR,
+      '', 128, 52, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-bridge'));
     westSpike.nodes.push(new DungeonNode(
-      '', 228, 134, DungeonNodeStatus.OPEN_DOOR,
+      '', 226, 140, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-spike-room'));
@@ -77,7 +77,7 @@ export class MiseryMire {
         return true;
     }, 'mm-west-spike'));
     bridge.nodes.push(new DungeonNode(
-      'Bridge Chest', 120, 70, DungeonNodeStatus.CLOSED_CHEST,
+      'Bridge Chest', 122, 70, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[181]));
@@ -85,27 +85,27 @@ export class MiseryMire {
 
     var spikeRoom = new DungeonMapData('mm-spike-room', 'Spike Room', '');
     spikeRoom.nodes.push(new DungeonNode(
-      '', 31, 136, DungeonNodeStatus.OPEN_DOOR,
+      '', 31, 140, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-west-spike'));
     spikeRoom.nodes.push(new DungeonNode(
-      'Spike Room Chest. Requires Invulnerability Item', 152, 132, DungeonNodeStatus.CLOSED_CHEST,
+      'Spike Room Chest. Requires Invulnerability Item', 154, 136, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config);
     }, l[183]));
     spikeRoom.nodes.push(new DungeonNode(
-      '', 56, 64, DungeonNodeStatus.GROUND_KEY,
+      '', 58, 66, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return true;
     }, ''));
     spikeRoom.nodes.push(new DungeonNode(
-      '', 128, 49, DungeonNodeStatus.SK_LOCKED,
+      '', 126, 51, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-big-door'));
     spikeRoom.nodes.push(new DungeonNode(
-      'Map Room. Requires Switch on Blue', 128, 224, DungeonNodeStatus.OPEN_DOOR,
+      'Map Room. Requires Switch on Blue', 126, 226, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.mmSwitch;
     }, 'mm-map'));
@@ -113,27 +113,27 @@ export class MiseryMire {
 
     var mapRoom = new DungeonMapData('mm-map', 'Map Room', '');
     mapRoom.nodes.push(new DungeonNode(
-      '', 81, 68, DungeonNodeStatus.SK_LOCKED,
+      '', 75, 70, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-entry'));
     mapRoom.nodes.push(new DungeonNode(
-      '', 128, 24, DungeonNodeStatus.OPEN_DOOR,
+      '', 126, 28, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.mmSwitch;
     }, 'mm-spike-room'));
     mapRoom.nodes.push(new DungeonNode(
-      '', 80, 196, DungeonNodeStatus.OPEN_DOOR,
+      '', 75, 198, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.mmSwitch;
     }, 'mm-entry'));
     mapRoom.nodes.push(new DungeonNode(
-      '', 176, 196, DungeonNodeStatus.OPEN_DOOR,
+      '', 170, 198, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.mmSwitch;
     }, 'mm-bc'));
     mapRoom.nodes.push(new DungeonNode(
-      'Map Chest', 100, 64, DungeonNodeStatus.CLOSED_CHEST,
+      'Map Chest', 110, 64, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.mmSwitch;
     }, l[182]));
@@ -141,12 +141,12 @@ export class MiseryMire {
 
     var switchRoom = new DungeonMapData('mm-switch-room', 'Switch Room', '');
     switchRoom.nodes.push(new DungeonNode(
-      '', 224, 126, DungeonNodeStatus.SK_LOCKED,
+      '', 224, 130, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-entry'));
     switchRoom.nodes.push(new DungeonNode(
-      '', 32, 126, DungeonNodeStatus.SK_LOCKED,
+      '', 32, 130, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-four-torch'));
@@ -156,7 +156,7 @@ export class MiseryMire {
         return true;
     }, 'switch'));
     switchRoom.nodes.push(new DungeonNode(
-      '', 57, 150, DungeonNodeStatus.GROUND_KEY,
+      '', 57, 152, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return true;
     }, ''));
@@ -169,12 +169,12 @@ export class MiseryMire {
         return true;
     }, 'mm-switch-room'));
     fourTorch.nodes.push(new DungeonNode(
-      'Compass Room. Requires Lamp or Fire Rod', 126, 40, DungeonNodeStatus.OPEN_DOOR,
+      'Compass Room. Requires Lamp or Fire Rod', 124, 45, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasFiresource();
     }, 'mm-compass'));
     fourTorch.nodes.push(new DungeonNode(
-      'Big Key Room. Requires Lamp or Fire Rod', 126, 216, DungeonNodeStatus.OPEN_DOOR,
+      'Big Key Room. Requires Lamp or Fire Rod', 124, 220, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasFiresource();
     }, 'mm-bk'));
@@ -182,12 +182,12 @@ export class MiseryMire {
 
     var compassRoom = new DungeonMapData('mm-compass', 'Compass Room', '');
     compassRoom.nodes.push(new DungeonNode(
-      '', 128, 218, DungeonNodeStatus.OPEN_DOOR,
+      '', 126, 218, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-four-torch'));
     compassRoom.nodes.push(new DungeonNode(
-      '', 225, 128, DungeonNodeStatus.OPEN_DOOR,
+      '', 225, 132, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-lone-stalfo'));    
@@ -200,12 +200,12 @@ export class MiseryMire {
 
     var bkRoom = new DungeonMapData('mm-bk', 'Big Key Room', '');
     bkRoom.nodes.push(new DungeonNode(
-      '', 32, 136, DungeonNodeStatus.OPEN_DOOR,
+      '', 32, 140, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-lone-stalfo'));
     bkRoom.nodes.push(new DungeonNode(
-      'Big Key Chest', 128, 124, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest', 128, 130, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[179]));
@@ -213,12 +213,12 @@ export class MiseryMire {
 
     var loneStalfo = new DungeonMapData('mm-lone-stalfo', 'Northwest of Hub Room', '');
     loneStalfo.nodes.push(new DungeonNode(
-      '', 224, 130, DungeonNodeStatus.OPEN_DOOR,
+      '', 222, 135, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-entry'));
     loneStalfo.nodes.push(new DungeonNode(
-      '', 128, 41, DungeonNodeStatus.BK_LOCKED,
+      '', 124, 45, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-big-door'));
@@ -226,12 +226,12 @@ export class MiseryMire {
 
     var bigDoor = new DungeonMapData('mm-big-door', 'Big Door Room', '');
     bigDoor.nodes.push(new DungeonNode(
-      '', 228, 126, DungeonNodeStatus.SK_LOCKED,
+      '', 224, 130, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-spike-room'));
     bigDoor.nodes.push(new DungeonNode(
-      'Room before Vitreous. Requires Lamp and Cane of Somaria', 128, 83, DungeonNodeStatus.BK_LOCKED,
+      'Room before Vitreous. Requires Lamp and Cane of Somaria', 125, 86, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasLightsource(config) && items.somaria;
     }, 'mm-pre-vitty'));
@@ -239,17 +239,17 @@ export class MiseryMire {
 
     var bigChest = new DungeonMapData('mm-bc', 'Big Chest Room', '');
     bigChest.nodes.push(new DungeonNode(
-      '', 80, 132, DungeonNodeStatus.OPEN_DOOR,
+      '', 80, 136, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-entry'));
     bigChest.nodes.push(new DungeonNode(
-      'Map Room. Requires Switch on Blue', 80, 67, DungeonNodeStatus.OPEN_DOOR,
+      'Map Room. Requires Switch on Blue', 80, 71, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.mmSwitch;
     }, 'mm-map'));
     bigChest.nodes.push(new DungeonNode(
-      'Misery Mire Big Chest', 128, 31, DungeonNodeStatus.BIG_CHEST,
+      'Misery Mire Big Chest', 126, 35, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[177]));
@@ -257,12 +257,12 @@ export class MiseryMire {
 
     var beforeVit = new DungeonMapData('mm-pre-vitty', 'Room before Vitreous', '');
     beforeVit.nodes.push(new DungeonNode(
-      '', 192, 152, DungeonNodeStatus.OPEN_DOOR,
+      '', 188, 156, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'mm-big-door'));
     beforeVit.nodes.push(new DungeonNode(
-      'Vitreous Room. Requires one of Sword/Hammer/Bow', 64, 88, DungeonNodeStatus.BK_LOCKED,
+      'Vitreous Room. Requires one of Sword/Hammer/Bow', 60, 92, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.sword || items.hammer || items.hasBow();
     }, 'mm-vitty'));
@@ -270,7 +270,7 @@ export class MiseryMire {
 
     var vittyRoom = new DungeonMapData('mm-vitty', 'Vitreous Room', '');
     vittyRoom.nodes.push(new DungeonNode(
-      '', 128, 128, DungeonNodeStatus.BOSS,
+      '', 126, 130, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, l[184]));

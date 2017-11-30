@@ -115,15 +115,17 @@ export class GameComponent implements OnInit {
   }
 
   onDungeonFinished([prizeName, mapName]) {
-    this.items.add(
-      this._itemNamesService.getItemById(prizeName).shortName, 
-      mapName);
-    this.itemLog.unshift({
+    if (prizeName.indexOf('Agahnim') === -1) {
+      this.items.add(
+        this._itemNamesService.getItemById(prizeName).shortName, 
+        mapName);
+      this.itemLog.unshift({
         item: prizeName,
         location: mapName + '\'s Boss',
         region: mapName,
         type: 'get'      
       });
+    }    
   }
 
   onGameFinished() {

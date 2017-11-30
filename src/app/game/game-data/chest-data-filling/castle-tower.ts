@@ -64,7 +64,7 @@ export class CastleTower {
 
     var aga = new DungeonMapData('ct-aga', 'Aganim\'s Fight Room', '');
     aga.nodes.push(new DungeonNode(
-      '', 128, 98, DungeonNodeStatus.BOSS,
+      'Agahnim', 128, 98, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, 'Agahnim'));

@@ -13,7 +13,9 @@ export class ItemLineComponent implements OnInit {
   @Input() items:Items;
   shortName:string;
   longName:string;
-  actionType:string; 
+  actionType:string;
+
+  textLine:string;
 
   constructor(private _itemNamesService:ItemNamesService) { }
 
@@ -117,6 +119,11 @@ export class ItemLineComponent implements OnInit {
         this.itemLogEntry.region = 'Dark World';
       }
     }
+    if (this.shortName.indexOf('agahnim') > -1 || this.shortName.indexOf('ganon') > -1) {
+      this.textLine = 'Defeated ' + this.longName;
+    } else {
+      this.textLine = this.actionType + ' ' + this.longName + ' in ' + this.itemLogEntry.location;
+    }    
   }
 
 }

@@ -34,19 +34,18 @@
   <button class='btn btn-primary' (click)='onWarpClicked()' *ngIf='canWarp()'>
     Warp
   </button>
-  <button class='btn btn-info' (click)='onCheckMap("lw")' *ngIf='!items.lwMapOpen'>
+  <button class='btn btn-info' (click)='onCheckMap("lw")' *ngIf='!items.lwMapOpen && !currentDungeon'>
     Check LW Map
   </button>
-  <button class='btn btn-info' (click)='onCheckMap("dw")' *ngIf='!items.dwMapOpen && canViewDarkWorldMap()'>
+  <button class='btn btn-info' (click)='onCheckMap("dw")' *ngIf='!items.dwMapOpen && canViewDarkWorldMap() && !currentDungeon'>
     Check DW Map
   </button>
-  <button class='btn btn-warning' (click)='checkMedallion("tr")' *ngIf='!items.trMedallionChecked && canViewTRMedallion()'>
+  <button class='btn btn-warning' (click)='checkMedallion("tr")' *ngIf='!items.trMedallionChecked && canViewTRMedallion() && !currentDungeon'>
     Check TR Medallion
   </button>
-  <button class='btn btn-warning' (click)='checkMedallion("mm")' *ngIf='!items.mmMedallionChecked && canViewMMMedallion()'>
+  <button class='btn btn-warning' (click)='checkMedallion("mm")' *ngIf='!items.mmMedallionChecked && canViewMMMedallion() && !currentDungeon'>
     Check MM Medallion
   </button>
 </div>
-
-
 {{tooltip}}
+<button (click)='getAll()'>get All</button>

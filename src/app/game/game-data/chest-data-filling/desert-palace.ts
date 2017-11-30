@@ -15,12 +15,12 @@ export class DesertPalace {
 
     var entrance = new DungeonMapData('dp-entry', 'Big Hall', '');
     entrance.nodes.push(new DungeonNode(
-      '', 128, 216, DungeonNodeStatus.OPEN_DOOR,
+      '', 126, 216, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'exit'));
     entrance.nodes.push(new DungeonNode(
-      '', 6, 64, DungeonNodeStatus.OPEN_DOOR,
+      '', 16, 66, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'dp-bc'));
@@ -40,12 +40,12 @@ export class DesertPalace {
         return true;
     }, 'dp-map'));
     entrance.nodes.push(new DungeonNode(
-      '', 250, 128, DungeonNodeStatus.SK_LOCKED,
+      '', 240, 128, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'dp-right'));
     entrance.nodes.push(new DungeonNode(
-      'Power Glove Required', 6, 194, DungeonNodeStatus.OPEN_DOOR,
+      'Power Glove Required', 16, 194, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.glove;
     }, 'dp-first-tile'));
@@ -53,12 +53,12 @@ export class DesertPalace {
 
     var torch = new DungeonMapData('dp-torch', 'Torch Room', '');
     torch.nodes.push(new DungeonNode(
-      '', 129, 210, DungeonNodeStatus.OPEN_DOOR,
+      '', 127, 210, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'dp-entry'));
     torch.nodes.push(new DungeonNode(
-      'Torch Item (Boots Required)', 72, 91, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
+      'Torch Item (Boots Required)', 74, 91, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.boots;
     }, l[69]));
@@ -76,7 +76,7 @@ export class DesertPalace {
         return true;
     }, 'dp-entry'));
     map.nodes.push(new DungeonNode(
-      'Map Chest', 128, 123, DungeonNodeStatus.CLOSED_CHEST,
+      'Map Chest', 129, 123, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[68]));
@@ -89,12 +89,12 @@ export class DesertPalace {
         return true;
     }, 'dp-entry'));
     right.nodes.push(new DungeonNode(
-      'Compass Chest', 128, 200, DungeonNodeStatus.CLOSED_CHEST,
+      'Compass Chest', 129, 200, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[71]));
     right.nodes.push(new DungeonNode(
-      'Big Key Chest', 128, 22, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest', 129, 22, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[70]));
@@ -102,12 +102,12 @@ export class DesertPalace {
 
     var bcRoom = new DungeonMapData('dp-bc', 'Big Chest Room', '');
     bcRoom.nodes.push(new DungeonNode(
-      '', 128, 216, DungeonNodeStatus.OPEN_DOOR,
+      '', 126, 216, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'dp-entry'));
     bcRoom.nodes.push(new DungeonNode(
-      'Big Key Chest', 128, 110, DungeonNodeStatus.BIG_CHEST,
+      'Big Key Chest', 126, 120, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[67]));
@@ -115,17 +115,17 @@ export class DesertPalace {
 
     var firstTile = new DungeonMapData('dp-first-tile', 'First Tile Room', '');
     firstTile.nodes.push(new DungeonNode(
-      '', 128, 217, DungeonNodeStatus.OPEN_DOOR,
+      '', 126, 219, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'dp-entry'));
     firstTile.nodes.push(new DungeonNode(
-      '', 128, 42, DungeonNodeStatus.SK_LOCKED,
+      '', 126, 44, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'dp-big-door'));
     firstTile.nodes.push(new DungeonNode(
-      '', 56, 188, DungeonNodeStatus.GROUND_KEY,
+      '', 58, 190, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return true;
     }, ''));
@@ -148,7 +148,7 @@ export class DesertPalace {
 
     var lanmoRoom = new DungeonMapData('dp-lanmo', 'Lanmolas Room', '');
     lanmoRoom.nodes.push(new DungeonNode(
-      '', 128, 128, DungeonNodeStatus.BOSS,
+      'Lanmolas', 128, 128, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, l[72]));

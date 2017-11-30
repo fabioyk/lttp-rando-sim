@@ -16,17 +16,17 @@ export class SwampPalace {
 
     var entrance = new DungeonMapData('sp-entry', 'Entrance', '');
     entrance.nodes.push(new DungeonNode(
-      '', 126, 240, DungeonNodeStatus.OPEN_DOOR,
+      '', 124, 240, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'exit'));
     entrance.nodes.push(new DungeonNode(
-      'Swamp Palace First Chest', 92, 50, DungeonNodeStatus.CLOSED_CHEST,
+      'Swamp Palace First Chest', 92, 52, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[139]));
     entrance.nodes.push(new DungeonNode(
-      '', 64, 24, DungeonNodeStatus.SK_LOCKED,
+      '', 64, 32, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-tall-room'));
@@ -39,12 +39,12 @@ export class SwampPalace {
         return true;
     }, 'sp-entry'));
     tallRoom.nodes.push(new DungeonNode(
-      'Map Chest', 32, 66, DungeonNodeStatus.CLOSED_CHEST,
+      'Map Chest', 34, 68, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[142]));
     tallRoom.nodes.push(new DungeonNode(
-      'Main Hub. Requires Hammer', 144, 197, DungeonNodeStatus.OPEN_DOOR,
+      'Main Hub. Requires Hammer', 144, 199, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hammer;
     }, 'sp-main-hub'));
@@ -57,32 +57,32 @@ export class SwampPalace {
         return true;
     }, 'sp-tall-room'));
     mainHub.nodes.push(new DungeonNode(
-      'Big Chest', 124, 111, DungeonNodeStatus.BIG_CHEST,
+      'Big Chest', 123, 115, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[140]));
     mainHub.nodes.push(new DungeonNode(
-      'Freestanding Key. Requires Hookshot', 232, 139, DungeonNodeStatus.GROUND_KEY,
+      'Freestanding Key. Requires Hookshot', 232, 137, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return items.hookshot;
     }, ''));
     mainHub.nodes.push(new DungeonNode(
-      'Downstairs. Requires Hookshot', 128, 24, DungeonNodeStatus.SK_LOCKED,
+      'Downstairs. Requires Hookshot', 126, 24, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hookshot;
     }, 'sp-downstairs'));
     mainHub.nodes.push(new DungeonNode(
-      '', 16, 68, DungeonNodeStatus.SK_LOCKED,
+      '', 16, 70, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-switch'));
     mainHub.nodes.push(new DungeonNode(
-      '', 16, 196, DungeonNodeStatus.OPEN_DOOR,
+      '', 16, 198, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-south-switch'));
     mainHub.nodes.push(new DungeonNode(
-      '', 128, 228, DungeonNodeStatus.OPEN_DOOR,
+      '', 126, 228, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-south'));
@@ -95,7 +95,7 @@ export class SwampPalace {
         return true;
     }, 'sp-main-hub'));
     southRoom.nodes.push(new DungeonNode(
-      'Compass Chest', 60, 40, DungeonNodeStatus.CLOSED_CHEST,
+      'Compass Chest', 62, 42, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[144]));
@@ -103,7 +103,7 @@ export class SwampPalace {
 
     var switchRoom = new DungeonMapData('sp-switch', 'Switch Room', '');
     switchRoom.nodes.push(new DungeonNode(
-      '', 222, 136, DungeonNodeStatus.OPEN_DOOR,
+      '', 222, 138, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-main-hub'));
@@ -113,12 +113,12 @@ export class SwampPalace {
         return true;
     }, 'switch'));
     switchRoom.nodes.push(new DungeonNode(
-      'Water Switch', 72, 101, DungeonNodeStatus.WATER_SWITCH,
+      'Water Switch', 72, 103, DungeonNodeStatus.WATER_SWITCH,
     function(items:Items, config:Config) {
         return true;
     }, 'flood'));
     switchRoom.nodes.push(new DungeonNode(
-      'South of Switch Room. Requires Switch on Blue', 128, 225, DungeonNodeStatus.OPEN_DOOR,
+      'South of Switch Room. Requires Switch on Blue', 126, 227, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.spSwitch;
     }, 'sp-south-switch'));
@@ -126,22 +126,22 @@ export class SwampPalace {
 
     var southSwitch = new DungeonMapData('sp-south-switch', 'South of Switch Room', '');
     southSwitch.nodes.push(new DungeonNode(
-      '', 241, 133, DungeonNodeStatus.OPEN_DOOR,
+      '', 241, 134, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-main-hub'));
     southSwitch.nodes.push(new DungeonNode(
-      'Switch Room. Requires Switch on Blue', 192, 88, DungeonNodeStatus.OPEN_DOOR,
+      'Switch Room. Requires Switch on Blue', 192, 90, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.spSwitch;
     }, 'sp-switch'));
     southSwitch.nodes.push(new DungeonNode(
-      'Left Side. Requires Flooded Swamp', 16, 132, DungeonNodeStatus.OPEN_DOOR,
+      'Left Side. Requires Flooded Swamp', 16, 134, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.spFlooded;
     }, 'sp-left'));
     southSwitch.nodes.push(new DungeonNode(
-      'Key Pot Room. Requires non Flooded Swamp (leave dungeon to reset)', 128, 100, DungeonNodeStatus.OPEN_DOOR,
+      'Key Pot Room. Requires non Flooded Swamp (leave dungeon to reset)', 126, 100, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return !items.spFlooded;
     }, 'sp-left-key'));
@@ -149,12 +149,12 @@ export class SwampPalace {
 
     var leftKey = new DungeonMapData('sp-left-key', 'Key Pot Room', '');
     leftKey.nodes.push(new DungeonNode(
-      '', 126, 200, DungeonNodeStatus.OPEN_DOOR,
+      '', 124, 202, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-south-switch'));
     leftKey.nodes.push(new DungeonNode(
-      '', 118, 96, DungeonNodeStatus.GROUND_KEY,
+      '', 118, 98, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return true;
     }, ''));
@@ -167,12 +167,12 @@ export class SwampPalace {
         return true;
     }, 'sp-south-switch'));
     leftSide.nodes.push(new DungeonNode(
-      'Left Side Rupee Chest', 67, 83, DungeonNodeStatus.CLOSED_CHEST,
+      'Left Side Rupee Chest', 67, 85, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[143]));
     leftSide.nodes.push(new DungeonNode(
-      'Big Key Chest. Requires Switch on Red', 247, 83, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest. Requires Switch on Red', 247, 85, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return !items.spSwitch;
     }, l[141]));
@@ -180,17 +180,17 @@ export class SwampPalace {
 
     var downstairs = new DungeonMapData('sp-downstairs', 'Downstairs', '');
     downstairs.nodes.push(new DungeonNode(
-      '', 188, 96, DungeonNodeStatus.OPEN_DOOR,
+      '', 188, 100, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-main-hub'));
     downstairs.nodes.push(new DungeonNode(
-      'Flooded Room Left Chest', 158, 198, DungeonNodeStatus.CLOSED_CHEST,
+      'Flooded Room Left Chest', 156, 198, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[145]));
     downstairs.nodes.push(new DungeonNode(
-      'Flooded Room Right Chest', 175, 198, DungeonNodeStatus.CLOSED_CHEST,
+      'Flooded Room Right Chest', 177, 198, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[146]));
@@ -200,7 +200,7 @@ export class SwampPalace {
         return true;
     }, l[147]));
     downstairs.nodes.push(new DungeonNode(
-      'Arrghus Room', 172, 16, DungeonNodeStatus.OPEN_DOOR,
+      'Arrghus Room', 172, 20, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-arrghus'));
@@ -208,7 +208,7 @@ export class SwampPalace {
 
     var arrghusRoom = new DungeonMapData('sp-arrghus', 'Arrghus Room', '');
     arrghusRoom.nodes.push(new DungeonNode(
-      '', 128, 152, DungeonNodeStatus.BOSS,
+      'Arrghus', 128, 152, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, l[148]));
