@@ -54,21 +54,13 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Tavern', 8.1, 57.8,
+      'Kakariko', 4.5, 46.8,
       function(items:Items, config:Config) {
         return true;
       },
       null,
-      [l[6]]
-    ));
-
-    itemLocations.push(new ItemLocation(
-      'Chicken Hut', 4.4, 54.2,
-      function(items:Items, config:Config) {
-        return true;
-      },
-      null,
-      [l[7]]
+      [l[6], l[7], l[12], l[13], l[14], l[15], l[16], 
+      l[17], l[18], l[19], l[20], l[21], l[28]]
     ));
 
     itemLocations.push(new ItemLocation(
@@ -87,24 +79,6 @@ export class LightWorld {
       },
       null,
       [l[9], l[10], l[11]]
-    ));
-
-    itemLocations.push(new ItemLocation(
-      'Kakariko Well', 1.7, 41,
-      function(items:Items, config:Config) {
-        return true;
-      },
-      null,
-      [l[12], l[13], l[14], l[15], l[16]]
-    ));
-
-    itemLocations.push(new ItemLocation(
-      'Thieves Hut', 6.4, 41,
-      function(items:Items, config:Config) {
-        return true;
-      },
-      null,
-      [l[17], l[18], l[19], l[20], l[21]]
     ));
 
     itemLocations.push(new ItemLocation(
@@ -132,15 +106,6 @@ export class LightWorld {
       },
       null,
       [l[27]]
-    ));
-
-    itemLocations.push(new ItemLocation(
-      'Bottle Vendor', 4.5, 46.8,
-      function(items:Items, config:Config) {
-        return true;
-      },
-      null,
-      [l[28]]
     ));
 
     itemLocations.push(new ItemLocation(
@@ -180,33 +145,12 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Bombos Tablet', 11, 92.2,
-      function(items:Items, config:Config) {
-        return items.book && items.mirror && items.canSouthDarkWorld() 
-          && (items.sword >= 2 || (items.hammer && config.mode === 'swordless'));
-      },
-      function(items:Items, config:Config) {
-        return items.book && items.mirror && items.canSouthDarkWorld();
-      },
-      [l[33]]
-    ));
-
-    itemLocations.push(new ItemLocation(
       'King Zora', 47.7, 12.1,
       function(items:Items, config:Config) {
         return items.flippers || items.glove || config.canGlitch;
       },
       null,
       [l[34]]
-    ));
-
-    itemLocations.push(new ItemLocation(
-      'Forest Hideout', 9.4, 13,
-      function(items:Items, config:Config) {
-        return true;
-      },
-      null,
-      [l[35]]
     ));
 
     itemLocations.push(new ItemLocation(
@@ -218,34 +162,7 @@ export class LightWorld {
         return true;
       },
       [l[36]]
-    ));
-
-    itemLocations.push(new ItemLocation(
-      'South of Grove', 14.1, 84.1,
-      function(items:Items, config:Config) {
-        return items.mirror && items.canSouthDarkWorld();
-      },
-      null,
-      [l[37]]
-    ));
-
-    itemLocations.push(new ItemLocation(
-      'Graveyard Cliff Cave', 28.1, 27,
-      function(items:Items, config:Config) {
-        return items.mirror && items.moonPearl && items.canNorthWestDarkWorld();
-      },
-      null,
-      [l[38]]
-    ));
-
-    itemLocations.push(new ItemLocation(
-      'Checkerboard Cave', 8.8, 77.3,
-      function(items:Items, config:Config) {
-        return items.canMire() && items.mirror;
-      },
-      null,
-      [l[39]]
-    ));
+    ));    
 
     itemLocations.push(new ItemLocation(
       'Library', 7.7, 65.9,
@@ -259,12 +176,12 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Mushroom Location', 6.2, 8.6,
+      'Lost Woods', 7.2, 9.6,
       function(items:Items, config:Config) {
         return true;
       },
       null,
-      [l[42]]
+      [l[42], l[35]]
     ));
 
     itemLocations.push(new ItemLocation(
@@ -415,7 +332,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'East Death Mountain 7 Chest Cave', 41.4, 17.1,
+      'Paradox Cave', 41.4, 17.1,
       function(items:Items, config:Config) {
         return items.canEastDeathMountain(config);
       },
@@ -444,14 +361,7 @@ export class LightWorld {
       [l[87]]
     ));
 
-    itemLocations.push(new ItemLocation(
-      'Blacksmiths', 15.2, 51.8,
-      function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld() && items.glove === 2;
-      },
-      null,
-      [l[113]]
-    ));
+    
 
     // itemLocations.push(new ItemLocation(
     //   'King\'s Tomb', 0, 0,

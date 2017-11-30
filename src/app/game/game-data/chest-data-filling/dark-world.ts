@@ -175,6 +175,54 @@ export class DarkWorld {
       ['Ganon']
     ));
 
+    itemLocations.push(new ItemLocation(
+      'Bombos Tablet', 62.5, 92.2,
+      function(items:Items, config:Config) {
+        return items.book && items.mirror && items.canSouthDarkWorld() 
+          && (items.sword >= 2 || (items.hammer && config.mode === 'swordless'));
+      },
+      function(items:Items, config:Config) {
+        return items.book && items.mirror && items.canSouthDarkWorld();
+      },
+      [l[33]]
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'South of Grove', 62.5, 84.1,
+      function(items:Items, config:Config) {
+        return items.mirror && items.canSouthDarkWorld();
+      },
+      null,
+      [l[37]]
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'Graveyard Cliff Cave', 78.5, 27,
+      function(items:Items, config:Config) {
+        return items.mirror && items.moonPearl && items.canNorthWestDarkWorld();
+      },
+      null,
+      [l[38]]
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'Checkerboard Cave', 60, 77.3,
+      function(items:Items, config:Config) {
+        return items.canMire() && items.mirror;
+      },
+      null,
+      [l[39]]
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'Blacksmiths', 57, 65.9,
+      function(items:Items, config:Config) {
+        return items.canNorthWestDarkWorld() && items.glove === 2;
+      },
+      null,
+      [l[113]]
+    ));
+
     return itemLocations;
   }
 }
