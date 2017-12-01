@@ -40,12 +40,12 @@
   <button class='btn btn-info' (click)='onCheckMap("dw")' *ngIf='!items.dwMapOpen && canViewDarkWorldMap() && !currentDungeon'>
     Check DW Map
   </button>
-  <button class='btn btn-warning' (click)='checkMedallion("tr")' *ngIf='!items.trMedallionChecked && canViewTRMedallion() && !currentDungeon'>
-    Check TR Medallion
-  </button>
   <button class='btn btn-warning' (click)='checkMedallion("mm")' *ngIf='!items.mmMedallionChecked && canViewMMMedallion() && !currentDungeon'>
     Check MM Medallion
   </button>
+  <button class='btn btn-warning' (click)='checkMedallion("tr")' *ngIf='!items.trMedallionChecked && canViewTRMedallion() && !currentDungeon'>
+    Check TR Medallion
+  </button>  
 </div>
 {{tooltip}}
-<button (click)='getAll()'>get All</button>
+<button *ngIf='isDev' (click)='getAll()'>get All</button>

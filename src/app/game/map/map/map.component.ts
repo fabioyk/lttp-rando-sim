@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { isDevMode } from '@angular/core';
 import { Items } from '../../game-data/items';
 import { GameService } from '../../game-data/game-service.service';
 import { MapNode } from '../../game-data/map-node';
@@ -23,6 +24,7 @@ export class MapComponent implements OnInit {
   @Output() finishedDungeon = new EventEmitter<[string, string]>();
   @Output() onGameFinished = new EventEmitter<string>();
   tooltip:string;
+  isDev = false;
 
   currentDungeonMap: DungeonMapData;
   currentDungeon: DungeonData;
@@ -34,6 +36,8 @@ export class MapComponent implements OnInit {
               private itemNameService:ItemNamesService) { }
 
   ngOnInit() {    
+    this.isDev = isDevMode();
+    
     this.currentBackgroundImage = 'url(assets/light-world.png)';
     this.tooltip = '';
   }

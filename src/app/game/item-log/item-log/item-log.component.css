@@ -7,6 +7,25 @@ hr {
 }
 
 .item-log-body {
-  max-height: 500px;
+  height: 800px;
+  padding: 10px;
   overflow-y: scroll;
+}
+
+@media (min-width: 768px) {
+  .item-log-body {
+    height: 500px;
+  }
+}
+
+@media (min-width: 992px) {
+  .item-log-body {
+    height: 400px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .item-log-body {
+    height: 465px;
+  }
 }

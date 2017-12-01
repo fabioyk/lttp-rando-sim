@@ -100,7 +100,7 @@ export class ThievesTown {
         return true;
     }, 'tt-fork2'));
     fork.nodes.push(new DungeonNode(
-      '', 226, 1420, DungeonNodeStatus.OPEN_DOOR,
+      '', 226, 142, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-stalfo-corridor'));

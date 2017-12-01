@@ -1,17 +1,10 @@
 <div class='panel panel-info'>
   <div class='panel-heading'>
-    <h3 class='panel-title'>Item Log</h3>
-    <hr>
-    <form class='form-inline'>
-      <div class='form-group'>
-        <button class='btn btn-default' type='button' name='showImportantButton' 
-            [(ngModel)]='filterArgs.onlyImportantShown' btnCheckbox>Only Show Important</button>
-      </div>
-      <div class='form-group'>
-        <input type='text' class='form-control' name='searchForm' 
-          [(ngModel)]='filterArgs.searchQuery' placeholder='Search'>
-      </div>
-    </form>
+    <h3 class='panel-title'>Item Log <button class='btn btn-default' type='button' name='showImportantButton' 
+      [(ngModel)]='filterArgs.onlyImportantShown' btnCheckbox>Filter Relevant</button></h3>
+    
+    <input type='text' class='form-control' name='searchForm' 
+      [(ngModel)]='filterArgs.searchQuery' placeholder='Search'>
   </div>
   <div class='panel-body item-log-body' *ngIf='itemLogList.length > 0'>
     <app-item-line *ngFor='let entry of (itemLogList | logSearch:filterArgs)'

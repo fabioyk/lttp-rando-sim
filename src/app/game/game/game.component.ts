@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
+import { isDevMode } from '@angular/core';
 import { Location } from '@angular/common';
 import { GameService } from '../game-data/game-service.service';
 import { Items } from '../game-data/items';
@@ -19,6 +20,7 @@ import { ItemNamesService } from '../../log-parse/item-names.service';
 })
 export class GameComponent implements OnInit {
   modeSelected = 'standard';
+  isDev = false;
   seedNum = '';
   errorMessage = '';
 
@@ -41,6 +43,8 @@ export class GameComponent implements OnInit {
               private _location: Location) { }
 
   ngOnInit() {
+    this.isDev = isDevMode();
+
     this.gameState = 'loading';
     this._seedService.ping();
 

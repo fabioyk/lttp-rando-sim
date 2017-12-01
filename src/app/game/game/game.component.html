@@ -2,14 +2,15 @@
   Loading...
 </div>
 <div class='container-fluid' *ngIf='gameState === "playing"'>
+  <h1>Z3R Simulator</h1>
   <app-item-tracker
-    class='col-sm-3'
+    class='col-md-3 col-sm-4 col-xs-3 game-obj'
     [items]='items'
     [config]='config'
     [dungeonsData]='dungeonsData'
   ></app-item-tracker>
   <app-map 
-    class='col-sm-6'
+    class='col-md-6 col-sm-8 col-xs-9 game-obj'
     [items]='items'
     [config]='config'
     [(currentMap)]='currentMap'
@@ -19,12 +20,12 @@
     (onGameFinished)='onGameFinished()'
   ></app-map>
   <app-item-log
-    class='col-sm-3'
+    class='col-md-3 col-xs-12 game-obj'
     [itemLogList]='itemLog'
     [items]='items'></app-item-log>
   <app-options></app-options>  
   <app-game-menu
-    class='col-sm-6'
+    class='col-sm-6 game-obj'
     [items]='items'
     [currentMap]='currentMap'
     ></app-game-menu>
@@ -46,4 +47,4 @@
   </div>  
 </div>
 
-<button (click)='onCreditWarp()'>Credits Warp</button>
+<button *ngIf='isDev' (click)='onCreditWarp()'>Credits Warp</button>
