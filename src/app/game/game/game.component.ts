@@ -57,14 +57,14 @@ export class GameComponent implements OnInit {
 
     this.sub = this._route.queryParams.subscribe(
       params => {
-        console.log(params);
+        if (!params.seed) {
+          this._router.navigate(['/']);
+        }
         var canGlitch = false;
         if (params.minorGlitches) {
           canGlitch = true;
-          console.log('glitches allowed');
         }
         if (params.seed && +params.seed === this._seedService.lastSeedNum) {
-          console.log('in cache!');
           this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch);
         } else {
           this._seedService.getSeed(gameMode, +params.seed)
@@ -107,9 +107,12 @@ export class GameComponent implements OnInit {
       setTimeout(() => {
         if (type !== 'view') {
           this.items.add(this._itemNamesService.getItemById(prize).shortName, region);
-        }        
+        }
+        var itemData = this.convertItemName(prize, type);
         this.itemLog.unshift({
           item: prize,
+          shortName: itemData[0],
+          longName: itemData[1],
           location: mapNode.tooltip ? mapNode.tooltip : mapNode.id,
           region: region,
           type: type      
@@ -118,13 +121,104 @@ export class GameComponent implements OnInit {
     });
   }
 
+  convertItemName(itemName:string, type:string):[string, string] {
+    var res = this._itemNamesService.getItemById(itemName);
+    var longName = res.longName, shortName = res.shortName;
+
+    var modifier = type === 'view' ? 1 : 0;
+    
+    if (res.longName.indexOf('Progressive') > -1) {
+      switch (res.shortName) {
+        case 'glove':
+          switch(this.items.glove + modifier) {
+            case 1:
+              longName = 'Power Gloves';
+              break;
+            case 2:
+              longName = 'Titan Mitts';
+              break;
+          }
+          shortName = 'glove' + (this.items.glove + modifier);
+          break;
+        case 'sword':
+          switch(this.items.sword + modifier) {
+            case 1:
+              longName = 'Fighter Sword';
+              break;
+            case 2:
+              longName = 'Master Sword';
+              break;
+            case 3:
+              longName = 'Tempered Sword';
+              break;
+            case 4:
+              longName = 'Golden Sword';
+              break;
+          }
+          shortName = 'sword' + (this.items.sword + modifier);
+          break;
+        case 'tunic':
+          switch(this.items.tunic + modifier) {
+            case 2:
+              longName = 'Blue Mail';
+              break;
+            case 3:
+              longName = 'Red Mail';
+              break;
+          }
+          shortName = 'tunic' + (this.items.tunic + modifier);
+          break;
+        case 'shield':
+          switch(this.items.shield + modifier) {
+            case 1:
+              longName = 'Blue Shield';
+              break;
+            case 2:
+              longName = 'Red Shield';
+              break;
+            case 3:
+              longName = 'Mirror Shield';
+              break;
+          }
+          shortName = 'shield' + (this.items.shield + modifier);
+          break;
+      }
+    }
+
+    if (res.shortName === 'bow') {
+      shortName = 'bow' + (this.items.bow + modifier*2);
+    }
+    if (res.shortName === 'silvers') {
+      shortName = 'bow1';
+    }
+    if (res.shortName === 'boomerang') {
+      shortName = 'boomerang1';
+    }
+    if (res.shortName === 'magicBoomerang') {
+      shortName = 'boomerang2';
+    }
+
+    if (res.shortName.indexOf('Agahnim') > -1) {
+      shortName = 'agahnim1';
+    }
+
+    if (res.shortName.indexOf('crystal') > -1) {
+      shortName = 'crystal';
+    }
+    return [shortName, longName];
+  }
+
   onDungeonFinished([prizeName, mapName]) {
     if (prizeName.indexOf('Agahnim') === -1) {
       this.items.add(
         this._itemNamesService.getItemById(prizeName).shortName, 
         mapName);
+
+      var itemData = this.convertItemName(prizeName, 'get');
       this.itemLog.unshift({
         item: prizeName,
+        shortName: itemData[0],
+        longName: itemData[1],
         location: mapName + '\'s Boss',
         region: mapName,
         type: 'get'      

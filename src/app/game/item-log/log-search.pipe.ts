@@ -17,7 +17,7 @@ export class LogSearchPipe implements PipeTransform {
     }
 
     return items.filter(item => {
-      if (filterObj.onlyImportantShown && item.item.indexOf('Agahnim') === -1 && item.item.indexOf('Ganon') === -1 && !ItemNamesService.isTrackableItem(+item.item) && item.type !== 'view') {
+      if (filterObj.onlyImportantShown && item.longName.indexOf('Agahnim') === -1 && item.longName.indexOf('Ganon') === -1 && !ItemNamesService.isTrackableItem(+item.item) && item.type !== 'view') {
         return false;
       } 
       if (filterObj.searchQuery != '') {        

@@ -7,9 +7,30 @@ hr {
 }
 
 .item-log-body {
-  max-height: 800px;
+  max-height: 500px;
   padding: 10px;
   overflow-y: scroll;
+}
+
+.panel-heading {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.form-control {
+  display: initial;
+  width: 100%;
+}
+
+.btn-default.active {
+  background-color: rgb(54, 54, 54);
+  color: white;
+}
+.btn-default.active:focus {
+  background-color: rgb(105, 105, 105);
+}
+.btn-default.active:hover {
+  background-color: rgb(94, 94, 94);
 }
 
 @media (min-width: 768px) {
@@ -20,12 +41,12 @@ hr {
 
 @media (min-width: 992px) {
   .item-log-body {
-    max-height: 400px;
+    height: 400px;
   }
 }
 
 @media (min-width: 1200px) {
   .item-log-body {
-    height: 465px;
+    height: 498px;
   }
 }

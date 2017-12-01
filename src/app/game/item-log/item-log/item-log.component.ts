@@ -28,13 +28,13 @@ export class ItemLogComponent implements OnInit {
 
   ngDoCheck() {
     let changes = this.iterableDiffer.diff(this.itemLogList);
-    if (changes) {
-      console.log(this.itemLogList);
-      console.log(this.filterArgs);
-    }
   }
 
   onToggleImportant() {
     this.filterArgs.onlyImportantShown = !this.filterArgs.onlyImportantShown;
+  }
+
+  onCleanText() {
+    this.filterArgs.searchQuery = '';
   }
 }

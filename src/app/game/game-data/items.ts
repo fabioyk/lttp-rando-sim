@@ -92,6 +92,7 @@ export class Items {
     bigChests: 0,
     bosses: 0,
     itemsPreGTBK: 0,
+    totalItemsPreGTBK: 0,
     sword0B: 0,
     sword1B: 0,
     sword2B: 0,
@@ -100,6 +101,7 @@ export class Items {
     preBoots: 0,
     preMirror: 0,
     preFlute: 0,
+    preGlove: 0,
     preMitts: 0,
     preBow: 0,
     preHammer: 0,
@@ -114,6 +116,7 @@ export class Items {
     preGo: 0,
     startTime: 0
   }
+  preEachDun = [];
   gtChestCount = 0;
 
   startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];
@@ -137,6 +140,7 @@ export class Items {
       this.ipItems, this.mmItems, this.trItems, this.gtItems];
 
     this.stats.startTime = Date.now();
+    this.preEachDun = [0, 0, 0, 0, 0, 0, 0];
   }
 
   add(itemName:string, region:string) {
@@ -166,6 +170,9 @@ export class Items {
         case 3: this.stats.sword3B++; break;
         case 4: this.stats.sword4B++; break;
       }
+      if (itemName.indexOf('crystal') > -1) {
+        this.preEachDun[+itemName.charAt(7)-1] = this.stats.totalCount;
+      }
     }
 
     switch(itemName) {
@@ -185,7 +192,10 @@ export class Items {
       case 'hookshot': this.hookshot = true; this.stats.preHook = this.stats.totalCount; break;
       case 'silvers': this.bow += 1; break;
       case 'tunic': this.tunic++; break;
-      case 'glove': this.glove++; if (this.glove === 2) this.stats.preMitts = this.stats.totalCount; break;
+      case 'glove': this.glove++; 
+        if (this.glove === 1) this.stats.preGlove = this.stats.totalCount;
+        if (this.glove === 2) this.stats.preMitts = this.stats.totalCount; 
+        break;
       case 'shield': this.shield++; break;
       case 'sword': this.sword++; if (this.sword === 2) this.stats.preMS = this.stats.totalCount;  break;
       case 'Agahnim': this.agahnim = 1; break;
@@ -233,6 +243,7 @@ export class Items {
       this.gtChestCount++;
       if (itemName === 'bigKey') {
         this.stats.itemsPreGTBK = this.gtChestCount;
+        this.stats.totalItemsPreGTBK = this.stats.totalCount;
       }
     }
 

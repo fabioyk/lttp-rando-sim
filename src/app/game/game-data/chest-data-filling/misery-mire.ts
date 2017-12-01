@@ -270,7 +270,7 @@ export class MiseryMire {
 
     var vittyRoom = new DungeonMapData('mm-vitty', 'Vitreous Room', '');
     vittyRoom.nodes.push(new DungeonNode(
-      '', 126, 130, DungeonNodeStatus.BOSS,
+      'Vitreous', 126, 130, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, l[184]));

@@ -17,6 +17,8 @@ import { TurtleRock } from './chest-data-filling/turtle-rock';
 import { GanonsTower } from './chest-data-filling/ganons-tower';
 import { MapNode } from './map-node';
 import { Items } from './items';
+import { ItemNames } from '../../log-parse/item-names.enum';
+import { ItemNamesService } from '../../log-parse/item-names.service';
 
 @Injectable()
 export class GameService {
@@ -24,7 +26,7 @@ export class GameService {
   dungeonsData: DungeonData[];
   overworldData: OverworldData;
 
-  constructor() { }
+  constructor(private _itemNamesService: ItemNamesService) { }
 
   loadSeed(log:string, seedNumber:number, canGlitch:boolean) {
     var spoilerLogManager = new SpoilerLog();
@@ -45,8 +47,6 @@ export class GameService {
     const medallions = ['bombos', 'ether', 'quake'];
     this.config.mmMedallion = medallions[logObj.mmMedallion];
     this.config.trMedallion = medallions[logObj.trMedallion];
-
-    console.log('Medallions:',this.config.mmMedallion,this.config.trMedallion);
 
     this.dungeonsData = [];
     this.dungeonsData.push(EasternPalace.setup(logObj.locations, this.config));
@@ -151,6 +151,16 @@ export class GameService {
     }
 
     return accNodes;
+  }
+
+  getDungeonPrizes() {
+    var obj = {};
+    this.dungeonsData.forEach((dunData, i) => {
+      if (i !== 3 && i !== 11) {
+        obj[dunData.name] = this._itemNamesService.getItemById(dunData.dungeonPrize).longName;
+      }
+    });
+    return obj;
   }
 
 }

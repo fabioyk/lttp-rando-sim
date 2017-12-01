@@ -2,7 +2,7 @@
   Loading...
 </div>
 <div class='container-fluid' *ngIf='gameState === "playing"'>
-  <h1>Z3R Simulator</h1>
+  <h1><span class='title' (click)='onBackMainMenu()'>Z3R Simulator</span></h1>
   <app-item-tracker
     class='col-md-3 col-sm-4 col-xs-3 game-obj'
     [items]='items'

@@ -14,6 +14,7 @@ import { SharedModule } from './shared/shared.module';
 import { SeedApiService } from './shared/seed-api.service';
 import { HttpModule } from '@angular/http';
 import { ItemNamesService } from './log-parse/item-names.service';
+import { WindowRefService } from "./shared/window-ref.service";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { ItemNamesService } from './log-parse/item-names.service';
       { path: 'open', component: GameComponent },  
     ])
   ],
-  providers: [GameService, SeedApiService, ItemNamesService],
+  providers: [GameService, SeedApiService, ItemNamesService, WindowRefService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

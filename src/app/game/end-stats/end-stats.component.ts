@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Items } from '../game-data/items';
 import { Config } from '../game-data/config';
+import { GameService } from '../game-data/game-service.service';
 
 @Component({
   selector: 'app-end-stats',
@@ -11,7 +12,7 @@ export class EndStatsComponent implements OnInit {
   @Input() items:Items;
   @Input() config:Config;
 
-  constructor() { }
+  constructor(private _gameService:GameService) { }
 
   ngOnInit() {
   }
@@ -65,7 +66,7 @@ export class EndStatsComponent implements OnInit {
 
   getItemInfoTables() {
     var res = [];
-    res.push(['Item Progress', this.generateItemProgressTable()]);
+    res.push(['Locations Pre Items', this.generateItemProgressTable()]);
     return res;
   }
 
@@ -74,6 +75,7 @@ export class EndStatsComponent implements OnInit {
 
     var fullClears = 0;
     var partialClears = 0;
+    var clearedItems = 0;
     var partialEntry = 0;
     var untouched = 0;
     this.items.dungeonItemsArray.forEach((dunItems, i) => {
@@ -82,20 +84,23 @@ export class EndStatsComponent implements OnInit {
           fullClears++;
         } else if (dunItems.isBossDefeated) {
           partialClears++;
+        } else if (dunItems.itemsLeft === 0 && !dunItems.isBossDefeated) {
+          clearedItems++;
         } else if (dunItems.itemsLeft === this.items.startingItemCount[i] 
           && !dunItems.isBossDefeated && !dunItems.hasCompass && !dunItems.hasMap
           && !dunItems.hasBigKey && dunItems.smallKeys === 0) {
-          untouched++
+          untouched++;
         } else {
           partialEntry++;
         }
       }
     });
 
-    res.push(['Dungeons Full Cleared', fullClears]);
-    res.push(['Dungeons Partially Cleared', partialClears]);
-    res.push(['Dungeons Entered and not Cleared', partialEntry]);
-    res.push(['Dungeons Untouched', untouched]);
+    res.push(['Full Clears', fullClears]);
+    res.push(['Killed Boss, left Items', partialClears]);
+    res.push(['Cleaned Items', clearedItems]);
+    res.push(['Abandoned Dungeons', partialEntry]);
+    res.push(['Untouched Dungeons', untouched]);
 
     return res;
   }
@@ -111,30 +116,40 @@ export class EndStatsComponent implements OnInit {
 
   generateItemProgressTable() {
     var res = [];
-    res.push(['Items Pre Boots', this.items.stats.preBoots]);
-    res.push(['Items Pre Mirror', this.items.stats.preMirror]);
-    res.push(['Items Pre Flute', this.items.stats.preFlute]);
-    res.push(['Items Pre Mitts', this.items.stats.preMitts]);
-    res.push(['Items Pre Bow', this.items.stats.preBow]);
-    res.push(['Items Pre Hammer', this.items.stats.preHammer]);
-    res.push(['Items Pre Master Sword', this.items.stats.preHammer]);
-    res.push(['Items Pre Fire Rod', this.items.stats.preFireRod]);
-    res.push(['Items Pre Ice Rod', this.items.stats.preIceRod]);
-    res.push(['Items Pre Flippers', this.items.stats.preFlippers]);
-    res.push(['Items Pre Cane of Somaria', this.items.stats.preSomaria]);
-    res.push(['Items Pre Hookshot', this.items.stats.preHook]);
-    res.push(['Items Pre Lamp', this.items.stats.preLamp]);
-    res.push(['Items Pre Dark World Access', this.items.stats.preDW]);
+    res.push(['boots', 'Boots', this.items.stats.preBoots]);
+    res.push(['mirror', 'Mirror', this.items.stats.preMirror]);
+    res.push(['flute', 'Flute', this.items.stats.preFlute]);
+    res.push(['glove2', 'Titan Mitts', this.items.stats.preMitts]);
+    res.push(['glove1', 'Power Gloves', this.items.stats.preGlove]);
+    res.push(['bow', 'Bow', this.items.stats.preBow]);
+    res.push(['hammer', 'Hammer', this.items.stats.preHammer]);
+    res.push(['sword2', 'Master Sword', this.items.stats.preMS]);
+    res.push(['fireRod', 'Fire Rod', this.items.stats.preFireRod]);
+    res.push(['iceRod', 'Ice Rod', this.items.stats.preIceRod]);
+    res.push(['flippers', 'Flippers', this.items.stats.preFlippers]);
+    res.push(['somaria', 'Cane of Somaria', this.items.stats.preSomaria]);
+    res.push(['hookshot', 'Hookshot', this.items.stats.preHook]);
+    res.push(['lamp', 'Lamp', this.items.stats.preLamp]);
+    res.push(['agahnim', 'Dark World Access', this.items.stats.preDW]);
+    res.push(['bigKey', 'Ganons Tower Big Key', this.items.stats.totalItemsPreGTBK]);
+
+    var dunPrizes = this._gameService.getDungeonPrizes();
+
+    Object.keys(dunPrizes).forEach((dunName) => {
+      if (dunPrizes[dunName].indexOf('Crystal') > -1) {
+        res.push(['crystal', dunName, this.items.preEachDun[+dunPrizes[dunName].charAt(8)-1]]);    
+      }
+    });
 
     res.sort((a, b) => {
-      if (a[1] === 0) return 1;
-      if (b[1] === 0) return -1;
-      return a[1] - b[1];
+      if (a[2] === 0) return 1;
+      if (b[2] === 0) return -1;
+      return a[2] - b[2];
     });
 
     return res.map((line) => {
-      if (line[1] === 0) {
-        return [line[0], 'Not Found'];
+      if (line[2] === 0) {
+        return [line[0], line[1], 'Not Found'];
       } else {
         return line;
       }

@@ -36,11 +36,14 @@
         <h3>{{data[0]}}</h3>
         <table class='table table-striped'>
           <tr *ngFor='let line of data[1]'>
-            <td class='col-xs-6'>
-              {{line[0]}}
+            <td class='col-xs-1'>
+              <img class='icon' [src]="'assets/item-icons/'+line[0]+'.png'">
+            </td>
+            <td class='col-xs-5'>
+              {{line[1]}}
             </td>
             <td class='col-xs-6'>
-              {{line[1]}}
+              {{line[2]}}
             </td>
           </tr>
         </table>

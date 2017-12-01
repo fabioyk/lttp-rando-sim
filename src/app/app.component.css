@@ -1,5 +1,13 @@
+.whole-app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+}
+
 .container {
-  margin-top: 5%;
+  margin-top: 3%;
 }
 
 @media (max-width: 768px) {
@@ -9,8 +17,19 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 992px) {
   .container {
     width: 100%;
   }
+}
+
+footer {
+  background-color: #333333;
+  color: #CCCCCC;
+  text-align: center;
+  width: 100%;
+  padding: 1rem;
+  padding-top: 2rem;
+  margin-top: 10px;
+  z-index: 5;
 }
