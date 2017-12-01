@@ -7,20 +7,20 @@ hr {
 }
 
 .item-log-body {
-  height: 800px;
+  max-height: 800px;
   padding: 10px;
   overflow-y: scroll;
 }
 
 @media (min-width: 768px) {
   .item-log-body {
-    height: 500px;
+    max-height: 500px;
   }
 }
 
 @media (min-width: 992px) {
   .item-log-body {
-    height: 400px;
+    max-height: 400px;
   }
 }
 

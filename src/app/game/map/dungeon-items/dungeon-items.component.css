@@ -21,7 +21,18 @@ p {
 
 @media (max-width: 768px) {
   p {
-    margin-top: -50px;
+    padding: 0;
+    border-radius: 3px;
+    padding-right: 5px;
+  }
+  .icon {
+    height: 12px;
+    width: 12px;
+  }
+  .key-text {
+    margin-left: 0;
+    margin-top: 6px;
+    font-size: 10px;
   }
 
 }
