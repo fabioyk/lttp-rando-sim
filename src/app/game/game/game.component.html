@@ -1,8 +1,9 @@
+<h1><span class='title' (click)='onBackMainMenu()'>Z3R Simulator</span> <small class='hidden-xs'>{{seedDescription}}</small></h1>
 <div class='container' *ngIf='gameState === "loading"'>
   Loading...
 </div>
 <div class='container-fluid' *ngIf='gameState === "playing"'>
-  <h1><span class='title' (click)='onBackMainMenu()'>Z3R Simulator</span></h1>
+  
   <app-item-tracker
     class='col-md-3 col-sm-4 col-xs-3 game-obj'
     [items]='items'

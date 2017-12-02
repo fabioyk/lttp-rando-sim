@@ -21,6 +21,7 @@ import { ItemNamesService } from '../../log-parse/item-names.service';
 export class GameComponent implements OnInit {
   modeSelected = 'standard';
   isDev = false;
+  seedDescription = '';
   seedNum = '';
   errorMessage = '';
 
@@ -97,6 +98,11 @@ export class GameComponent implements OnInit {
       this.itemLog = [];
       this.dungeonsData = this.gameService.dungeonsData;
       this.gameState = 'playing';
+
+      this.seedDescription = '(' 
+        + (this.config.mode === 'standard' ? 'Standard' : 'Open') 
+        + ', ' + (this.config.canGlitch ? 'Minor Glitches' : 'No Glitches') 
+        + ', Seed ' + seedNumber + ')';
     } else {
       this._router.navigate(['/']);      
     }
