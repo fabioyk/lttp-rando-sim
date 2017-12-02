@@ -104,6 +104,7 @@ export class Items {
     preGlove: 0,
     preMitts: 0,
     preBow: 0,
+    prePearl: 0,
     preHammer: 0,
     preMS: 0,
     preFireRod: 0,
@@ -190,6 +191,7 @@ export class Items {
       case 'somaria': this.somaria = true; this.stats.preSomaria = this.stats.totalCount; break;
       case 'lamp': this.lamp = true; this.stats.preLamp = this.stats.totalCount; break;
       case 'hookshot': this.hookshot = true; this.stats.preHook = this.stats.totalCount; break;
+      case 'moonPearl': this.moonPearl = true; this.stats.prePearl = this.stats.totalCount; break;
       case 'silvers': this.bow += 1; break;
       case 'tunic': this.tunic++; break;
       case 'glove': this.glove++; 

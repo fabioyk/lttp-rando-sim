@@ -130,6 +130,7 @@ export class EndStatsComponent implements OnInit {
     res.push(['somaria', 'Cane of Somaria', this.items.stats.preSomaria]);
     res.push(['hookshot', 'Hookshot', this.items.stats.preHook]);
     res.push(['lamp', 'Lamp', this.items.stats.preLamp]);
+    res.push(['moonPearl', 'Moon Pearl', this.items.stats.prePearl]);
     res.push(['agahnim', 'Dark World Access', this.items.stats.preDW]);
     res.push(['bigKey', 'Ganons Tower Big Key', this.items.stats.totalItemsPreGTBK]);
 
