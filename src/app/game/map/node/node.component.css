@@ -3,6 +3,26 @@
   z-index: 2;
 }
 
+.chest-count {
+  width: 100%;
+  text-align: right;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  bottom: -7px;
+  right: -5px;
+  color: white;
+  text-shadow:
+  -1px -1px 0 #000,  
+   1px -1px 0 #000,
+   -1px 1px 0 #000,
+    1px 1px 0 #000;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
 .open-state {
   background-color: lightgreen;
 }
@@ -130,8 +150,22 @@
   background-image: url('/assets/node-icons/empty.png');    
 }
 
+@media (max-width: 992px) {
+  .chest-count { 
+    font-size: 12px;
+    right: -4px;
+    bottom: -5px;
+  }
+}
+
 @media (max-width: 768px) {
   .overworld-type, .dungeon-type, .in-dungeon-type {
     border: 1.5px solid black;
   }
+  .chest-count { 
+    font-size: 8px;
+    right: -4px;
+    bottom: -5px;
+  }
 }
+

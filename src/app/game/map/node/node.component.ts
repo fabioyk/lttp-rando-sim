@@ -18,19 +18,23 @@ export class NodeComponent implements OnInit {
   @Output() nodeMouseEnter = new EventEmitter<string>();
   @Output() nodeMouseLeave = new EventEmitter<string>();
 
-
   nodeX: string;
   nodeY: string;
   locationType: string;
   locationName: string;
   color: string;
   type: string;
+  chestCountNum: string;
 
   constructor() { }
 
   ngOnInit() {
     this.nodeX = this.nodeInfo.x + '%';
     this.nodeY = this.nodeInfo.y + '%';
+
+    if (this.nodeType && this.nodeType === 'overworld' && this.nodeInfo.prize.length > 1) {
+      this.chestCountNum = 'x' + this.nodeInfo.prize.length;
+    }
   }
 
   getNodeType() {
