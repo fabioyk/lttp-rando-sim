@@ -103,13 +103,54 @@ export class MiseryMire {
       '', 126, 51, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
-    }, 'mm-big-door'));
+    }, 'mm-north-spike'));
     spikeRoom.nodes.push(new DungeonNode(
       'Map Room. Requires Switch on Blue', 126, 226, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.mmSwitch;
     }, 'mm-map'));
     mmData.dungeonMaps.push(spikeRoom);
+
+    var northSpikeRoom = new DungeonMapData('mm-north-spike', 'North of Spike Room', '');
+    northSpikeRoom.nodes.push(new DungeonNode(
+      '', 126, 221, DungeonNodeStatus.SK_LOCKED,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'mm-spike-room'));
+    northSpikeRoom.nodes.push(new DungeonNode(
+      '', 52, 136, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'mm-big-door'));
+    northSpikeRoom.nodes.push(new DungeonNode(
+      '', 126, 46, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'mm-fish-spine'));
+    mmData.dungeonMaps.push(northSpikeRoom);
+
+    var fishSpine = new DungeonMapData('mm-fish-spine', 'Fish Spine', '');
+    fishSpine.nodes.push(new DungeonNode(
+      'Lone Stalfo Room. Requires Switch on Blue', 190, 243, DungeonNodeStatus.SK_LOCKED,
+    function(items:Items, config:Config) {
+        return items.mmSwitch;
+    }, 'mm-lone-stalfo'));
+    fishSpine.nodes.push(new DungeonNode(
+      '', 236, 136, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'mm-north-spike'));
+    fishSpine.nodes.push(new DungeonNode(
+      '', 47, 53, DungeonNodeStatus.GROUND_KEY,
+    function(items:Items, config:Config) {
+        return true;
+    }, ''));
+    fishSpine.nodes.push(new DungeonNode(
+      '', 83, 66, DungeonNodeStatus.SWITCH,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'switch')); 
+    mmData.dungeonMaps.push(fishSpine);
 
     var mapRoom = new DungeonMapData('mm-map', 'Map Room', '');
     mapRoom.nodes.push(new DungeonNode(
@@ -226,10 +267,10 @@ export class MiseryMire {
 
     var bigDoor = new DungeonMapData('mm-big-door', 'Big Door Room', '');
     bigDoor.nodes.push(new DungeonNode(
-      '', 224, 130, DungeonNodeStatus.SK_LOCKED,
+      '', 224, 130, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'mm-spike-room'));
+    }, 'mm-north-spike'));
     bigDoor.nodes.push(new DungeonNode(
       'Room before Vitreous. Requires Lamp and Cane of Somaria', 125, 86, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
