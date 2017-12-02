@@ -320,7 +320,7 @@ export class IcePalace {
     fairyDrop.nodes.push(new DungeonNode(
       '', 124, 225, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hookshot;
+        return true;
     }, 'ip-push-block-right'));
     fairyDrop.nodes.push(new DungeonNode(
       'Drop down. Requires Switch on Blue', 78, 118, DungeonNodeStatus.OPEN_DOOR,
