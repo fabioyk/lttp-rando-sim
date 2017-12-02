@@ -15,4 +15,8 @@ export class DungeonNodeStatus {
   static WATER_SWITCH = 13;
   static BLIND_RESCUE = 14;
   static TT_BOMB_FLOOR = 15;
+  static SWITCH_FLIPPED = 16;
+  static BLIND_RESCUED = 17;
+  static TT_BOMB_FLOOR_DONE = 18;
+  static WATER_SWITCH_FLIPPED = 19;
 }

@@ -74,7 +74,7 @@ export class MapComponent implements OnInit {
 
     return nodes;
   }
-
+/*
   onMouseMove(event:MouseEvent) {
     console.log(document.elementFromPoint(event.offsetX, event.offsetY));
   }
@@ -87,8 +87,9 @@ export class MapComponent implements OnInit {
     console.log('left');
     this.tooltip = mapNode.tooltip;
   }
+  */
   onNodeClick(nodeClicked:MapNode) {
-    this.onNodeMouseEnter(nodeClicked);
+    //this.onNodeMouseEnter(nodeClicked);
     switch (nodeClicked.status) {
       case 'getable':
         if (!nodeClicked.originalNode.isOpened) {
@@ -116,7 +117,7 @@ export class MapComponent implements OnInit {
   }
 
   onDungeonClick(dungeonClicked:MapNode) {
-    this.onNodeMouseEnter(dungeonClicked);
+    //this.onNodeMouseEnter(dungeonClicked);
     if (!dungeonClicked.originalNode.canEnter || 
       dungeonClicked.originalNode.canEnter(this.items, this.config)) {
         console.log('Can I enter ' + dungeonClicked.id);
@@ -147,7 +148,7 @@ export class MapComponent implements OnInit {
   }
 
   onDungeonNodeClick(dungeonNode:MapNode) {
-    this.onNodeMouseEnter(dungeonNode);
+    //this.onNodeMouseEnter(dungeonNode);
     if (dungeonNode.originalNode.canOpen(this.items, this.config)) {
       switch(+dungeonNode.status) {
         case DungeonNodeStatus.OPEN_DOOR:
@@ -214,20 +215,31 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.COLLECTED_GROUND_KEY:
           console.log('Already got this small key');
           break;
+        case DungeonNodeStatus.SWITCH_FLIPPED:
         case DungeonNodeStatus.SWITCH:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
+          var nextState;
+          if (+dungeonNode.status === DungeonNodeStatus.SWITCH) {
+            nextState = DungeonNodeStatus.SWITCH_FLIPPED;
+          } else {
+            nextState = DungeonNodeStatus.SWITCH;            
+          }          
+          dungeonNode.originalNode.status = nextState.toString();          
           console.log('Switch');
           break;
         case DungeonNodeStatus.WATER_SWITCH:
-        this.addPrizes(dungeonNode, this.currentDungeon.name);
+          this.addPrizes(dungeonNode, this.currentDungeon.name);
+          dungeonNode.originalNode.status = DungeonNodeStatus.WATER_SWITCH_FLIPPED.toString();
           console.log('Water Switch');
           break;
         case DungeonNodeStatus.BLIND_RESCUE:
-        this.addPrizes(dungeonNode, this.currentDungeon.name);
+          this.addPrizes(dungeonNode, this.currentDungeon.name);
+          dungeonNode.originalNode.status = DungeonNodeStatus.BLIND_RESCUED.toString();          
           console.log('Blind');
           break;
         case DungeonNodeStatus.TT_BOMB_FLOOR:
-        this.addPrizes(dungeonNode, this.currentDungeon.name);
+          this.addPrizes(dungeonNode, this.currentDungeon.name);
+          dungeonNode.originalNode.status = DungeonNodeStatus.TT_BOMB_FLOOR_DONE.toString();          
           console.log('Bomb floor on TT');
           break;
       }
@@ -246,6 +258,17 @@ export class MapComponent implements OnInit {
       this.changeMap('dark-world');
     }
 
+    if (this.currentDungeon.name === 'Swamp Palace') {
+      this.currentDungeon.dungeonMaps.forEach(map => {
+        map.nodes.forEach(node => {
+          if (node.status == DungeonNodeStatus.WATER_SWITCH_FLIPPED) {            
+            node.status = DungeonNodeStatus.WATER_SWITCH;
+            this.items.remove('flood', 'Swamp Palace');
+          }
+        });
+      })
+    }
+
     this.currentDungeon = null;
     this.currentDungeonMap = null;
     this.currentDungeonItems = null;
@@ -257,6 +280,7 @@ export class MapComponent implements OnInit {
     this.leaveDungeon(isDefeatAga);
   }
 
+  /*
   onMouseLeave(node:MapNode) {
     if (node.tooltip && (node.status === 'getable' || node.status === 'viewable')) {
       this.tooltip = node.tooltip;
@@ -275,7 +299,7 @@ export class MapComponent implements OnInit {
     }
     
   }
-
+*/
   onWarpClicked() {
     if (this.currentMap === 'light-world'
       && (this.items.agahnim
@@ -341,8 +365,7 @@ export class MapComponent implements OnInit {
     } else if (this.currentMap === 'dark-world') {
       this.currentBackgroundImage = 'url(assets/dark-world.png)';      
     } else {
-      this.currentBackgroundImage = 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'.png")';
-      console.log(this.currentBackgroundImage);
+      this.currentBackgroundImage = 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'.png")';      
     }
   }
 

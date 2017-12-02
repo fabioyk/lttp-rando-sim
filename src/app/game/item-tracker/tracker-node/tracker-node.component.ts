@@ -62,6 +62,10 @@ export class TrackerNodeComponent implements OnInit {
     } else {
       shouldShow = this.items.dwMapOpen;
     }
+    
+    if (this.items.getDungeonItems(this.dungeonData.name).isBossDefeated) {
+      shouldShow = true;
+    }
 
     if (shouldShow) {
       switch(this._itemNamesService.getItemById(this.dungeonData.dungeonPrize).shortName) {

@@ -76,15 +76,23 @@ export class NodeComponent implements OnInit {
         case DungeonNodeStatus.GROUND_KEY:
           return 'spare-key';
         case DungeonNodeStatus.COLLECTED_GROUND_KEY:
-          return 'open-chest';
+          return 'empty';
         case DungeonNodeStatus.SWITCH:
+          return 'switch-red';
+        case DungeonNodeStatus.SWITCH_FLIPPED:
           return 'switch-blue';
         case DungeonNodeStatus.WATER_SWITCH:
           return 'water-switch-off';
+        case DungeonNodeStatus.WATER_SWITCH_FLIPPED:
+          return 'water-switch-on';
         case DungeonNodeStatus.BLIND_RESCUE:
           return 'blind';
+        case DungeonNodeStatus.BLIND_RESCUED:
+          return 'empty';
         case DungeonNodeStatus.TT_BOMB_FLOOR:
           return 'tt-floor';
+        case DungeonNodeStatus.TT_BOMB_FLOOR_DONE:
+          return 'tt-floor-open';
         default:
           console.log(this.nodeInfo.status);
           return '';

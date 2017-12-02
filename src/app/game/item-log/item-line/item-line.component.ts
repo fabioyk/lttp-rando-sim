@@ -41,6 +41,14 @@ export class ItemLineComponent implements OnInit {
     }
     if (this.shortName.indexOf('agahnim') > -1 || this.shortName.indexOf('ganon') > -1) {
       this.textLine = 'Defeated ' + this.longName;
+    } else if (this.shortName === 'switch') {
+      this.textLine = 'Flipped Switch';
+    } else if (this.shortName === 'flood') {
+      this.textLine = 'Flooded Room';
+    } else if (this.shortName === 'tt-bomb') {
+      this.textLine = 'Destroyed the floor';
+    } else if (this.shortName === 'blind') {
+      this.textLine = 'Rescued Blind';
     } else {
       this.textLine = this.actionType + ' ' + this.longName + ' in ' + this.itemLogEntry.location;
     }    
