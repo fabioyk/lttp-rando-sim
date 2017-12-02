@@ -49,6 +49,8 @@ export class ItemLineComponent implements OnInit {
       this.textLine = 'Destroyed the floor';
     } else if (this.shortName === 'blind') {
       this.textLine = 'Rescued Blind';
+    } else if (this.shortName === 'ip-switch-room') {
+      this.textLine = 'Pushed Block to the Switch';
     } else {
       this.textLine = this.actionType + ' ' + this.longName + ' in ' + this.itemLogEntry.location;
     }    

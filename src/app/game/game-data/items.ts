@@ -62,6 +62,8 @@ export class Items {
   ttBlindDelivered = false;
   ttBombableFloor = false;
   mmSwitch = false;
+  ipSwitch = false;
+  ipBlockPushed = false;
 
   pendantCourage = false;
   pendantPower = false;
@@ -147,7 +149,7 @@ export class Items {
   add(itemName:string, region:string) {
     if (!itemName) return;
     
-    var notItemLocation = ['flood', 'blind', 'tt-bomb', 'switch', 
+    var notItemLocation = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room',
       'crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7',
       'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
     var bossItems = ['crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7',
@@ -208,12 +210,15 @@ export class Items {
       case 'blind': this.ttBlindDelivered = true; break;
       case 'tt-bomb': this.ttBombableFloor = true; break;
       case 'switch':
-      if (region === 'Swamp Palace') {
-        this.spSwitch = !this.spSwitch;
-      } else {
-        this.mmSwitch = !this.mmSwitch;
-      }
-      break;
+        if (region === 'Swamp Palace') {
+          this.spSwitch = !this.spSwitch;
+        } else if (region === 'Misery Mire') {
+          this.mmSwitch = !this.mmSwitch;
+        } else if (region === 'Ice Palace') {
+          this.ipSwitch = !this.ipSwitch;
+        }
+        break;
+      case 'ip-switch-room': this.ipBlockPushed = true; break;
       case 'smallKey': 
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].smallKeys++;
         this.stats.sks++;
@@ -253,7 +258,7 @@ export class Items {
       this.stats.capacityUpgrades++;
     }
 
-    const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'smallKey', 'bigKey', 'map', 'compass'];
+    const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room', 'smallKey', 'bigKey', 'map', 'compass'];
     if (itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
         && itemName.indexOf('Agahnim') === -1 && itemName.indexOf('Ganon') === -1
         && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {      

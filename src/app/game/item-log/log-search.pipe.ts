@@ -16,7 +16,7 @@ export class LogSearchPipe implements PipeTransform {
       return items;
     }
 
-    const importantActions = ['blind', 'tt-bomb', 'switch', 'flood'];
+    const importantActions = ['blind', 'tt-bomb', 'switch', 'flood', 'ip-switch-room'];
 
     return items.filter(item => {
       if (importantActions.indexOf(item.shortName) > -1) {

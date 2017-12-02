@@ -151,6 +151,9 @@ export class MapComponent implements OnInit {
     //this.onNodeMouseEnter(dungeonNode);
     if (dungeonNode.originalNode.canOpen(this.items, this.config)) {
       switch(+dungeonNode.status) {
+        case DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK:
+          this.addPrizes(dungeonNode, this.currentDungeon.name);
+          dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_DOOR.toString();          
         case DungeonNodeStatus.OPEN_DOOR:
           this.changeMapInDungeon(dungeonNode.prize[0]);
           console.log('Change map to '+dungeonNode.prize);
@@ -266,8 +269,24 @@ export class MapComponent implements OnInit {
             this.items.remove('flood', 'Swamp Palace');
           }
         });
-      })
+      });
+      this.items.spSwitch = false;
+    } else if (this.currentDungeon.name === 'Misery Mire') {
+      this.items.mmSwitch = false;
+    } else if (this.currentDungeon.name === 'Ice Palace') {
+      this.currentDungeon.dungeonMaps.forEach(map => {
+        if (map.id === 'ip-push-block') {
+          map.nodes.forEach(node => {
+            if (node.content == 'ip-switch-room') {
+              node.status = DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK;
+              this.items.ipBlockPushed = false;
+            }
+          });
+        }
+      });
+      this.items.ipSwitch = false;
     }
+    
 
     this.currentDungeon = null;
     this.currentDungeonMap = null;

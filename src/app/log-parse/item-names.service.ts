@@ -349,6 +349,11 @@ export class ItemNamesService {
       shortName: 'switch',
       longName: 'Switch'
     });
+    this.itemNames.push({
+      id: 254,
+      shortName: 'ip-switch-room',
+      longName: 'Pushed the Block'
+    });
     
     
     this.initialized = true;

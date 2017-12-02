@@ -123,6 +123,9 @@
 .tt-floor-open {
   background-image: url('/assets/node-icons/tt_floor_open.png');  
 }
+.push-block {
+  background-image: url('/assets/node-icons/push-block.png');    
+}
 .empty {
   background-image: url('/assets/node-icons/empty.png');    
 }

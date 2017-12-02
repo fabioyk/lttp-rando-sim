@@ -93,6 +93,8 @@ export class NodeComponent implements OnInit {
           return 'tt-floor';
         case DungeonNodeStatus.TT_BOMB_FLOOR_DONE:
           return 'tt-floor-open';
+        case DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK:
+          return 'push-block';
         default:
           console.log(this.nodeInfo.status);
           return '';
