@@ -142,7 +142,7 @@ export class DesertPalace {
     function(items:Items, config:Config) {
         return items.hasFiresource()
           && (items.sword || items.hammer || items.hasBow() || items.fireRod || items.iceRod
-            || items.byrna || items.somaria);
+            || items.byrna || items.somaria || config.canGlitch);
     }, 'dp-lanmo'));
     dpData.dungeonMaps.push(bigDoor);
 
