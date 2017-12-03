@@ -117,6 +117,7 @@ export class Items {
     preFlippers: 0,
     preDW: 0,
     preGo: 0,
+    preGanon: 0,
     startTime: 0
   }
   preEachDun = [];
@@ -209,6 +210,7 @@ export class Items {
       case 'flood': this.spFlooded = true; break;
       case 'blind': this.ttBlindDelivered = true; break;
       case 'tt-bomb': this.ttBombableFloor = true; break;
+      case 'Ganon': this.ganon = true; this.stats.preGanon = this.stats.totalCount; break;
       case 'switch':
         if (region === 'Swamp Palace') {
           this.spSwitch = !this.spSwitch;

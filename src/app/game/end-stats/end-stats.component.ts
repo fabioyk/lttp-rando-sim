@@ -133,6 +133,7 @@ export class EndStatsComponent implements OnInit {
     res.push(['moonPearl', 'Moon Pearl', this.items.stats.prePearl]);
     res.push(['agahnim', 'Dark World Access', this.items.stats.preDW]);
     res.push(['bigKey', 'Ganons Tower Big Key', this.items.stats.totalItemsPreGTBK]);
+    res.push(['Ganon', 'Ganon', this.items.stats.preGanon]);
 
     var dunPrizes = this._gameService.getDungeonPrizes();
 
