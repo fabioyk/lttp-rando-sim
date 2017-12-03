@@ -22,7 +22,7 @@ export class LogSearchPipe implements PipeTransform {
       if (importantActions.indexOf(item.shortName) > -1) {
         return true;
       }
-      if (filterObj.onlyImportantShown && item.longName.indexOf('Agahnim') === -1 && item.longName.indexOf('Ganon') === -1 && !ItemNamesService.isTrackableItem(+item.item) && item.type !== 'view') {
+      if (filterObj.onlyImportantShown && item.longName.indexOf('Agahnim') === -1 && item.longName.indexOf('Ganon') === -1 && !ItemNamesService.isTrackableItem(+item.item) && (item.type !== 'view' && item.type !== 'cant')) {
         return false;
       } 
       if (filterObj.searchQuery != '') {        

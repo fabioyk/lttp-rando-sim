@@ -32,7 +32,7 @@
 
 <div class='menu-buttons'>
   <button class='btn btn-primary' (click)='onWarpClicked()' *ngIf='canWarp()'>
-    Warp
+    {{warpButtonText}}
   </button>
   <button class='btn btn-info' (click)='onCheckMap("lw")' *ngIf='!items.lwMapOpen && !currentDungeon'>
     Check LW Map

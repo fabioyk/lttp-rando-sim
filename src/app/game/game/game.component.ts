@@ -127,6 +127,19 @@ export class GameComponent implements OnInit {
     });
   }
 
+  onCantItem([mapNode, region]) {
+    console.log(mapNode);
+    console.log(region);
+    this.itemLog.unshift({
+      item: mapNode.prize[0],
+      shortName: 'cant-item',
+      longName: 'Tried to open ' + mapNode.tooltip,
+      location: mapNode.tooltip,
+      region: region,
+      type: 'cant'
+    });
+  }
+
   convertItemName(itemName:string, type:string):[string, string] {
     var res = this._itemNamesService.getItemById(itemName);
     var longName = res.longName, shortName = res.shortName;

@@ -1,5 +1,6 @@
 .node {
   position: absolute;
+  cursor: pointer;
   z-index: 2;
 }
 
@@ -26,28 +27,23 @@
 .open-state {
   background-color: lightgreen;
 }
-.unavailable-state {
+.unavailable-state, .dungeon-unavailable {
   background-color: lightcoral;
+  cursor: default;
   opacity: 0.5;
 }
 .view-state {
   background-color: yellow;
 }
-.opened-state {
+.opened-state, .dungeon-cleared {
   background-color: grey;
+  cursor: default;
 }
 .dungeon-state {
   background-color: blue;
 }
 .dungeon-defeated {
   background-color: lightblue;
-}
-.dungeon-cleared {
-  background-color: grey;
-}
-.dungeon-unavailable {
-  background-color: lightcoral;
-  opacity: 0.5;
 }
 
 .overworld-type {
@@ -78,8 +74,7 @@
 
 .open-door, .sk-door, .bk-door {
   width: 11%;
-  height: 8%;
-  margin: -5.5% -4%;
+  height: 7%;
 }
 
 .open-door {
@@ -95,7 +90,6 @@
 .closed-chest, .open-chest {
   width: 8%;
   height: 8%;
-  margin: -4% -4%;
 }
 
 .closed-chest {
@@ -108,7 +102,6 @@
 .big-chest, .open-big-chest {
   width: 10%;
   height: 8%;
-  margin: -5% -4%;
 }
 
 .big-chest {

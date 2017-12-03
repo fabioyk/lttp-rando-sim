@@ -21,10 +21,13 @@ export class MapComponent implements OnInit {
   @Input() config: Config;
   @Output() addedItem = new EventEmitter<[MapNode, string]>();
   @Output() viewItem = new EventEmitter<[MapNode, string]>();
+  @Output() cantItem = new EventEmitter<[MapNode, string]>();
   @Output() finishedDungeon = new EventEmitter<[string, string]>();
   @Output() onGameFinished = new EventEmitter<string>();
   tooltip:string;
   isDev = false;
+
+  warpButtonText:string;
 
   currentDungeonMap: DungeonMapData;
   currentDungeon: DungeonData;
@@ -248,6 +251,8 @@ export class MapComponent implements OnInit {
       }
     } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()) {
       this.viewItem.emit([dungeonNode, this.currentMap]);
+    } else {
+      this.cantItem.emit([dungeonNode, this.currentDungeon.name]);
     }
     // TODO check if viewable but not obtainable
     console.log(dungeonNode);
@@ -341,8 +346,15 @@ export class MapComponent implements OnInit {
     && (this.items.agahnim
       || (this.items.hammer && this.items.glove && this.items.moonPearl)
       || (this.items.glove === 2 && this.items.moonPearl))) {
+        this.warpButtonText = 'Warp to DW'
         return true;
     } else {
+      if (this.currentDungeon !== null) {
+        this.warpButtonText = 'Mirror/Death Warp';
+      }
+      if (this.currentMap === 'dark-world') {
+        this.warpButtonText = 'Mirror to LW';
+      }
       return this.currentDungeon !== null || this.currentMap === 'dark-world';
     }
   }

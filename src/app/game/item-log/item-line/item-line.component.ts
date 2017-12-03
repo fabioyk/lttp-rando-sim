@@ -21,6 +21,14 @@ export class ItemLineComponent implements OnInit {
 
   ngOnInit() {
     if (this.itemLogEntry) {
+      this.shortName = this.itemLogEntry.shortName;
+      this.longName = this.itemLogEntry.longName;
+
+      if (this.itemLogEntry.type === 'cant') {
+        this.textLine = this.itemLogEntry.longName;
+        return;
+      }
+    
       switch(this.itemLogEntry.type) {
         case 'get':
           this.actionType = 'Got';
@@ -29,9 +37,6 @@ export class ItemLineComponent implements OnInit {
           this.actionType = 'Saw';
           break;
       }
-
-      this.shortName = this.itemLogEntry.shortName;
-      this.longName = this.itemLogEntry.longName;
 
       if (this.itemLogEntry.region === 'light-world') {
         this.itemLogEntry.region = 'Light World';
