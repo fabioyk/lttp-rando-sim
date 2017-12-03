@@ -37,7 +37,7 @@ export class DarkWorld {
       'Spike Cave', 78.6, 14.9,
       function(items:Items, config:Config) {
         return items.canDarkWestDeathMountain(config) && items.hammer && items.glove
-            && items.hasInvincibilityItem(config) && items.hasMagicExtension(config);
+            && ((items.hasInvincibilityItem(config) && items.hasMagicExtension(config)) || config.canGlitch);
       },
       null,
       [l[103]]

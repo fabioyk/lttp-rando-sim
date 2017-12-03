@@ -443,12 +443,12 @@ export class GanonsTower {
     helmaRoom.nodes.push(new DungeonNode(
       'Moldorm 2 Chest. Requires Hookshot', 145, 187, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hookshot;
+        return items.hookshot || (items.boots && config.canGlitch);
     }, l[225]));
     helmaRoom.nodes.push(new DungeonNode(
       'Agahnim 2. Requires Hookshot', 16, 198, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hookshot;
+        return items.hookshot || (items.boots && config.canGlitch);
     }, 'gt-aga2'));
     gtData.dungeonMaps.push(helmaRoom);
 
@@ -456,7 +456,7 @@ export class GanonsTower {
     aga2.nodes.push(new DungeonNode(
       'Agahnim 2', 129, 113, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
-        return items.hookshot;
+        return true;
     }, 'Agahnim 2'));
     gtData.dungeonMaps.push(aga2);
 
