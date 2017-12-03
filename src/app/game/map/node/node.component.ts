@@ -95,7 +95,7 @@ export class NodeComponent implements OnInit {
       } else if (this.dungeonItems.isBossDefeated) {
         return 'dungeon-defeated';
       } else if (this.nodeInfo.status === 'unavailable') {
-        return 'dungeon-unavailable';
+        return 'unavailable-state';
       } else {
         return 'dungeon-state';
       }      

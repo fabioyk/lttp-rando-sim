@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Seed } from '../../shared/seed';
 import { SeedApiService } from '../../shared/seed-api.service';
 import { ItemNamesService } from '../../log-parse/item-names.service';
+import { DungeonNodeStatus } from '../game-data/dungeon-node-status.enum';
 
 @Component({
   selector: 'app-game',
@@ -127,15 +128,31 @@ export class GameComponent implements OnInit {
     });
   }
 
-  onCantItem([mapNode, region]) {
+  onCantItem([mapNode, region, reason]) {
+    var msg = '';
+    if (+mapNode.status === DungeonNodeStatus.BK_LOCKED
+      || +mapNode.status === DungeonNodeStatus.BIG_CHEST) {
+      if (!reason) {
+        msg = 'Missing Big Key';
+      }      
+    } else if (+mapNode.status === DungeonNodeStatus.SK_LOCKED) {
+      if (!reason) {
+        msg = 'Missing Small Key';
+      }      
+    }
+    if (!msg) {
+      msg = 'Tried to open ' + mapNode.tooltip + '. ' + mapNode.originalNode.errorMessage;
+    }
+    
     this.itemLog.unshift({
       item: mapNode.prize[0],
       shortName: 'cant-item',
-      longName: 'Tried to open ' + mapNode.tooltip + '. ' + mapNode.originalNode.errorMessage,
+      longName: msg,
       location: mapNode.tooltip,
       region: region,
       type: 'cant'
     });
+    
   }
 
   convertItemName(itemName:string, type:string):[string, string] {

@@ -21,7 +21,7 @@ export class MapComponent implements OnInit {
   @Input() config: Config;
   @Output() addedItem = new EventEmitter<[MapNode, string]>();
   @Output() viewItem = new EventEmitter<[MapNode, string]>();
-  @Output() cantItem = new EventEmitter<[MapNode, string]>();
+  @Output() cantItem = new EventEmitter<[MapNode, string, boolean]>();
   @Output() finishedDungeon = new EventEmitter<[string, string]>();
   @Output() onGameFinished = new EventEmitter<string>();
   tooltip:string;
@@ -172,12 +172,16 @@ export class MapComponent implements OnInit {
                 });
               }
             });
+          }  else {
+            this.cantItem.emit([dungeonNode, this.currentDungeon.name, false]);
           }
           console.log('Need a key for '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.BK_LOCKED:
           if (this.currentDungeonItems.hasBigKey) {
             this.changeMapInDungeon(dungeonNode.prize[0]);
+          } else {
+            this.cantItem.emit([dungeonNode, this.currentDungeon.name, false]);
           }
           console.log('Need BK for '+dungeonNode.prize);
           break;
@@ -186,6 +190,8 @@ export class MapComponent implements OnInit {
             this.addPrizes(dungeonNode, this.currentDungeon.name);
             this.items.stats.bigChests++;
             dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_BIG_CHEST.toString();
+          } else {
+            this.cantItem.emit([dungeonNode, this.currentDungeon.name, false]);
           }
           console.log('Big Chest! Need BK for '+dungeonNode.prize);
           break;
@@ -250,7 +256,7 @@ export class MapComponent implements OnInit {
     } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()) {
       this.viewItem.emit([dungeonNode, this.currentMap]);
     } else {
-      this.cantItem.emit([dungeonNode, this.currentDungeon.name]);
+      this.cantItem.emit([dungeonNode, this.currentDungeon.name, true]);
     }
     // TODO check if viewable but not obtainable
     console.log(dungeonNode);
