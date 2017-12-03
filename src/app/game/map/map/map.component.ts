@@ -325,10 +325,7 @@ export class MapComponent implements OnInit {
   }
 */
   onWarpClicked() {
-    if (this.currentMap === 'light-world'
-      && (this.items.agahnim
-        || (this.items.hammer && this.items.glove && this.items.moonPearl)
-        || (this.items.glove === 2 && this.items.moonPearl))) {
+    if (this.canWarpToDW()) {
       console.log('warp to dw');
       this.changeMap('dark-world');
     } else if (this.currentMap === 'dark-world') {
@@ -342,10 +339,7 @@ export class MapComponent implements OnInit {
   }
 
   canWarp():boolean {
-    if (this.currentMap === 'light-world'
-    && (this.items.agahnim
-      || (this.items.hammer && this.items.glove && this.items.moonPearl)
-      || (this.items.glove === 2 && this.items.moonPearl))) {
+    if (this.canWarpToDW()) {
         this.warpButtonText = 'Warp to DW'
         return true;
     } else {
@@ -357,6 +351,15 @@ export class MapComponent implements OnInit {
       }
       return this.currentDungeon !== null || this.currentMap === 'dark-world';
     }
+  }
+
+  canWarpToDW() {
+    return this.currentMap === 'light-world'
+    && (this.items.agahnim
+      || (this.items.hammer && this.items.glove && this.items.moonPearl)
+      || (this.items.glove === 2 && this.items.moonPearl)
+      || (this.items.flute && this.items.glove === 2)
+      || (this.items.canDarkEastDeathMountain(this.config) && this.config.canGlitch));
   }
 
   onCheckMap(mapName:string) {

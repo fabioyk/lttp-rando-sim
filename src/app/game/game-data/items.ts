@@ -325,7 +325,7 @@ export class Items {
     return this.canWestDeathMountain(config) && (this.hookshot || (this.mirror && this.hammer));
   }
   canDarkEastDeathMountain(config:Config) {
-    return this.glove === 2 && this.canEastDeathMountain(config) && this.moonPearl;
+    return this.glove === 2 && this.canEastDeathMountain(config);
   }
   canDarkWestDeathMountain(config:Config) {
     return this.canWestDeathMountain(config) && this.moonPearl;

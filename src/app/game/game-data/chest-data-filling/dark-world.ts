@@ -9,7 +9,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Super Bunny Cave', 92.8, 14.7,
       function(items:Items, config:Config) {
-        return items.canDarkEastDeathMountain(config);
+        return items.canDarkEastDeathMountain(config) && (items.moonPearl || config.canGlitch);
       },
       null,
       [l[97], l[98]]
@@ -18,7 +18,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Hookshot Cave (bottom chest)', 91.6, 8.6,
       function(items:Items, config:Config) {
-        return items.canDarkEastDeathMountain(config) && (items.hookshot || items.boots);
+        return items.canDarkEastDeathMountain(config) && items.moonPearl && (items.hookshot || items.boots);
       },
       null,
       [l[99]]
@@ -27,7 +27,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Hookshot Cave (3 top chests)', 91.6, 3.4,
       function(items:Items, config:Config) {
-        return items.canDarkEastDeathMountain(config) && (items.hookshot || (items.boots && config.canGlitch));
+        return items.canDarkEastDeathMountain(config) && items.moonPearl && (items.hookshot || (items.boots && config.canGlitch));
       },
       null,
       [l[100], l[101], l[102]]
@@ -158,7 +158,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Mire Shed', 51.7, 79.5,
       function(items:Items, config:Config) {
-        return items.canMire() && items.moonPearl;
+        return items.canMire() && (items.moonPearl || config.canGlitch);
       },
       null,
       [l[122], l[123]]
