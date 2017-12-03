@@ -152,7 +152,7 @@ export class Items {
     
     var notItemLocation = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room',
       'crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7',
-      'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
+      'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2'];
     var bossItems = ['crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7',
     'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
 
