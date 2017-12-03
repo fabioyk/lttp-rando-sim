@@ -7,19 +7,17 @@ export class DungeonNode {
   status: DungeonNodeStatus;
   canOpen: Function;
   content: string;
-  canOpenGlitched: Function;
+  errorMessage: string;
 
   constructor(name:string, x:number, y:number, 
-      status:DungeonNodeStatus, canOpen:Function, content:string, canOpenGlitched:Function = null) {
+      status:DungeonNodeStatus, canOpen:Function, content:string, errorMessage:string = '') {
     this.location = name;
     this.x = x;
     this.y = y;
     this.status = status;
     this.canOpen = canOpen;
     this.content = content;
+    this.errorMessage = errorMessage;
 
-    if (canOpenGlitched) {
-      this.canOpenGlitched = canOpenGlitched;
-    }
   }
 }

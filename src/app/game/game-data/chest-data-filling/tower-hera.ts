@@ -30,10 +30,10 @@ export class TowerHera {
         return true;
     }, l[90]));
     entrance.nodes.push(new DungeonNode(
-      'Basement. Requires Lamp or Fire Rod', 64, 36, DungeonNodeStatus.SK_LOCKED,
+      'Basement', 64, 36, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasFiresource();
-    }, 'toh-basement'));
+    }, 'toh-basement', 'Fire Source Required'));
     entrance.nodes.push(new DungeonNode(
       '', 184, 172, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
@@ -84,10 +84,10 @@ export class TowerHera {
         return true;
     }, l[92]));
     upstairs.nodes.push(new DungeonNode(
-      'Moldorm Room. Requires either Sword or Hammer', 30, 66, DungeonNodeStatus.OPEN_DOOR,
+      'Moldorm Room', 30, 66, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.sword || items.hammer;
-    }, 'toh-moldorm'));
+    }, 'toh-moldorm', 'Sword or Hammer Required'));
     tohData.dungeonMaps.push(upstairs);
 
     var moldormRoom = new DungeonMapData('toh-moldorm', 'Moldorm Room', '');

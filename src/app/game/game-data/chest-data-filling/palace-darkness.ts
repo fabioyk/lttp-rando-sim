@@ -30,10 +30,10 @@ export class PalaceDarkness {
         return true;
     }, 'pod-fork1'));
     entrance.nodes.push(new DungeonNode(
-      'Bow Locked', 192, 32, DungeonNodeStatus.OPEN_DOOR,
+      'Right Side', 192, 32, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasBow();
-    }, 'pod-right'));
+    }, 'pod-right', 'Bow Required'));
     podData.dungeonMaps.push(entrance);
 
     var leftRoom = new DungeonMapData('pod-left', 'Shooter Room', '');
@@ -66,10 +66,10 @@ export class PalaceDarkness {
         return true;
     }, l[126]));
     rightRoom.nodes.push(new DungeonNode(
-      'Statue Push Room. Requires Hammer', 160, 60, DungeonNodeStatus.OPEN_DOOR,
+      'Statue Push Room', 160, 60, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hammer;
-    }, 'pod-statue'));
+    }, 'pod-statue', 'Hammer Required'));
     podData.dungeonMaps.push(rightRoom);
 
     var fork1 = new DungeonMapData('pod-fork1', 'First Big Room', '');
@@ -166,13 +166,13 @@ export class PalaceDarkness {
         return true;
     }, 'pod-compass'));
     fork2.nodes.push(new DungeonNode(
-      'Dark Maze. Requires Lamp', 82, 69, DungeonNodeStatus.SK_LOCKED,
+      'Dark Maze', 82, 69, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasLightsource(config);
-    }, 'pod-maze'));
+    }, 'pod-maze', 'Lamp Required'));
     if (config.canGlitch) {
       fork2.nodes.push(new DungeonNode(
-        'Hammer Jump to Dark Maze', 82, 140, DungeonNodeStatus.OPEN_DOOR,
+        '', 82, 140, DungeonNodeStatus.OPEN_DOOR,
       function(items:Items, config:Config) {
           return true;
       }, 'pod-maze'));
@@ -209,15 +209,15 @@ export class PalaceDarkness {
         return true;
     }, 'pod-fork2'));
     compass.nodes.push(new DungeonNode(
-      '', 78, 52, DungeonNodeStatus.OPEN_DOOR,
+      'Dark Basement', 78, 52, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasLightsource(config);
-    }, 'pod-basement'));
+    }, 'pod-basement', 'Lamp Required'));
     compass.nodes.push(new DungeonNode(
-      '', 176, 52, DungeonNodeStatus.OPEN_DOOR,
+      'Dark Basement', 176, 52, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasLightsource(config);
-    }, 'pod-basement'));
+    }, 'pod-basement', 'Lamp Required'));
     compass.nodes.push(new DungeonNode(
       '', 127, 225, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -278,10 +278,10 @@ export class PalaceDarkness {
         return true;
     }, 'pod-jump'));
     statue.nodes.push(new DungeonNode(
-      'Path to Helmasaur. Requires Bow and Hammer', 126, 28, DungeonNodeStatus.SK_LOCKED,
+      'Path to Helmasaur', 126, 28, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasBow() && items.hammer;
-    }, 'pod-to-helma'));
+    }, 'pod-to-helma', 'Bow and Hammer Required'));
     podData.dungeonMaps.push(statue);
 
     var pathHelma = new DungeonMapData('pod-to-helma', 'Path to Helmasaur', '');

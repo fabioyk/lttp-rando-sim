@@ -26,10 +26,10 @@ export class TurtleRock {
         return true;
     }, 'tr-compass'));
     entrance.nodes.push(new DungeonNode(
-      'Map Room. Requires Fire Rod', 235, 70, DungeonNodeStatus.OPEN_DOOR,
+      'Map Room', 235, 70, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.fireRod;
-    }, 'tr-map'));
+    }, 'tr-map', 'Fire Rod Required'));
     entrance.nodes.push(new DungeonNode(
       '', 65, 32, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -170,10 +170,10 @@ export class TurtleRock {
         return true;
     }, 'tr-bc'));
     outside.nodes.push(new DungeonNode(
-      'Mimic Cave. Requires Mirror', 222, 177, DungeonNodeStatus.OPEN_DOOR,
+      'Mimic Cave', 222, 177, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.mirror;
-    }, 'tr-mimic'));
+    }, 'tr-mimic', 'Mirror Required'));
     trData.dungeonMaps.push(outside);
 
     var mimic = new DungeonMapData('tr-mimic', 'Mimic Cave', '');
@@ -186,7 +186,7 @@ export class TurtleRock {
       'Mimic Cave Chest', 128, 62, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hammer;
-    }, l[79]));
+    }, l[79], 'Hammer Required'));
     trData.dungeonMaps.push(mimic);
 
     var bc = new DungeonMapData('tr-bc', 'Big Chest Room', '');
@@ -227,10 +227,10 @@ export class TurtleRock {
         return true;
     }, 'tr-big-door'));
     rollerSwitch.nodes.push(new DungeonNode(
-      'Mini Helma Bridge. Requires Lamp', 126, 52, DungeonNodeStatus.SK_LOCKED,
+      'Mini Helma Bridge', 126, 52, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasLightsource(config);
-    }, 'tr-helma-bridge'));
+    }, 'tr-helma-bridge', 'Lamp Required'));
     rollerSwitch.nodes.push(new DungeonNode(
       'Roller Switch Chest', 57, 134, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -263,25 +263,25 @@ export class TurtleRock {
         return true;
     }, 'tr-helma-bridge'));
     laserBridge.nodes.push(new DungeonNode(
-      'Laser Bridge Chest 1', 164, 59, DungeonNodeStatus.CLOSED_CHEST,
+      'Laser Bridge 1', 164, 59, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config);
-    }, l[196]));
+    }, l[196], 'Invincibility Item Required'));
     laserBridge.nodes.push(new DungeonNode(
-      'Laser Bridge Chest 2', 92, 91, DungeonNodeStatus.CLOSED_CHEST,
+      'Laser Bridge 2', 92, 91, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config);
-    }, l[195]));
+    }, l[195], 'Invincibility Item Required'));
     laserBridge.nodes.push(new DungeonNode(
-      'Laser Bridge Chest 3', 164, 124, DungeonNodeStatus.CLOSED_CHEST,
+      'Laser Bridge 3', 164, 124, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config);
-    }, l[194]));
+    }, l[194], 'Invincibility Item Required'));
     laserBridge.nodes.push(new DungeonNode(
-      'Laser Bridge Chest 4', 92, 156, DungeonNodeStatus.CLOSED_CHEST,
+      'Laser Bridge 4', 92, 156, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config);
-    }, l[193]));
+    }, l[193], 'Invincibility Item Required'));
     trData.dungeonMaps.push(laserBridge);
 
     var beforeTri = new DungeonMapData('tr-before-tri', 'Room Before Trinexx', '');
@@ -291,10 +291,10 @@ export class TurtleRock {
         return true;
     }, 'tr-helma-bridge'));
     beforeTri.nodes.push(new DungeonNode(
-      'Trinexx Room. Requires Fire Rod and Ice Rod', 115, 25, DungeonNodeStatus.BK_LOCKED,
+      'Trinexx Room', 115, 25, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.fireRod && items.iceRod;
-    }, 'tr-trinexx'));
+    }, 'tr-trinexx', 'Fire Rod and Ice Rod Required'));
     trData.dungeonMaps.push(beforeTri);
 
     var trinexx = new DungeonMapData('tr-trinexx', 'Trinexx Room', '');

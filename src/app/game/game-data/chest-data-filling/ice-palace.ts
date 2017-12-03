@@ -10,7 +10,7 @@ export class IcePalace {
     var ipData = new DungeonData('Ice Palace', l[176],
       function(items:Items, config:Config) {
         return (items.flippers || config.canGlitch) && items.moonPearl
-            && items.glove === 2 && items.hasMeltyPower();
+            && items.glove === 2;
       }, 79.6, 85.8
     );
 
@@ -21,10 +21,10 @@ export class IcePalace {
         return true;
     }, 'exit'));
     entrance.nodes.push(new DungeonNode(
-      '', 30, 142, DungeonNodeStatus.OPEN_DOOR,
+      'First Fork', 30, 142, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasMeltyPower();
-    }, 'ip-first-fork'));
+    }, 'ip-first-fork', 'Fire Rod or Bombos Required'));
     ipData.dungeonMaps.push(entrance);
     
 
@@ -85,10 +85,10 @@ export class IcePalace {
         return true;
     }, 'ip-conveyor-room'));
     ipbj.nodes.push(new DungeonNode(
-      'Switch on Red or Bomb Jump', 220, 138, DungeonNodeStatus.OPEN_DOOR,
+      'Plus Sign Room', 220, 138, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return !items.ipSwitch || config.canGlitch;
-    }, 'ip-plus'));
+    }, 'ip-plus', 'Switch on Red Required'));
     ipData.dungeonMaps.push(ipbj);
 
     var plus = new DungeonMapData('ip-plus', 'Plus Shaped Room', '');
@@ -154,10 +154,10 @@ export class IcePalace {
       }, 'ip-bc'));
     }    
     tallRoom.nodes.push(new DungeonNode(
-      'Spike Room. Requires Hookshot', 170, 67, DungeonNodeStatus.OPEN_DOOR,
+      'Spike Room', 170, 67, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hookshot || config.canGlitch;
-    }, 'ip-spike-room'));
+    }, 'ip-spike-room', 'Hookshot Required'));
     tallRoom.nodes.push(new DungeonNode(
       '', 126, 240, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -172,15 +172,15 @@ export class IcePalace {
         return true;
     }, 'ip-plus'));
     spikeRoom.nodes.push(new DungeonNode(
-      'Spike Room Chest. Requires Hookshot/Invulnerability Item', 73, 182, DungeonNodeStatus.CLOSED_CHEST,
+      'Spike Room Chest', 73, 182, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config) || items.hookshot;
-    }, l[171]));
+    }, l[171], 'Hookshot/Invulnerability Item Required'));
     spikeRoom.nodes.push(new DungeonNode(
-      'Map Room. Requires Hookshot/Invulnerability Item', 184, 51, DungeonNodeStatus.OPEN_DOOR,
+      'Map Room', 184, 51, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasInvincibilityItem(config) || items.hookshot;
-    }, 'ip-map'));
+    }, 'ip-map', 'Hookshot/Invulnerability Item Required'));
     ipData.dungeonMaps.push(spikeRoom);
 
     var mapRoom = new DungeonMapData('ip-map', 'Map Room', '');
@@ -190,20 +190,20 @@ export class IcePalace {
         return true;
     }, 'ip-spike-room'));
     mapRoom.nodes.push(new DungeonNode(
-      'Map Chest. Requires Hammer', 188, 184, DungeonNodeStatus.CLOSED_CHEST,
+      'Map Chest', 188, 184, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hammer;
-    }, l[170]));
+    }, l[170], 'Hammer Required'));
     mapRoom.nodes.push(new DungeonNode(
-      'Freestanding Key. Requires Hammer', 120, 118, DungeonNodeStatus.GROUND_KEY,
+      'Freestanding Key', 120, 118, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return items.hammer;
-    }, ''));
+    }, '', 'Hammer Required'));
     mapRoom.nodes.push(new DungeonNode(
-      'Big Key Room. Requires Hammer', 225, 140, DungeonNodeStatus.OPEN_DOOR,
+      'Big Key Room', 225, 140, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hammer;
-    }, 'ip-bk'));
+    }, 'ip-bk', 'Hammer Required'));
     ipData.dungeonMaps.push(mapRoom);
 
     var bkRoom = new DungeonMapData('ip-bk', 'Big Key Room', '');
@@ -271,39 +271,39 @@ export class IcePalace {
     //TODO adjust numbers
     var pushBlock = new DungeonMapData('ip-push-block', 'Push Block Room', '');
     pushBlock.nodes.push(new DungeonNode(
-      'Big Chest Room. Requires Hookshot', 32, 140, DungeonNodeStatus.OPEN_DOOR,
+      'Big Chest Room', 32, 140, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hookshot;
-    }, 'ip-bc'));
+    }, 'ip-bc', 'Hookshot Required'));
     pushBlock.nodes.push(new DungeonNode(
-      '', 106, 135, DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK,
+      'Button Switch Room', 106, 135, DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK,
     function(items:Items, config:Config) {
         return items.ipSwitch;
-    }, 'ip-switch-room'));
+    }, 'ip-switch-room', 'Switch on Blue Required'));
     pushBlock.nodes.push(new DungeonNode(
-      'Icy Pot Room. Requires Switch on Red', 224, 140, DungeonNodeStatus.OPEN_DOOR,
+      'Icy Pot Room', 224, 140, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return !items.ipSwitch;
-    }, 'ip-icy-pot'));
+    }, 'ip-icy-pot', 'Switch on Red Required'));
     pushBlock.nodes.push(new DungeonNode(
-      'Fairy Drop Room. Requires Switch on Red', 124, 54, DungeonNodeStatus.BK_LOCKED,
+      'Fairy Drop Room', 124, 54, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return !items.ipSwitch;
-    }, 'ip-fairy-drop'));
+    }, 'ip-fairy-drop', 'Switch on Red Required'));
     ipData.dungeonMaps.push(pushBlock);
 
     //TODO adjust numbers
     var pushBlockRight = new DungeonMapData('ip-push-block-right', 'Push Block Room', '');
     pushBlockRight.nodes.push(new DungeonNode(
-      'Big Chest Room. Requires Hookshot and Switch on Red', 32, 140, DungeonNodeStatus.OPEN_DOOR,
+      'Big Chest Room', 32, 140, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hookshot && !items.ipSwitch;
-    }, 'ip-bc'));
+    }, 'ip-bc', 'Hookshot and Switch on Red Required'));
     pushBlockRight.nodes.push(new DungeonNode(
-      '', 126, 130, DungeonNodeStatus.OPEN_DOOR,
+      'Button Switch Room', 126, 130, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.ipSwitch;
-    }, 'ip-switch-room'));
+    }, 'ip-switch-room', 'Switch on Blue Required'));
     pushBlockRight.nodes.push(new DungeonNode(
       '', 224, 140, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -323,10 +323,10 @@ export class IcePalace {
         return true;
     }, 'ip-push-block-right'));
     fairyDrop.nodes.push(new DungeonNode(
-      'Drop down. Requires Switch on Blue', 78, 118, DungeonNodeStatus.OPEN_DOOR,
+      'Button Switch Room', 78, 118, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.ipSwitch;
-    }, 'ip-switch-room'));
+    }, 'ip-switch-room', 'Switch on Blue Required'));
     fairyDrop.nodes.push(new DungeonNode(
       '', 124, 53, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -346,10 +346,10 @@ export class IcePalace {
         return true;
     }, 'ip-final-switch'));
     finalButton.nodes.push(new DungeonNode(
-      'Requires Cane of Somaria or Block Pushed from above', 124, 225, DungeonNodeStatus.OPEN_DOOR,
+      'Pre Boss Room', 124, 225, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.somaria || items.ipBlockPushed;
-    }, 'ip-pre-khold'));
+    }, 'ip-pre-khold', 'Somaria or Block Pushed from Above Required'));
     ipData.dungeonMaps.push(finalButton);
 
     var finalSwitch = new DungeonMapData('ip-final-switch', 'Crystal Switch Room', '');
@@ -369,13 +369,13 @@ export class IcePalace {
     preKhold.nodes.push(new DungeonNode(
       '', 127, 52, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hookshot;
+        return true;
     }, 'ip-switch-room'));
     preKhold.nodes.push(new DungeonNode(
-      'Kholdstare Room. Requires Hammer', 62, 206, DungeonNodeStatus.OPEN_DOOR,
+      'Kholdstare Room', 62, 206, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hammer;
-    }, 'ip-khold'));
+    }, 'ip-khold', 'Hammer Required'));
     ipData.dungeonMaps.push(preKhold);
 
     var kholdRoom = new DungeonMapData('ip-khold', 'Kholdstare Room', '');

@@ -93,15 +93,15 @@ export class EasternPalace {
         return true;
     }, l[61]));
     bigChestRoom.nodes.push(new DungeonNode(
-      'Armos Room. Bow and Lamp Required', 126, 14, DungeonNodeStatus.BK_LOCKED,
+      'Armos Room', 126, 14, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasBow() && items.hasLightsource(config);
-    }, 'ep-armos'));
+    }, 'ep-armos', 'Bow and Lamp Required'));
     bigChestRoom.nodes.push(new DungeonNode(
-      'Big Key Room. Lamp Required', 232, 60, DungeonNodeStatus.OPEN_DOOR,
+      'Big Key Room', 232, 60, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasLightsource(config);
-    }, 'ep-bk'));
+    }, 'ep-bk', 'Lamp Required'));
     epData.dungeonMaps.push(bigChestRoom);
 
     var bigKeyRoom = new DungeonMapData('ep-bk', 'Big Key Room', '');

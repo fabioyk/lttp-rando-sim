@@ -45,10 +45,10 @@ export class DesertPalace {
         return true;
     }, 'dp-right'));
     entrance.nodes.push(new DungeonNode(
-      'Power Glove Required', 16, 194, DungeonNodeStatus.OPEN_DOOR,
+      'Desert Final Section', 16, 194, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.glove;
-    }, 'dp-first-tile'));
+    }, 'dp-first-tile', 'Power Gloves Required'));
     dpData.dungeonMaps.push(entrance);
 
     var torch = new DungeonMapData('dp-torch', 'Torch Room', '');
@@ -58,10 +58,10 @@ export class DesertPalace {
         return true;
     }, 'dp-entry'));
     torch.nodes.push(new DungeonNode(
-      'Torch Item (Boots Required)', 74, 91, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
+      'Torch Item', 74, 91, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.boots;
-    }, l[69]));
+    }, l[69], 'Boots Required'));
     dpData.dungeonMaps.push(torch);
 
     var map = new DungeonMapData('dp-map', 'Map Room', '');
@@ -138,12 +138,12 @@ export class DesertPalace {
         return true;
     }, 'dp-first-tile'));
     bigDoor.nodes.push(new DungeonNode(
-      'Lanmolas Room. Fire Source and Weapon Required', 36, 70, DungeonNodeStatus.BK_LOCKED,
+      'Lanmolas Room', 36, 70, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasFiresource()
           && (items.sword || items.hammer || items.hasBow() || items.fireRod || items.iceRod
             || items.byrna || items.somaria || config.canGlitch);
-    }, 'dp-lanmo'));
+    }, 'dp-lanmo', 'Fire Source and Weapon Required'));
     dpData.dungeonMaps.push(bigDoor);
 
     var lanmoRoom = new DungeonMapData('dp-lanmo', 'Lanmolas Room', '');

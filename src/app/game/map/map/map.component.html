@@ -1,5 +1,5 @@
 <div class="map"
-  [ngStyle]="{'background-image': currentBackgroundImage}">
+  [ngStyle]="{'background-image': getMapBg()}">
   <div *ngIf='!currentDungeon'>
     <app-node *ngFor='let lwNode of gameService.getAccessibleNodes(items, currentMap)'
         nodeType='overworld'
@@ -18,6 +18,9 @@
     <app-node *ngFor='let dunNode of loadMap()'
         nodeType='inside-dungeon'
         [nodeInfo]='dunNode'
+        [items]='items'
+        [config]='config'
+        [dungeonItems]='currentDungeonItems'
         (click)='onDungeonNodeClick(dunNode)'>
     </app-node>    
   </div>

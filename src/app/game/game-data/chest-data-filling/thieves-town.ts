@@ -53,11 +53,11 @@ export class ThievesTown {
         return true;
     }, 'tt-entry'));
     stalfoCorridor.nodes.push(new DungeonNode(
-      'Blind. Requires Blind to be Rescued and a Weapon', 128, 21, DungeonNodeStatus.OPEN_DOOR,
+      'Blind', 128, 21, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.ttBlindDelivered && items.ttBombableFloor
             && (items.sword || items.hammer || items.somaria || items.byrna);
-    }, 'tt-blind'));
+    }, 'tt-blind', 'Floor Bombed, Blind Rescued and a Weapon Required'));
     stalfoCorridor.nodes.push(new DungeonNode(
       '', 80, 196, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -149,10 +149,10 @@ export class ThievesTown {
         return true;
     }, 'tt-fork2'));
     bigChest.nodes.push(new DungeonNode(
-      'Big Chest. Requires Hammer', 127, 130, DungeonNodeStatus.BIG_CHEST,
+      'Big Chest', 127, 130, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return items.hammer;
-    }, l[164]));
+    }, l[164], 'Hammer Required'));
     ttData.dungeonMaps.push(bigChest);
 
     var bombableFloor = new DungeonMapData('tt-bombable-floor', 'Bombable Floor', '');

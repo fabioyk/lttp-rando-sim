@@ -128,12 +128,10 @@ export class GameComponent implements OnInit {
   }
 
   onCantItem([mapNode, region]) {
-    console.log(mapNode);
-    console.log(region);
     this.itemLog.unshift({
       item: mapNode.prize[0],
       shortName: 'cant-item',
-      longName: 'Tried to open ' + mapNode.tooltip,
+      longName: 'Tried to open ' + mapNode.tooltip + '. ' + mapNode.originalNode.errorMessage,
       location: mapNode.tooltip,
       region: region,
       type: 'cant'

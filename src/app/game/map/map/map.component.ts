@@ -33,15 +33,13 @@ export class MapComponent implements OnInit {
   currentDungeon: DungeonData;
   currentDungeonItems: DungeonItems;
 
-  currentBackgroundImage:string = 'assets/map.png';
-
   constructor(private gameService:GameService,
               private itemNameService:ItemNamesService) { }
 
   ngOnInit() {    
     this.isDev = isDevMode();
     
-    this.currentBackgroundImage = 'url(assets/light-world.png)';
+    this.currentMap = 'light-world';
     this.tooltip = '';
   }
 
@@ -393,13 +391,34 @@ export class MapComponent implements OnInit {
   }
 
   changeMap(newMap:string) {
-    this.currentMap = newMap;
+    this.currentMap = newMap;    
+  }
+
+
+  pegMaps = ['ip-bj', 'ip-fairy-drop', 'ip-final-switch', 'ip-push-block', 'ip-push-block-right',
+    'mm-compass', 'mm-entry', 'mm-fish-spine', 'mm-map',
+    'sp-left', 'sp-south-switch', 'sp-switch'];
+  getMapBg():string {
     if (this.currentMap === 'light-world') {
-      this.currentBackgroundImage = 'url(assets/light-world.png)';
+      return 'url(assets/light-world.png)';
     } else if (this.currentMap === 'dark-world') {
-      this.currentBackgroundImage = 'url(assets/dark-world.png)';      
+      return 'url(assets/dark-world.png)';      
     } else {
-      this.currentBackgroundImage = 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'.png")';      
+      if (this.pegMaps.indexOf(this.currentMap) === -1) {
+        return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'.png")';      
+      } else {
+        var shouldFlip = false;
+        if (this.currentDungeon.name === 'Swamp Palace') {
+          shouldFlip = this.items.spSwitch;
+        } else if (this.currentDungeon.name === 'Ice Palace') {
+          shouldFlip = this.items.ipSwitch;
+        } else if (this.currentDungeon.name === 'Misery Mire') {
+          shouldFlip = this.items.mmSwitch;
+        }
+
+        return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+(shouldFlip ? '-flipped' : '') + '.png")';
+      }
+      
     }
   }
 

@@ -28,10 +28,10 @@ export class GanonsTower {
         return true;
     }, 'gt-first-left'));
     entrance.nodes.push(new DungeonNode(
-      'Upstairs. Requires Bow, Firesource and Big Key', 126, 22, DungeonNodeStatus.BK_LOCKED,
+      'Upstairs', 126, 22, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasBow() && items.hasFiresource();
-    }, 'gt-upstairs'));
+    }, 'gt-upstairs', 'Bow, Fire Source and Big Key Required'));
     entrance.nodes.push(new DungeonNode(
       '', 190, 35, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -51,10 +51,10 @@ export class GanonsTower {
         return true;
     }, 'gt-first-left'));
     firstRight.nodes.push(new DungeonNode(
-      'Tile Room. Requires Cane of Somaria', 223, 132, DungeonNodeStatus.OPEN_DOOR,
+      'Tile Room', 223, 132, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.somaria;
-    }, 'gt-tile-room'));
+    }, 'gt-tile-room', 'Cane of Somaria Required'));
     firstRight.nodes.push(new DungeonNode(
       'Right Side First Chest', 57, 62, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -73,11 +73,19 @@ export class GanonsTower {
     function(items:Items, config:Config) {
         return true;
     }, 'gt-first-right'));
-    tileRoom.nodes.push(new DungeonNode(
-      'Compass Room. Requires Fire Rod', 221, 132, DungeonNodeStatus.SK_LOCKED,
-    function(items:Items, config:Config) {
-        return items.fireRod;
-    }, 'gt-right-side'));
+    if (!config.canGlitch) {
+      tileRoom.nodes.push(new DungeonNode(
+        'Compass Room', 221, 132, DungeonNodeStatus.SK_LOCKED,
+      function(items:Items, config:Config) {
+          return items.fireRod;
+      }, 'gt-right-side', 'Fire Rod Required'));
+    } else {
+      tileRoom.nodes.push(new DungeonNode(
+        'Compass Room', 221, 132, DungeonNodeStatus.SK_LOCKED,
+      function(items:Items, config:Config) {
+          return items.fireRod || items.lamp;
+      }, 'gt-right-side', 'Fire Source Required'));
+    }    
     tileRoom.nodes.push(new DungeonNode(
       'Tile Room Chest', 139, 65, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -94,7 +102,7 @@ export class GanonsTower {
     rightSide.nodes.push(new DungeonNode(
       '', 71, 132, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.fireRod;
+        return true;
     }, 'gt-sk-corridor'));
     rightSide.nodes.push(new DungeonNode(
       'Compass Room Chest 1', 105, 98, DungeonNodeStatus.CLOSED_CHEST,
@@ -236,7 +244,7 @@ export class GanonsTower {
       'Key Torch Item', 155, 113, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.boots;
-    }, l[199]));
+    }, l[199], 'Boots Required'));
     gtData.dungeonMaps.push(keyTorch);
 
     var hammerPegs = new DungeonMapData('gt-hammer-pegs', 'Hammer Pegs Room', '');
@@ -246,10 +254,10 @@ export class GanonsTower {
         return true;
     }, 'gt-first-left'));
     hammerPegs.nodes.push(new DungeonNode(
-      'Hookshot Room. Requires Hammer', 29, 130, DungeonNodeStatus.OPEN_DOOR,
+      'Hookshot Room', 29, 130, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hammer;
-    }, 'gt-hookshot-room'));
+    }, 'gt-hookshot-room', 'Hammer Required'));
     hammerPegs.nodes.push(new DungeonNode(
       '', 204, 190, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
@@ -264,20 +272,20 @@ export class GanonsTower {
         return true;
     }, 'gt-hammer-pegs'));
     hookshotRoom.nodes.push(new DungeonNode(
-      'Stalfos Room. Requires Hookshot', 126, 32, DungeonNodeStatus.OPEN_DOOR,
+      'Stalfos Room', 126, 32, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hookshot;
-    }, 'gt-stalfo'));
+        return items.hookshot || config.canGlitch;
+    }, 'gt-stalfo', 'Hookshot Required'));
     hookshotRoom.nodes.push(new DungeonNode(
-      'Double Firebar Room. Requires Hookshot or Boots', 170, 195, DungeonNodeStatus.SK_LOCKED,
+      'Double Firebar Room', 170, 195, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hookshot || items.boots;
-    }, 'gt-double-firebar'));
+        return items.hookshot || items.boots || config.canGlitch;
+    }, 'gt-double-firebar', 'Hookshot or Boots Required'));
     hookshotRoom.nodes.push(new DungeonNode(
-      'Firesnake Room. Requires Hookshot', 126, 239, DungeonNodeStatus.OPEN_DOOR,
+      'Firesnake Room', 126, 239, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hookshot;
-    }, 'gt-double-switch'));
+        return items.hookshot || config.canGlitch;
+    }, 'gt-double-switch', 'Hookshot Required'));
     gtData.dungeonMaps.push(hookshotRoom);
 
     var stalfos = new DungeonMapData('gt-stalfo', 'Stalfos Room', '');
@@ -341,15 +349,15 @@ export class GanonsTower {
 
     var firesnake = new DungeonMapData('gt-firesnake', 'Firesnake Room', '');
     firesnake.nodes.push(new DungeonNode(
-      '', 37, 169, DungeonNodeStatus.SK_LOCKED,
+      'Teleport Room', 37, 169, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hookshot;
-    }, 'gt-teleports'));
+        return items.hookshot || config.canGlitch;
+    }, 'gt-teleports', 'Hookshot Required'));
     firesnake.nodes.push(new DungeonNode(
       'Firesnake Chest', 32, 116, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hookshot;
-    }, l[208]));
+        return items.hookshot || config.canGlitch;
+    }, l[208], 'Hookshot Required'));
     gtData.dungeonMaps.push(firesnake);
 
     var teleports = new DungeonMapData('gt-teleports', 'Teleport Room', '');
@@ -441,15 +449,15 @@ export class GanonsTower {
 
     var helmaRoom = new DungeonMapData('gt-moldorm', 'Moldorm 2 Room', '');
     helmaRoom.nodes.push(new DungeonNode(
-      'Moldorm 2 Chest. Requires Hookshot', 145, 187, DungeonNodeStatus.CLOSED_CHEST,
+      'Moldorm 2 Chest', 145, 187, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hookshot || (items.boots && config.canGlitch);
-    }, l[225]));
+    }, l[225], 'Hookshot Required'));
     helmaRoom.nodes.push(new DungeonNode(
-      'Agahnim 2. Requires Hookshot', 16, 198, DungeonNodeStatus.BK_LOCKED,
+      'Agahnim 2', 16, 198, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.hookshot || (items.boots && config.canGlitch);
-    }, 'gt-aga2'));
+    }, 'gt-aga2', 'Hookshot Required'));
     gtData.dungeonMaps.push(helmaRoom);
 
     var aga2 = new DungeonMapData('gt-aga2', 'Agahnim 2 Room', '');

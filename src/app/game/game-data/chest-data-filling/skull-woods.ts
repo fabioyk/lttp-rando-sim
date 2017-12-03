@@ -161,10 +161,10 @@ export class SkullWoods {
         return true;
     }, 'sw-entry'));
     part2.nodes.push(new DungeonNode(
-      'Final Section. Requires Fire Rod', 41, 202, DungeonNodeStatus.OPEN_DOOR,
+      'Final Section', 41, 202, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.fireRod;
-    }, 'sw-final'));
+    }, 'sw-final', 'Fire Rod Required'));
     part2.nodes.push(new DungeonNode(
       '', 21, 150, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
@@ -184,10 +184,10 @@ export class SkullWoods {
         return true;
     }, 'sw-part2'));
     final.nodes.push(new DungeonNode(
-      'Mothula Room. Requires Sword.', 62, 32, DungeonNodeStatus.SK_LOCKED,
+      'Mothula Room', 62, 32, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.sword;
-    }, 'sw-mothula'));
+    }, 'sw-mothula', 'Sword Required'));
     final.nodes.push(new DungeonNode(
       'Final Section Chest', 84, 186, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {

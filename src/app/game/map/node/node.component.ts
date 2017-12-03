@@ -4,6 +4,8 @@ import { DungeonNode } from '../../game-data/dungeon-node';
 import { MapNode } from '../../game-data/map-node';
 import { DungeonNodeStatus } from '../../game-data/dungeon-node-status.enum';
 import { DungeonItems } from '../../game-data/dungeon-items';
+import { Items } from '../../game-data/items';
+import { Config } from '../../game-data/config';
 
 @Component({
   selector: 'app-node',
@@ -14,6 +16,8 @@ export class NodeComponent implements OnInit {
   @Input() nodeType: string;
   @Input() nodeInfo: MapNode;
   @Input() dungeonItems: DungeonItems;
+  @Input() items: Items;
+  @Input() config: Config;
   @Output() clickedNode = new EventEmitter<MapNode>();
   @Output() nodeMouseEnter = new EventEmitter<string>();
   @Output() nodeMouseLeave = new EventEmitter<string>();
@@ -30,7 +34,7 @@ export class NodeComponent implements OnInit {
 
   ngOnInit() {
     this.nodeX = this.nodeInfo.x + '%';
-    this.nodeY = this.nodeInfo.y + '%';
+    this.nodeY = this.nodeInfo.y + '%';    
 
     if (this.nodeType && this.nodeType === 'overworld' && this.nodeInfo.prize.length > 1) {
       this.chestCountNum = 'x' + this.nodeInfo.prize.length;
@@ -53,6 +57,54 @@ export class NodeComponent implements OnInit {
       'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower', 'Ganons Tower'];
   
       return 'url("./assets/dungeon-tracker-icons/boss' + duns.indexOf(this.nodeInfo.tooltip) + '2.png")';
+    }
+  }
+
+  getNodeBgClass() {
+    if (this.nodeType === 'inside-dungeon') {
+      if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
+          && +this.nodeInfo.status !== DungeonNodeStatus.VIEWABLE_CLOSED_CHEST) {
+        return 'dungeon-unavailable';
+      }
+      if (!this.nodeInfo.originalNode.canOpen(this.items, this.config)
+        && +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST) {
+        return 'view-state';
+      }
+      if (+this.nodeInfo.status === DungeonNodeStatus.BK_LOCKED
+        || +this.nodeInfo.status === DungeonNodeStatus.BIG_CHEST) {
+        return this.dungeonItems.hasBigKey ? 'dun-open-state' : 'dungeon-unavailable';
+      }
+      if (+this.nodeInfo.status === DungeonNodeStatus.SK_LOCKED) {
+        return this.dungeonItems.smallKeys > 0 ? 'dun-open-state' : 'dungeon-unavailable';
+      }
+      if (+this.nodeInfo.status === DungeonNodeStatus.WATER_SWITCH_FLIPPED
+        || +this.nodeInfo.status === DungeonNodeStatus.BLIND_RESCUED
+        || +this.nodeInfo.status === DungeonNodeStatus.COLLECTED_GROUND_KEY
+        || +this.nodeInfo.status === DungeonNodeStatus.OPEN_CHEST
+        || +this.nodeInfo.status === DungeonNodeStatus.OPEN_BIG_CHEST
+        || +this.nodeInfo.status === DungeonNodeStatus.TT_BOMB_FLOOR_DONE) {
+        return 'opened-state';
+      }
+      return 'dun-open-state';
+      
+    } else if (this.nodeInfo.originalNode.isOpened) {
+      return 'opened-state';
+    } else if (this.nodeType !== 'overworld') {
+      if (this.dungeonItems.isBossDefeated && this.dungeonItems.itemsLeft === 0) {
+        return 'dungeon-cleared';
+      } else if (this.dungeonItems.isBossDefeated) {
+        return 'dungeon-defeated';
+      } else if (this.nodeInfo.status === 'unavailable') {
+        return 'dungeon-unavailable';
+      } else {
+        return 'dungeon-state';
+      }      
+    } else if (this.nodeInfo.status === 'viewable') {
+      return 'view-state';
+    } else if (this.nodeInfo.status === 'unavailable') {
+      return 'unavailable-state';
+    } else {
+      return 'open-state';
     }
   }
 
@@ -103,24 +155,8 @@ export class NodeComponent implements OnInit {
           console.log(this.nodeInfo.status);
           return '';
       }
-    } else if (this.nodeInfo.originalNode.isOpened) {
-      return 'opened-state';
-    } else if (this.nodeType !== 'overworld') {
-      if (this.dungeonItems.isBossDefeated && this.dungeonItems.itemsLeft === 0) {
-        return 'dungeon-cleared';
-      } else if (this.dungeonItems.isBossDefeated) {
-        return 'dungeon-defeated';
-      } else if (this.nodeInfo.status === 'unavailable') {
-        return 'dungeon-unavailable';
-      } else {
-        return 'dungeon-state';
-      }      
-    } else if (this.nodeInfo.status === 'viewable') {
-      return 'view-state';
-    } else if (this.nodeInfo.status === 'unavailable') {
-      return 'unavailable-state';
     } else {
-      return 'open-state';
+      return '';
     }
   }
 }

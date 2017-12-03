@@ -27,10 +27,16 @@
 .open-state {
   background-color: lightgreen;
 }
-.unavailable-state, .dungeon-unavailable {
+.dun-open-state {
+  background-color: lightblue;
+}
+.dungeon-unavailable {
   background-color: lightcoral;
-  cursor: default;
+}
+.unavailable-state {
+  background-color: lightcoral;  
   opacity: 0.5;
+  cursor: default;
 }
 .view-state {
   background-color: yellow;
@@ -69,7 +75,6 @@
   background-size: cover;
   background-repeat: no-repeat;
   border: solid black;
-  background-color: lightblue;
 }
 
 .open-door, .sk-door, .bk-door {
