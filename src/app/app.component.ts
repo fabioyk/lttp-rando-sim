@@ -4,6 +4,7 @@ import { GameService } from './game/game-data/game-service.service';
 import { seeds } from './temp/seeds';
 import { WindowRefService } from "./shared/window-ref.service";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { Router } from '@angular/router';
 
 var self;
 
@@ -20,7 +21,8 @@ export class AppComponent {
   window: Window;
   
   constructor(private _windowRef: WindowRefService,
-              private _modalService: BsModalService) {
+              private _modalService: BsModalService,
+              private _router: Router) {
     this.window = _windowRef.nativeWindow;
   }
 
@@ -30,6 +32,10 @@ export class AppComponent {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this._modalService.show(template);
+  }
+
+  onBackMainMenu() {
+    this._router.navigate(['/']);    
   }
 
 }

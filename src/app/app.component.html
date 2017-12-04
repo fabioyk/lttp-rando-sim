@@ -1,12 +1,11 @@
 <div class='whole-app'>
   <div class="container">
+    <h1><span class="not-selectable title stylized-font" (click)="onBackMainMenu()">Z3R Simulator</span> <button type="button" class="btn btn-default pull-right" 
+      (click)="openModal(template)">How To Play</button></h1>
+    
     <router-outlet></router-outlet>
   </div>    
   <footer>
-    <p>
-        <button type="button" class="btn btn-default" 
-          (click)="openModal(template)">How To Play</button>
-    </p>
 
     <p>
       

@@ -4,7 +4,7 @@
 }
 
 .title {
-  cursor: pointer;
+  margin-top: 0;
 }
 
 @media (max-width: 768px) {
