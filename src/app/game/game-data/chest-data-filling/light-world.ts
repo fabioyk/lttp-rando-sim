@@ -216,7 +216,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Lake Hylia Island', 36.1, 82.9,
       function(items:Items, config:Config) {
-        return items.flippers && items.moonPearl && items.mirror 
+        return (items.flippers || (items.boots && config.canGlitch)) && items.moonPearl && items.mirror 
           && (items.canSouthDarkWorld() || items.canNorthEastDarkWorld());
       },
       function(items:Items, config:Config) {

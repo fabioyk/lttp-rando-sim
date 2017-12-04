@@ -69,7 +69,7 @@ export class GameComponent implements OnInit {
         if (params.seed && +params.seed === this._seedService.lastSeedNum) {
           this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch);
         } else {
-          this._seedService.getSeed(gameMode, +params.seed)
+          this._seedService.getSeed(gameMode, params.seed)
             .subscribe((seed) => {
               this.gameInit(seed.data, seed.seed, canGlitch);
             });

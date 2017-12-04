@@ -9,7 +9,7 @@ export class IcePalace {
   static setup (l:string[], config:Config):DungeonData {
     var ipData = new DungeonData('Ice Palace', l[176],
       function(items:Items, config:Config) {
-        return (items.flippers || config.canGlitch) && items.moonPearl
+        return (items.flippers || config.canGlitch) && (items.moonPearl || config.canGlitch)
             && items.glove === 2;
       }, 79.6, 85.8
     );

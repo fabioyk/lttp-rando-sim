@@ -14,3 +14,7 @@ body {
 a {
   cursor: pointer;
 }
+
+.stylized-font {
+  font-family: 'Hammersmith One', sans-serif;
+}

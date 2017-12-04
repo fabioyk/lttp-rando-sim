@@ -12,7 +12,6 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     SharedModule,
     AlertModule.forRoot(),
-    TabsModule.forRoot(),
     ButtonsModule.forRoot(),
     TooltipModule.forRoot(),
     RouterModule

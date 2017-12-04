@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from "@angular/router";
 import { SeedApiService } from '../../shared/seed-api.service';
 import { Seed } from '../../shared/seed';
@@ -39,8 +40,9 @@ export class MainMenuComponent implements OnInit {
     this.shouldDisablePlay = true;
     this.lockedMode = this.modeSelected;
     this.lockedGlitch = this.glitchSelected;
+    this.errorMessage = '';
 
-    this._seedService.getSeed(this.lockedMode, +this.seedNum, this.dailySeed)
+    this._seedService.getSeed(this.lockedMode, this.seedNum, this.dailySeed)
       .subscribe((seed) => {
         if (!seed || seed.error) {
           this.errorMessage = seed.error;
@@ -56,5 +58,4 @@ export class MainMenuComponent implements OnInit {
         }
       });
   }
-
 }

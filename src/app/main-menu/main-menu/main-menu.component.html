@@ -1,4 +1,4 @@
-<h1>Z3R Simulator</h1>
+<h1 class="not-selectable stylized-font">Z3R Simulator</h1>
 <form class="form-horizontal">
   <div class="form-group">
     <label for="game-mode" class="col-sm-4 control-label">Game Mode</label>    
@@ -24,16 +24,23 @@
     <label for="seed-num-input" class="col-sm-4 control-label">Seed</label>
     <div class="col-sm-8 form-inline">
         <input type="text" name="seedSelect" class="form-control" id="seed-num-input"
-        placeholder="Random" maxlength="10" [(ngModel)]="seedNum" [disabled]='dailySeed'>
+        placeholder="Random" maxlength="10" [(ngModel)]="seedNum" [disabled]='dailySeed'
+        (keyup.enter)="onSubmit()">
         <button type="button" class="btn btn-default" 
           [(ngModel)]="dailySeed" (click)='onDailySeedClick()'
-          name="dailyButton" btnCheckbox>Daily Seed</button>
-    </div>
-    
+          name="dailyButton" btnCheckbox>Daily Seed</button> 
+          <abbr class="super-text not-selectable"
+            tooltip="A new seed every day! Resets at Midnight UTC / 7PM EST">?</abbr>
+    </div>    
   </div>
   <div class="form-group">
     <div class="col-sm-offset-4 col-sm-8">
-      <button class="btn btn-primary" (click)="onSubmit()" type="button" [disabled]='shouldDisablePlay'>Play</button>
+      <button class="btn btn-primary" (click)="onSubmit()" 
+        type="button" [disabled]='shouldDisablePlay'>Play</button>      
     </div>
   </div>
+  <alert type="danger" *ngIf="errorMessage">
+    {{errorMessage}}
+  </alert>
 </form>
+

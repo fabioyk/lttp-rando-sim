@@ -33,3 +33,20 @@ footer {
   margin-top: 10px;
   z-index: 5;
 }
+
+.green-text {
+  color: lightgreen;
+  
+}
+
+.yellow-text {
+  color: yellow;
+}
+
+.green-text, .yellow-text {
+  text-shadow:
+  -1px -1px 0 #000,  
+   1px -1px 0 #000,
+   -1px 1px 0 #000,
+    1px 1px 0 #000;
+}

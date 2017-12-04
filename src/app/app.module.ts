@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AlertModule } from 'ngx-bootstrap';
+import { AlertModule, ModalModule } from 'ngx-bootstrap';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { WindowRefService } from "./shared/window-ref.service";
   imports: [
     AlertModule.forRoot(),
     ButtonsModule.forRoot(),
+    ModalModule.forRoot(),
     BrowserModule, 
     GameModule,
     MainMenuModule,

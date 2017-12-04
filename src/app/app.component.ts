@@ -1,8 +1,9 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, TemplateRef } from '@angular/core';
 import { SpoilerLog } from './game/game-data/spoiler-log';
 import { GameService } from './game/game-data/game-service.service';
 import { seeds } from './temp/seeds';
 import { WindowRefService } from "./shared/window-ref.service";
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
 var self;
 
@@ -13,17 +14,22 @@ var self;
 })
 export class AppComponent {
   @ViewChild('footer') elementView: ElementRef;
-    
+  modalRef: BsModalRef;    
   title = 'app';
   footerHeight: number;  
   window: Window;
   
-  constructor(private _windowRef: WindowRefService) {
+  constructor(private _windowRef: WindowRefService,
+              private _modalService: BsModalService) {
     this.window = _windowRef.nativeWindow;
   }
 
   ngOnInit() {
     self = this;
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this._modalService.show(template);
   }
 
 }

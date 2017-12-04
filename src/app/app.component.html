@@ -1,17 +1,72 @@
 <div class='whole-app'>
   <div class="container">
-      <router-outlet></router-outlet>
-    </div>
-    
-    <footer>
-      <p>
-        Developed by Kyong92 - 
-          <a href="https://www.twitch.tv/kyong92">
-            <img src="assets/twitch_glitch_icon.png">
-          </a> - 
-          <a href="https://twitter.com/kyong92">
-            <i class="fa fa-twitter" aria-hidden="true"></i>
-          </a>
-      </p>    
-    </footer>
+    <router-outlet></router-outlet>
+  </div>    
+  <footer>
+    <p>
+        <button type="button" class="btn btn-default" 
+          (click)="openModal(template)">How To Play</button>
+    </p>
+
+    <p>
+      
+      Developed by Kyong92 - 
+        <a href="https://www.twitch.tv/kyong92">
+          <img src="assets/twitch_glitch_icon.png">
+        </a> - 
+        <a href="https://twitter.com/kyong92">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+    </p>    
+  </footer>
 </div>
+
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">How to Play</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h3>Z3R Simulator</h3>
+      <p>
+        This tool was made for routing practice. Play seeds in 5 minutes instead of 2 hours!
+      </p>
+      <p>
+        Click on <span class='green-text'>Green</span> locations to open them. 
+        The Item Tracker and Log are updated automatically.
+      </p>
+      <p>
+        Click on <span class='yellow-text'>Yellow</span> locations to check what they are, 
+        but you're going to need something to get them.
+      </p>      
+      <p>
+        Decide when to check the map or the medallions and freely warp between Light 
+        and Dark world by using the <strong>buttons below the Map</strong>. 
+        They are unlocked as you get the necessary items.
+      </p>
+      <p>
+        You can search the Item Log to remember where you got something, 
+        or filter out all those useless rupees.
+      </p>
+      <p>
+        You can play this just like you play a normal rando, 
+        thinking where you would be and what you would do, 
+        or just screw around and warp around the world getting everything.
+      </p>
+      <h3>Minor Glitches</h3>
+      <p>
+        If you activate <strong>Minor Glitches and Sequence Breaking</strong>, 
+        the following options are unlocked:
+      </p>
+      <ul class="list-inline">
+        <li>Dark Rooms</li>
+        <li>Fake Flippers</li>
+        <li>Water Walking</li>
+        <li>Super Bunny</li>
+        <li>Bomb Jumps</li>
+        <li>Hovering</li>
+      </ul>
+    </div>
+  </ng-template>
