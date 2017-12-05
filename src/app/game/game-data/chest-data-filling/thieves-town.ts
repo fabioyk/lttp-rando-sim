@@ -9,7 +9,7 @@ export class ThievesTown {
   static setup (l:string[], config:Config):DungeonData {
     var ttData = new DungeonData('Thieves Town', l[167],
       function(items:Items, config:Config) {
-        return items.moonPearl && items.canNorthWestDarkWorld();
+        return items.moonPearl && items.canNorthWestDarkWorld(config);
       }, 12.8, 47.9
     );
 

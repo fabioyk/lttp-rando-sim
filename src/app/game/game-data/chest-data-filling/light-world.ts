@@ -29,7 +29,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'King\'s Tomb', 30.8, 29.6,
       function(items:Items, config:Config) {
-        return items.boots && (items.glove === 2 || (items.mirror && items.canNorthWestDarkWorld()));
+        return items.boots && (items.glove === 2 || (items.mirror && items.canNorthWestDarkWorld(config)));
       },
       null,
       [l[3]]
@@ -217,7 +217,7 @@ export class LightWorld {
       'Lake Hylia Island', 36.1, 82.9,
       function(items:Items, config:Config) {
         return (items.flippers || (items.boots && config.canGlitch)) && items.moonPearl && items.mirror 
-          && (items.canSouthDarkWorld() || items.canNorthEastDarkWorld());
+          && (items.canSouthDarkWorld(config) || items.canNorthEastDarkWorld(config));
       },
       function(items:Items, config:Config) {
         return true;

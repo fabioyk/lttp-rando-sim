@@ -9,7 +9,7 @@ export class PalaceDarkness {
   static setup (l:string[], config:Config):DungeonData {
     var podData = new DungeonData('Palace of Darkness', l[138],
       function(items:Items, config:Config) {
-        return items.canNorthEastDarkWorld() && items.moonPearl;
+        return items.canNorthEastDarkWorld(config) && items.moonPearl;
       }, 94, 40
     );
 

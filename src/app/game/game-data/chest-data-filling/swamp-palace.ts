@@ -10,7 +10,7 @@ export class SwampPalace {
     var spData = new DungeonData('Swamp Palace', l[149],
       function(items:Items, config:Config) {
         return items.moonPearl && items.mirror && items.flippers
-          && items.canSouthDarkWorld();
+          && items.canSouthDarkWorld(config);
       }, 47, 91
     );
 

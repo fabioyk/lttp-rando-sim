@@ -332,21 +332,21 @@ export class Items {
   canDarkWestDeathMountain(config:Config) {
     return this.canWestDeathMountain(config) && this.moonPearl;
   }
-  canNorthEastDarkWorld() {
+  canNorthEastDarkWorld(config:Config) {
     return this.agahnim
       || (this.hammer && this.glove && this.moonPearl)
-      || (this.glove === 2 && this.flippers && this.moonPearl);
+      || (this.glove === 2 && (this.flippers || (this.boots && config.canGlitch)) && this.moonPearl);
   }
-  canNorthWestDarkWorld() {
-    return (this.canNorthEastDarkWorld()
+  canNorthWestDarkWorld(config:Config) {
+    return (this.canNorthEastDarkWorld(config)
         && (this.hookshot && (this.hammer || this.glove || this.flippers))
         || (this.hammer && this.glove)
         || this.glove === 2)
       && this.moonPearl;
   }
-  canSouthDarkWorld() {
+  canSouthDarkWorld(config:Config) {
     return this.moonPearl
-      && ((this.canNorthEastDarkWorld() && (this.hammer
+      && ((this.canNorthEastDarkWorld(config) && (this.hammer
         || (this.hookshot && (this.flippers || this.glove))))
         || (this.hammer && this.glove)
         || this.glove === 2);
