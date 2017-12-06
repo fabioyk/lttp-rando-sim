@@ -24,6 +24,41 @@
   user-select: none; /* Standard */
 }
 
+.warp {
+  background-image: url(/assets/node-icons/warp.png);
+  background-size: cover;
+}
+.invisible {
+  display: none;
+}
+
+.unavailable {
+  background-color: lightcoral;
+}
+.dungeon {
+  background-color: blue;
+}
+.open {
+  background-color: lightgreen;
+}
+.dun-defeated {
+  background-color: lightblue;
+}
+.view {
+  background-color: yellow;
+}
+.cleared, .opened {
+  background-color: grey;
+}
+
+.unavailable {
+  opacity: 0.5;  
+}
+.unavailable, .cleared, .opened {
+  cursor: default;
+}
+
+
 .open-state {
   background-color: lightgreen;
 }
@@ -44,6 +79,11 @@
 .opened-state, .dungeon-cleared {
   background-color: grey;
   cursor: default;
+}
+.unavailable-open-state, .dungeon-unavailable-cleared {
+  background-color: grey;
+  cursor: default;
+  opacity: 0.5;
 }
 .dungeon-state {
   background-color: blue;

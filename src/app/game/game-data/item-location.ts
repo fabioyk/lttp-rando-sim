@@ -6,7 +6,8 @@ export class ItemLocation {
   canGet: Function;
   canView: Function;
   item: string[];
-  constructor(location:string, x:number, y:number, canGet:Function, canView:Function, item:string[]) {
+  region: string;
+  constructor(location:string, x:number, y:number, canGet:Function, canView:Function, item:string[], region:string='') {
     this.location = location;
     this.x = x;
     this.y = y;
@@ -16,6 +17,7 @@ export class ItemLocation {
     if (canView) {
       this.canView = canView;
     }
+    this.region = region;
     this.item = item;
 
     this.isOpened = false;

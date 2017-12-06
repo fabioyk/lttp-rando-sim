@@ -26,6 +26,8 @@ export class MapComponent implements OnInit {
   @Output() onGameFinished = new EventEmitter<string>();
   tooltip:string;
   isDev = false;
+  hasUsedMirror = false;
+  currentRegion = 'ow';
 
   warpButtonText:string;
 
@@ -75,42 +77,25 @@ export class MapComponent implements OnInit {
 
     return nodes;
   }
-/*
-  onMouseMove(event:MouseEvent) {
-    console.log(document.elementFromPoint(event.offsetX, event.offsetY));
-  }
 
-  onNodeMouseEnter(mapNode:MapNode) {
-    this.tooltip = mapNode.tooltip;
-  }
-
-  onNodeMouseLeave(mapNode:MapNode) {
-    console.log('left');
-    this.tooltip = mapNode.tooltip;
-  }
-  */
   onNodeClick(nodeClicked:MapNode) {
-    //this.onNodeMouseEnter(nodeClicked);
-    switch (nodeClicked.status) {
-      case 'getable':
-        if (!nodeClicked.originalNode.isOpened) {
-          this.addPrizes(nodeClicked, this.currentMap);
-          if (nodeClicked.originalNode) {
-            nodeClicked.originalNode.isOpened = true;
-          }
-          nodeClicked.status = 'opened'
-          if (nodeClicked.tooltip === 'Ganon') {
-            this.onGameFinished.emit('');
-          }
+    if (nodeClicked.status.indexOf('getable') > -1) {
+      if (!nodeClicked.originalNode.isOpened) {
+        this.addPrizes(nodeClicked, this.currentMap);
+        if (nodeClicked.originalNode) {
+          nodeClicked.originalNode.isOpened = true;
         }
-        break;
-      case 'viewable':
-        this.viewItem.emit([nodeClicked, this.currentMap]);
-        break;      
+        nodeClicked.status = 'opened'
+        if (nodeClicked.tooltip === 'Ganon') {
+          this.onGameFinished.emit('');
+        }
+      }
+    } else if (nodeClicked.status.indexOf('viewable') > -1) {
+      this.viewItem.emit([nodeClicked, this.currentMap]);
+    } else if (nodeClicked.status === 'warp') {
+      this.currentRegion = nodeClicked.id;
+      this.changeMap('dark-world');
     }
-    
-    // console.log(nodeClicked.originalNode);
-    //nodeClicked.originalNode.isOpened = true;
   }
 
   addPrizes(node:MapNode, region:string) {    
@@ -121,8 +106,6 @@ export class MapComponent implements OnInit {
     //this.onNodeMouseEnter(dungeonClicked);
     if (!dungeonClicked.originalNode.canEnter || 
       dungeonClicked.originalNode.canEnter(this.items, this.config)) {
-        console.log('Can I enter ' + dungeonClicked.id);
-        console.log(dungeonClicked.originalNode);
         this.currentDungeon = dungeonClicked.originalNode;
         this.currentDungeonMap = this.currentDungeon.startingMap;
         this.changeMap(this.currentDungeonMap.id);
@@ -258,13 +241,10 @@ export class MapComponent implements OnInit {
     } else {
       this.cantItem.emit([dungeonNode, this.currentDungeon.name, true]);
     }
-    // TODO check if viewable but not obtainable
-    console.log(dungeonNode);
   }
 
   leaveDungeon(isDefeatAga = false) {
-    const lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
-    if (lwDuns.indexOf(this.currentDungeon.name) > -1 && !isDefeatAga) {
+    if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 && !isDefeatAga) {
       this.changeMap('light-world');
     } else {
       this.changeMap('dark-world');
@@ -273,7 +253,7 @@ export class MapComponent implements OnInit {
     if (this.currentDungeon.name === 'Swamp Palace') {
       this.currentDungeon.dungeonMaps.forEach(map => {
         map.nodes.forEach(node => {
-          if (node.status == DungeonNodeStatus.WATER_SWITCH_FLIPPED) {            
+          if (node.status == DungeonNodeStatus.WATER_SWITCH_FLIPPED) {
             node.status = DungeonNodeStatus.WATER_SWITCH;
             this.items.remove('flood', 'Swamp Palace');
           }
@@ -294,67 +274,78 @@ export class MapComponent implements OnInit {
         }
       });
       this.items.ipSwitch = false;
+    } else if (this.currentDungeon.name === 'Ganons Tower') {
+      this.currentRegion = 'ow';
     }
     
-
     this.currentDungeon = null;
     this.currentDungeonMap = null;
     this.currentDungeonItems = null;
   }
 
-  defeatDungeon(isDefeatAga = false) {
+  defeatDungeon(isDefeatAga = false) {    
     this.finishedDungeon.emit([this.currentDungeon.dungeonPrize, this.currentDungeon.name]);    
     this.currentDungeonItems.isBossDefeated = true;
     this.leaveDungeon(isDefeatAga);
   }
 
-  /*
-  onMouseLeave(node:MapNode) {
-    if (node.tooltip && (node.status === 'getable' || node.status === 'viewable')) {
-      this.tooltip = node.tooltip;
-    } else {
-      if (node.id === 'exit') {
-        this.tooltip = 'Leave Dungeon';
-      } else if (node.status === DungeonNodeStatus.OPEN_DOOR.toString() && node.originalNode.canOpen(this.items, this.config)) {
-        this.currentDungeon.dungeonMaps.forEach((eachDunMap) => {
-          if (eachDunMap.id === node.id) {
-            this.tooltip = eachDunMap.name;
-          }
-        })
+  onSaveAndQuit() {
+    this.currentRegion = 'ow';
+    if (this.currentDungeon) {
+      var isLwDun = this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1;
+      this.leaveDungeon(false);
+      if (!isLwDun && this.items.agahnim && this.items.mirror) {
+        this.changeMap('dark-world');
       } else {
-        this.tooltip = node.tooltip;
+        this.changeMap('light-world');
       }
+    } else {
+      if (this.currentMap === 'dark-world' && this.items.agahnim && this.items.mirror) {
+        this.changeMap('dark-world');      
+      } else {
+        this.changeMap('light-world');
+      }      
     }
-    
   }
-*/
+
   onWarpClicked() {
     if (this.canWarpToDW()) {
-      console.log('warp to dw');
       this.changeMap('dark-world');
     } else if (this.currentMap === 'dark-world') {
-      console.log('warp to lw');
+      if (this.items.mirror) {
+        this.hasUsedMirror = true;
+      }
       this.changeMap('light-world');
     } else if (this.currentDungeon) {
       console.log('warp to dungeon entrance');
       this.currentDungeonMap = this.currentDungeon.startingMap;
       this.changeMap(this.currentDungeonMap.id);      
-    }    
+    }
   }
 
   canWarp():boolean {
-    if (this.canWarpToDW()) {
-        this.warpButtonText = 'Warp to DW'
-        return true;
-    } else {
-      if (this.currentDungeon !== null) {
-        this.warpButtonText = 'Mirror/Death Warp';
-      }
-      if (this.currentMap === 'dark-world') {
-        this.warpButtonText = 'Mirror to LW';
-      }
-      return this.currentDungeon !== null || this.currentMap === 'dark-world';
+    var hasMirror = this.items.mirror;
+    if (this.currentMap === 'light-world' && hasMirror && this.hasUsedMirror) {
+      this.warpButtonText = 'Mirror Portal Back to DW';
+      //this.currentRegion = 'all';
     }
+    if (this.currentDungeon !== null) {
+      if (hasMirror) {
+        this.warpButtonText = 'Mirror';
+      } else {
+        this.warpButtonText = 'Death Warp';
+      }
+    }
+    if (this.currentMap === 'dark-world') {
+      if (hasMirror) {
+        this.warpButtonText = 'Mirror to LW';
+      } else {
+        this.warpButtonText = 'S&Q to LW';
+      }
+    }
+    return this.currentDungeon !== null 
+      || (this.currentMap === 'dark-world' && hasMirror) 
+      || (this.currentMap === 'light-world' && hasMirror && this.hasUsedMirror);
   }
 
   canWarpToDW() {
@@ -374,10 +365,12 @@ export class MapComponent implements OnInit {
     }
   }
 
+  canViewLightWorldMap():boolean {
+    return this.currentMap === 'light-world';
+  }
+
   canViewDarkWorldMap():boolean {
-    return this.items.canWestDeathMountain(this.config) 
-        || (this.items.glove && this.items.hammer) || this.items.glove === 2
-        || this.items.agahnim > 0;
+    return this.currentMap === 'dark-world';
   }
 
   checkMedallion(dunName:string) {
@@ -390,10 +383,12 @@ export class MapComponent implements OnInit {
   }
 
   canViewTRMedallion():boolean {
-    return this.items.canDarkEastDeathMountain(this.config);
+    return this.items.canDarkEastDeathMountain(this.config) && this.currentMap === 'dark-world'
+      && (this.currentRegion === 'dm' || this.currentRegion === 'all');    
   }
   canViewMMMedallion():boolean {
-    return this.items.canMire();
+    return this.items.canMire() && this.currentMap === 'dark-world' 
+      && (this.currentRegion === 'mire' || this.currentRegion === 'all');
   }
 
   changeMap(newMap:string) {
@@ -461,5 +456,13 @@ export class MapComponent implements OnInit {
     this.items.add('pendantPower', 'light-world');
     this.items.add('pendantWisdom', 'light-world');
     this.items.add('agahnim2', 'light-world');
+  }
+
+  getBootsDw() {
+    this.items.add('glove', 'light-world');
+    this.items.add('glove', 'light-world');
+    this.items.add('boots', 'light-world');
+    this.items.add('moonPearl', 'light-world');
+    
   }
 }

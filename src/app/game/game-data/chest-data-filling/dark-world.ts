@@ -12,7 +12,8 @@ export class DarkWorld {
         return items.canDarkEastDeathMountain(config) && (items.moonPearl || config.canGlitch);
       },
       null,
-      [l[97], l[98]]
+      [l[97], l[98]],
+      'dm'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -21,7 +22,8 @@ export class DarkWorld {
         return items.canDarkEastDeathMountain(config) && items.moonPearl && (items.hookshot || items.boots);
       },
       null,
-      [l[99]]
+      [l[99]],
+      'dm'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -30,7 +32,8 @@ export class DarkWorld {
         return items.canDarkEastDeathMountain(config) && items.moonPearl && (items.hookshot || (items.boots && config.canGlitch));
       },
       null,
-      [l[100], l[101], l[102]]
+      [l[100], l[101], l[102]],
+      'dm'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -40,7 +43,8 @@ export class DarkWorld {
             && ((items.hasInvincibilityItem(config) && items.hasMagicExtension(config)) || config.canGlitch);
       },
       null,
-      [l[103]]
+      [l[103]],
+      'wdm'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -49,7 +53,8 @@ export class DarkWorld {
         return items.canNorthEastDarkWorld(config) && items.moonPearl && items.glove;
       },
       null,
-      [l[104]]
+      [l[104]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -58,7 +63,8 @@ export class DarkWorld {
         return items.canNorthEastDarkWorld(config);
       },
       null,
-      [l[105]]
+      [l[105]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -69,7 +75,8 @@ export class DarkWorld {
             && items.crystal5 && items.crystal6;
       },
       null,
-      [l[106], l[107]]
+      [l[106], l[107]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -78,7 +85,8 @@ export class DarkWorld {
         return items.canNorthWestDarkWorld(config);
       },
       null,
-      [l[108]]
+      [l[108]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -87,7 +95,8 @@ export class DarkWorld {
         return items.canNorthWestDarkWorld(config);
       },
       null,
-      [l[109]]
+      [l[109]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -96,7 +105,8 @@ export class DarkWorld {
         return items.canNorthWestDarkWorld(config);
       },
       null,
-      [l[110]]
+      [l[110]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -105,7 +115,8 @@ export class DarkWorld {
         return items.canNorthWestDarkWorld(config) && items.glove === 2 && items.hammer;
       },
       null,
-      [l[111]]
+      [l[111]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -116,7 +127,8 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.canNorthWestDarkWorld(config);
       },
-      [l[112]]
+      [l[112]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -125,7 +137,8 @@ export class DarkWorld {
         return items.canNorthWestDarkWorld(config) && items.glove === 2;
       },
       null,
-      [l[114]]
+      [l[114]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -134,7 +147,8 @@ export class DarkWorld {
         return items.canSouthDarkWorld(config);
       },
       null,
-      [l[115], l[116], l[117], l[118], l[120]]
+      [l[115], l[116], l[117], l[118], l[120]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -143,7 +157,8 @@ export class DarkWorld {
         return items.canSouthDarkWorld(config);
       },
       null,
-      [l[119]]
+      [l[119]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -152,7 +167,8 @@ export class DarkWorld {
         return items.canSouthDarkWorld(config);
       },
       null,
-      [l[121]]
+      [l[121]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -161,7 +177,8 @@ export class DarkWorld {
         return items.canMire() && (items.moonPearl || config.canGlitch);
       },
       null,
-      [l[122], l[123]]
+      [l[122], l[123]],
+      'mire'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -172,7 +189,8 @@ export class DarkWorld {
           && items.crystal7 && items.sword >= 2 && (items.lamp || items.fireRod);
       },
       null,
-      ['Ganon']
+      ['Ganon'],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -184,7 +202,8 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.book && items.mirror && items.canSouthDarkWorld(config);
       },
-      [l[33]]
+      [l[33]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -193,7 +212,8 @@ export class DarkWorld {
         return items.mirror && items.canSouthDarkWorld(config);
       },
       null,
-      [l[37]]
+      [l[37]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -202,7 +222,8 @@ export class DarkWorld {
         return items.mirror && items.moonPearl && items.canNorthWestDarkWorld(config);
       },
       null,
-      [l[38]]
+      [l[38]],
+      'ow'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -211,7 +232,8 @@ export class DarkWorld {
         return items.canMire() && items.mirror;
       },
       null,
-      [l[39]]
+      [l[39]],
+      'mire'
     ));
 
     itemLocations.push(new ItemLocation(
@@ -220,7 +242,8 @@ export class DarkWorld {
         return items.canNorthWestDarkWorld(config) && items.glove === 2;
       },
       null,
-      [l[113]]
+      [l[113]],
+      'ow'
     ));
 
     return itemLocations;

@@ -203,7 +203,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Desert West Ledge', 1.5, 91,
+      'Desert West Ledge', 1.5, 89,
       function(items:Items, config:Config) {
         return items.book || (items.canMire() && items.mirror);
       },
@@ -359,6 +359,87 @@ export class LightWorld {
         return items.canEastDeathMountain(config);
       },
       [l[87]]
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'ow', 4.5, 34,
+      function(items:Items, config:Config) {
+        return (items.hammer && items.glove) || items.glove === 2;
+      },
+      null,
+      ['warp']
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'wdm', 28.6, 14.9,
+      function(items:Items, config:Config) {
+        return items.canWestDeathMountain(config);
+      },
+      null,
+      ['warp']
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'dm', 38.1, 22.9,
+      function(items:Items, config:Config) {
+        return items.canEastDeathMountain(config) && items.glove === 2;
+      },
+      null,
+      ['warp']
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'ow', 23.5, 79,
+      function(items:Items, config:Config) {
+        return items.hammer && items.glove;
+      },
+      null,
+      ['warp']
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'mire', 1.7, 96,
+      function(items:Items, config:Config) {
+        return items.canMire();
+      },
+      null,
+      ['warp']
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'ow', 48.2, 70,
+      function(items:Items, config:Config) {
+        return items.hammer && items.glove;
+      },
+      null,
+      ['warp']
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'ip', 39.7, 87,
+      function(items:Items, config:Config) {
+        return (items.flippers || config.canGlitch) && items.glove === 2;
+      },
+      null,
+      ['warp']
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'dm', 47, 6,
+      function(items:Items, config:Config) {
+        return items.canEastDeathMountain(config) && items.glove === 2 && items.hammer;
+      },
+      null,
+      ['warp']
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'ow', 24.9, 59,
+      function(items:Items, config:Config) {
+        return items.agahnim;
+      },
+      null,
+      ['warp']
     ));
 
     

@@ -86,26 +86,59 @@ export class NodeComponent implements OnInit {
         return 'opened-state';
       }
       return 'dun-open-state';
-      
-    } else if (this.nodeInfo.originalNode.isOpened) {
-      return 'opened-state';
     } else if (this.nodeType !== 'overworld') {
-      if (this.dungeonItems.isBossDefeated && this.dungeonItems.itemsLeft === 0) {
-        return 'dungeon-cleared';
-      } else if (this.dungeonItems.isBossDefeated) {
-        return 'dungeon-defeated';
-      } else if (this.nodeInfo.status === 'unavailable') {
-        return 'unavailable-state';
+      var res = '';
+      if (this.nodeInfo.status.indexOf('unavailable') > -1) {
+        res += 'unavailable';
+      }
+      if (this.nodeInfo.status.indexOf('getable') > -1) {
+        res += ' dungeon';
       } else {
-        return 'dungeon-state';
-      }      
-    } else if (this.nodeInfo.status === 'viewable') {
-      return 'view-state';
-    } else if (this.nodeInfo.status === 'unavailable') {
-      return 'unavailable-state';
+        res += ' unavailable';
+      }
+      if (this.dungeonItems.isBossDefeated && this.dungeonItems.itemsLeft === 0) {
+        res += ' cleared';
+      } else if (this.dungeonItems.isBossDefeated) {
+        res += ' dun-defeated';
+      }
+      return res;
     } else {
-      return 'open-state';
-    }
+      var res = '';
+      if (this.nodeInfo.status.indexOf('unreachable') > -1) {
+        res += 'unavailable';
+      }
+      if (this.nodeInfo.originalNode.isOpened) {
+        res += ' opened';
+      } else if (this.nodeInfo.status.indexOf('viewable') > -1) {
+        res += ' view';    
+      } else if (this.nodeInfo.status.indexOf('warp') > -1) {
+        res += ' warp';
+      } else if (this.nodeInfo.status.indexOf('invisible') > -1) {
+        res += ' invisible';
+      } else if (this.nodeInfo.status.indexOf('unavailable') > -1) {
+        res += ' unavailable';
+      } else {
+        res += ' open';
+      }
+      return res;
+    } 
+    // if (this.nodeInfo.status === 'unavailable') {
+    //   if (this.nodeInfo.originalNode.isOpened) {
+    //     return 'unavailable open';
+    //   } else {
+    //     return 'unavailable';
+    //   }      
+    // } else if (this.nodeInfo.originalNode.isOpened) {
+    //   return 'open';
+    // } else if (this.nodeInfo.status === 'viewable') {
+    //   return 'view';    
+    // } else if (this.nodeInfo.status === 'warp') {
+    //   return 'warp';
+    // } else if (this.nodeInfo.status === 'invisible') {
+    //   return 'invisible';
+    // } else {
+    //   return 'open';
+    // }
   }
 
   getNodeState() {

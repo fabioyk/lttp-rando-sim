@@ -1,13 +1,13 @@
 <div class="map"
   [ngStyle]="{'background-image': getMapBg()}">
   <div *ngIf='!currentDungeon'>
-    <app-node *ngFor='let lwNode of gameService.getAccessibleNodes(items, currentMap)'
+    <app-node *ngFor='let lwNode of gameService.getAccessibleNodes(items, currentMap, currentRegion)'
         nodeType='overworld'
         [nodeInfo]='lwNode'
         (click)='onNodeClick(lwNode)'
     >
     </app-node>
-    <app-node *ngFor='let dun of gameService.getAccessibleDungeons(items, currentMap)'
+    <app-node *ngFor='let dun of gameService.getAccessibleDungeons(items, currentMap, currentRegion)'
         nodeType='dungeon'
         [nodeInfo]='dun'        
         [dungeonItems]='items.getDungeonItems(dun.tooltip)'
@@ -34,13 +34,16 @@
 </div>
 
 <div class='menu-buttons'>
+    <button class='btn btn-danger' (click)='onSaveAndQuit()'>
+        Save & Quit
+      </button>
   <button class='btn btn-primary' (click)='onWarpClicked()' *ngIf='canWarp()'>
     {{warpButtonText}}
   </button>
-  <button class='btn btn-info' (click)='onCheckMap("lw")' *ngIf='!items.lwMapOpen && !currentDungeon'>
+  <button class='btn btn-info' (click)='onCheckMap("lw")' *ngIf='!items.lwMapOpen && canViewLightWorldMap()'>
     Check LW Map
   </button>
-  <button class='btn btn-info' (click)='onCheckMap("dw")' *ngIf='!items.dwMapOpen && canViewDarkWorldMap() && !currentDungeon'>
+  <button class='btn btn-info' (click)='onCheckMap("dw")' *ngIf='!items.dwMapOpen && canViewDarkWorldMap()'>
     Check DW Map
   </button>
   <button class='btn btn-warning' (click)='checkMedallion("mm")' *ngIf='!items.mmMedallionChecked && canViewMMMedallion() && !currentDungeon'>
@@ -52,3 +55,4 @@
 </div>
 {{tooltip}}
 <button *ngIf='isDev' (click)='getAll()'>get All</button>
+<button *ngIf='isDev' (click)='getBootsDw()'>get Boots + DW</button>

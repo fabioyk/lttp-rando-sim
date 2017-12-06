@@ -70,7 +70,7 @@ export class GameService {
 
   }
 
-  getAccessibleNodes(items:Items, mapName:string):MapNode[] {
+  getAccessibleNodes(items:Items, mapName:string, region:string=''):MapNode[] {
     var accNodes:MapNode[] = [];
 
     var locationsArray;
@@ -85,13 +85,35 @@ export class GameService {
     if (locationsArray) {
       locationsArray.forEach((location) => {
         var status = '';
-        if (!location.canGet || location.canGet(items, this.config)) {
-          status = 'getable';
-        } else if (location.canView && location.canView(items, this.config)) {
-          status = 'viewable';
+        if (location.item[0] === 'warp') {
+          if (location.canGet(items, this.config)) {
+            status = 'warp';
+          } else {
+            status = 'invisible';
+          }
         } else {
-          status = 'unavailable';
-        }
+          if (mapName === 'dark-world' && region && region !== 'all') {
+            if (location.region.indexOf(region) === -1) {
+              status = 'unreachable';
+            }
+
+            if (!location.canGet || location.canGet(items, this.config)) {
+              status += ' getable';
+            } else if (location.canView && location.canView(items, this.config)) {
+              status += ' viewable';
+            } else {
+              status += ' unavailable';
+            }
+          } else {
+            if (!location.canGet || location.canGet(items, this.config)) {
+              status = 'getable';
+            } else if (location.canView && location.canView(items, this.config)) {
+              status = 'viewable';
+            } else {
+              status = 'unavailable';
+            }
+          }          
+        }        
         accNodes.push({
           x: (location.x - offset)*2,
           y: location.y,
@@ -107,14 +129,15 @@ export class GameService {
     return accNodes;
   }
 
-  getAccessibleDungeons(items:Items, world:string):MapNode[] {
+  lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
+  getAccessibleDungeons(items:Items, world:string, region:string=''):MapNode[] {
     var accNodes:MapNode[] = [];
 
-    const lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
+    
 
     if (world === 'light-world') {
       this.dungeonsData.forEach((dungeon) => {
-        if (lwDuns.indexOf(dungeon.name) > -1) {
+        if (this.lwDuns.indexOf(dungeon.name) > -1) {
           var status = 'unavailable';
           if (dungeon.canEnter(items, this.config)) {
             status = 'getable';
@@ -132,11 +155,51 @@ export class GameService {
       })
     } else if (world === 'dark-world') {
       this.dungeonsData.forEach((dungeon) => {
-        if (lwDuns.indexOf(dungeon.name) === -1) {
+        if (this.lwDuns.indexOf(dungeon.name) === -1) {
           var status = 'unavailable';
-          if (dungeon.canEnter(items, this.config)) {
-            status = 'getable';
+
+
+          if (region && region !== 'all') {
+            if ((region === 'ip' && dungeon.name === 'Ice Palace')
+              || (region === 'mire' && dungeon.name === 'Misery Mire')
+              || (region === 'dm' 
+                && (dungeon.name === 'Turtle Rock' || dungeon.name === 'Ganons Tower'))
+              || (region === 'ow' && (dungeon.name !== 'Ice Palace' 
+                  && dungeon.name !== 'Misery Mire' 
+                  && dungeon.name !== 'Turtle Rock'
+                  && dungeon.name !== 'Ganons Tower' ))) {
+              if (dungeon.canEnter(items, this.config)) {
+                status = 'getable';
+              }
+            }
+          } else {
+            if (dungeon.canEnter(items, this.config)) {
+              status = 'getable';
+            }
           }
+
+          if ((region === 'ip' && dungeon.name === 'Ice Palace')
+            || (region === 'mire' && dungeon.name === 'Misery Mire')
+            || (region === 'dm' 
+              && (dungeon.name === 'Turtle Rock' || dungeon.name === 'Ganons Tower'))
+            || (region === 'ow' && (dungeon.name !== 'Ice Palace' 
+                && dungeon.name !== 'Misery Mire' 
+                && dungeon.name !== 'Turtle Rock'
+                && dungeon.name !== 'Ganons Tower' ))) {
+            status = 'reachable';
+          } else {
+            status = 'unavailable';
+          }
+
+          if (dungeon.canEnter(items, this.config)) {
+            status += ' getable';
+          } else {
+            status += ' unaccessible';
+          }
+          if (dungeon.name === 'Swamp Palace') {
+            console.log(status);
+          }
+          
           accNodes.push({
             x: dungeon.x,
             y: dungeon.y,
