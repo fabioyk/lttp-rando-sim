@@ -19,7 +19,7 @@ export class ItemTrackerComponent implements OnInit {
 
   ngOnInit() {
     this.itemsToTrack = 
-    ['tunic', 'sword', 'shield', 'moonPearl', '', 
+    ['tunic', 'sword', 'shield', 'moonPearl', 'health', 
      'bow', 'boomerang', 'hookshot', 'mushroom', 'powder', 
      'fireRod', 'iceRod', 'bombos', 'ether', 'quake', 
      'lamp', 'hammer', 'flute', 'shovel', 'book', 

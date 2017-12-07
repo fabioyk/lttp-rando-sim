@@ -20,6 +20,7 @@ export class TrackerNodeComponent implements OnInit {
   @Input() config:Config;
 
   medallionName:string;
+  heartCount:string;
 
   constructor(private _itemNamesService:ItemNamesService) { }
 
@@ -103,7 +104,7 @@ export class TrackerNodeComponent implements OnInit {
   }
 
   isTransparent() {
-    if ((typeof this.value === 'boolean' && !this.value) || (this.value === 0)) {
+    if (this.itemName !== 'health' && ((typeof this.value === 'boolean' && !this.value) || (this.value === 0))) {
       return 'off';
     }
   }
@@ -121,5 +122,11 @@ export class TrackerNodeComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  getHealth() {
+    return 3 + this.items.stats.heartContainers + Math.floor(this.items.stats.heartPieces/4);
+
+
   }
 }

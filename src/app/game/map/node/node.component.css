@@ -13,11 +13,6 @@
   bottom: -7px;
   right: -5px;
   color: white;
-  text-shadow:
-  -1px -1px 0 #000,  
-   1px -1px 0 #000,
-   -1px 1px 0 #000,
-    1px 1px 0 #000;
   -webkit-user-select: none; /* Safari */        
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */

@@ -1,6 +1,7 @@
 <div class='node' *ngIf='isItem'
   [ngStyle]="{'background-image': getBgImg()}"
   [ngClass]="isTransparent()">
+  <span class='counter not-selectable outline-text' *ngIf='itemName === "health"'>{{getHealth()}}</span>
 </div>
 <div class='dungeon-node' 
     *ngIf='!isItem'
