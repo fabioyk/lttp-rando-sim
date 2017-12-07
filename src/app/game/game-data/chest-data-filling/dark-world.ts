@@ -22,7 +22,7 @@ export class DarkWorld {
         return items.canDarkEastDeathMountain(config) && items.moonPearl && (items.hookshot || items.boots);
       },
       null,
-      [l[99]],
+      [l[102]],
       'dm'
     ));
 
@@ -32,7 +32,7 @@ export class DarkWorld {
         return items.canDarkEastDeathMountain(config) && items.moonPearl && (items.hookshot || (items.boots && config.canGlitch));
       },
       null,
-      [l[100], l[101], l[102]],
+      [l[100], l[101], l[99]],
       'dm'
     ));
 
