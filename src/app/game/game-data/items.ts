@@ -262,7 +262,7 @@ export class Items {
 
     const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room', 'smallKey', 'bigKey', 'map', 'compass'];
     if (itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
-        && itemName.indexOf('Agahnim') === -1 && itemName.indexOf('Ganon') === -1
+        && itemName.indexOf('Agahnim 2') === -1 && itemName.indexOf('Ganon') === -1
         && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {      
       this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;      
     }
