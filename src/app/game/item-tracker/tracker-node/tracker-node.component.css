@@ -42,6 +42,14 @@ div {
   left: 0;
 }
 
+@media (max-width: 992px) {
+  .counter {
+    font-size: 22px;
+    bottom: 4px;
+    right: 4px;
+  }
+}
+
 @media (max-width: 768px) {
   .counter {
     font-size: 10px;
@@ -50,10 +58,3 @@ div {
   }
 }
 
-@media (max-width: 992px) {
-  .counter {
-    font-size: 22px;
-    bottom: 4px;
-    right: 4px;
-  }
-}
