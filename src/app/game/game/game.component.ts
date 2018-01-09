@@ -99,6 +99,7 @@ export class GameComponent implements OnInit {
       this.itemLog = [];
       this.dungeonsData = this.gameService.dungeonsData;
       this.gameState = 'playing';
+      this.gameService.updateData(this.items, 'light-world', 'light-world');
 
       this.seedDescription = '(' 
         + (this.config.mode === 'standard' ? 'Standard' : 'Open') 
@@ -109,11 +110,12 @@ export class GameComponent implements OnInit {
     }
   }
 
-  onAddedItem([mapNode, region], type:string) {
+  onAddedItem([mapNode, map, region], type:string) {
     mapNode.prize.forEach((prize, i) => {
       setTimeout(() => {
         if (type !== 'view') {
-          this.items.add(this._itemNamesService.getItemById(prize).shortName, region);
+          this.items.add(this._itemNamesService.getItemById(prize).shortName, map);
+          this.gameService.updateData(this.items, map, region);
         }
         var itemData = this.convertItemName(prize, type);
         this.itemLog.unshift({
@@ -121,8 +123,8 @@ export class GameComponent implements OnInit {
           shortName: itemData[0],
           longName: itemData[1],
           location: mapNode.tooltip ? mapNode.tooltip : mapNode.id,
-          region: region,
-          type: type      
+          region: map,
+          type: type
         });
       }, 1*i);
     });

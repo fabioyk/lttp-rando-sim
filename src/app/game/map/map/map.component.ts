@@ -9,6 +9,7 @@ import { Config } from '../../game-data/config';
 import { DungeonNodeStatus } from '../../game-data/dungeon-node-status.enum';
 import { DungeonItems } from '../../game-data/dungeon-items';
 import { ItemNamesService } from '../../../log-parse/item-names.service';
+import { DungeonNode } from '../../game-data/dungeon-node';
 
 @Component({
   selector: 'app-map',
@@ -53,31 +54,6 @@ export class MapComponent implements OnInit {
     }
   }
 
-  loadMap():MapNode[] {
-    var nodes:MapNode[] = [];
-
-    this.currentDungeonMap.nodes.forEach((eachNode, index) => {
-      var tempX = eachNode.x, tempY = 20;
-      if (tempX === 0) {
-        tempX = 10 + index*10;
-      } else {
-        tempX = Math.floor(eachNode.x / 256 * 100);
-        tempY = Math.floor(eachNode.y / 256 * 100);
-      }
-      nodes.push({
-        x: tempX,
-        y: tempY,
-        tooltip: eachNode.location,
-        id: eachNode.content,
-        status: eachNode.status.toString(),
-        prize: [eachNode.content],
-        originalNode: eachNode
-      })
-    });
-
-    return nodes;
-  }
-
   onNodeClick(nodeClicked:MapNode) {
     if (nodeClicked.status.indexOf('getable') > -1) {
       if (!nodeClicked.originalNode.isOpened) {
@@ -91,15 +67,15 @@ export class MapComponent implements OnInit {
         }
       }
     } else if (nodeClicked.status.indexOf('viewable') > -1) {
-      this.viewItem.emit([nodeClicked, this.currentMap]);
+      this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
     } else if (nodeClicked.status === 'warp') {
       this.currentRegion = nodeClicked.id;
       this.changeMap('dark-world');
     }
   }
 
-  addPrizes(node:MapNode, region:string) {    
-    this.addedItem.emit([node, region]);
+  addPrizes(node:MapNode, region:string) {
+    this.addedItem.emit([node, region, this.currentRegion]);    
   }
 
   onDungeonClick(dungeonClicked:MapNode) {
@@ -126,7 +102,7 @@ export class MapComponent implements OnInit {
         }
       });
       if (nextPlace) {
-        this.currentDungeonMap = nextPlace;        
+        this.currentDungeonMap = nextPlace;
         this.changeMap(nextPlace.id);
       }
     }    
@@ -284,6 +260,13 @@ export class MapComponent implements OnInit {
     this.currentDungeonItems = null;
   }
 
+  changeTooltip(mapNode:MapNode) {
+    this.tooltip = mapNode.tooltip;
+  }
+  clearTooltip() {
+    this.tooltip = '';
+  }
+
   defeatDungeon(isDefeatAga = false) {    
     this.finishedDungeon.emit([this.currentDungeon.dungeonPrize, this.currentDungeon.name]);    
     this.currentDungeonItems.isBossDefeated = true;
@@ -393,7 +376,8 @@ export class MapComponent implements OnInit {
   }
 
   changeMap(newMap:string) {
-    this.currentMap = newMap;    
+    this.currentMap = newMap;
+    this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
   }
 
 

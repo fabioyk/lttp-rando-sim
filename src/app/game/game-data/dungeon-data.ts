@@ -1,4 +1,5 @@
 import { DungeonMapData } from "./dungeon-map-data";
+import { MapNode } from "./map-node";
 
 export class DungeonData {
   static dungeonNames = ['light-world', 'Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower',
@@ -14,6 +15,7 @@ export class DungeonData {
   dungeonPrize: string;
   x: number;
   y: number;
+  mapNode: MapNode;
 
   constructor(name:string, dungeonPrize:string, canEnter:Function, x:number, y:number) {
     this.name = name;

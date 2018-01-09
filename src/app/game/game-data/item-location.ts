@@ -1,3 +1,5 @@
+import { MapNode } from "./map-node";
+
 export class ItemLocation {
   x: number;
   y: number;
@@ -7,6 +9,7 @@ export class ItemLocation {
   canView: Function;
   item: string[];
   region: string;
+  mapNode: MapNode;
   constructor(location:string, x:number, y:number, canGet:Function, canView:Function, item:string[], region:string='') {
     this.location = location;
     this.x = x;
@@ -21,5 +24,6 @@ export class ItemLocation {
     this.item = item;
 
     this.isOpened = false;
+    
   }
 }

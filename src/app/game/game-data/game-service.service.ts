@@ -62,78 +62,174 @@ export class GameService {
     this.dungeonsData.push(TurtleRock.setup(logObj.locations, this.config));
     this.dungeonsData.push(GanonsTower.setup(logObj.locations, this.config));    
     this.overworldData = new OverworldData(logObj.locations, this.config);
+    this.setupData();
 
     var itemList = logObj.locations;
   }
 
   setupData() {
-
+    this.overworldData.lwLocations.forEach((location) => {
+      var status = '';
+      if (location.item[0] === 'warp') {
+        status = 'invisible';
+      } else {
+          if (!location.canGet) {
+            status = 'getable';
+          } else {
+            status = 'unavailable';
+          }    
+      }
+      location.mapNode = {
+        x: location.x*2,
+        y: location.y,
+        tooltip: location.location,
+        id: location.location,
+        status: status,
+        prize: location.item,
+        originalNode: location
+      };
+    });
+    this.overworldData.dwLocations.forEach((location) => {
+      location.mapNode = {
+        x: (location.x-50)*2,
+        y: location.y,
+        tooltip: location.location,
+        id: location.location,
+        status: 'unreachable unavailable',
+        prize: location.item,
+        originalNode: location
+      };
+    });
+    this.dungeonsData.forEach((dungeon) => {
+      dungeon.dungeonMaps.forEach((map) => {
+        map.nodes.forEach((eachNode, index) => {
+          var tempX = eachNode.x, tempY = 20;
+          if (tempX === 0) {
+            tempX = 10 + index*10;
+          } else {
+            tempX = Math.floor(eachNode.x / 256 * 100);
+            tempY = Math.floor(eachNode.y / 256 * 100);
+          }
+          eachNode.mapNode = {
+            x: tempX,
+            y: tempY,
+            tooltip: eachNode.location,
+            id: eachNode.content,
+            status: eachNode.status.toString(),
+            prize: [eachNode.content],
+            originalNode: eachNode
+          };
+        });
+      });      
+      dungeon.mapNode = {
+        x: dungeon.x,
+        y: dungeon.y,
+        tooltip: dungeon.name,
+        id: dungeon.startingMap.id,
+        status: 'unavailable',
+        prize: [],
+        originalNode: dungeon
+      };
+    });
   }
 
-  getAccessibleNodes(items:Items, mapName:string, region:string=''):MapNode[] {
-    var accNodes:MapNode[] = [];
-
-    var locationsArray;
-    var offset = 0;
-    if (mapName === 'light-world') {
-      locationsArray = this.overworldData.lwLocations;
-    } else if (mapName === 'dark-world') {
-      locationsArray = this.overworldData.dwLocations;
-      offset = 50;
-    }
-
-    if (locationsArray) {
-      locationsArray.forEach((location) => {
-        var status = '';
-        if (location.item[0] === 'warp') {
-          if (location.canGet(items, this.config)) {
-            status = 'warp';
-          } else {
-            status = 'invisible';
-          }
+  updateData(items:Items, world:string, region:string='') {
+    this.overworldData.lwLocations.forEach((location) => {
+      if (location.item[0] === 'warp') {
+        if (location.canGet(items, this.config)) {
+          location.mapNode.status = 'warp';
         } else {
-          if (mapName === 'dark-world' && region && region !== 'all') {
-            if (location.region.indexOf(region) === -1) {
-              status = 'unreachable';
-            }
+          location.mapNode.status = 'invisible';
+        }
+      } else {
+        if (!location.canGet || location.canGet(items, this.config)) {
+          location.mapNode.status = 'getable';
+        } else if (location.canView && location.canView(items, this.config)) {
+          location.mapNode.status = 'viewable';
+        } else {
+          location.mapNode.status = 'unavailable';
+        }
+      }
+    });
+    this.overworldData.dwLocations.forEach((location) => {
+      var status = '';
+      if (location.region.indexOf(region) === -1) {
+        status = 'unreachable';
+      }
 
-            if (!location.canGet || location.canGet(items, this.config)) {
-              status += ' getable';
-            } else if (location.canView && location.canView(items, this.config)) {
-              status += ' viewable';
-            } else {
-              status += ' unavailable';
+      if (!location.canGet || location.canGet(items, this.config)) {
+        status += ' getable';
+      } else if (location.canView && location.canView(items, this.config)) {
+        status += ' viewable';
+      } else {
+        status += ' unavailable';
+      }
+
+      location.mapNode.status = status;      
+    });
+    if (world === 'light-world') {
+      this.dungeonsData.forEach((dungeon) => {
+        if (this.lwDuns.indexOf(dungeon.name) > -1) {
+          var status = 'unavailable';
+          if (dungeon.canEnter(items, this.config)) {
+            status = 'getable';
+          }
+          dungeon.mapNode.status = status;
+        }
+      })
+    } else if (world === 'dark-world') {
+      this.dungeonsData.forEach((dungeon) => {
+        if (this.lwDuns.indexOf(dungeon.name) === -1) {
+          var status = 'unavailable';
+
+          if (region && region !== 'all') {
+            if ((region === 'ip' && dungeon.name === 'Ice Palace')
+              || (region === 'mire' && dungeon.name === 'Misery Mire')
+              || (region === 'dm' 
+                && (dungeon.name === 'Turtle Rock' || dungeon.name === 'Ganons Tower'))
+              || (region === 'ow' && (dungeon.name !== 'Ice Palace' 
+                  && dungeon.name !== 'Misery Mire' 
+                  && dungeon.name !== 'Turtle Rock'
+                  && dungeon.name !== 'Ganons Tower' ))) {
+              if (dungeon.canEnter(items, this.config)) {
+                status = 'getable';
+              }
             }
           } else {
-            if (!location.canGet || location.canGet(items, this.config)) {
+            if (dungeon.canEnter(items, this.config)) {
               status = 'getable';
-            } else if (location.canView && location.canView(items, this.config)) {
-              status = 'viewable';
-            } else {
-              status = 'unavailable';
             }
-          }          
-        }        
-        accNodes.push({
-          x: (location.x - offset)*2,
-          y: location.y,
-          tooltip: location.location,
-          id: location.location,
-          status: status,
-          prize: location.item,
-          originalNode: location
-        });
-      });
+          }
+
+          if ((region === 'ip' && dungeon.name === 'Ice Palace')
+            || (region === 'mire' && dungeon.name === 'Misery Mire')
+            || (region === 'dm' 
+              && (dungeon.name === 'Turtle Rock' || dungeon.name === 'Ganons Tower'))
+            || (region === 'ow' && (dungeon.name !== 'Ice Palace' 
+                && dungeon.name !== 'Misery Mire' 
+                && dungeon.name !== 'Turtle Rock'
+                && dungeon.name !== 'Ganons Tower' ))) {
+            status = 'reachable';
+          } else {
+            status = 'unavailable';
+          }
+
+          if (dungeon.canEnter(items, this.config)) {
+            status += ' getable';
+          } else {
+            status += ' unaccessible';
+          }
+          dungeon.mapNode.status = status;
+          
+
+        }   
+      })
     }
- 
-    return accNodes;
   }
 
   lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
   getAccessibleDungeons(items:Items, world:string, region:string=''):MapNode[] {
     var accNodes:MapNode[] = [];
-
-    
 
     if (world === 'light-world') {
       this.dungeonsData.forEach((dungeon) => {

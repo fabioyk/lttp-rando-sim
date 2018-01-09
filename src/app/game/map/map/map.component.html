@@ -1,27 +1,36 @@
 <div class="map"
   [ngStyle]="{'background-image': getMapBg()}">
   <div *ngIf='!currentDungeon'>
-    <app-node *ngFor='let lwNode of gameService.getAccessibleNodes(items, currentMap, currentRegion)'
-        nodeType='overworld'
-        [nodeInfo]='lwNode'
-        (click)='onNodeClick(lwNode)'
+    <app-node *ngFor='let lwNode of gameService.overworldData[currentMap === "light-world" ? "lwLocations" : "dwLocations"]'
+      nodeType='overworld'
+      [nodeInfo]='lwNode.mapNode'
+      (click)='onNodeClick(lwNode.mapNode)'
+      (mouseover)='changeTooltip(lwNode.mapNode)'
+      (mouseleave)='clearTooltip()'
     >
-    </app-node>
-    <app-node *ngFor='let dun of gameService.getAccessibleDungeons(items, currentMap, currentRegion)'
-        nodeType='dungeon'
-        [nodeInfo]='dun'        
-        [dungeonItems]='items.getDungeonItems(dun.tooltip)'
-        (click)='onDungeonClick(dun)'>
-    </app-node>
+    </app-node> 
+    <div *ngFor='let dun of gameService.dungeonsData'>
+      <app-node *ngIf='(gameService.lwDuns.indexOf(dun.name) > -1 && currentMap === "light-world") || (gameService.lwDuns.indexOf(dun.name) === -1 && currentMap === "dark-world")'
+          nodeType='dungeon'
+          [nodeInfo]='dun.mapNode'        
+          [dungeonItems]='items.getDungeonItems(dun.name)'
+          (click)='onDungeonClick(dun.mapNode)'
+          (mouseover)='changeTooltip(dun.mapNode)'
+          (mouseleave)='clearTooltip()'>
+        </app-node>
+    </div>
+    
   </div>
   <div *ngIf='currentDungeon'>
-    <app-node *ngFor='let dunNode of loadMap()'
+    <app-node *ngFor='let dunNode of currentDungeonMap.nodes'
         nodeType='inside-dungeon'
-        [nodeInfo]='dunNode'
+        [nodeInfo]='dunNode.mapNode'
         [items]='items'
         [config]='config'
         [dungeonItems]='currentDungeonItems'
-        (click)='onDungeonNodeClick(dunNode)'>
+        (click)='onDungeonNodeClick(dunNode.mapNode)'
+        (mouseover)='changeTooltip(dunNode.mapNode)'
+        (mouseleave)='clearTooltip()'>
     </app-node>    
   </div>
 
@@ -32,7 +41,9 @@
     </app-dungeon-items>
   </div>
 </div>
-
+<div class='map-footer'>
+  {{tooltip}}
+</div>
 <div class='menu-buttons'>
     <button class='btn btn-danger' (click)='onSaveAndQuit()'>
         Save & Quit
@@ -53,6 +64,6 @@
     Check TR Medallion
   </button>  
 </div>
-{{tooltip}}
+
 <button *ngIf='isDev' (click)='getAll()'>get All</button>
 <button *ngIf='isDev' (click)='getBootsDw()'>get Boots + DW</button>
