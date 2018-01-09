@@ -57,17 +57,20 @@ export class TrackerNodeComponent implements OnInit {
   }
 
   getDungeonPrizeBg() {
-    var shouldShow = false;
+    var shouldShow = false, heardDungeonMusic = false;
     if (DungeonData.lwDungeons.indexOf(this.dungeonData.name) > -1) {
       shouldShow = this.items.lwMapOpen;
     } else {
       shouldShow = this.items.dwMapOpen;
     }
-    
     if (this.items.getDungeonItems(this.dungeonData.name).isBossDefeated) {
       shouldShow = true;
     }
 
+    if (this.items.hasVisitedDungeon(this.dungeonData.name)) {
+      heardDungeonMusic = true;
+    }
+    
     if (shouldShow) {
       switch(this._itemNamesService.getItemById(this.dungeonData.dungeonPrize).shortName) {
         case 'crystal5':
@@ -80,6 +83,15 @@ export class TrackerNodeComponent implements OnInit {
           return 'url("./assets/dungeon-tracker-icons/dungeon4.png")';
         default:
           return 'url("./assets/dungeon-tracker-icons/dungeon1.png")';
+      }
+    } else if (heardDungeonMusic) {
+      switch(this._itemNamesService.getItemById(this.dungeonData.dungeonPrize).shortName) {        
+        case 'pendantCourage':
+        case 'pendantPower':
+        case 'pendantWisdom':
+          return 'url("./assets/dungeon-tracker-icons/dungeonP.png")';
+        default:
+          return 'url("./assets/dungeon-tracker-icons/dungeonC.png")';
       }
     } else {
       return 'url("./assets/dungeon-tracker-icons/dungeon0.png")';          

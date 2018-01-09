@@ -109,6 +109,7 @@ export class MapComponent implements OnInit {
         this.currentDungeon = dungeonClicked.originalNode;
         this.currentDungeonMap = this.currentDungeon.startingMap;
         this.changeMap(this.currentDungeonMap.id);
+        this.items.visitDungeon(dungeonClicked.tooltip);
         this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);
       }
     

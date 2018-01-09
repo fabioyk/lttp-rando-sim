@@ -2,6 +2,7 @@ import { DungeonItems } from "./dungeon-items";
 import { Config } from "./config";
 import { DungeonData } from "./dungeon-data";
 import { ItemNamesService } from "../../log-parse/item-names.service";
+import { TrackerNodeComponent } from "../item-tracker/tracker-node/tracker-node.component";
 
 export class Items {
   tunic = 1;
@@ -124,6 +125,8 @@ export class Items {
   gtChestCount = 0;
 
   startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];
+
+  visitedDungeon = [];
   
   setup() {
     this.hcItems = new DungeonItems('Hyrule Castle', 6);
@@ -145,6 +148,7 @@ export class Items {
 
     this.stats.startTime = Date.now();
     this.preEachDun = [0, 0, 0, 0, 0, 0, 0];
+    this.visitedDungeon = [false, false, false, false, false, false, false, false, false, false];
   }
 
   add(itemName:string, region:string) {
@@ -374,4 +378,25 @@ export class Items {
     })
     return duns;
   }
+  visitDungeon(dunName:string):void {
+    const trackedDunList = ['Eastern Palace', 'Desert Palace',
+    'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 'Skull Woods',
+    'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock'];
+
+    if (trackedDunList.indexOf(dunName) > -1) {
+      this.visitedDungeon[trackedDunList.indexOf(dunName)] = true;
+    }
+  }
+  hasVisitedDungeon(dunName:string):boolean {
+    const trackedDunList = ['Eastern Palace', 'Desert Palace',
+    'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 'Skull Woods',
+    'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock'];
+
+    if (trackedDunList.indexOf(dunName) > -1) {
+      return this.visitedDungeon[trackedDunList.indexOf(dunName)];
+    } else {
+      return false;
+    }
+  }
+  
 }
