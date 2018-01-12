@@ -384,13 +384,16 @@ export class MapComponent implements OnInit {
   pegMaps = ['ip-bj', 'ip-fairy-drop', 'ip-final-switch', 'ip-push-block', 'ip-push-block-right',
     'mm-compass', 'mm-entry', 'mm-fish-spine', 'mm-map',
     'sp-left', 'sp-south-switch', 'sp-switch'];
+  floodMaps = ['sp-south-switch', 'sp-switch'];
   getMapBg():string {
     if (this.currentMap === 'light-world') {
       return 'url(assets/light-world.png)';
     } else if (this.currentMap === 'dark-world') {
       return 'url(assets/dark-world.png)';      
     } else {
-      if (this.pegMaps.indexOf(this.currentMap) === -1) {
+      if (this.currentMap === 'ip-switch-room' && this.items.ipBlockPushed) {
+        return 'url("assets/maps/Ice Palace/ip-switch-room-block.png")';              
+      } else if (this.pegMaps.indexOf(this.currentMap) === -1) {
         return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'.png")';      
       } else {
         var shouldFlip = false;
@@ -402,7 +405,11 @@ export class MapComponent implements OnInit {
           shouldFlip = this.items.mmSwitch;
         }
 
-        return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+(shouldFlip ? '-flipped' : '') + '.png")';
+        if (this.floodMaps.indexOf(this.currentMap) > -1 && this.items.spFlooded) {
+          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'-flooded'+(shouldFlip ? '-flipped' : '') + '.png")';          
+        } else {
+          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+(shouldFlip ? '-flipped' : '') + '.png")';
+        }        
       }
       
     }
