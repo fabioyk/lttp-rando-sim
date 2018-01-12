@@ -195,16 +195,29 @@ export class SwampPalace {
         return true;
     }, l[146]));
     downstairs.nodes.push(new DungeonNode(
+      'Arrghus Room', 172, 20, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'sp-downstairs2'));
+    spData.dungeonMaps.push(downstairs);
+
+    var downstairs2 = new DungeonMapData('sp-downstairs2', 'Downstairs', '');
+    downstairs2.nodes.push(new DungeonNode(
+      '', 188, 100, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'sp-downstairs'));
+    downstairs2.nodes.push(new DungeonNode(
       'Hidden Waterfall Chest', 136, 38, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[147]));
-    downstairs.nodes.push(new DungeonNode(
+    downstairs2.nodes.push(new DungeonNode(
       'Arrghus Room', 172, 20, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sp-arrghus'));
-    spData.dungeonMaps.push(downstairs);
+    spData.dungeonMaps.push(downstairs2);
 
     var arrghusRoom = new DungeonMapData('sp-arrghus', 'Arrghus Room', '');
     arrghusRoom.nodes.push(new DungeonNode(

@@ -43,7 +43,7 @@ export class SkullWoods {
       '', 20, 104, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'sw-part2'));
+    }, 'sw-part21'));
     swData.dungeonMaps.push(entrance);
 
     var compass = new DungeonMapData('sw-left-drop', 'Compass Room', '');
@@ -154,7 +154,7 @@ export class SkullWoods {
     }, 'sw-bc'));
     swData.dungeonMaps.push(northeastBc);
 
-    var part2 = new DungeonMapData('sw-part2', 'Second Section', '');
+    var part2 = new DungeonMapData('sw-part21', 'Big Key Room', '');
     part2.nodes.push(new DungeonNode(
       '', 211, 202, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -163,13 +163,8 @@ export class SkullWoods {
     part2.nodes.push(new DungeonNode(
       'Final Section', 41, 202, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.fireRod;
-    }, 'sw-final', 'Fire Rod Required'));
-    part2.nodes.push(new DungeonNode(
-      '', 21, 150, DungeonNodeStatus.GROUND_KEY,
-    function(items:Items, config:Config) {
         return true;
-    }, 'sw-bc'));
+    }, 'sw-part22'));
     part2.nodes.push(new DungeonNode(
       'Big Key Chest', 217, 82, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -177,12 +172,30 @@ export class SkullWoods {
     }, l[151]));
     swData.dungeonMaps.push(part2);
 
+    var part22 = new DungeonMapData('sw-part22', 'Before Final Section', '');
+    part22.nodes.push(new DungeonNode(
+      '', 211, 202, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'sw-part21'));
+    part22.nodes.push(new DungeonNode(
+      'Final Section', 41, 202, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return items.fireRod;
+    }, 'sw-final', 'Fire Rod Required'));
+    part22.nodes.push(new DungeonNode(
+      '', 21, 150, DungeonNodeStatus.GROUND_KEY,
+    function(items:Items, config:Config) {
+        return true;
+    }, ''));
+    swData.dungeonMaps.push(part22);
+
     var final = new DungeonMapData('sw-final', 'Final Section', '');
     final.nodes.push(new DungeonNode(
       '', 62, 242, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'sw-part2'));
+    }, 'sw-part22'));
     final.nodes.push(new DungeonNode(
       'Mothula Room', 62, 32, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
