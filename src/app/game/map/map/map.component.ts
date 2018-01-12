@@ -56,7 +56,7 @@ export class MapComponent implements OnInit {
 
   onNodeClick(nodeClicked:MapNode) {
     if (nodeClicked.status.indexOf('getable') > -1) {
-      if (!nodeClicked.originalNode.isOpened) {
+      if (!nodeClicked.originalNode.isOpened && nodeClicked.status.indexOf('unreachable') === -1) {
         this.addPrizes(nodeClicked, this.currentMap);
         if (nodeClicked.originalNode) {
           nodeClicked.originalNode.isOpened = true;
@@ -79,9 +79,7 @@ export class MapComponent implements OnInit {
   }
 
   onDungeonClick(dungeonClicked:MapNode) {
-    //this.onNodeMouseEnter(dungeonClicked);
-    if (!dungeonClicked.originalNode.canEnter || 
-      dungeonClicked.originalNode.canEnter(this.items, this.config)) {
+    if (dungeonClicked.status.indexOf('getable') > -1 && dungeonClicked.status.indexOf('unavailable') === -1) {
         this.currentDungeon = dungeonClicked.originalNode;
         this.currentDungeonMap = this.currentDungeon.startingMap;
         this.changeMap(this.currentDungeonMap.id);
