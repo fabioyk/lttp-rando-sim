@@ -80,13 +80,12 @@ export class MapComponent implements OnInit {
 
   onDungeonClick(dungeonClicked:MapNode) {
     if (dungeonClicked.status.indexOf('getable') > -1 && dungeonClicked.status.indexOf('unavailable') === -1) {
-        this.currentDungeon = dungeonClicked.originalNode;
-        this.currentDungeonMap = this.currentDungeon.startingMap;
-        this.changeMap(this.currentDungeonMap.id);
-        this.items.visitDungeon(dungeonClicked.tooltip);
-        this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);
-      }
-    
+      this.currentDungeon = dungeonClicked.originalNode;
+      this.currentDungeonMap = this.currentDungeon.startingMap;
+      this.changeMap(this.currentDungeonMap.id);
+      this.items.visitDungeon(dungeonClicked.tooltip);
+      this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);
+    }    
   }
 
   changeMapInDungeon(destination:string) {

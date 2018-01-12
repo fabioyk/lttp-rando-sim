@@ -115,6 +115,7 @@
 .open-door, .sk-door, .bk-door {
   width: 11%;
   height: 7%;
+  margin: -3.5% -5.5%;
 }
 
 .open-door {
@@ -130,6 +131,7 @@
 .closed-chest, .open-chest {
   width: 8%;
   height: 8%;
+  margin: -4% -4%;
 }
 
 .closed-chest {
@@ -142,6 +144,7 @@
 .big-chest, .open-big-chest {
   width: 10%;
   height: 8%;
+  margin: -4% -5%;
 }
 
 .big-chest {

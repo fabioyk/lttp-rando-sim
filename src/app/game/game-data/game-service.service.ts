@@ -103,16 +103,9 @@ export class GameService {
     this.dungeonsData.forEach((dungeon) => {
       dungeon.dungeonMaps.forEach((map) => {
         map.nodes.forEach((eachNode, index) => {
-          var tempX = eachNode.x, tempY = 20;
-          if (tempX === 0) {
-            tempX = 10 + index*10;
-          } else {
-            tempX = Math.floor(eachNode.x / 256 * 100);
-            tempY = Math.floor(eachNode.y / 256 * 100);
-          }
           eachNode.mapNode = {
-            x: tempX,
-            y: tempY,
+            x: eachNode.x,
+            y: eachNode.y,
             tooltip: eachNode.location,
             id: eachNode.content,
             status: eachNode.status.toString(),
