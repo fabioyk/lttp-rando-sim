@@ -206,7 +206,7 @@ export class SwampPalace {
       '', 25, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'sp-downstairs'));
+    }, 'sp-downstairs1'));
     downstairs2.nodes.push(new DungeonNode(
       'Hidden Waterfall Chest', 54.7, 76.7, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
