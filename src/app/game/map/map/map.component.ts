@@ -171,7 +171,7 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.BOSS:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();          
-          this.defeatDungeon(this.currentDungeon.name === 'Aga Tower');
+          this.defeatDungeon(this.currentDungeon.name === 'Aga Tower' || this.currentDungeon.name === 'Ganons Tower');
           console.log('Boss fight with '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.GROUND_KEY:
@@ -218,7 +218,10 @@ export class MapComponent implements OnInit {
   }
 
   leaveDungeon(isDefeatAga = false) {
-    if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 && !isDefeatAga) {
+    if (isDefeatAga && this.currentDungeon.name === 'Ganons Tower') {
+      this.currentRegion = 'ow';
+    }
+    if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 && (this.currentDungeon.name !== 'Aga Tower' && !isDefeatAga)) {
       this.changeMap('light-world');
     } else {
       this.changeMap('dark-world');
@@ -248,8 +251,6 @@ export class MapComponent implements OnInit {
         }
       });
       this.items.ipSwitch = false;
-    } else if (this.currentDungeon.name === 'Ganons Tower') {
-      this.currentRegion = 'ow';
     }
     
     this.currentDungeon = null;
