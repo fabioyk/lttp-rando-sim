@@ -2,5 +2,8 @@
   [ngStyle]="{'left':nodeX, 'top':nodeY, 'background-image': getDungeonBg()}"
   [ngClass]="[getNodeType(), getNodeState(), getNodeBgClass()]"
   > 
-  <div class='chest-count outline-text'>{{chestCountNum}}</div>
+  <div class='chest-count outline-text'>
+    {{chestCountNum}}
+    <i class="fa fa-search" aria-hidden="true" *ngIf='isLookable'></i>
+  </div>
 </div>

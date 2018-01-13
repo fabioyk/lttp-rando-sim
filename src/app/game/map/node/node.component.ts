@@ -29,12 +29,14 @@ export class NodeComponent implements OnInit {
   color: string;
   type: string;
   chestCountNum: string;
+  isLookable: boolean;
 
   constructor() { }
 
   ngOnInit() {
     this.nodeX = this.nodeInfo.x + '%';
-    this.nodeY = this.nodeInfo.y + '%';    
+    this.nodeY = this.nodeInfo.y + '%';
+    this.isLookable = false;   
 
     if (this.nodeType && this.nodeType === 'overworld' && this.nodeInfo.prize.length > 1) {
       this.chestCountNum = 'x' + this.nodeInfo.prize.length;
@@ -61,13 +63,15 @@ export class NodeComponent implements OnInit {
   }
 
   getNodeBgClass() {
+    this.isLookable = false;
     if (this.nodeType === 'inside-dungeon') {
+      this.isLookable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST;
       if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
           && +this.nodeInfo.status !== DungeonNodeStatus.VIEWABLE_CLOSED_CHEST) {
         return 'dungeon-unavailable';
       }
       if (!this.nodeInfo.originalNode.canOpen(this.items, this.config)
-        && +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST) {
+          && +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST) {        
         return 'view-state';
       }
       if (+this.nodeInfo.status === DungeonNodeStatus.BK_LOCKED
@@ -109,8 +113,10 @@ export class NodeComponent implements OnInit {
       }
       if (this.nodeInfo.originalNode.isOpened) {
         res += ' opened';
+      } else if (this.nodeInfo.status.indexOf('now-getable') > -1) {
+        res += ' open';
       } else if (this.nodeInfo.status.indexOf('viewable') > -1) {
-        res += ' view';    
+        res += ' view';
       } else if (this.nodeInfo.status.indexOf('warp') > -1) {
         res += ' warp';
       } else if (this.nodeInfo.status.indexOf('invisible') > -1) {
@@ -120,25 +126,10 @@ export class NodeComponent implements OnInit {
       } else {
         res += ' open';
       }
+      this.isLookable = (this.nodeInfo.status.indexOf('now-getable') > -1 
+        || this.nodeInfo.status.indexOf('viewable') > -1);
       return res;
     } 
-    // if (this.nodeInfo.status === 'unavailable') {
-    //   if (this.nodeInfo.originalNode.isOpened) {
-    //     return 'unavailable open';
-    //   } else {
-    //     return 'unavailable';
-    //   }      
-    // } else if (this.nodeInfo.originalNode.isOpened) {
-    //   return 'open';
-    // } else if (this.nodeInfo.status === 'viewable') {
-    //   return 'view';    
-    // } else if (this.nodeInfo.status === 'warp') {
-    //   return 'warp';
-    // } else if (this.nodeInfo.status === 'invisible') {
-    //   return 'invisible';
-    // } else {
-    //   return 'open';
-    // }
   }
 
   getNodeState() {
@@ -153,6 +144,7 @@ export class NodeComponent implements OnInit {
         case DungeonNodeStatus.BIG_CHEST:
           return 'big-chest';
         case DungeonNodeStatus.VIEWABLE_CLOSED_CHEST:
+        case DungeonNodeStatus.VIEWABLE_GETABLE_CLOSED_CHEST:
           return 'closed-chest';
         case DungeonNodeStatus.CLOSED_CHEST:
           return 'closed-chest';

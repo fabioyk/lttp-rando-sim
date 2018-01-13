@@ -61,7 +61,11 @@ export class MapComponent implements OnInit {
   }
 
   onNodeClick(nodeClicked:MapNode) {
-    if (nodeClicked.status.indexOf('getable') > -1) {
+    if (nodeClicked.status.indexOf('now-getable') > -1) {
+      this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
+      nodeClicked.status = 'getable';
+      this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
+    } else if (nodeClicked.status.indexOf('getable') > -1) {
       if (!nodeClicked.originalNode.isOpened && nodeClicked.status.indexOf('unreachable') === -1) {
         this.addPrizes(nodeClicked, this.currentMap);
         if (nodeClicked.originalNode) {
@@ -88,13 +92,19 @@ export class MapComponent implements OnInit {
     if (dungeonClicked.status.indexOf('getable') > -1 && dungeonClicked.status.indexOf('unavailable') === -1) {
       if (this.currentDungeonMap) {
         this.currentDungeonMap.cleanPreload();
-      }
+      }      
       this.currentDungeon = dungeonClicked.originalNode;
       this.currentDungeonMap = this.currentDungeon.startingMap;
       this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
       this.changeMap(this.currentDungeonMap.id);
       this.items.visitDungeon(dungeonClicked.tooltip);
-      this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);      
+      this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);
+      if (this.currentDungeon.name === 'Turtle Rock') {
+        this.checkMedallion('tr');
+      }
+      if (this.currentDungeon.name === 'Misery Mire') {
+        this.checkMedallion('mm');
+      }
     }    
   }
 
@@ -163,9 +173,10 @@ export class MapComponent implements OnInit {
           }
           break;
         case DungeonNodeStatus.VIEWABLE_CLOSED_CHEST:
-          this.addPrizes(dungeonNode, this.currentDungeon.name);
-          dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();
+          this.viewItem.emit([dungeonNode, this.currentMap]);
+          dungeonNode.originalNode.status = DungeonNodeStatus.VIEWABLE_GETABLE_CLOSED_CHEST.toString();
           break;
+        case DungeonNodeStatus.VIEWABLE_GETABLE_CLOSED_CHEST:
         case DungeonNodeStatus.CLOSED_CHEST:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();
@@ -435,27 +446,19 @@ export class MapComponent implements OnInit {
   }
 
   preloadMapsAndIcons() {
+    var images = ['assets/light-world.png', 'assets/dark-world.png',
+      'assets/node-icons/big_door.png', 'assets/node-icons/closed_big_chest.png',
+      'assets/node-icons/closed_chest.png', 'assets/node-icons/key_door.png',
+      'assets/node-icons/open_chest.png', 'assets/node-icons/open_big_chest.png',
+      'assets/node-icons/small_key.png', 'assets/node-icons/warp.png',
+      'assets/item-icons/compass.png', 'assets/item-icons/compassEmpty.png', 
+      'assets/item-icons/bigKey.png', 'assets/item-icons/bigKeyEmpty.png', 
+      'assets/item-icons/map.png', 'assets/item-icons/mapEmpty.png'];
     this.preloadedImages = [];
-    this.preloadedImages[0] = new Image();
-    this.preloadedImages[0].src = 'assets/light-world.png';
-    this.preloadedImages[1] = new Image();
-    this.preloadedImages[1].src = 'assets/dark-world.png';
-    this.preloadedImages[2] = new Image();
-    this.preloadedImages[2].src = 'assets/node-icons/big_door.png';
-    this.preloadedImages[3] = new Image();
-    this.preloadedImages[3].src = 'assets/node-icons/closed_big_chest.png';
-    this.preloadedImages[4] = new Image();
-    this.preloadedImages[4].src = 'assets/node-icons/closed_chest.png';
-    this.preloadedImages[5] = new Image();
-    this.preloadedImages[5].src = 'assets/node-icons/key_door.png';
-    this.preloadedImages[6] = new Image();
-    this.preloadedImages[6].src = 'assets/node-icons/open_chest.png';
-    this.preloadedImages[7] = new Image();
-    this.preloadedImages[7].src = 'assets/node-icons/open_big_chest.png';
-    this.preloadedImages[8] = new Image();
-    this.preloadedImages[8].src = 'assets/node-icons/small_key.png';
-    this.preloadedImages[9] = new Image();
-    this.preloadedImages[9].src = 'assets/node-icons/warp.png';
+    images.forEach((imageUrl, index) => {
+      this.preloadedImages[index] = new Image();
+      this.preloadedImages[index].src = imageUrl;
+    });
   }
 
   getAll() {

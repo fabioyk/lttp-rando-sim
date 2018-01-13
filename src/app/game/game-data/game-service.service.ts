@@ -74,11 +74,13 @@ export class GameService {
       if (location.item[0] === 'warp') {
         status = 'invisible';
       } else {
-          if (!location.canGet) {
-            status = 'getable';
-          } else {
-            status = 'unavailable';
-          }    
+        if (location.canView) {
+          status = 'viewable';
+        } else if (!location.canGet) {
+          status = 'getable';
+        } else {
+          status = 'unavailable';
+        }    
       }
       location.mapNode = {
         x: location.x*2,
@@ -145,8 +147,13 @@ export class GameService {
         } else {
           location.mapNode.status = 'invisible';
         }
-      } else {
-        if (!location.canGet || location.canGet(items, this.config)) {
+      } else {     
+        if (location.location !== 'Ether Tablet' && (location.mapNode.status === 'now-getable' 
+          || (location.mapNode.status === 'viewable' 
+            && location.canGet(items, this.config))
+          || (location.canView && location.canGet(items, this.config) && location.mapNode.status === 'unavailable'))) {
+          location.mapNode.status = 'now-getable';
+        } else if (!location.canGet || location.canGet(items, this.config)) {
           location.mapNode.status = 'getable';
         } else if (location.canView && location.canView(items, this.config)) {
           location.mapNode.status = 'viewable';
@@ -159,9 +166,12 @@ export class GameService {
       var status = '';
       if (location.region.indexOf(region) === -1) {
         status = 'unreachable';
-      }
-
-      if (!location.canGet || location.canGet(items, this.config)) {
+      }   
+      if (location.location !== 'Bombos Tablet' && (location.mapNode.status.indexOf('now-getable') > -1 
+          || (location.canView && location.mapNode.status.indexOf('unavailable') > -1
+          && location.canGet(items, this.config)))) {
+        status += ' now-getable';
+      } else if (!location.canGet || location.canGet(items, this.config)) {
         status += ' getable';
       } else if (location.canView && location.canView(items, this.config)) {
         status += ' viewable';

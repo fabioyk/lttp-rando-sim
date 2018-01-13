@@ -52,7 +52,9 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.canNorthEastDarkWorld(config) && items.moonPearl && items.glove;
       },
-      null,
+      function(items:Items, config:Config) {
+        return items.canNorthEastDarkWorld(config) && items.moonPearl && items.glove;
+      },
       [l[104]],
       'ow'
     ));
@@ -62,7 +64,9 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.canNorthEastDarkWorld(config);
       },
-      null,
+      function(items:Items, config:Config) {
+        return items.canNorthEastDarkWorld(config);
+      },
       [l[105]],
       'ow'
     ));
@@ -114,7 +118,9 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.canNorthWestDarkWorld(config) && items.glove === 2 && items.hammer;
       },
-      null,
+      function(items:Items, config:Config) {
+        return items.canNorthWestDarkWorld(config) && items.glove === 2 && items.hammer;
+      },
       [l[111]],
       'ow'
     ));
@@ -166,7 +172,9 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.canSouthDarkWorld(config);
       },
-      null,
+      function(items:Items, config:Config) {
+        return items.canSouthDarkWorld(config);
+      },
       [l[121]],
       'ow'
     ));
@@ -211,7 +219,9 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.mirror && items.canSouthDarkWorld(config);
       },
-      null,
+      function(items:Items, config:Config) {
+        return items.mirror && items.canSouthDarkWorld(config);
+      },
       [l[37]],
       'ow'
     ));
@@ -221,7 +231,9 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.mirror && items.moonPearl && items.canNorthWestDarkWorld(config);
       },
-      null,
+      function(items:Items, config:Config) {
+        return items.mirror && items.moonPearl && items.canNorthWestDarkWorld(config);
+      },
       [l[38]],
       'ow'
     ));
@@ -231,7 +243,9 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.canMire() && items.mirror;
       },
-      null,
+      function(items:Items, config:Config) {
+        return items.canMire() && items.mirror;
+      },
       [l[39]],
       'mire'
     ));

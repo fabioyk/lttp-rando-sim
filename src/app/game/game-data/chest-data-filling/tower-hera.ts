@@ -48,7 +48,7 @@ export class TowerHera {
         return true;
     }, 'toh-entry'));
     skRoom.nodes.push(new DungeonNode(
-      'Basement Cage Item', 53, 61, DungeonNodeStatus.CLOSED_CHEST,
+      'Basement Cage Item', 53, 61, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[89]));

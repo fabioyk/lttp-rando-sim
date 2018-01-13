@@ -180,7 +180,9 @@ export class LightWorld {
       function(items:Items, config:Config) {
         return true;
       },
-      null,
+      function(items:Items, config:Config) {
+        return true;
+      },
       [l[42], l[35]]
     ));
 
@@ -189,7 +191,9 @@ export class LightWorld {
       function(items:Items, config:Config) {
         return items.mushroom;
       },
-      null,
+      function(items:Items, config:Config) {
+        return items.mushroom;
+      },
       [l[43]]
     ));
 
@@ -198,7 +202,9 @@ export class LightWorld {
       function(items:Items, config:Config) {
         return true;
       },
-      null,
+      function(items:Items, config:Config) {
+        return true;
+      },
       [l[44]]
     ));
 
@@ -304,7 +310,9 @@ export class LightWorld {
       function(items:Items, config:Config) {
         return items.canWestDeathMountain(config);
       },
-      null,
+      function(items:Items, config:Config) {
+        return items.canWestDeathMountain(config);
+      },
       [l[75]]
     ));
 

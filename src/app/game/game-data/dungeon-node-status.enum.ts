@@ -20,4 +20,5 @@ export class DungeonNodeStatus {
   static TT_BOMB_FLOOR_DONE = 18;
   static WATER_SWITCH_FLIPPED = 19;
   static OPEN_DOOR_PUSH_BLOCK = 20;
+  static VIEWABLE_GETABLE_CLOSED_CHEST = 21;
 }
