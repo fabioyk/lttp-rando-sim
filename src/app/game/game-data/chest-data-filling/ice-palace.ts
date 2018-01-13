@@ -16,12 +16,12 @@ export class IcePalace {
 
     var entrance = new DungeonMapData('ip-entry', 'Entrance', '');
     entrance.nodes.push(new DungeonNode(
-      '', 126, 226, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'exit'));
     entrance.nodes.push(new DungeonNode(
-      'First Fork', 30, 142, DungeonNodeStatus.OPEN_DOOR,
+      'First Fork', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasMeltyPower();
     }, 'ip-first-fork', 'Fire Rod or Bombos Required'));
@@ -30,17 +30,17 @@ export class IcePalace {
 
     var firstFork = new DungeonMapData('ip-first-fork', 'First Fork', '');
     firstFork.nodes.push(new DungeonNode(
-      '', 30, 142, DungeonNodeStatus.OPEN_DOOR,
+      '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-entry'));
     firstFork.nodes.push(new DungeonNode(
-      '', 126, 226, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-compass'));
     firstFork.nodes.push(new DungeonNode(
-      '', 126, 52, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-conveyor-room'));
@@ -48,12 +48,12 @@ export class IcePalace {
 
     var compass = new DungeonMapData('ip-compass', 'Compass Room', '');
     compass.nodes.push(new DungeonNode(
-      '', 126, 52, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-first-fork'));
     compass.nodes.push(new DungeonNode(
-      'Compass Chest', 122, 169, DungeonNodeStatus.CLOSED_CHEST,
+      'Compass Chest', 47, 66, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[169]));
@@ -61,17 +61,17 @@ export class IcePalace {
 
     var conveyor = new DungeonMapData('ip-conveyor-room', 'Conveyor Room', '');
     conveyor.nodes.push(new DungeonNode(
-      '', 142, 117, DungeonNodeStatus.GROUND_KEY,
+      '', 55, 53, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return true;
     }, ''));
     conveyor.nodes.push(new DungeonNode(
-      '', 53, 106, DungeonNodeStatus.SWITCH,
+      '', 20, 42, DungeonNodeStatus.SWITCH,
     function(items:Items, config:Config) {
         return true;
     }, 'switch'));
     conveyor.nodes.push(new DungeonNode(
-      '', 66, 174, DungeonNodeStatus.SK_LOCKED,
+      '', 25, 69, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-bj'));
@@ -80,12 +80,12 @@ export class IcePalace {
     //TODO adjust numbers
     var ipbj = new DungeonMapData('ip-bj', 'Bomb Jump Room', '');
     ipbj.nodes.push(new DungeonNode(
-      '', 124, 49, DungeonNodeStatus.SK_LOCKED,
+      '', 50, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-conveyor-room'));
     ipbj.nodes.push(new DungeonNode(
-      'Plus Sign Room', 220, 138, DungeonNodeStatus.OPEN_DOOR,
+      'Plus Sign Room', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return !items.ipSwitch || config.canGlitch;
     }, 'ip-plus', 'Switch on Red Required'));
@@ -93,22 +93,22 @@ export class IcePalace {
 
     var plus = new DungeonMapData('ip-plus', 'Plus Shaped Room', '');
     plus.nodes.push(new DungeonNode(
-      '', 126, 229, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-bj'));
     plus.nodes.push(new DungeonNode(
-      '', 220, 140, DungeonNodeStatus.SK_LOCKED,
+      '', 88, 53.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-spike-room'));
     plus.nodes.push(new DungeonNode(
-      '', 126, 52, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-tall-room'));
     plus.nodes.push(new DungeonNode(
-      '', 29, 140, DungeonNodeStatus.OPEN_DOOR,
+      '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-double-freezor'));
@@ -116,23 +116,23 @@ export class IcePalace {
 
     var doubFreez = new DungeonMapData('ip-double-freezor', 'Double Freezor Room', '');
     doubFreez.nodes.push(new DungeonNode(
-      '', 69, 176, DungeonNodeStatus.OPEN_DOOR,
+      '', 28, 67, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-plus'));
     doubFreez.nodes.push(new DungeonNode(
-      'Double Freezor Chest', 124, 136, DungeonNodeStatus.CLOSED_CHEST,
+      'Double Freezor Chest', 46.5, 53.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[172]));
     doubFreez.nodes.push(new DungeonNode(
-      '', 61, 131, DungeonNodeStatus.OPEN_DOOR,
+      '', 27, 50, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-bc'));
     if (config.canGlitch) {
       doubFreez.nodes.push(new DungeonNode(
-        '', 220, 140, DungeonNodeStatus.OPEN_DOOR,
+        '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
       function(items:Items, config:Config) {
           return true;
       }, 'ip-tall-room'));
@@ -142,24 +142,24 @@ export class IcePalace {
     var tallRoom = new DungeonMapData('ip-tall-room', 'Tall Icy Room', '');
     if (config.canGlitch) {
       tallRoom.nodes.push(new DungeonNode(
-        '', 80, 196, DungeonNodeStatus.OPEN_DOOR,
+        '', 32, 77, DungeonNodeStatus.OPEN_DOOR,
       function(items:Items, config:Config) {
           return true;
       }, 'ip-double-freezor'));
     } else {
       tallRoom.nodes.push(new DungeonNode(
-        '', 80, 196, DungeonNodeStatus.OPEN_DOOR,
+        '', 32, 77, DungeonNodeStatus.OPEN_DOOR,
       function(items:Items, config:Config) {
           return true;
       }, 'ip-bc'));
     }    
     tallRoom.nodes.push(new DungeonNode(
-      'Spike Room', 170, 67, DungeonNodeStatus.OPEN_DOOR,
+      'Spike Room', 68, 26, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hookshot || config.canGlitch;
     }, 'ip-spike-room', 'Hookshot Required'));
     tallRoom.nodes.push(new DungeonNode(
-      '', 126, 240, DungeonNodeStatus.SK_LOCKED,
+      '', 50, 95, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-double-jelly'));
@@ -167,40 +167,40 @@ export class IcePalace {
 
     var spikeRoom = new DungeonMapData('ip-spike-room', 'Spike Room', '');
     spikeRoom.nodes.push(new DungeonNode(
-      '', 34, 140, DungeonNodeStatus.SK_LOCKED,
+      '', 13, 53.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-plus'));
     spikeRoom.nodes.push(new DungeonNode(
-      'Spike Room Chest', 73, 182, DungeonNodeStatus.CLOSED_CHEST,
+      'Spike Room Chest', 28.5, 72, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasInvincibilityItem(config) || items.hookshot;
-    }, l[171], 'Hookshot/Invulnerability Item Required'));
+        return true;
+    }, l[171], ''));
     spikeRoom.nodes.push(new DungeonNode(
-      'Map Room', 184, 51, DungeonNodeStatus.OPEN_DOOR,
+      'Map Room', 72, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hasInvincibilityItem(config) || items.hookshot;
-    }, 'ip-map', 'Hookshot/Invulnerability Item Required'));
+        return true;
+    }, 'ip-map', ''));
     ipData.dungeonMaps.push(spikeRoom);
 
     var mapRoom = new DungeonMapData('ip-map', 'Map Room', '');
     mapRoom.nodes.push(new DungeonNode(
-      '', 184, 51, DungeonNodeStatus.OPEN_DOOR,
+      '', 72, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-spike-room'));
     mapRoom.nodes.push(new DungeonNode(
-      'Map Chest', 188, 184, DungeonNodeStatus.CLOSED_CHEST,
+      'Map Chest', 72, 72, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hammer;
     }, l[170], 'Hammer Required'));
     mapRoom.nodes.push(new DungeonNode(
-      'Freestanding Key', 120, 118, DungeonNodeStatus.GROUND_KEY,
+      'Freestanding Key', 50, 50, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return items.hammer;
     }, '', 'Hammer Required'));
     mapRoom.nodes.push(new DungeonNode(
-      'Big Key Room', 225, 140, DungeonNodeStatus.OPEN_DOOR,
+      'Big Key Room', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hammer;
     }, 'ip-bk', 'Hammer Required'));
@@ -208,12 +208,12 @@ export class IcePalace {
 
     var bkRoom = new DungeonMapData('ip-bk', 'Big Key Room', '');
     bkRoom.nodes.push(new DungeonNode(
-      '', 103, 92, DungeonNodeStatus.OPEN_DOOR,
+      '', 40.5, 34, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-map'));
     bkRoom.nodes.push(new DungeonNode(
-      'Big Key Chest', 116, 184, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest', 44, 72, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[168]));
@@ -221,12 +221,12 @@ export class IcePalace {
 
     var bcRoom = new DungeonMapData('ip-bc', 'Big Chest Room', '');
     bcRoom.nodes.push(new DungeonNode(
-      '', 220, 140, DungeonNodeStatus.OPEN_DOOR,
+      '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-push-block'));
     bcRoom.nodes.push(new DungeonNode(
-      'Big Chest', 62, 80, DungeonNodeStatus.BIG_CHEST,
+      'Big Chest', 25, 30, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[174]));
@@ -234,17 +234,17 @@ export class IcePalace {
 
     var djRoom = new DungeonMapData('ip-double-jelly', 'Double Jelly Room', '');
     djRoom.nodes.push(new DungeonNode(
-      '', 78, 52, DungeonNodeStatus.SK_LOCKED,
+      '', 31, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-tall-room'));
     djRoom.nodes.push(new DungeonNode(
-      'Double Jelly Chest', 72, 185, DungeonNodeStatus.CLOSED_CHEST,
+      'Double Jelly Chest', 28, 72, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[173]));
     djRoom.nodes.push(new DungeonNode(
-      '', 220, 140, DungeonNodeStatus.OPEN_DOOR,
+      '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-icy-pot'));
@@ -252,17 +252,17 @@ export class IcePalace {
 
     var skullPot = new DungeonMapData('ip-icy-pot', 'Icy Skull Pot Room', '');
     skullPot.nodes.push(new DungeonNode(
-      '', 33, 140, DungeonNodeStatus.OPEN_DOOR,
+      '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-push-block-right'));
     skullPot.nodes.push(new DungeonNode(
-      '', 49, 94, DungeonNodeStatus.GROUND_KEY,
+      '', 19, 38, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return true;
     }, ''));
     skullPot.nodes.push(new DungeonNode(
-      '', 127, 226, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-double-jelly'));
@@ -271,22 +271,22 @@ export class IcePalace {
     //TODO adjust numbers
     var pushBlock = new DungeonMapData('ip-push-block', 'Push Block Room', '');
     pushBlock.nodes.push(new DungeonNode(
-      'Big Chest Room', 32, 140, DungeonNodeStatus.OPEN_DOOR,
+      'Big Chest Room', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hookshot;
     }, 'ip-bc', 'Hookshot Required'));
     pushBlock.nodes.push(new DungeonNode(
-      'Button Switch Room', 106, 135, DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK,
+      'Button Switch Room', 42, 52, DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK,
     function(items:Items, config:Config) {
         return items.ipSwitch;
     }, 'ip-switch-room', 'Switch on Blue Required'));
     pushBlock.nodes.push(new DungeonNode(
-      'Icy Pot Room', 224, 140, DungeonNodeStatus.OPEN_DOOR,
+      'Icy Pot Room', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return !items.ipSwitch;
     }, 'ip-icy-pot', 'Switch on Red Required'));
     pushBlock.nodes.push(new DungeonNode(
-      'Fairy Drop Room', 124, 54, DungeonNodeStatus.BK_LOCKED,
+      'Fairy Drop Room', 50, 19, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return !items.ipSwitch;
     }, 'ip-fairy-drop', 'Switch on Red Required'));
@@ -295,22 +295,22 @@ export class IcePalace {
     //TODO adjust numbers
     var pushBlockRight = new DungeonMapData('ip-push-block-right', 'Push Block Room', '');
     pushBlockRight.nodes.push(new DungeonNode(
-      'Big Chest Room', 32, 140, DungeonNodeStatus.OPEN_DOOR,
+      'Big Chest Room', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hookshot && !items.ipSwitch;
     }, 'ip-bc', 'Hookshot and Switch on Red Required'));
     pushBlockRight.nodes.push(new DungeonNode(
-      'Button Switch Room', 126, 130, DungeonNodeStatus.OPEN_DOOR,
+      'Button Switch Room', 59, 47, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.ipSwitch;
     }, 'ip-switch-room', 'Switch on Blue Required'));
     pushBlockRight.nodes.push(new DungeonNode(
-      '', 224, 140, DungeonNodeStatus.OPEN_DOOR,
+      '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-icy-pot'));
     pushBlockRight.nodes.push(new DungeonNode(
-      '', 124, 54, DungeonNodeStatus.BK_LOCKED,
+      '', 50, 19, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-fairy-drop'));
@@ -318,17 +318,17 @@ export class IcePalace {
 
     var fairyDrop = new DungeonMapData('ip-fairy-drop', 'Fairy Drop Room', '');
     fairyDrop.nodes.push(new DungeonNode(
-      '', 124, 225, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-push-block-right'));
     fairyDrop.nodes.push(new DungeonNode(
-      'Button Switch Room', 78, 118, DungeonNodeStatus.OPEN_DOOR,
+      'Button Switch Room', 31, 46, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.ipSwitch;
     }, 'ip-switch-room', 'Switch on Blue Required'));
     fairyDrop.nodes.push(new DungeonNode(
-      '', 124, 53, DungeonNodeStatus.SK_LOCKED,
+      '', 50, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-switch-room'));
@@ -336,17 +336,17 @@ export class IcePalace {
 
     var finalButton = new DungeonMapData('ip-switch-room', 'Button Switch Room', '');
     finalButton.nodes.push(new DungeonNode(
-      '', 124, 53, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-fairy-drop'));    
     finalButton.nodes.push(new DungeonNode(
-      '', 224, 140, DungeonNodeStatus.SK_LOCKED,
+      '', 88, 53.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-final-switch'));
     finalButton.nodes.push(new DungeonNode(
-      'Pre Boss Room', 124, 225, DungeonNodeStatus.OPEN_DOOR,
+      'Pre Boss Room', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.somaria || items.ipBlockPushed;
     }, 'ip-pre-khold', 'Somaria or Block Pushed from Above Required'));
@@ -354,12 +354,12 @@ export class IcePalace {
 
     var finalSwitch = new DungeonMapData('ip-final-switch', 'Crystal Switch Room', '');
     finalSwitch.nodes.push(new DungeonNode(
-      '', 33, 140, DungeonNodeStatus.SK_LOCKED,
+      '', 72, 54, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-switch-room'));    
     finalSwitch.nodes.push(new DungeonNode(
-      '', 184, 133, DungeonNodeStatus.SWITCH,
+      '', 13, 53.5, DungeonNodeStatus.SWITCH,
     function(items:Items, config:Config) {
         return true;
     }, 'switch'));
@@ -367,12 +367,12 @@ export class IcePalace {
 
     var preKhold = new DungeonMapData('ip-pre-khold', 'Room Above Boss', '');
     preKhold.nodes.push(new DungeonNode(
-      '', 127, 52, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ip-switch-room'));
     preKhold.nodes.push(new DungeonNode(
-      'Kholdstare Room', 62, 206, DungeonNodeStatus.OPEN_DOOR,
+      'Kholdstare Room', 25, 76.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hammer;
     }, 'ip-khold', 'Hammer Required'));
@@ -380,7 +380,7 @@ export class IcePalace {
 
     var kholdRoom = new DungeonMapData('ip-khold', 'Kholdstare Room', '');
     kholdRoom.nodes.push(new DungeonNode(
-      'Kholdstare', 128, 136, DungeonNodeStatus.BOSS,
+      'Kholdstare', 50, 50, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, l[175]));

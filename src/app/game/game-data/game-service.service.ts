@@ -104,8 +104,8 @@ export class GameService {
       dungeon.dungeonMaps.forEach((map) => {
         map.nodes.forEach((eachNode, index) => {
           eachNode.mapNode = {
-            x: eachNode.x,
-            y: eachNode.y,
+            x: eachNode.x > 100 ? 10*index : eachNode.x,
+            y: eachNode.y > 100 ? 10*index : eachNode.y,
             tooltip: eachNode.location,
             id: eachNode.content,
             status: eachNode.status.toString(),
@@ -316,3 +316,16 @@ export class GameService {
   }
 
 }
+/*
+1x1 room
+top     50 19
+left    13 53.5
+right   79 53.5
+bottom  50 88 or 84
+
+2x2 room
+top     50 9.5
+left    7 51.5
+right   93 51.5
+bottom  50 95
+*/

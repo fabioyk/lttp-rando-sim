@@ -15,32 +15,32 @@ export class ThievesTown {
 
     var entrance = new DungeonMapData('tt-entry', 'Entrance', '');
     entrance.nodes.push(new DungeonNode(
-      '', 62, 248, DungeonNodeStatus.OPEN_DOOR,
+      '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'exit'));
     entrance.nodes.push(new DungeonNode(
-      '', 222, 32, DungeonNodeStatus.BK_LOCKED,
+      '', 87.5, 6, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-stalfo-corridor'));
     entrance.nodes.push(new DungeonNode(
-      'Map Chest', 34, 170, DungeonNodeStatus.CLOSED_CHEST,
+      'Map Chest', 13.5, 66.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[161]));
     entrance.nodes.push(new DungeonNode(
-      'Big Room Top Left Chest', 48, 75, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Room Top Left Chest', 19, 30.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[163]));
     entrance.nodes.push(new DungeonNode(
-      'Compass Chest', 178, 204, DungeonNodeStatus.CLOSED_CHEST,
+      'Compass Chest', 68.6, 80, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[162]));
     entrance.nodes.push(new DungeonNode(
-      'Big Key Chest', 100, 218, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest', 39, 85.3, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[160]));
@@ -48,23 +48,23 @@ export class ThievesTown {
 
     var stalfoCorridor = new DungeonMapData('tt-stalfo-corridor', 'Stalfo Corridor', '');
     stalfoCorridor.nodes.push(new DungeonNode(
-      '', 128, 238, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-entry'));
     stalfoCorridor.nodes.push(new DungeonNode(
-      'Blind', 128, 21, DungeonNodeStatus.OPEN_DOOR,
+      'Blind', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.ttBlindDelivered && items.ttBombableFloor
             && (items.sword || items.hammer || items.somaria || items.byrna);
     }, 'tt-blind', 'Floor Bombed, Blind Rescued and a Weapon Required'));
     stalfoCorridor.nodes.push(new DungeonNode(
-      '', 80, 196, DungeonNodeStatus.SK_LOCKED,
+      '', 33, 77, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-hellway'));
     stalfoCorridor.nodes.push(new DungeonNode(
-      '', 144, 40, DungeonNodeStatus.GROUND_KEY,
+      '', 54, 17, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return true;
     }, ''));
@@ -72,17 +72,17 @@ export class ThievesTown {
 
     var hellway = new DungeonMapData('tt-hellway', 'Hellway', '');
     hellway.nodes.push(new DungeonNode(
-      '', 174, 198, DungeonNodeStatus.OPEN_DOOR,
+      '', 68, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-stalfo-corridor'));
     hellway.nodes.push(new DungeonNode(
-      '', 126, 32, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-bombable-floor'));
     hellway.nodes.push(new DungeonNode(
-      '', 174, 69, DungeonNodeStatus.OPEN_DOOR,
+      '', 68, 26, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-fork'));
@@ -90,17 +90,17 @@ export class ThievesTown {
 
     var fork = new DungeonMapData('tt-fork', 'Conveyor Belt Fork', '');
     fork.nodes.push(new DungeonNode(
-      '', 31, 142, DungeonNodeStatus.OPEN_DOOR,
+      '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-hellway'));
     fork.nodes.push(new DungeonNode(
-      '', 127, 52, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-fork2'));
     fork.nodes.push(new DungeonNode(
-      '', 226, 142, DungeonNodeStatus.OPEN_DOOR,
+      '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-stalfo-corridor'));
@@ -108,17 +108,17 @@ export class ThievesTown {
 
     var fork2 = new DungeonMapData('tt-fork2', 'Fork Downstairs', '');
     fork2.nodes.push(new DungeonNode(
-      '', 193, 26, DungeonNodeStatus.OPEN_DOOR,
+      '', 75, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-fork'));
     fork2.nodes.push(new DungeonNode(
-      '', 18, 198, DungeonNodeStatus.SK_LOCKED,
+      '', 7, 77, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-bc'));
     fork2.nodes.push(new DungeonNode(
-      'Rescue Blind', 238, 198, DungeonNodeStatus.OPEN_DOOR,
+      'Rescue Blind', 93, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-maiden'));
@@ -126,17 +126,17 @@ export class ThievesTown {
 
     var blindCell = new DungeonMapData('tt-maiden', 'Blind Cell', '');
     blindCell.nodes.push(new DungeonNode(
-      '', 80, 198, DungeonNodeStatus.OPEN_DOOR,
+      '', 32, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-fork2'));
     blindCell.nodes.push(new DungeonNode(
-      'Blind Cell Chest', 160, 50, DungeonNodeStatus.CLOSED_CHEST,
+      'Blind Cell Chest', 61, 19, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[165]));
     blindCell.nodes.push(new DungeonNode(
-      '', 138, 50, DungeonNodeStatus.BLIND_RESCUE,
+      '', 51, 22, DungeonNodeStatus.BLIND_RESCUE,
     function(items:Items, config:Config) {
         return true;
     }, 'blind'));
@@ -144,12 +144,12 @@ export class ThievesTown {
 
     var bigChest = new DungeonMapData('tt-bc', 'Big Chest', '');
     bigChest.nodes.push(new DungeonNode(
-      '', 224, 139, DungeonNodeStatus.OPEN_DOOR,
+      '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-fork2'));
     bigChest.nodes.push(new DungeonNode(
-      'Big Chest', 127, 130, DungeonNodeStatus.BIG_CHEST,
+      'Big Chest', 50, 49, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return items.hammer;
     }, l[164], 'Hammer Required'));
@@ -157,17 +157,17 @@ export class ThievesTown {
 
     var bombableFloor = new DungeonMapData('tt-bombable-floor', 'Bombable Floor', '');
     bombableFloor.nodes.push(new DungeonNode(
-      '', 34, 138, DungeonNodeStatus.OPEN_DOOR,
+      '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-hellway'));
     bombableFloor.nodes.push(new DungeonNode(
-      'Bombable Floor Chest', 60, 73, DungeonNodeStatus.CLOSED_CHEST,
+      'Bombable Floor Chest', 22, 29, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[159]));
     bombableFloor.nodes.push(new DungeonNode(
-      'Bomb the Floor', 131, 97, DungeonNodeStatus.TT_BOMB_FLOOR,
+      'Bomb the Floor', 50, 38, DungeonNodeStatus.TT_BOMB_FLOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-bomb'));
@@ -175,7 +175,7 @@ export class ThievesTown {
 
     var blindRoom = new DungeonMapData('tt-blind', 'Blind Room', '');
     blindRoom.nodes.push(new DungeonNode(
-      'Blind', 129, 136, DungeonNodeStatus.BOSS,
+      'Blind', 50, 50, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
         return true;
     }, l[166]));
