@@ -13,7 +13,7 @@ export class DesertPalace {
       }, 7.6, 78.4
     );
 
-    var entrance = new DungeonMapData('dp-entry', 'Big Hall', '');
+    var entrance = new DungeonMapData('dp-entry', 'Big Hall');
     entrance.nodes.push(new DungeonNode(
       '', 50, 83, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -51,7 +51,7 @@ export class DesertPalace {
     }, 'dp-first-tile', 'Power Gloves Required'));
     dpData.dungeonMaps.push(entrance);
 
-    var torch = new DungeonMapData('dp-torch', 'Torch Room', '');
+    var torch = new DungeonMapData('dp-torch', 'Torch Room');
     torch.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -64,7 +64,7 @@ export class DesertPalace {
     }, l[69], 'Boots Required'));
     dpData.dungeonMaps.push(torch);
 
-    var map = new DungeonMapData('dp-map', 'Map Room', '');
+    var map = new DungeonMapData('dp-map', 'Map Room');
     map.nodes.push(new DungeonNode(
       '', 25, 70, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -82,7 +82,7 @@ export class DesertPalace {
     }, l[68]));
     dpData.dungeonMaps.push(map);
 
-    var right = new DungeonMapData('dp-right', 'Right Side', '');
+    var right = new DungeonMapData('dp-right', 'Right Side');
     right.nodes.push(new DungeonNode(
       '', 39, 85, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -100,7 +100,7 @@ export class DesertPalace {
     }, l[70]));
     dpData.dungeonMaps.push(right);
 
-    var bcRoom = new DungeonMapData('dp-bc', 'Big Chest Room', '');
+    var bcRoom = new DungeonMapData('dp-bc', 'Big Chest Room');
     bcRoom.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -113,7 +113,7 @@ export class DesertPalace {
     }, l[67]));
     dpData.dungeonMaps.push(bcRoom);
 
-    var firstTile = new DungeonMapData('dp-first-tile', 'First Tile Room', '');
+    var firstTile = new DungeonMapData('dp-first-tile', 'Tile Room');
     firstTile.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -131,7 +131,7 @@ export class DesertPalace {
     }, ''));
     dpData.dungeonMaps.push(firstTile);
 
-    var bigDoor = new DungeonMapData('dp-big-door', 'Big Door', '');
+    var bigDoor = new DungeonMapData('dp-big-door', 'Big Door');
     bigDoor.nodes.push(new DungeonNode(
       '', 75, 69, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -146,7 +146,7 @@ export class DesertPalace {
     }, 'dp-lanmo', 'Fire Source and Weapon Required'));
     dpData.dungeonMaps.push(bigDoor);
 
-    var lanmoRoom = new DungeonMapData('dp-lanmo', 'Lanmolas Room', '');
+    var lanmoRoom = new DungeonMapData('dp-lanmo', 'Lanmolas Room');
     lanmoRoom.nodes.push(new DungeonNode(
       'Lanmolas', 50, 50, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {

@@ -13,7 +13,7 @@ export class CastleTower {
       }, 49.6, 39
     );
 
-    var entrance = new DungeonMapData('ct-entry', 'Entrance', '');
+    var entrance = new DungeonMapData('ct-entry', 'Aga Tower Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -31,7 +31,7 @@ export class CastleTower {
     }, l[95]));
     ctData.dungeonMaps.push(entrance);
 
-    var maze = new DungeonMapData('ct-maze', 'Dark Maze', '');
+    var maze = new DungeonMapData('ct-maze', 'Dark Maze');
     maze.nodes.push(new DungeonNode(
       '', 75, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -49,7 +49,7 @@ export class CastleTower {
     }, l[96]));
     ctData.dungeonMaps.push(maze);
 
-    var top = new DungeonMapData('ct-top', 'Top of Tower', '');
+    var top = new DungeonMapData('ct-top', 'Top of the Tower');
     top.nodes.push(new DungeonNode(
       '', 50, 84, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -62,7 +62,7 @@ export class CastleTower {
     }, 'ct-aga', 'Sword Required'));
     ctData.dungeonMaps.push(top);
 
-    var aga = new DungeonMapData('ct-aga', 'Aganim\'s Fight Room', '');
+    var aga = new DungeonMapData('ct-aga', 'Agahnim Room');
     aga.nodes.push(new DungeonNode(
       'Agahnim', 50, 50, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {

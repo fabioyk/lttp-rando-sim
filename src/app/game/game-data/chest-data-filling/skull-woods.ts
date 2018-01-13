@@ -13,7 +13,7 @@ export class SkullWoods {
       }, 6.6, 5.4
     );
 
-    var entrance = new DungeonMapData('sw-entry', 'Entrance', '');
+    var entrance = new DungeonMapData('sw-entry', 'Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 57.5, 87, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -46,7 +46,7 @@ export class SkullWoods {
     }, 'sw-part21'));
     swData.dungeonMaps.push(entrance);
 
-    var compass = new DungeonMapData('sw-left-drop', 'Compass Room', '');
+    var compass = new DungeonMapData('sw-left-drop', 'Compass Room');
     compass.nodes.push(new DungeonNode(
       '', 75, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -64,14 +64,14 @@ export class SkullWoods {
     }, 'sw-right-drop'));
     swData.dungeonMaps.push(compass);
 
-    var gibdoStalfo = new DungeonMapData('sw-gibdo-stalfo', 'Gibdo Stalfo Room', '');
+    var gibdoStalfo = new DungeonMapData('sw-gibdo-stalfo', 'Pot Prison Room');
     gibdoStalfo.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sw-left-drop'));
     gibdoStalfo.nodes.push(new DungeonNode(
-      'Gibdo Stalfo Chest', 22, 28.5, DungeonNodeStatus.CLOSED_CHEST,
+      'Pot Prison Chest', 22, 28.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[155]));
@@ -82,7 +82,7 @@ export class SkullWoods {
     }, 'sw-bc'));
     swData.dungeonMaps.push(gibdoStalfo);
 
-    var bigChest = new DungeonMapData('sw-bc', 'Big Chest Room', '');
+    var bigChest = new DungeonMapData('sw-bc', 'Big Chest Room');
     bigChest.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -105,20 +105,20 @@ export class SkullWoods {
     }, l[150]));
     swData.dungeonMaps.push(bigChest);
 
-    var rightFall = new DungeonMapData('sw-right-drop', 'Right Fall Room', '');
+    var rightFall = new DungeonMapData('sw-right-drop', 'Pinball Room');
     rightFall.nodes.push(new DungeonNode(
       '', 75, 9.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'sw-map'));
     rightFall.nodes.push(new DungeonNode(
-      'Right Fall Chest', 51.5, 45, DungeonNodeStatus.CLOSED_CHEST,
+      'Pinball Chest', 51.5, 45, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[156]));
     swData.dungeonMaps.push(rightFall);
 
-    var mapRoom = new DungeonMapData('sw-map', 'Map Room', '');
+    var mapRoom = new DungeonMapData('sw-map', 'Map Room');
     mapRoom.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -141,7 +141,7 @@ export class SkullWoods {
     }, l[153]));
     swData.dungeonMaps.push(mapRoom);
 
-    var northeastBc = new DungeonMapData('sw-northeast-bc', 'Top Right Fall', '');
+    var northeastBc = new DungeonMapData('sw-northeast-bc', 'Circle of Pots Room');
     northeastBc.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -154,14 +154,14 @@ export class SkullWoods {
     }, 'sw-bc'));
     swData.dungeonMaps.push(northeastBc);
 
-    var part2 = new DungeonMapData('sw-part21', 'Big Key Room', '');
+    var part2 = new DungeonMapData('sw-part21', 'Big Key Room');
     part2.nodes.push(new DungeonNode(
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sw-entry'));
     part2.nodes.push(new DungeonNode(
-      'Final Section', 32, 77, DungeonNodeStatus.OPEN_DOOR,
+      '', 32, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sw-part22'));
@@ -172,14 +172,14 @@ export class SkullWoods {
     }, l[151]));
     swData.dungeonMaps.push(part2);
 
-    var part22 = new DungeonMapData('sw-part22', 'Before Final Section', '');
+    var part22 = new DungeonMapData('sw-part22', 'Key Pot Room');
     part22.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'sw-part21'));
     part22.nodes.push(new DungeonNode(
-      'Final Section', 50, 88, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.fireRod;
     }, 'sw-final', 'Fire Rod Required'));
@@ -190,7 +190,7 @@ export class SkullWoods {
     }, ''));
     swData.dungeonMaps.push(part22);
 
-    var final = new DungeonMapData('sw-final', 'Final Section', '');
+    var final = new DungeonMapData('sw-final', 'Final Section');
     final.nodes.push(new DungeonNode(
       '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -202,13 +202,13 @@ export class SkullWoods {
         return items.sword;
     }, 'sw-mothula', 'Sword Required'));
     final.nodes.push(new DungeonNode(
-      'Final Section Chest', 33, 74, DungeonNodeStatus.CLOSED_CHEST,
+      'Bridge Room Chest', 33, 74, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[154]));
     swData.dungeonMaps.push(final);
 
-    var mothulaRoom = new DungeonMapData('sw-mothula', 'Mothula Room', '');
+    var mothulaRoom = new DungeonMapData('sw-mothula', 'Mothula Room');
     mothulaRoom.nodes.push(new DungeonNode(
       'Mothula', 50, 50, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {

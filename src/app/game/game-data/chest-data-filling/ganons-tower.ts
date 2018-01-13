@@ -16,7 +16,7 @@ export class GanonsTower {
       }, 55, 4.5
     );
 
-    var entrance = new DungeonMapData('gt-entry', 'Entrance', '');
+    var entrance = new DungeonMapData('gt-entry', 'Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -28,10 +28,10 @@ export class GanonsTower {
         return true;
     }, 'gt-first-left'));
     entrance.nodes.push(new DungeonNode(
-      'Upstairs', 50, 9.5, DungeonNodeStatus.BK_LOCKED,
+      '', 50, 9.5, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.hasBow() && items.hasFiresource();
-    }, 'gt-upstairs', 'Bow, Fire Source and Big Key Required'));
+    }, 'gt-upstairs', 'Bow and Fire Source Required'));
     entrance.nodes.push(new DungeonNode(
       '', 75, 14, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -39,7 +39,7 @@ export class GanonsTower {
     }, 'gt-first-right'));
     gtData.dungeonMaps.push(entrance);
 
-    var firstRight = new DungeonMapData('gt-first-right', 'First Room Right Side', '');
+    var firstRight = new DungeonMapData('gt-first-right', 'Hope Room');
     firstRight.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -56,18 +56,18 @@ export class GanonsTower {
         return items.somaria;
     }, 'gt-tile-room', 'Cane of Somaria Required'));
     firstRight.nodes.push(new DungeonNode(
-      'Right Side First Chest', 22, 29, DungeonNodeStatus.CLOSED_CHEST,
+      'Hope Room Left Chest', 22, 29, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[211]));
     firstRight.nodes.push(new DungeonNode(
-      'Right Side Second Chest', 78, 29, DungeonNodeStatus.CLOSED_CHEST,
+      'Hope Room Right Chest', 78, 29, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[212]));
     gtData.dungeonMaps.push(firstRight);
 
-    var tileRoom = new DungeonMapData('gt-tile-room', 'Tile Room', '');
+    var tileRoom = new DungeonMapData('gt-tile-room', 'Tile Room');
     tileRoom.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -75,13 +75,13 @@ export class GanonsTower {
     }, 'gt-first-right'));
     if (!config.canGlitch) {
       tileRoom.nodes.push(new DungeonNode(
-        'Compass Room', 88, 53.5, DungeonNodeStatus.SK_LOCKED,
+        '', 88, 53.5, DungeonNodeStatus.SK_LOCKED,
       function(items:Items, config:Config) {
           return items.fireRod;
       }, 'gt-right-side', 'Fire Rod Required'));
     } else {
       tileRoom.nodes.push(new DungeonNode(
-        'Compass Room', 88, 53.5, DungeonNodeStatus.SK_LOCKED,
+        '', 88, 53.5, DungeonNodeStatus.SK_LOCKED,
       function(items:Items, config:Config) {
           return items.fireRod || items.lamp;
       }, 'gt-right-side', 'Fire Source Required'));
@@ -93,7 +93,7 @@ export class GanonsTower {
     }, l[214]));
     gtData.dungeonMaps.push(tileRoom);
 
-    var rightSide = new DungeonMapData('gt-right-side', 'Compass Room', '');
+    var rightSide = new DungeonMapData('gt-right-side', 'Compass Room');
     rightSide.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -126,20 +126,20 @@ export class GanonsTower {
     }, l[218]));
     gtData.dungeonMaps.push(rightSide);
 
-    var skCorridor = new DungeonMapData('gt-sk-corridor', 'Small Key Corridor', '');
+    var skCorridor = new DungeonMapData('gt-sk-corridor', 'Key Pot Corridor');
     skCorridor.nodes.push(new DungeonNode(
       '', 93, 51.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'gt-invisible-maze'));
     skCorridor.nodes.push(new DungeonNode(
-      '', 50, 40, DungeonNodeStatus.GROUND_KEY,
+      'Small Key', 50, 40, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
         return true;
     }, ''));
     gtData.dungeonMaps.push(skCorridor);
 
-    var invisibleMaze = new DungeonMapData('gt-invisible-maze', 'Invisible Maze', '');
+    var invisibleMaze = new DungeonMapData('gt-invisible-maze', 'Invisible Maze');
     invisibleMaze.nodes.push(new DungeonNode(
       '', 25, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -152,7 +152,7 @@ export class GanonsTower {
     }, 'gt-bobs-room'));
     gtData.dungeonMaps.push(invisibleMaze);
 
-    var bigChest = new DungeonMapData('gt-bc', 'Big Chest Room', '');
+    var bigChest = new DungeonMapData('gt-bc', 'Big Chest Room');
     bigChest.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -170,7 +170,7 @@ export class GanonsTower {
     }, l[210]));
     gtData.dungeonMaps.push(bigChest);
 
-    var bobsRoom = new DungeonMapData('gt-bobs-room', 'Bob\'s Room', '');
+    var bobsRoom = new DungeonMapData('gt-bobs-room', 'Bob\'s Room');
     bobsRoom.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -188,7 +188,7 @@ export class GanonsTower {
     }, l[213]));
     gtData.dungeonMaps.push(bobsRoom);
 
-    var iceArmos = new DungeonMapData('gt-armos', 'Ice Armos Room', '');
+    var iceArmos = new DungeonMapData('gt-armos', 'Ice Armos Room');
     iceArmos.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -201,30 +201,30 @@ export class GanonsTower {
     }, 'gt-bk'));
     gtData.dungeonMaps.push(iceArmos);
 
-    var bkRoom = new DungeonMapData('gt-bk', 'Big Key Room', '');
+    var bkRoom = new DungeonMapData('gt-bk', 'Big Key Room');
     bkRoom.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'gt-armos'));
     bkRoom.nodes.push(new DungeonNode(
-      'Ice Armos Chest 1', 50, 41, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest 1', 50, 41, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[219]));
     bkRoom.nodes.push(new DungeonNode(
-      'Ice Armos Chest 2', 41, 29, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest 2', 41, 29, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[220]));
     bkRoom.nodes.push(new DungeonNode(
-      'Ice Armos Chest 3', 60, 29, DungeonNodeStatus.CLOSED_CHEST,
+      'Big Key Chest 3', 60, 29, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[221]));
     gtData.dungeonMaps.push(bkRoom);
 
-    var keyTorch = new DungeonMapData('gt-first-left', 'Key Torch Room', '');
+    var keyTorch = new DungeonMapData('gt-first-left', 'Bob\'s Torch Room');
     keyTorch.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -241,20 +241,20 @@ export class GanonsTower {
         return true;
     }, 'gt-first-right'));
     keyTorch.nodes.push(new DungeonNode(
-      'Key Torch Item', 59.5, 47.5, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
+      'Bob\'s Torch Item', 59.5, 47.5, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.boots;
     }, l[199], 'Boots Required'));
     gtData.dungeonMaps.push(keyTorch);
 
-    var hammerPegs = new DungeonMapData('gt-hammer-pegs', 'Hammer Pegs Room', '');
+    var hammerPegs = new DungeonMapData('gt-hammer-pegs', 'Hammer Pegs Room');
     hammerPegs.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'gt-first-left'));
     hammerPegs.nodes.push(new DungeonNode(
-      'Hookshot Room', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
+      '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hammer;
     }, 'gt-hookshot-room', 'Hammer Required'));
@@ -265,30 +265,30 @@ export class GanonsTower {
     }, ''));
     gtData.dungeonMaps.push(hammerPegs);
 
-    var hookshotRoom = new DungeonMapData('gt-hookshot-room', 'Hookshot Room', '');
+    var hookshotRoom = new DungeonMapData('gt-hookshot-room', 'Hookshot Room');
     hookshotRoom.nodes.push(new DungeonNode(
       '', 68, 26, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'gt-hammer-pegs'));
     hookshotRoom.nodes.push(new DungeonNode(
-      'Stalfos Room', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hookshot || config.canGlitch;
     }, 'gt-stalfo', 'Hookshot Required'));
     hookshotRoom.nodes.push(new DungeonNode(
-      'Double Firebar Room', 68, 77, DungeonNodeStatus.SK_LOCKED,
+      '', 68, 77, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hookshot || items.boots || config.canGlitch;
     }, 'gt-double-firebar', 'Hookshot or Boots Required'));
     hookshotRoom.nodes.push(new DungeonNode(
-      'Firesnake Room', 50, 95, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hookshot || config.canGlitch;
     }, 'gt-double-switch', 'Hookshot Required'));
     gtData.dungeonMaps.push(hookshotRoom);
 
-    var stalfos = new DungeonMapData('gt-stalfo', 'Stalfos Room', '');
+    var stalfos = new DungeonMapData('gt-stalfo', 'Stalfos Room');
     stalfos.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -316,7 +316,7 @@ export class GanonsTower {
     }, l[203]));
     gtData.dungeonMaps.push(stalfos);
 
-    var stalfos = new DungeonMapData('gt-double-firebar', 'Double Firebar Room', '');
+    var stalfos = new DungeonMapData('gt-double-firebar', 'Double Firebar Room');
     stalfos.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -329,7 +329,7 @@ export class GanonsTower {
     }, l[209]));
     gtData.dungeonMaps.push(stalfos);
 
-    var doubleSwitch = new DungeonMapData('gt-double-switch', 'Double Switch Room', '');
+    var doubleSwitch = new DungeonMapData('gt-double-switch', 'Double Switch Room');
     doubleSwitch.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -347,9 +347,9 @@ export class GanonsTower {
     }, ''));
     gtData.dungeonMaps.push(doubleSwitch);
 
-    var firesnake = new DungeonMapData('gt-firesnake', 'Firesnake Room', '');
+    var firesnake = new DungeonMapData('gt-firesnake', 'Firesnake Room');
     firesnake.nodes.push(new DungeonNode(
-      'Teleport Room', 25, 69, DungeonNodeStatus.SK_LOCKED,
+      '', 25, 69, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.hookshot || config.canGlitch;
     }, 'gt-teleports', 'Hookshot Required'));
@@ -360,7 +360,7 @@ export class GanonsTower {
     }, l[208], 'Hookshot Required'));
     gtData.dungeonMaps.push(firesnake);
 
-    var teleports = new DungeonMapData('gt-teleports', 'Teleport Room', '');
+    var teleports = new DungeonMapData('gt-teleports', 'Teleport Room');
     teleports.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -378,7 +378,7 @@ export class GanonsTower {
     }, 'gt-invisible-maze'));
     gtData.dungeonMaps.push(teleports);
 
-    var randoRoom = new DungeonMapData('gt-rando-room', 'Rando Room', '');
+    var randoRoom = new DungeonMapData('gt-rando-room', 'Randomizer Room');
     randoRoom.nodes.push(new DungeonNode(
       '', 68, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -406,7 +406,7 @@ export class GanonsTower {
     }, l[207]));
     gtData.dungeonMaps.push(randoRoom);
 
-    var helmaRoom = new DungeonMapData('gt-upstairs', 'Mini Helma Room', '');
+    var helmaRoom = new DungeonMapData('gt-upstairs', 'Mini Helmasaur Room');
     helmaRoom.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -429,38 +429,38 @@ export class GanonsTower {
     }, ''));
     gtData.dungeonMaps.push(helmaRoom);
 
-    var helmaRoom = new DungeonMapData('gt-refill', 'Refill Room', '');
+    var helmaRoom = new DungeonMapData('gt-refill', 'Pre-Moldorm Room');
     helmaRoom.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'gt-upstairs'));
     helmaRoom.nodes.push(new DungeonNode(
-      'Pre Moldorm 2 Chest', 47, 53.5, DungeonNodeStatus.CLOSED_CHEST,
+      'Pre-Moldorm Chest', 47, 53.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[224]));
     helmaRoom.nodes.push(new DungeonNode(
-      'Mini Helma Chest 2', 50, 88, DungeonNodeStatus.SK_LOCKED,
+      '', 50, 88, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'gt-moldorm'));
     gtData.dungeonMaps.push(helmaRoom);
 
-    var moldorm2 = new DungeonMapData('gt-moldorm', 'Moldorm 2 Room', '');
+    var moldorm2 = new DungeonMapData('gt-moldorm', 'Moldorm Room');
     moldorm2.nodes.push(new DungeonNode(
-      'Moldorm 2 Chest', 56.5, 73.5, DungeonNodeStatus.CLOSED_CHEST,
+      'Moldorm Chest', 56.5, 73.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hookshot || (items.boots && config.canGlitch);
     }, l[225], 'Hookshot Required'));
     moldorm2.nodes.push(new DungeonNode(
-      'Agahnim 2', 7, 77, DungeonNodeStatus.BK_LOCKED,
+      '', 7, 77, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return items.hookshot || (items.boots && config.canGlitch);
     }, 'gt-aga2', 'Hookshot Required'));
     gtData.dungeonMaps.push(moldorm2);
 
-    var aga2 = new DungeonMapData('gt-aga2', 'Agahnim 2 Room', '');
+    var aga2 = new DungeonMapData('gt-aga2', 'Agahnim 2 Room');
     aga2.nodes.push(new DungeonNode(
       'Agahnim 2', 50, 56, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {

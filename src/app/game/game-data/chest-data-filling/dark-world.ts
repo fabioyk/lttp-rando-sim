@@ -7,7 +7,7 @@ export class DarkWorld {
     var itemLocations:ItemLocation[] = [];
 
     itemLocations.push(new ItemLocation(
-      'Super Bunny Cave', 92.8, 14.7,
+      'Superbunny Cave', 92.8, 14.7,
       function(items:Items, config:Config) {
         return items.canDarkEastDeathMountain(config) && (items.moonPearl || config.canGlitch);
       },
@@ -40,7 +40,7 @@ export class DarkWorld {
       'Spike Cave', 78.6, 14.9,
       function(items:Items, config:Config) {
         return items.canDarkWestDeathMountain(config) && items.hammer && items.glove
-            && ((items.hasInvincibilityItem(config) && items.hasMagicExtension(config)) || config.canGlitch);
+            && ((items.hasInvincibilityItem(config) && items.hasMagicExtension(config)) || config.canGlitch || items.byrna);
       },
       null,
       [l[103]],
@@ -68,7 +68,7 @@ export class DarkWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Fat Fairy', 73.5, 48.5,
+      'Pyramid Fairy', 73.5, 48.5,
       function(items:Items, config:Config) {
         return items.canSouthDarkWorld(config) && items.moonPearl 
             && (items.hammer || (items.mirror && items.agahnim))
@@ -90,7 +90,7 @@ export class DarkWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'C House', 60.8, 47.9,
+      'C-Shaped House', 60.8, 47.9,
       function(items:Items, config:Config) {
         return items.canNorthWestDarkWorld(config);
       },
@@ -217,7 +217,7 @@ export class DarkWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Graveyard Cliff Cave', 78.5, 27,
+      'Graveyard Ledge', 78.5, 27,
       function(items:Items, config:Config) {
         return items.mirror && items.moonPearl && items.canNorthWestDarkWorld(config);
       },

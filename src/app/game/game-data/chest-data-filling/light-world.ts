@@ -7,7 +7,7 @@ export class LightWorld {
     var itemLocations:ItemLocation[] = [];
 
     itemLocations.push(new ItemLocation(
-      'Pedestal', 2.5, 3.2,
+      'Master Sword Pedestal', 2.5, 3.2,
       function(items:Items, config:Config) {
         return items.pendantCourage && items.pendantPower && items.pendantWisdom;
       },
@@ -18,7 +18,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Hyrule Secret Entrance', 29.8, 41.8,
+      'Hyrule Secret Passage', 29.8, 41.8,
       function(items:Items, config:Config) {
         return true;
       },
@@ -91,7 +91,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Minimoldorm Cave', 32.6, 93.4,
+      'Mini Moldorm Cave', 32.6, 93.4,
       function(items:Items, config:Config) {
         return true;
       },
@@ -185,7 +185,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Witch', 40.8, 32.5,
+      'Potion Shop', 40.8, 32.5,
       function(items:Items, config:Config) {
         return items.mushroom;
       },
@@ -194,7 +194,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Race Game', 1.8, 69.8,
+      'Maze Race', 1.8, 69.8,
       function(items:Items, config:Config) {
         return true;
       },
@@ -203,7 +203,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Desert West Ledge', 1.5, 89,
+      'Desert Ledge', 1.5, 89,
       function(items:Items, config:Config) {
         return items.book || (items.canMire() && items.mirror);
       },
@@ -264,7 +264,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Bombable Wall in Escape', 26.8, 32.4,
+      'Sewers Bombable Wall', 26.8, 32.4,
       function(items:Items, config:Config) {
         return config.mode === 'standard' ? true : (items.glove || ((items.lamp || config.canGlitch) && items.hcItems.smallKeys > 0));
       },
@@ -291,7 +291,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Lost Old Man', 20.8, 20.4,
+      'Old Man', 20.8, 20.4,
       function(items:Items, config:Config) {
         return items.canWestDeathMountain(config) && items.hasLightsource(config);
       },
