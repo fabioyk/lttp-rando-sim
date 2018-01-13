@@ -6,6 +6,10 @@ export class DungeonData {
     'Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace',
     'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
   static lwDungeons = ['Eastern Palace', 'Desert Palace', 'Tower of Hera'];
+  static pegMaps = ['ip-bj', 'ip-fairy-drop', 'ip-final-switch', 'ip-push-block', 'ip-push-block-right',
+    'mm-compass', 'mm-entry', 'mm-fish-spine', 'mm-map',
+    'sp-left', 'sp-south-switch', 'sp-switch'];
+  static floodMaps = ['sp-south-switch', 'sp-switch'];
 
   name: string;
   itemsLeft: number;

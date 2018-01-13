@@ -32,6 +32,7 @@ export class MapComponent implements OnInit {
 
   warpButtonText:string;
 
+  preloadedImages = [];
   currentDungeonMap: DungeonMapData;
   currentDungeon: DungeonData;
   currentDungeonItems: DungeonItems;
@@ -44,10 +45,15 @@ export class MapComponent implements OnInit {
     
     this.currentMap = 'light-world';
     this.clearTooltip();
+    
+    this.preloadMapsAndIcons();
   }
 
   ngOnChanges() {
     if (this.currentMap === 'light-world' || this.currentMap === 'dark-world') {
+      if (this.currentDungeonMap) {
+        this.currentDungeonMap.cleanPreload();
+      }
       this.currentDungeon = null;
       this.currentDungeonMap = null;
       this.currentDungeonItems = null;
@@ -80,15 +86,22 @@ export class MapComponent implements OnInit {
 
   onDungeonClick(dungeonClicked:MapNode) {
     if (dungeonClicked.status.indexOf('getable') > -1 && dungeonClicked.status.indexOf('unavailable') === -1) {
+      if (this.currentDungeonMap) {
+        this.currentDungeonMap.cleanPreload();
+      }
       this.currentDungeon = dungeonClicked.originalNode;
       this.currentDungeonMap = this.currentDungeon.startingMap;
+      this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
       this.changeMap(this.currentDungeonMap.id);
       this.items.visitDungeon(dungeonClicked.tooltip);
-      this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);
+      this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);      
     }    
   }
 
   changeMapInDungeon(destination:string) {
+    if (this.currentDungeonMap) {
+      this.currentDungeonMap.cleanPreload();
+    }
     if (destination === 'exit') {
       this.leaveDungeon();
     } else {
@@ -100,6 +113,7 @@ export class MapComponent implements OnInit {
       });
       if (nextPlace) {
         this.currentDungeonMap = nextPlace;
+        this.currentDungeonMap.preloadImages(this.currentDungeon.name);
         this.changeMap(nextPlace.id);
       }
     }    
@@ -237,6 +251,9 @@ export class MapComponent implements OnInit {
       });
       this.items.ipSwitch = false;
     }
+    if (this.currentDungeonMap) {
+      this.currentDungeonMap.cleanPreload();
+    }
     
     this.currentDungeon = null;
     this.currentDungeonMap = null;
@@ -303,8 +320,11 @@ export class MapComponent implements OnInit {
       }
       this.changeMap('light-world');
     } else if (this.currentDungeon) {
-      console.log('warp to dungeon entrance');
+      if (this.currentDungeonMap) {
+        this.currentDungeonMap.cleanPreload();
+      }
       this.currentDungeonMap = this.currentDungeon.startingMap;
+      this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
       this.changeMap(this.currentDungeonMap.id);      
     }
   }
@@ -384,11 +404,6 @@ export class MapComponent implements OnInit {
     this.clearTooltip();
   }
 
-
-  pegMaps = ['ip-bj', 'ip-fairy-drop', 'ip-final-switch', 'ip-push-block', 'ip-push-block-right',
-    'mm-compass', 'mm-entry', 'mm-fish-spine', 'mm-map',
-    'sp-left', 'sp-south-switch', 'sp-switch'];
-  floodMaps = ['sp-south-switch', 'sp-switch'];
   getMapBg():string {
     if (this.currentMap === 'light-world') {
       return 'url(assets/light-world.png)';
@@ -397,7 +412,7 @@ export class MapComponent implements OnInit {
     } else {
       if (this.currentMap === 'ip-switch-room' && this.items.ipBlockPushed) {
         return 'url("assets/maps/Ice Palace/ip-switch-room-block.png")';              
-      } else if (this.pegMaps.indexOf(this.currentMap) === -1) {
+      } else if (DungeonData.pegMaps.indexOf(this.currentMap) === -1) {
         return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'.png")';      
       } else {
         var shouldFlip = false;
@@ -409,7 +424,7 @@ export class MapComponent implements OnInit {
           shouldFlip = this.items.mmSwitch;
         }
 
-        if (this.floodMaps.indexOf(this.currentMap) > -1 && this.items.spFlooded) {
+        if (DungeonData.floodMaps.indexOf(this.currentMap) > -1 && this.items.spFlooded) {
           return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'-flooded'+(shouldFlip ? '-flipped' : '') + '.png")';          
         } else {
           return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+(shouldFlip ? '-flipped' : '') + '.png")';
@@ -417,6 +432,30 @@ export class MapComponent implements OnInit {
       }
       
     }
+  }
+
+  preloadMapsAndIcons() {
+    this.preloadedImages = [];
+    this.preloadedImages[0] = new Image();
+    this.preloadedImages[0].src = 'assets/light-world.png';
+    this.preloadedImages[1] = new Image();
+    this.preloadedImages[1].src = 'assets/dark-world.png';
+    this.preloadedImages[2] = new Image();
+    this.preloadedImages[2].src = 'assets/node-icons/big_door.png';
+    this.preloadedImages[3] = new Image();
+    this.preloadedImages[3].src = 'assets/node-icons/closed_big_chest.png';
+    this.preloadedImages[4] = new Image();
+    this.preloadedImages[4].src = 'assets/node-icons/closed_chest.png';
+    this.preloadedImages[5] = new Image();
+    this.preloadedImages[5].src = 'assets/node-icons/key_door.png';
+    this.preloadedImages[6] = new Image();
+    this.preloadedImages[6].src = 'assets/node-icons/open_chest.png';
+    this.preloadedImages[7] = new Image();
+    this.preloadedImages[7].src = 'assets/node-icons/open_big_chest.png';
+    this.preloadedImages[8] = new Image();
+    this.preloadedImages[8].src = 'assets/node-icons/small_key.png';
+    this.preloadedImages[9] = new Image();
+    this.preloadedImages[9].src = 'assets/node-icons/warp.png';
   }
 
   getAll() {

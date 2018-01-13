@@ -32,6 +32,7 @@ export class GameComponent implements OnInit {
   config:Config;
   itemLog: ItemLogEntry[];
   dungeonsData:DungeonData[];
+  preloadedImages:HTMLImageElement[];
 
   private sub: Subscription;
 
@@ -57,6 +58,8 @@ export class GameComponent implements OnInit {
       gameMode = 'standard';
     }
 
+    this.preloadIcons();
+
     this.sub = this._route.queryParams.subscribe(
       params => {
         if (!params.seed) {
@@ -75,7 +78,7 @@ export class GameComponent implements OnInit {
             });
         }
       }
-    );
+    );    
   }
 
   onCreditWarp() {
@@ -264,6 +267,24 @@ export class GameComponent implements OnInit {
 
   onGameFinished() {
     this.gameState = 'finished';
+  }
+
+  preloadIcons() {
+    this.preloadedImages = [];
+    this.preloadedImages[0] = new Image();
+    this.preloadedImages[0].src = 'assets/dungeon-tracker-icons/chest0.png';
+    this.preloadedImages[1] = new Image();
+    this.preloadedImages[1].src = 'assets/dungeon-tracker-icons/chest1.png';
+    this.preloadedImages[2] = new Image();
+    this.preloadedImages[2].src = 'assets/dungeon-tracker-icons/chest2.png';
+    this.preloadedImages[3] = new Image();
+    this.preloadedImages[3].src = 'assets/dungeon-tracker-icons/chest3.png';
+    this.preloadedImages[4] = new Image();
+    this.preloadedImages[4].src = 'assets/dungeon-tracker-icons/chest4.png';
+    this.preloadedImages[5] = new Image();
+    this.preloadedImages[5].src = 'assets/dungeon-tracker-icons/chest5.png';
+    this.preloadedImages[6] = new Image();
+    this.preloadedImages[6].src = 'assets/dungeon-tracker-icons/chest6.png';
   }
 
 
