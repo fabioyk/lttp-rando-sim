@@ -306,9 +306,6 @@ export class GameService {
           } else {
             status += ' unaccessible';
           }
-          if (dungeon.name === 'Swamp Palace') {
-            console.log(status);
-          }
           
           accNodes.push({
             x: dungeon.x,

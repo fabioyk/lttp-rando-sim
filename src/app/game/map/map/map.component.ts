@@ -276,7 +276,6 @@ export class MapComponent implements OnInit {
 
   changeTooltip(mapNode:MapNode) {
     this.tooltip = mapNode.tooltip;
-    console.log(mapNode);
     if (this.currentDungeon && mapNode.prize[0] === 'exit') {
       this.tooltip = 'Leave the Dungeon';
     } else if (this.currentDungeon 

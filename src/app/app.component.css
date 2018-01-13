@@ -39,6 +39,10 @@ footer {
   z-index: 5;
 }
 
+.fa-twitter {
+  font-size: 24px;
+}
+
 .green-text {
   color: lightgreen;
   
@@ -46,4 +50,12 @@ footer {
 
 .yellow-text {
   color: yellow;
+}
+
+.white-text {
+  color: white;
+}
+
+.blue-text {
+  color: lightblue;
 }
