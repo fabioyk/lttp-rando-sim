@@ -114,7 +114,6 @@ export class MapComponent implements OnInit {
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_DOOR.toString();          
         case DungeonNodeStatus.OPEN_DOOR:
           this.changeMapInDungeon(dungeonNode.prize[0]);
-          console.log('Change map to '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.SK_LOCKED:
           if (this.currentDungeonItems.smallKeys > 0) {
@@ -132,7 +131,6 @@ export class MapComponent implements OnInit {
           }  else {
             this.cantItem.emit([dungeonNode, this.currentDungeon.name, false]);
           }
-          console.log('Need a key for '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.BK_LOCKED:
           if (this.currentDungeonItems.hasBigKey) {
@@ -140,7 +138,6 @@ export class MapComponent implements OnInit {
           } else {
             this.cantItem.emit([dungeonNode, this.currentDungeon.name, false]);
           }
-          console.log('Need BK for '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.BIG_CHEST:
           if (this.currentDungeonItems.hasBigKey) {
@@ -150,37 +147,32 @@ export class MapComponent implements OnInit {
           } else {
             this.cantItem.emit([dungeonNode, this.currentDungeon.name, false]);
           }
-          console.log('Big Chest! Need BK for '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.VIEWABLE_CLOSED_CHEST:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();
-          console.log('I can see this, its a chest with '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.CLOSED_CHEST:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();
-          console.log('Closed chest with '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.OPEN_CHEST:
-          console.log('Already opened chest with '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.OPEN_BIG_CHEST:
-          console.log('Already opened big chest with '+dungeonNode.prize);
           break;
         case DungeonNodeStatus.BOSS:
+          if (this.currentDungeon.name === 'Aga Tower' || this.currentDungeon.name === 'Ganons Tower') {
+            this.currentRegion = 'ow';
+          }
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();          
-          this.defeatDungeon(this.currentDungeon.name === 'Aga Tower' || this.currentDungeon.name === 'Ganons Tower');
-          console.log('Boss fight with '+dungeonNode.prize);
+          this.defeatDungeon();
           break;
         case DungeonNodeStatus.GROUND_KEY:
           this.items.add('smallKey', this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
-          console.log('Small Key on the ground');
           break;
         case DungeonNodeStatus.COLLECTED_GROUND_KEY:
-          console.log('Already got this small key');
           break;
         case DungeonNodeStatus.SWITCH_FLIPPED:
         case DungeonNodeStatus.SWITCH:
@@ -191,23 +183,19 @@ export class MapComponent implements OnInit {
           } else {
             nextState = DungeonNodeStatus.SWITCH;            
           }          
-          dungeonNode.originalNode.status = nextState.toString();          
-          console.log('Switch');
+          dungeonNode.originalNode.status = nextState.toString();
           break;
         case DungeonNodeStatus.WATER_SWITCH:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.WATER_SWITCH_FLIPPED.toString();
-          console.log('Water Switch');
           break;
         case DungeonNodeStatus.BLIND_RESCUE:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
-          dungeonNode.originalNode.status = DungeonNodeStatus.BLIND_RESCUED.toString();          
-          console.log('Blind');
+          dungeonNode.originalNode.status = DungeonNodeStatus.BLIND_RESCUED.toString();
           break;
         case DungeonNodeStatus.TT_BOMB_FLOOR:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
-          dungeonNode.originalNode.status = DungeonNodeStatus.TT_BOMB_FLOOR_DONE.toString();          
-          console.log('Bomb floor on TT');
+          dungeonNode.originalNode.status = DungeonNodeStatus.TT_BOMB_FLOOR_DONE.toString();
           break;
       }
     } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()) {
@@ -217,11 +205,8 @@ export class MapComponent implements OnInit {
     }
   }
 
-  leaveDungeon(isDefeatAga = false) {
-    if (isDefeatAga && this.currentDungeon.name === 'Ganons Tower') {
-      this.currentRegion = 'ow';
-    }
-    if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 && (this.currentDungeon.name !== 'Aga Tower' && !isDefeatAga)) {
+  leaveDungeon() {
+    if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 && this.currentDungeon.name !== 'Aga Tower') {
       this.changeMap('light-world');
     } else {
       this.changeMap('dark-world');
@@ -265,17 +250,17 @@ export class MapComponent implements OnInit {
     this.tooltip = '';
   }
 
-  defeatDungeon(isDefeatAga = false) {    
+  defeatDungeon() {    
     this.finishedDungeon.emit([this.currentDungeon.dungeonPrize, this.currentDungeon.name]);    
     this.currentDungeonItems.isBossDefeated = true;
-    this.leaveDungeon(isDefeatAga);
+    this.leaveDungeon();
   }
 
   onSaveAndQuit() {
     this.currentRegion = 'ow';
     if (this.currentDungeon) {
       var isLwDun = this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1;
-      this.leaveDungeon(false);
+      this.leaveDungeon();
       if (!isLwDun && this.items.agahnim && this.items.mirror) {
         this.changeMap('dark-world');
       } else {
