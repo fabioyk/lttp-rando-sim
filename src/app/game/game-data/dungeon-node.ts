@@ -4,7 +4,7 @@ import { MapNode } from "./map-node";
 export class DungeonNode {
   x: number;
   y: number;
-  location: string;
+  name: string;
   canOpen: Function;
   content: string;
   errorMessage: string;
@@ -13,7 +13,7 @@ export class DungeonNode {
 
   constructor(name:string, x:number, y:number, 
       status:DungeonNodeStatus, canOpen:Function, content:string, errorMessage:string = '') {
-    this.location = name;
+    this.name = name;
     this.x = x;
     this.y = y;
     this.canOpen = canOpen;

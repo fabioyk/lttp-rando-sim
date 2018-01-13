@@ -43,7 +43,7 @@ export class MapComponent implements OnInit {
     this.isDev = isDevMode();
     
     this.currentMap = 'light-world';
-    this.tooltip = '';
+    this.clearTooltip();
   }
 
   ngOnChanges() {
@@ -245,9 +245,26 @@ export class MapComponent implements OnInit {
 
   changeTooltip(mapNode:MapNode) {
     this.tooltip = mapNode.tooltip;
+    console.log(mapNode);
+    if (this.currentDungeon 
+      && mapNode.originalNode.canOpen 
+      && mapNode.originalNode.errorMessage 
+      && !mapNode.originalNode.canOpen(this.items, this.config) ) {
+        this.tooltip += '. ' + mapNode.originalNode.errorMessage;
+    } else if (!this.currentDungeon 
+        && (mapNode.status === 'unreachable getable' || mapNode.status === 'unavailable getable')) {
+      this.tooltip += '. Unreachable from here';
+    }
+    
   }
   clearTooltip() {
-    this.tooltip = '';
+    if (this.currentMap === 'light-world') {
+      this.tooltip = 'Light World';
+    } else if (this.currentMap === 'dark-world') {
+      this.tooltip = 'Dark World';
+    } else {
+      this.tooltip = this.currentDungeonMap.name;
+    }
   }
 
   defeatDungeon() {    
@@ -361,6 +378,7 @@ export class MapComponent implements OnInit {
   changeMap(newMap:string) {
     this.currentMap = newMap;
     this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
+    this.clearTooltip();
   }
 
 

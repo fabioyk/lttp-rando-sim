@@ -19,6 +19,7 @@ import { MapNode } from './map-node';
 import { Items } from './items';
 import { ItemNames } from '../../log-parse/item-names.enum';
 import { ItemNamesService } from '../../log-parse/item-names.service';
+import { DungeonNodeStatus } from './dungeon-node-status.enum';
 
 @Injectable()
 export class GameService {
@@ -103,10 +104,20 @@ export class GameService {
     this.dungeonsData.forEach((dungeon) => {
       dungeon.dungeonMaps.forEach((map) => {
         map.nodes.forEach((eachNode, index) => {
+          if (eachNode.name === '' && (eachNode.status === DungeonNodeStatus.OPEN_DOOR
+            || eachNode.status === DungeonNodeStatus.SK_LOCKED
+            || eachNode.status === DungeonNodeStatus.BK_LOCKED)) {
+              var target = eachNode.content;
+              dungeon.dungeonMaps.forEach((eachMap) => {
+                if (eachMap.id === target) {
+                  eachNode.name = eachMap.name;
+                }
+              });
+          }
           eachNode.mapNode = {
-            x: eachNode.x > 100 ? 10*index : eachNode.x,
-            y: eachNode.y > 100 ? 10*index : eachNode.y,
-            tooltip: eachNode.location,
+            x: eachNode.x,
+            y: eachNode.y,
+            tooltip: eachNode.name,
             id: eachNode.content,
             status: eachNode.status.toString(),
             prize: [eachNode.content],

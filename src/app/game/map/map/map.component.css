@@ -20,3 +20,16 @@ app-dungeon-items {
   color: white;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .map-footer {
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .map-footer span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+  }
+}
