@@ -348,7 +348,7 @@ export class MapComponent implements OnInit {
       this.items.lwMapOpen = true;
     } else if (this.canViewDarkWorldMap()) {
       this.items.dwMapOpen = true;
-    }
+    }    
   }
 
   canViewLightWorldMap():boolean {
@@ -366,6 +366,7 @@ export class MapComponent implements OnInit {
     if (dunName === 'mm' && this.canViewMMMedallion()) {
       this.items.mmMedallionChecked = true;
     }
+    this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
   }
 
   canViewTRMedallion():boolean {
