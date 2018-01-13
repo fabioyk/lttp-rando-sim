@@ -100,10 +100,10 @@ export class MapComponent implements OnInit {
       this.items.visitDungeon(dungeonClicked.tooltip);
       this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);
       if (this.currentDungeon.name === 'Turtle Rock') {
-        this.checkMedallion('tr');
+        this.items.trMedallionChecked = true;
       }
       if (this.currentDungeon.name === 'Misery Mire') {
-        this.checkMedallion('mm');
+        this.items.mmMedallionChecked = true;
       }
     }    
   }
@@ -188,6 +188,9 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.BOSS:
           if (this.currentDungeon.name === 'Aga Tower' || this.currentDungeon.name === 'Ganons Tower') {
             this.currentRegion = 'ow';
+            if (this.currentDungeon.name === 'Aga Tower') {
+              this.items.agahnim = 1; // Meh fix, but works for now
+            }
           }
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();          
