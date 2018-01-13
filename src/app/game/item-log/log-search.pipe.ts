@@ -19,7 +19,7 @@ export class LogSearchPipe implements PipeTransform {
     const importantActions = ['blind', 'tt-bomb', 'switch', 'flood', 'ip-switch-room'];
 
     return items.filter(item => {
-      if (importantActions.indexOf(item.shortName) > -1) {
+      if (importantActions.indexOf(item.shortName) > -1 && filterObj.searchQuery === '') {
         return true;
       }
       if (filterObj.onlyImportantShown && item.longName.indexOf('Agahnim') === -1 && item.longName.indexOf('Ganon') === -1 && !ItemNamesService.isTrackableItem(+item.item) && (item.type !== 'view' && item.type !== 'cant')) {
