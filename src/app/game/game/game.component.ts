@@ -33,6 +33,7 @@ export class GameComponent implements OnInit {
   itemLog: ItemLogEntry[];
   dungeonsData:DungeonData[];
   preloadedImages:HTMLImageElement[];
+  preloadedMaps:HTMLImageElement[];
 
   private sub: Subscription;
 
@@ -103,6 +104,9 @@ export class GameComponent implements OnInit {
       this.dungeonsData = this.gameService.dungeonsData;
       this.gameState = 'playing';
       this.gameService.updateData(this.items, 'light-world', 'light-world');
+      setTimeout(() => {
+        this.preloadMaps();
+      }, 10000);
 
       this.seedDescription = '(' 
         + (this.config.mode === 'standard' ? 'Standard' : 'Open') 
@@ -270,21 +274,25 @@ export class GameComponent implements OnInit {
   }
 
   preloadIcons() {
+    var iconsUrl = [
+      'assets/dungeon-tracker-icons/chest0.png', 'assets/dungeon-tracker-icons/chest1.png',
+      'assets/dungeon-tracker-icons/chest2.png', 'assets/dungeon-tracker-icons/chest3.png',
+      'assets/dungeon-tracker-icons/chest4.png', 'assets/dungeon-tracker-icons/chest5.png',
+      'assets/dungeon-tracker-icons/chest6.png'
+    ];
     this.preloadedImages = [];
-    this.preloadedImages[0] = new Image();
-    this.preloadedImages[0].src = 'assets/dungeon-tracker-icons/chest0.png';
-    this.preloadedImages[1] = new Image();
-    this.preloadedImages[1].src = 'assets/dungeon-tracker-icons/chest1.png';
-    this.preloadedImages[2] = new Image();
-    this.preloadedImages[2].src = 'assets/dungeon-tracker-icons/chest2.png';
-    this.preloadedImages[3] = new Image();
-    this.preloadedImages[3].src = 'assets/dungeon-tracker-icons/chest3.png';
-    this.preloadedImages[4] = new Image();
-    this.preloadedImages[4].src = 'assets/dungeon-tracker-icons/chest4.png';
-    this.preloadedImages[5] = new Image();
-    this.preloadedImages[5].src = 'assets/dungeon-tracker-icons/chest5.png';
-    this.preloadedImages[6] = new Image();
-    this.preloadedImages[6].src = 'assets/dungeon-tracker-icons/chest6.png';
+    iconsUrl.forEach((iconUrl, i) => {
+      this.preloadedImages[i] = new Image();
+      this.preloadedImages[i].src = iconUrl;
+    })
+  }
+
+  preloadMaps() {
+    this.preloadedMaps = [];
+    this.dungeonsData.forEach((eachDungeon, i) => {
+      this.preloadedMaps[i] = new Image();
+      this.preloadedMaps[i].src = 'assets/maps/' + eachDungeon.name + '/' + eachDungeon.startingMap.id + '.png';
+    });
   }
 
 
