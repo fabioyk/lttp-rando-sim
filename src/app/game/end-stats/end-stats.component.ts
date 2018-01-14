@@ -47,7 +47,7 @@ export class EndStatsComponent implements OnInit {
     var res = [];
     res.push(['Maps', this.items.stats.maps + '/12']);
     res.push(['Compasses', this.items.stats.compasses + '/11']);
-    res.push(['Small Keys', this.items.stats.sks + '/61']);
+    res.push(['Small Keys', this.items.stats.sks + '/44']);
     res.push(['Big Keys', this.items.stats.bks + '/12']);
     res.push(['Big Chests', this.items.stats.bigChests + '/11']);
     res.push(['Pendants', this.getPendantCount() + '/3']);
