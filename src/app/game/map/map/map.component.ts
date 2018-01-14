@@ -194,7 +194,7 @@ export class MapComponent implements OnInit {
           }
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();          
-          this.defeatDungeon();
+          this.defeatDungeon(this.currentDungeon.name === 'Aga Tower');
           break;
         case DungeonNodeStatus.GROUND_KEY:
           this.items.add('smallKey', this.currentDungeon.name);
@@ -233,8 +233,8 @@ export class MapComponent implements OnInit {
     }
   }
 
-  leaveDungeon() {
-    if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 && this.currentDungeon.name !== 'Aga Tower') {
+  leaveDungeon(isAgaBeingDefeated:boolean = false) {
+    if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 && (this.currentDungeon.name !== 'Aga Tower' || !isAgaBeingDefeated)) {
       this.changeMap('light-world');
     } else {
       this.changeMap('dark-world');
@@ -299,10 +299,10 @@ export class MapComponent implements OnInit {
     }
   }
 
-  defeatDungeon() {    
+  defeatDungeon(isAgaTower:boolean) {    
     this.finishedDungeon.emit([this.currentDungeon.dungeonPrize, this.currentDungeon.name]);    
     this.currentDungeonItems.isBossDefeated = true;
-    this.leaveDungeon();
+    this.leaveDungeon(isAgaTower);
   }
 
   onSaveAndQuit() {
