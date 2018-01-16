@@ -255,16 +255,23 @@ export class Items {
     if (!isGroundKey && itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
         && itemName.indexOf('Agahnim 2') === -1 && itemName.indexOf('Ganon') === -1
         && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {      
-      this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;      
-    }
-    if (!this.isKeysanity) {
-      const dungeonItemsNames = ['bigKey', 'smallKey', 'map', 'compass'];
-      dungeonItemNames.forEach((dunItemName) => {
-        if (itemName.indexOf(dunItemName) > -1) {
-          this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;          
+      if (!this.isKeysanity) {
+        const dungeonItemsNames = ['bigKey', 'smallKey', 'map', 'compass'];
+        var isDunItem = false;
+        dungeonItemNames.forEach((dunItemName) => {
+          if (itemName.indexOf(dunItemName) > -1) {
+            isDunItem = true;          
+          }
+        });
+        if (!isDunItem) {
+          this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;      
+          
         }
-      })
+      } else {
+        this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;
+      }      
     }
+    
   }
 
   addDungeonItem(itemName:string) {
