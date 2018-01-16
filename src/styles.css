@@ -33,3 +33,11 @@ a {
    -1px 1px 0 #000,
     1px 1px 0 #000;
 }
+
+.white-outline-text {
+  text-shadow:
+  -1px -1px 0 #FFF,  
+   1px -1px 0 #FFF,
+   -1px 1px 0 #FFF,
+    1px 1px 0 #FFF;
+}

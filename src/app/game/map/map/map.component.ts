@@ -197,7 +197,7 @@ export class MapComponent implements OnInit {
           this.defeatDungeon(this.currentDungeon.name === 'Aga Tower');
           break;
         case DungeonNodeStatus.GROUND_KEY:
-          this.items.add('smallKey', this.currentDungeon.name);
+          this.items.add('smallKey-'+DungeonData.allDungeonNames.indexOf(this.currentDungeon.name), this.currentDungeon.name, true);
           dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
           break;
         case DungeonNodeStatus.COLLECTED_GROUND_KEY:
@@ -302,6 +302,7 @@ export class MapComponent implements OnInit {
   defeatDungeon(isAgaTower:boolean) {    
     this.finishedDungeon.emit([this.currentDungeon.dungeonPrize, this.currentDungeon.name]);    
     this.currentDungeonItems.isBossDefeated = true;
+    this.currentDungeonItems.checkThisMap();
     this.leaveDungeon(isAgaTower);
   }
 
@@ -376,20 +377,87 @@ export class MapComponent implements OnInit {
       || (this.items.canDarkEastDeathMountain(this.config) && this.config.canGlitch));
   }
 
+  getAvailableDungeonMapIndexes():number[] {
+    var maps = [];
+    var start, end;
+
+    if (this.currentMap === 'light-world') {
+      start = 1;
+      end = 3;
+    } else {
+      start = 5;
+      end = 11;
+    }
+
+    for (var i = start; i <= end; i++) {
+      if (this.items.dungeonItemsArray[i].mapPrizeStatus === DungeonItems.UNKNOWN 
+          && this.items.dungeonItemsArray[i].hasMap) {
+        maps.push(i);
+      }
+    }
+
+    return maps;
+  }
+
   onCheckMap(mapName:string) {
-    if (mapName === 'lw') {
-      this.items.lwMapOpen = true;
-    } else if (this.canViewDarkWorldMap()) {
-      this.items.dwMapOpen = true;
-    }    
+    if (this.config.variation !== 'key-sanity') {
+      if (mapName === 'lw') {
+        this.items.lwMapOpen = true;      
+      } else if (this.canViewMap('dark-world')) {
+        this.items.dwMapOpen = true;
+      } 
+    } else {
+      if (mapName === 'gp') {
+        this.gameService.dungeonsData.forEach((dunData, i) => {
+          if (this.itemNameService.getItemById(dunData.dungeonPrize).shortName === 'pendantCourage') {
+            this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.GREEN_PENDANT;
+          }
+        });
+      } else if (mapName === 'rc') {
+        this.gameService.dungeonsData.forEach((dunData, i) => {
+          var prize = this.itemNameService.getItemById(dunData.dungeonPrize).shortName;
+          if (prize === 'crystal5' || prize === 'crystal6') {
+            this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.RED_CRYSTAL;
+          }
+        });
+      } else {
+        var mapsToCheck = this.getAvailableDungeonMapIndexes();
+        mapsToCheck.forEach((dunIndex) => {
+          this.items.dungeonItemsArray[dunIndex].checkThisMap();
+        })
+      }
+      
+    }     
   }
 
-  canViewLightWorldMap():boolean {
-    return this.currentMap === 'light-world';
-  }
+  canViewMap(world:string):boolean {
+    if (this.config.variation !== 'key-sanity') {
+      return this.currentMap === world;
+    } else {      
+      if (this.currentMap === world) {
+        return this.getAvailableDungeonMapIndexes().length > 0;
+      }
+      if (world === 'green-pendant') {
+        var foundGreen = false;
+        this.items.dungeonItemsArray.forEach((eachDunItems) => {
+          if (eachDunItems.mapPrizeStatus === DungeonItems.GREEN_PENDANT) {
+            foundGreen = true;
+          }
+        });
+        return !foundGreen && this.currentMap === 'light-world';
+      }
+      if (world === 'red-crystals') {
+        var foundReds = 0;
+        this.items.dungeonItemsArray.forEach((eachDunItems) => {
+          if (eachDunItems.mapPrizeStatus === DungeonItems.RED_CRYSTAL) {
+            foundReds++;
+          }
+        });
+        return foundReds < 2 && this.currentMap === 'dark-world' && this.items.canSouthDarkWorld(this.config) && this.currentRegion === 'ow';
+      }
+    }
 
-  canViewDarkWorldMap():boolean {
-    return this.currentMap === 'dark-world';
+    return false;
   }
 
   checkMedallion(dunName:string) {

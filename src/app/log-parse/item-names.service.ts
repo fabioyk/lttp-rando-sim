@@ -10,6 +10,7 @@ class ItemDescription {
 export class ItemNamesService {
   itemNames:ItemDescription[] = [];
   initialized = false;
+  static dungeonItemNames = ['smallKey', 'bigKey', 'map', 'compass'];
 
   constructor() { }
 
@@ -306,51 +307,269 @@ export class ItemNamesService {
       longName: 'Progressive Sword'
     });
 
-    // Dungeon Items (200~203)
-    this.itemNames.push({
-      id: 200,
-      shortName: 'bigKey',
-      longName: 'Big Key'
-    });
+    // Dungeon Items (200~250)
     this.itemNames.push({
       id: 201,
-      shortName: 'compass',
-      longName: 'Compass'
+      shortName: 'bigKey-1',
+      longName: 'Eastern Palace Big Key'
     });
     this.itemNames.push({
       id: 202,
-      shortName: 'smallKey',
-      longName: 'Small Key'
+      shortName: 'bigKey-2',
+      longName: 'Desert Palace Big Key'
     });
     this.itemNames.push({
       id: 203,
-      shortName: 'map',
-      longName: 'Map'
+      shortName: 'bigKey-3',
+      longName: 'Tower of Hera Big Key'
+    });
+    this.itemNames.push({
+      id: 205,
+      shortName: 'bigKey-5',
+      longName: 'Palace of Darkness Big Key'
+    });
+    this.itemNames.push({
+      id: 206,
+      shortName: 'bigKey-6',
+      longName: 'Swamp Palace Big Key'
+    });
+    this.itemNames.push({
+      id: 207,
+      shortName: 'bigKey-7',
+      longName: 'Skull Woods Big Key'
+    });
+    this.itemNames.push({
+      id: 208,
+      shortName: 'bigKey-8',
+      longName: 'Thieves Town Big Key'
+    });
+    this.itemNames.push({
+      id: 209,
+      shortName: 'bigKey-9',
+      longName: 'Ice Palace Big Key'
+    });
+    this.itemNames.push({
+      id: 210,
+      shortName: 'bigKey-10',
+      longName: 'Misery Mire Big Key'
+    });
+    this.itemNames.push({
+      id: 211,
+      shortName: 'bigKey-11',
+      longName: 'Turtle Rock Big Key'
+    });
+    this.itemNames.push({
+      id: 212,
+      shortName: 'bigKey-12',
+      longName: 'Ganons Tower Big Key'
     });
 
-    // Dungeon Nodes (250~)
+    this.itemNames.push({
+      id: 213,
+      shortName: 'smallKey-0',
+      longName: 'Sewers Key'
+    });
+    this.itemNames.push({
+      id: 215,
+      shortName: 'smallKey-2',
+      longName: 'Desert Palace Key'
+    });
+    this.itemNames.push({
+      id: 216,
+      shortName: 'smallKey-3',
+      longName: 'Tower of Hera Key'
+    });
+    this.itemNames.push({
+      id: 217,
+      shortName: 'smallKey-4',
+      longName: 'Agahnims Tower Key'
+    });
+    this.itemNames.push({
+      id: 218,
+      shortName: 'smallKey-5',
+      longName: 'Palace of Darkness Key'
+    });
+    this.itemNames.push({
+      id: 219,
+      shortName: 'smallKey-6',
+      longName: 'Swamp Palace Key'
+    });
+    this.itemNames.push({
+      id: 220,
+      shortName: 'smallKey-7',
+      longName: 'Skull Woods Key'
+    });
+    this.itemNames.push({
+      id: 221,
+      shortName: 'smallKey-8',
+      longName: 'Thieves Town Key'
+    });
+    this.itemNames.push({
+      id: 222,
+      shortName: 'smallKey-9',
+      longName: 'Ice Palace Key'
+    });
+    this.itemNames.push({
+      id: 223,
+      shortName: 'smallKey-10',
+      longName: 'Misery Mire Key'
+    });
+    this.itemNames.push({
+      id: 224,
+      shortName: 'smallKey-11',
+      longName: 'Turtle Rock Key'
+    });
+    this.itemNames.push({
+      id: 225,
+      shortName: 'smallKey-12',
+      longName: 'Ganons Tower Key'
+    });
+    
+    this.itemNames.push({
+      id: 226,
+      shortName: 'map-0',
+      longName: 'Sewers Map'
+    });
+    this.itemNames.push({
+      id: 227,
+      shortName: 'map-1',
+      longName: 'Eastern Palace Map'
+    });
+    this.itemNames.push({
+      id: 228,
+      shortName: 'map-2',
+      longName: 'Desert Palace Map'
+    });
+    this.itemNames.push({
+      id: 229,
+      shortName: 'map-3',
+      longName: 'Tower of Hera Map'
+    });
+    this.itemNames.push({
+      id: 230,
+      shortName: 'map-4',
+      longName: 'Agahnims Tower Map'
+    });
+    this.itemNames.push({
+      id: 231,
+      shortName: 'map-5',
+      longName: 'Palace of Darkness Map'
+    });
+    this.itemNames.push({
+      id: 232,
+      shortName: 'map-6',
+      longName: 'Swamp Palace Map'
+    });
+    this.itemNames.push({
+      id: 233,
+      shortName: 'map-7',
+      longName: 'Skull Woods Map'
+    });
+    this.itemNames.push({
+      id: 234,
+      shortName: 'map-8',
+      longName: 'Thieves Town Map'
+    });
+    this.itemNames.push({
+      id: 235,
+      shortName: 'map-9',
+      longName: 'Ice Palace Map'
+    });
+    this.itemNames.push({
+      id: 236,
+      shortName: 'map-10',
+      longName: 'Misery Mire Map'
+    });
+    this.itemNames.push({
+      id: 237,
+      shortName: 'map-11',
+      longName: 'Turtle Rock Map'
+    });
+    this.itemNames.push({
+      id: 238,
+      shortName: 'map-12',
+      longName: 'Ganons Tower Map'
+    });
+    
+    this.itemNames.push({
+      id: 240,
+      shortName: 'compass-1',
+      longName: 'Eastern Palace Compass'
+    });
+    this.itemNames.push({
+      id: 241,
+      shortName: 'compass-2',
+      longName: 'Desert Palace Compass'
+    });
+    this.itemNames.push({
+      id: 242,
+      shortName: 'compass-3',
+      longName: 'Tower of Hera Compass'
+    });
+    this.itemNames.push({
+      id: 244,
+      shortName: 'compass-5',
+      longName: 'Palace of Darkness Compass'
+    });
+    this.itemNames.push({
+      id: 245,
+      shortName: 'compass-6',
+      longName: 'Swamp Palace Compass'
+    });
+    this.itemNames.push({
+      id: 246,
+      shortName: 'compass-7',
+      longName: 'Skull Woods Compass'
+    });
+    this.itemNames.push({
+      id: 247,
+      shortName: 'compass-8',
+      longName: 'Thieves Town Compass'
+    });
+    this.itemNames.push({
+      id: 248,
+      shortName: 'compass-9',
+      longName: 'Ice Palace Compass'
+    });
+    this.itemNames.push({
+      id: 249,
+      shortName: 'compass-10',
+      longName: 'Misery Mire Compass'
+    });
     this.itemNames.push({
       id: 250,
+      shortName: 'compass-11',
+      longName: 'Turtle Rock Compass'
+    });
+    this.itemNames.push({
+      id: 251,
+      shortName: 'compass-12',
+      longName: 'Ganons Tower Compass'
+    });
+    
+    // Dungeon Nodes (300+)
+    this.itemNames.push({
+      id: 300,
       shortName: 'flood',
       longName: 'Water Switch'
     });
     this.itemNames.push({
-      id: 251,
+      id: 301,
       shortName: 'blind',
       longName: 'Rescued Blind'
     });
     this.itemNames.push({
-      id: 252,
+      id: 302,
       shortName: 'tt-bomb',
       longName: 'Bombed the Floor'
     });
     this.itemNames.push({
-      id: 253,
+      id: 303,
       shortName: 'switch',
       longName: 'Switch'
     });
     this.itemNames.push({
-      id: 254,
+      id: 304,
       shortName: 'ip-switch-room',
       longName: 'Pushed the Block'
     });
@@ -364,7 +583,7 @@ export class ItemNamesService {
   }
 
   static isDungeonItem(id:number) {
-    return id >= 200 && id <= 203;
+    return id >= 200 && id <= 250;
   }
 
   static isProgressiveItem(id:number) {

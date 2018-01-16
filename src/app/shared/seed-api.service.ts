@@ -13,7 +13,7 @@ import { Seed } from './seed';
 
 @Injectable()
 export class SeedApiService {
-  private _apiUrl = 'https://lttp-rando-seed-api.glitch.me/';
+  private _apiUrl = 'https://lttp-rando-seed-api-dev.glitch.me/';
   public lastSeedData:string;
   public lastSeedNum:number;
 
@@ -32,7 +32,24 @@ export class SeedApiService {
       if (seed) {
         queryUrl += '&seed=' + seed;
       }
-    }
+    }  
+    
+    // var tempSeed = { seed: 100008649,
+    //   logic: 'no-glitches-28',
+    //   variation: 'key-sanity',
+    //   difficulty: 'normal',
+    //   goal: 'ganon',
+    //   mode: 'open',
+    //   data: '10000864901001200000000000000008013120222017122235014237201127017008234017011002217210213126223100125222106233203017226151016013102009220013217232150015206202017224006225121119118013209007016004017013006017017136151015205102013109223218224124014152110117015218248116014017153015153218015003249218007008017008104112013017013015251224012216008013247008153224013017008013017006211102223017013002016208103207013002153102007135212242016013225015001107015236007018015017014229017246131017013231221128013220014130002015114008218132225017113244134218004245220013013108008241013006101006115017129215240123006250150017013228013002013111013004238152017006219013004012008017152225017004105017017227002004133017017016017' }
+
+    // return this._http.get('http://localhost:4200/')
+    //   .map((response: Response) => {
+    //     var seed = <Seed> tempSeed;
+    //     this.lastSeedData = seed.data;
+    //     this.lastSeedNum = seed.seed;        
+    //     return seed;
+    //   })
+    //   .catch(this.handleError);
     
     return this._http.get(queryUrl)
       .map((response: Response) => {

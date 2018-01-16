@@ -15,6 +15,7 @@ export class ItemLineComponent implements OnInit {
   longName:string;
   actionType:string;
 
+  subText:string;
   textLine:string;
 
   constructor(private _itemNamesService:ItemNamesService) { }
@@ -23,6 +24,25 @@ export class ItemLineComponent implements OnInit {
     if (this.itemLogEntry) {
       this.shortName = this.itemLogEntry.shortName;
       this.longName = this.itemLogEntry.longName;
+
+      ItemNamesService.dungeonItemNames.forEach((eachItemName) => {
+        if (this.shortName.indexOf(eachItemName) > -1) {          
+          if (this.itemLogEntry.type === 'view') {
+            if (this.shortName.indexOf('bigKey') > -1) {
+              this.longName = 'a Big Key';
+            } else if (this.shortName.indexOf('smallKey') > -1) {
+              this.longName = 'a Small Key';
+            } else if (this.shortName.indexOf('map') > -1) {
+              this.longName = 'a Map';
+            } else if (this.shortName.indexOf('compass') > -1) {
+              this.longName = 'a Compass';
+            }
+          } else {
+            this.setSubText();
+          }
+          this.shortName = eachItemName;
+        }        
+      });
 
       if (this.itemLogEntry.type === 'cant') {
         this.textLine = this.itemLogEntry.longName;
@@ -59,6 +79,12 @@ export class ItemLineComponent implements OnInit {
     } else {
       this.textLine = this.actionType + ' ' + this.longName + ' in ' + this.itemLogEntry.location;
     }    
+  }
+
+  setSubText() {
+    var dunIndex = this.shortName.split('-')[1];
+    const dunSubTexts = ['HC', 'EP', 'DP', 'ToH', 'AT', 'PoD', 'SP', 'SW', 'TT', 'IP', 'MM', 'TR', 'GT'];
+    this.subText = dunSubTexts[dunIndex];
   }
 
 }

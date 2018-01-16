@@ -55,8 +55,10 @@ export class GameComponent implements OnInit {
     var gameMode = '';
     if (this._router.url.indexOf('open') > -1) {
       gameMode = 'open';
-    } else {
+    } else if (this._router.url.indexOf('standard') > -1) {
       gameMode = 'standard';
+    } else if (this._router.url.indexOf('keysanity') > -1) {
+      gameMode = 'keysanity'
     }
 
     this.preloadIcons();
@@ -98,8 +100,8 @@ export class GameComponent implements OnInit {
     if (seedData) {
       this.gameService.loadSeed(seedData, seedNumber, canGlitch);
       this.items = new Items();
-      this.items.setup();
       this.config = this.gameService.config;
+      this.items.setup(this.config.variation === 'key-sanity', this.gameService.dungeonsData);
       this.itemLog = [];
       this.dungeonsData = this.gameService.dungeonsData;
       this.gameState = 'playing';
@@ -109,7 +111,7 @@ export class GameComponent implements OnInit {
       }, 10000);
 
       this.seedDescription = '(' 
-        + (this.config.mode === 'standard' ? 'Standard' : 'Open') 
+        + (this.config.mode === 'standard' ? 'Standard' : (this.config.variation === 'none' ? 'Open' : 'Keysanity')) 
         + ', ' + (this.config.canGlitch ? 'Minor Glitches' : 'No Glitches') 
         + ', Seed ' + seedNumber + ')';
     } else {
@@ -119,22 +121,20 @@ export class GameComponent implements OnInit {
 
   onAddedItem([mapNode, map, region], type:string) {
     mapNode.prize.forEach((prize, i) => {
-      setTimeout(() => {
-        if (type !== 'view') {
-          this.items.add(this._itemNamesService.getItemById(prize).shortName, map);
-          this.gameService.updateData(this.items, map, region);
-        }
-        var itemData = this.convertItemName(prize, type);
-        this.itemLog.unshift({
-          item: prize,
-          shortName: itemData[0],
-          longName: itemData[1],
-          location: mapNode.tooltip ? mapNode.tooltip : mapNode.id,
-          region: map,
-          type: type
-        });
-      }, 1*i);
+      if (type !== 'view') {
+        this.items.add(this._itemNamesService.getItemById(prize).shortName, map);        
+      }
+      var itemData = this.convertItemName(prize, type);
+      this.itemLog.unshift({
+        item: prize,
+        shortName: itemData[0],
+        longName: itemData[1],
+        location: mapNode.tooltip ? mapNode.tooltip : mapNode.id,
+        region: map,
+        type: type
+      });
     });
+    this.gameService.updateData(this.items, map, region);
   }
 
   onCantItem([mapNode, region, reason]) {

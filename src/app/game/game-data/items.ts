@@ -1,7 +1,6 @@
 import { DungeonItems } from "./dungeon-items";
 import { Config } from "./config";
 import { DungeonData } from "./dungeon-data";
-import { ItemNamesService } from "../../log-parse/item-names.service";
 import { TrackerNodeComponent } from "../item-tracker/tracker-node/tracker-node.component";
 
 export class Items {
@@ -43,20 +42,6 @@ export class Items {
   crystal5 = false;
   crystal6 = false;
   crystal7 = false;
-
-  hcItems:DungeonItems;  
-  epItems:DungeonItems;
-  dpItems:DungeonItems;
-  tohItems:DungeonItems;
-  ctItems:DungeonItems;  
-  podItems:DungeonItems;
-  spItems:DungeonItems;
-  swItems:DungeonItems;
-  ttItems:DungeonItems;
-  ipItems:DungeonItems;
-  mmItems:DungeonItems;
-  trItems:DungeonItems;
-  gtItems:DungeonItems;
   
   spSwitch = false;
   spFlooded = false;
@@ -79,7 +64,9 @@ export class Items {
   mmMedallionChecked = false;
   trMedallionChecked = false;
 
-  dungeonItemsArray = [];
+  isKeysanity:boolean;
+
+  dungeonItemsArray:DungeonItems[] = [];
 
   stats = {
     totalCount: 0,
@@ -124,34 +111,40 @@ export class Items {
   preEachDun = [];
   gtChestCount = 0;
 
-  startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];
+  startingItemCount = [];
 
   visitedDungeon = [];
+
+  constructor() {
+
+  }
   
-  setup() {
-    this.hcItems = new DungeonItems('Hyrule Castle', 6);
-    this.epItems = new DungeonItems('Eastern Palace', 3);
-    this.dpItems = new DungeonItems('Desert Palace', 2);
-    this.tohItems = new DungeonItems('Tower of Hera', 2);
-    this.ctItems = new DungeonItems('Aga Tower', 1);
-    this.podItems = new DungeonItems('Palace of Darkness', 5);
-    this.spItems = new DungeonItems('Swamp Palace', 6);
-    this.swItems = new DungeonItems('Skull Woods', 2);
-    this.ttItems = new DungeonItems('Thieves Town', 4);
-    this.ipItems = new DungeonItems('Ice Palace', 3);
-    this.mmItems = new DungeonItems('Misery Mire', 2);
-    this.trItems = new DungeonItems('Turtle Rock', 6);
-    this.gtItems = new DungeonItems('Ganons Tower', 21);
-    this.dungeonItemsArray = [this.hcItems, this.epItems, this.dpItems, this.tohItems,
-      this.ctItems, this.podItems, this.spItems, this.swItems, this.ttItems,
-      this.ipItems, this.mmItems, this.trItems, this.gtItems];
+  setup(isKeysanity:boolean, dungeonsData:DungeonData[]) {
+    this.isKeysanity = isKeysanity;
+
+    if (!isKeysanity) {
+      this.startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];
+      
+    } else {
+      this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 28];
+    }
+
+    DungeonData.dungeonNames.forEach((dunName, index) => {
+      if (index === 0) {
+        this.dungeonItemsArray.push(new DungeonItems('Hyrule Castle', this.startingItemCount[0], ''));
+      } else {
+        this.dungeonItemsArray.push(new DungeonItems(dunName, this.startingItemCount[index], dungeonsData[index-1].dungeonPrize));        
+      }
+    })
 
     this.stats.startTime = Date.now();
     this.preEachDun = [0, 0, 0, 0, 0, 0, 0];
     this.visitedDungeon = [false, false, false, false, false, false, false, false, false, false];
+
+    
   }
 
-  add(itemName:string, region:string) {
+  add(itemName:string, region:string, isGroundKey:boolean = false) {
     if (!itemName) return;
     
     var notItemLocation = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room',
@@ -225,27 +218,18 @@ export class Items {
         }
         break;
       case 'ip-switch-room': this.ipBlockPushed = true; break;
-      case 'smallKey': 
-        this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].smallKeys++;
-        this.stats.sks++;
-        break;
-      case 'bigKey': 
-        this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasBigKey = true;
-        this.stats.bks++;
-        break;
-      case 'map': 
-        this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasMap = true;
-        this.stats.maps++;
-        break;
-      case 'compass': 
-        this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].hasCompass = true;
-        this.stats.compasses++;
-        break;
       default:
         if (this[itemName] !== undefined) {
           this[itemName] = true;
         }        
     }
+
+    var dungeonItemNames = ['smallKey', 'bigKey', 'map', 'compass'];
+    dungeonItemNames.forEach((dunItem) => {
+      if (itemName.indexOf(dunItem) > -1) {
+        this.addDungeonItem(itemName);
+      }
+    })
 
     if (this.stats.preDW === 0 && this.moonPearl && 
         (this.agahnim || (this.hammer && this.glove) || (this.glove === 2))) {
@@ -254,23 +238,58 @@ export class Items {
 
     if (region === 'Ganons Tower' && this.stats.itemsPreGTBK === 0) {
       this.gtChestCount++;
-      if (itemName === 'bigKey') {
+      if (itemName === 'bigKey-12') {
         this.stats.itemsPreGTBK = this.gtChestCount;
-        this.stats.totalItemsPreGTBK = this.stats.totalCount;
       }
+    }
+
+    if (itemName === 'bigKey-12') {
+      this.stats.totalItemsPreGTBK = this.stats.totalCount;
     }
 
     if (itemName.indexOf('Upgrade') > -1) {
       this.stats.capacityUpgrades++;
     }
 
-    const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room', 'smallKey', 'bigKey', 'map', 'compass'];
-    if (itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
+    const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room'];
+    if (!isGroundKey && itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
         && itemName.indexOf('Agahnim 2') === -1 && itemName.indexOf('Ganon') === -1
         && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {      
       this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;      
     }
-  } 
+    if (!this.isKeysanity) {
+      const dungeonItemsNames = ['bigKey', 'smallKey', 'map', 'compass'];
+      dungeonItemNames.forEach((dunItemName) => {
+        if (itemName.indexOf(dunItemName) > -1) {
+          this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;          
+        }
+      })
+    }
+  }
+
+  addDungeonItem(itemName:string) {
+    var dunItem = itemName.split('-')[0];
+    var dunIndex = +itemName.split('-')[1];
+
+    switch(dunItem) {
+      case 'smallKey':
+        this.dungeonItemsArray[dunIndex].smallKeys++;
+        this.stats.sks++;
+        break;
+      case 'bigKey': 
+        this.dungeonItemsArray[dunIndex].hasBigKey = true;
+        this.stats.bks++;
+        break;
+      case 'map': 
+        this.dungeonItemsArray[dunIndex].hasMap = true;
+        this.stats.maps++;
+        break;
+      case 'compass': 
+        this.dungeonItemsArray[dunIndex].hasCompass = true;
+        this.stats.compasses++;
+        break;
+    }
+  }
 
   remove(itemName:string, region:string) {
     switch(itemName) {
@@ -360,32 +379,26 @@ export class Items {
   }
 
   getDungeonItems(dungeon:string):DungeonItems {
-    const dunList = ['Hyrule Castle', 'Eastern Palace', 'Desert Palace',
-    'Tower of Hera', 'Aga Tower', 'Palace of Darkness', 'Swamp Palace', 'Skull Woods',
-    'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
-    return this.dungeonItemsArray[dunList.indexOf(dungeon)];
+    return this.dungeonItemsArray[DungeonData.allDungeonNames.indexOf(dungeon)];
   }
   getAllDungeonItems():any[] {
-    const allDunList = ['Hyrule Castle', 'Eastern Palace', 'Desert Palace',
-    'Tower of Hera', 'Aga Tower', 'Palace of Darkness', 'Swamp Palace', 'Skull Woods',
-    'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
-    const trackedDunList = ['Eastern Palace', 'Desert Palace',
-    'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 'Skull Woods',
-    'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock'];
     var duns = [];
-    trackedDunList.forEach((dunName) => {
-      duns.push({name: dunName, items: this.dungeonItemsArray[allDunList.indexOf(dunName)]});
+    DungeonData.crystalDungeonNames.forEach((dunName) => {
+      duns.push({name: dunName, items: this.dungeonItemsArray[DungeonData.allDungeonNames.indexOf(dunName)]});
     })
     return duns;
   }
   visitDungeon(dunName:string):void {
-    const trackedDunList = ['Eastern Palace', 'Desert Palace',
-    'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 'Skull Woods',
-    'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock'];
-
-    if (trackedDunList.indexOf(dunName) > -1) {
-      this.visitedDungeon[trackedDunList.indexOf(dunName)] = true;
+    var dunIndex = DungeonData.crystalDungeonNames.indexOf(dunName);
+    if (dunIndex > -1) {
+      this.visitedDungeon[dunIndex] = true;
+      var dunFullListIndex = DungeonData.allDungeonNames.indexOf(dunName);
+      if (this.dungeonItemsArray[dunFullListIndex].mapPrizeStatus === DungeonItems.UNKNOWN) {
+        
+      }
     }
+
+    
   }
   hasVisitedDungeon(dunName:string):boolean {
     const trackedDunList = ['Eastern Palace', 'Desert Palace',

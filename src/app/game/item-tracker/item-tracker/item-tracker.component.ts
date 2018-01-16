@@ -18,6 +18,7 @@ export class ItemTrackerComponent implements OnInit {
   constructor(private _gameService:GameService) { }
 
   ngOnInit() {
+    
     this.itemsToTrack = 
     ['tunic', 'sword', 'shield', 'moonPearl', 'health', 
      'bow', 'boomerang', 'hookshot', 'mushroom', 'powder', 
@@ -27,8 +28,14 @@ export class ItemTrackerComponent implements OnInit {
      'boots', 'glove', 'flippers', 'halfMagic', 'agahnim'];
   }
 
-  filterDungeons(dungeon:DungeonData) {
-    return dungeon.name !== "Aga Tower" && dungeon.name !== "Ganons Tower";
+  getDungeons() {
+    if (this.config.variation !== 'key-sanity') {
+      return this.dungeonsData.filter((dungeon) => {
+        return dungeon.name !== "Aga Tower" && dungeon.name !== "Ganons Tower";        
+      });
+    } else {
+      return this.dungeonsData;
+    }
   }
 
 }
