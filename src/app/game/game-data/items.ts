@@ -401,7 +401,7 @@ export class Items {
       this.visitedDungeon[dunIndex] = true;
       var dunFullListIndex = DungeonData.allDungeonNames.indexOf(dunName);
       if (this.dungeonItemsArray[dunFullListIndex].mapPrizeStatus === DungeonItems.UNKNOWN) {
-        
+        this.dungeonItemsArray[dunFullListIndex].listenThisMap();
       }
     }
 
