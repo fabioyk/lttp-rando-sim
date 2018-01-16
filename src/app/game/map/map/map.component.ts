@@ -402,9 +402,19 @@ export class MapComponent implements OnInit {
   onCheckMap(mapName:string) {
     if (this.config.variation !== 'key-sanity') {
       if (mapName === 'lw') {
-        this.items.lwMapOpen = true;      
+        this.items.lwMapOpen = true;
+        this.gameService.dungeonsData.forEach((dunData, i) => {
+          if (DungeonData.lwDungeons.indexOf(dunData.name) > -1) {
+            this.items.dungeonItemsArray[i+1].checkThisMap();
+          }
+        });
       } else if (this.canViewMap('dark-world')) {
         this.items.dwMapOpen = true;
+        this.gameService.dungeonsData.forEach((dunData, i) => {
+          if (DungeonData.lwDungeons.indexOf(dunData.name) === -1) {
+            this.items.dungeonItemsArray[i+1].checkThisMap();
+          }
+        });
       } 
     } else {
       if (mapName === 'gp') {
