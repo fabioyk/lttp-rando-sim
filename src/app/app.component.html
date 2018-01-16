@@ -4,11 +4,12 @@
       <span class="not-selectable title stylized-font" (click)="onBackMainMenu()">
         Z3R Simulator
       </span> 
-      <button type="button" class="btn btn-default pull-right" 
-        (click)="openModal(aboutTemplate)">About</button>
-      <button type="button" class="btn btn-default pull-right" 
-        (click)="openModal(howToTemplate)">How To Play</button>
-      
+      <div class="pull-right">
+        <button type="button" class="btn btn-default pull-right" 
+          (click)="openModal(howToTemplate)">How To Play</button>
+        <button type="button" class="btn btn-default pull-right" 
+          (click)="openModal(aboutTemplate)">About</button>        
+      </div>
     </h1>
     
     <router-outlet></router-outlet>
