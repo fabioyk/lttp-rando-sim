@@ -7,6 +7,10 @@ div {
   padding-right: 0;
 }
 
+.col-xs-2 {
+    padding: 0;
+}
+
 .col-xs-5ths,
 .col-sm-5ths,
 .col-md-5ths,

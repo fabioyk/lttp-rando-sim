@@ -4,6 +4,7 @@
       class='col-xs-5ths'
       *ngFor='let itemName of itemsToTrack'
       [isItem]='true'
+      [config]='config'
       [itemName]='itemName'
       [value]='items[itemName]'
       [items]='items'
@@ -13,8 +14,8 @@
 <div class='container-fluid'>
   <div>
     <app-tracker-node
-      class='col-xs-5ths'
-      *ngFor='let dungeonData of dungeonsData.filter(filterDungeons)'
+      class='col-xs-2'
+      *ngFor='let dungeonData of getDungeons()'
       [isItem]='false'
       [items]='items'
       [config]='config'

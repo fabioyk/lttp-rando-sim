@@ -39,7 +39,7 @@ export class GameService {
     this.config.goal = logObj.goal === '0' ? 'ganon' : 'other';
     this.config.logic = logObj.logic;
     this.config.mode = logObj.mode === '0' ? 'standard' : 'open';
-    this.config.variation = logObj.variation;
+    this.config.variation = logObj.variation === '0' ? 'none' : 'key-sanity';
     this.config.vtSeedNumber = logObj.seed;
     this.config.canGlitch = canGlitch;
 

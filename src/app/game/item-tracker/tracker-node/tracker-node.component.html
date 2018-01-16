@@ -1,21 +1,47 @@
 <div class='node' *ngIf='isItem'
   [ngStyle]="{'background-image': getBgImg()}"
   [ngClass]="isTransparent()">
+  <span class='not-selectable outline-text' 
+    *ngIf='itemName === "bombos" || itemName === "ether" || itemName === "quake"'
+    [ngClass]="checkMmMedallion()"
+    >MM</span>
+  <span class='not-selectable outline-text' 
+    *ngIf='itemName === "bombos" || itemName === "ether" || itemName === "quake"'
+    [ngClass]="checkTrMedallion()">TR</span>
   <span class='counter not-selectable outline-text' *ngIf='itemName === "health"'>{{getHealth()}}</span>
 </div>
 <div class='dungeon-node' 
     *ngIf='!isItem'
     >
-  <div class='dungeon-node-bg'
-    [ngStyle]="{'background-image': getDungeonBg()}">
+  <div    
+    >
+    <figure
+      [ngStyle]="{'background-image': getDungeonBg()}"
+      [ngClass]="getDungeonBeatenClass()">
+</figure>
     <div class='dungeon-medallion'
       [ngStyle]="{'background-image': getDungeonMedallionBg()}">
     </div>    
     <div class='dungeon-prize'
+      [ngClass]='isAgaTowerOrGt ? "invisible" : ""'
       [ngStyle]="{'background-image': getDungeonPrizeBg()}">
     </div>
   </div>
-  <div class='dungeon-chest'
+  <div class='dungeon-keys' *ngIf='config.variation === "key-sanity"'>
+    <div class='big-key-icon'
+      [ngClass]="getBigKeyIconClass()">
+
+    </div>
+    <div class='small-keys-icon'
+      [ngClass]="getSmallKeysIconClass()">
+      <span class='small-keys-text not-selectable outline-text'>
+          {{keyCountText}}
+      </span>
+      
+    </div>
+  </div>
+  <div class='dungeon-chest outline-text'
     [ngStyle]="{'background-image': getDungeonChestCountBg()}">
-  </div>  
+    {{chestCountText}}
+  </div>
 </div>

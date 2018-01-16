@@ -3,7 +3,10 @@
     {{itemLogEntry.region}}
   </div>
   <div class='panel-body'>
-    <img class='icon' [src]="'assets/item-icons/'+shortName+'.png'">      
+    <span class='line-icon-container'>
+      <img class='icon' [src]="'assets/item-icons/'+shortName+'.png'">
+      <span class='subText white-outline-text not-selectable' *ngIf='subText'>{{subText}}</span>
+    </span>
     {{textLine}}
   </div>
 </div>

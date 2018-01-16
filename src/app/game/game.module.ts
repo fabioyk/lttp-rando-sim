@@ -26,6 +26,8 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     RouterModule.forChild([
       { path: 'standard', component: GameComponent },
       { path: 'open', component: GameComponent },
+      { path: 'keysanity', component: GameComponent },
+      
     ])
   ],
   declarations: [GameComponent, EndStatsComponent],

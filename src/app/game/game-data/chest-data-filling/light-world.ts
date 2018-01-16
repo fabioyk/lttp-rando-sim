@@ -272,7 +272,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Sewers Bombable Wall', 26.8, 32.4,
       function(items:Items, config:Config) {
-        return config.mode === 'standard' ? true : (items.glove || ((items.lamp || config.canGlitch) && items.hcItems.smallKeys > 0));
+        return config.mode === 'standard' ? true : (items.glove || ((items.lamp || config.canGlitch) && items.dungeonItemsArray[0].smallKeys > 0));
       },
       null,
       [l[53], l[54], l[55]]

@@ -33,6 +33,7 @@ import { WindowRefService } from "./shared/window-ref.service";
       { path: '', component: MainMenuComponent },
       { path: 'standard', component: GameComponent },
       { path: 'open', component: GameComponent },  
+      { path: 'keysanity', component: GameComponent },  
     ])
   ],
   providers: [GameService, SeedApiService, ItemNamesService, WindowRefService],

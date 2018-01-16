@@ -27,19 +27,76 @@ div {
   width: 100%;
 }
 
+.dungeon-node-bg {
+  position: absolute;
+}
+
 .dungeon-prize, .dungeon-medallion {
-  position: absolute;  
+  position: relative;  
   top: 25%;
   width: 50%;
-  height: 25%;
+  padding-top: 50%;
 }
 
 .dungeon-prize {
   left: 50%;
 }
 
-.dungeon-medallion {
-  left: 0;
+.mm-medallion-text, .tr-medallion-text {
+  position: absolute;
+  font-weight: bold;
+}
+
+.mm-medallion-text {
+  bottom: 5px;
+  left: 5px;
+}
+
+.tr-medallion-text {
+  top: 5px;
+  right: 5px;
+}
+
+.dungeon-chest {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.dungeon-keys {
+  display: flex;
+}
+
+.big-key-icon, .small-keys-icon {
+  background-size: contain;
+  width: 50%;
+  padding-top: 50%;
+}
+
+.big-key-icon {
+  background-image: url(/assets/item-icons/bigKey.png);  
+}
+.small-keys-icon {
+  background-image: url(/assets/item-icons/smallKey.png);  
+  position: relative;
+}
+
+.small-keys-text {
+  position: absolute;
+  font-size: 16px;
+  top: 5px;
+  right: 1px;
+}
+
+.grayscale {
+  opacity: 0.5;
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}
+
+.invisible {
+  visibility: hidden;
 }
 
 @media (max-width: 992px) {
@@ -55,6 +112,31 @@ div {
     font-size: 10px;
     bottom: -4px;
     right: 1px;
+  }
+
+  .dungeon-chest {
+    font-size: 14px;
+  }
+
+  .small-keys-text {
+    font-size: 12px;
+    top: 0px;
+    right: 2px;
+  }
+
+  .mm-medallion-text, .tr-medallion-text {
+    font-size: 10px;
+    font-weight: normal;
+  }
+
+  .mm-medallion-text {
+    bottom: -2px;
+    left: -2px;
+  }
+  
+  .tr-medallion-text {
+    top: -2px;
+    right: -2px;
   }
 }
 
