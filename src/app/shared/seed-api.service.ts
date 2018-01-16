@@ -13,7 +13,7 @@ import { Seed } from './seed';
 
 @Injectable()
 export class SeedApiService {
-  private _apiUrl = 'https://lttp-rando-seed-api-dev.glitch.me/';
+  private _apiUrl = 'https://lttp-rando-seed-api.glitch.me/';
   public lastSeedData:string;
   public lastSeedNum:number;
 
