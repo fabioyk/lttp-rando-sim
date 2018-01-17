@@ -397,7 +397,7 @@ export class Items {
   }
   visitDungeon(dunName:string):void {
     var dunIndex = DungeonData.crystalDungeonNames.indexOf(dunName);
-    if (dunIndex > -1) {
+    if (dunIndex > -1 && !this.isKeysanity) {
       this.visitedDungeon[dunIndex] = true;
       var dunFullListIndex = DungeonData.allDungeonNames.indexOf(dunName);
       if (this.dungeonItemsArray[dunFullListIndex].mapPrizeStatus === DungeonItems.UNKNOWN) {
