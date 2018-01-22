@@ -120,7 +120,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Magic Bat', 16, 58,
       function(items:Items, config:Config) {
-        return items.powder && (items.hammer || (items.moonPearl && items.mirror && items.glove === 2));
+        return (items.powder || (items.somaria && items.mushroom && config.canGlitch)) && (items.hammer || (items.moonPearl && items.mirror && items.glove === 2));
       },
       null,
       [l[30]]
