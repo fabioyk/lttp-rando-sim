@@ -191,9 +191,7 @@ export class LightWorld {
       function(items:Items, config:Config) {
         return items.mushroom;
       },
-      function(items:Items, config:Config) {
-        return items.mushroom;
-      },
+      null,
       [l[43]]
     ));
 

@@ -119,7 +119,10 @@ export class GameComponent implements OnInit {
     }
   }
 
-  onAddedItem([mapNode, map, region], type:string) {
+  onAddedItem([mapNode, map, region], type:string) {    
+    if (mapNode.tooltip === 'Potion Shop') {
+      this.items.mushroom = false;
+    }
     mapNode.prize.forEach((prize, i) => {
       if (type !== 'view') {
         this.items.add(this._itemNamesService.getItemById(prize).shortName, map);        

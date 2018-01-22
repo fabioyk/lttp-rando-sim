@@ -562,6 +562,7 @@ export class MapComponent implements OnInit {
     this.items.add('book', 'light-world');
     this.items.add('cape', 'light-world');
     this.items.add('mirror', 'light-world');
+    this.items.add('mushroom', 'light-world');
     this.items.add('boots', 'light-world');
     this.items.add('flippers', 'light-world');
     this.items.add('crystal1', 'light-world');
