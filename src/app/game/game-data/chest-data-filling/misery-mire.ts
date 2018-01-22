@@ -164,7 +164,7 @@ export class MiseryMire {
         return items.mmSwitch;
     }, 'mm-spike-room', 'Switch on Blue Required'));
     mapRoom.nodes.push(new DungeonNode(
-      '', 32, 26, DungeonNodeStatus.OPEN_DOOR,
+      '', 32, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.mmSwitch;
     }, 'mm-entry', 'Switch on Blue Required'));
