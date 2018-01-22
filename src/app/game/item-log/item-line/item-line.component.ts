@@ -18,6 +18,8 @@ export class ItemLineComponent implements OnInit {
   subText:string;
   textLine:string;
 
+  bookLocations = ['Master Sword Pedestal', 'Ether Tablet', 'Bombos Tablet'];
+
   constructor(private _itemNamesService:ItemNamesService) { }
 
   ngOnInit() {
@@ -26,16 +28,20 @@ export class ItemLineComponent implements OnInit {
       this.longName = this.itemLogEntry.longName;
 
       ItemNamesService.dungeonItemNames.forEach((eachItemName) => {
-        if (this.shortName.indexOf(eachItemName) > -1) {          
+        if (this.shortName.indexOf(eachItemName) > -1) {
           if (this.itemLogEntry.type === 'view') {
-            if (this.shortName.indexOf('bigKey') > -1) {
+            if (this.shortName.indexOf('bigKey') > -1 
+                && this.bookLocations.indexOf(this.itemLogEntry.location) === -1) {
               this.longName = 'a Big Key';
-            } else if (this.shortName.indexOf('smallKey') > -1) {
+            } else if (this.shortName.indexOf('smallKey') > -1
+                && this.bookLocations.indexOf(this.itemLogEntry.location) === -1) {
               this.longName = 'a Small Key';
             } else if (this.shortName.indexOf('map') > -1) {
               this.longName = 'a Map';
             } else if (this.shortName.indexOf('compass') > -1) {
               this.longName = 'a Compass';
+            } else {
+              this.setSubText();
             }
           } else {
             this.setSubText();
