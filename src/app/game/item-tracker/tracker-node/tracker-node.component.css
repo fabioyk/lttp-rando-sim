@@ -118,6 +118,16 @@ div {
     font-size: 10px;
   }
 
+  .big-key-icon, .small-keys-icon {
+    background-size: contain;
+    width: 100%;
+    padding-top: 100%;
+  }
+
+  .dungeon-keys {
+    flex-flow: column;
+  }
+
   .small-keys-text {
     font-size: 8px;
     top: 0px;
