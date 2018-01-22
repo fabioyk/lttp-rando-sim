@@ -187,6 +187,10 @@
   background-image: url('/assets/node-icons/empty.png');    
 }
 
+.faded {
+  color: #888;
+}
+
 @media (max-width: 992px) {
   .chest-count { 
     font-size: 10px;

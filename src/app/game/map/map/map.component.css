@@ -21,6 +21,10 @@ app-dungeon-items {
   text-align: center;
 }
 
+.icon {
+  width: 20px;
+}
+
 @media (max-width: 768px) {
   .map-footer {
     height: 40px;

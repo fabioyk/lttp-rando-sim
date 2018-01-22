@@ -30,13 +30,14 @@ export class NodeComponent implements OnInit {
   type: string;
   chestCountNum: string;
   isLookable: boolean;
+  isFaded: boolean;
 
   constructor() { }
 
   ngOnInit() {
     this.nodeX = this.nodeInfo.x + '%';
     this.nodeY = this.nodeInfo.y + '%';
-    this.isLookable = false;   
+    this.isLookable = false;
 
     if (this.nodeType && this.nodeType === 'overworld' && this.nodeInfo.prize.length > 1) {
       this.chestCountNum = 'x' + this.nodeInfo.prize.length;
@@ -182,6 +183,15 @@ export class NodeComponent implements OnInit {
       }
     } else {
       return '';
+    }
+  }
+
+  onNodeClick() {
+    if (this.isLookable && !this.nodeInfo.isFaded) {
+      if (this.nodeInfo.status.indexOf('viewable') > -1 || (this.nodeInfo.originalNode.canOpen && !this.nodeInfo.originalNode.canOpen(this.items, this.config)
+      && +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST)) {
+        this.nodeInfo.isFaded = true;
+      }
     }
   }
 }

@@ -46,29 +46,29 @@
   <span>{{tooltip}}</span>
 </div>
 <div class='menu-buttons'>
-    <button class='btn btn-danger' (click)='onSaveAndQuit()'>
-        Save & Quit
-      </button>
+  <button class='btn btn-danger' (click)='onSaveAndQuit()'>
+    Save & Quit
+  </button>
   <button class='btn btn-primary' (click)='onWarpClicked()' *ngIf='canWarp()'>
     {{warpButtonText}}
   </button>
   <button class='btn btn-info' (click)='onCheckMap("lw")' *ngIf='!items.lwMapOpen && canViewMap("light-world")'>
-    Check LW Map
+    Check <img class="icon" src="/assets/item-icons/map.png">
   </button>
   <button class='btn btn-info' (click)='onCheckMap("dw")' *ngIf='!items.dwMapOpen && canViewMap("dark-world")'>
-    Check DW Map
+    Check <img class="icon" src="/assets/item-icons/map.png">
   </button>
   <button class='btn btn-info' (click)='onCheckMap("gp")' *ngIf='canViewMap("green-pendant")'>
-    Check Green Pendant
+    Check <img class="icon" src="/assets/item-icons/pendantCourage.png">
   </button>
   <button class='btn btn-info' (click)='onCheckMap("rc")' *ngIf='canViewMap("red-crystals")'>
-    Check Red Crystals
+    Check <img class="icon" src="/assets/item-icons/redCrystal.png">
   </button>
   <button class='btn btn-warning' (click)='checkMedallion("mm")' *ngIf='!items.mmMedallionChecked && canViewMMMedallion() && !currentDungeon'>
-    Check MM Medallion
+    Check <img class="icon" src="/assets/dungeon-tracker-icons/boss82.png"><img class="icon" src="/assets/dungeon-tracker-icons/medallion0.png">
   </button>
   <button class='btn btn-warning' (click)='checkMedallion("tr")' *ngIf='!items.trMedallionChecked && canViewTRMedallion() && !currentDungeon'>
-    Check TR Medallion
+    Check <img class="icon" src="/assets/dungeon-tracker-icons/boss92.png"><img class="icon" src="/assets/dungeon-tracker-icons/medallion0.png">
   </button>  
 </div>
 

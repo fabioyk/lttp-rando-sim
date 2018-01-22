@@ -6,4 +6,5 @@ export class MapNode {
   status:string;
   prize:string[];
   originalNode:any;
+  isFaded:boolean;
 }

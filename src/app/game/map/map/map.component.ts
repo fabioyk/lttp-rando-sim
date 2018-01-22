@@ -61,7 +61,7 @@ export class MapComponent implements OnInit {
   }
 
   onNodeClick(nodeClicked:MapNode) {
-    if (nodeClicked.status.indexOf('now-getable') > -1) {
+    if (nodeClicked.status.indexOf('now-getable') > -1 && !nodeClicked.isFaded) {
       this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
       nodeClicked.status = 'getable';
       this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
@@ -308,6 +308,7 @@ export class MapComponent implements OnInit {
 
   onSaveAndQuit() {
     this.currentRegion = 'ow';
+    this.hasUsedMirror = false;
     if (this.currentDungeon) {
       var isLwDun = this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1;
       this.leaveDungeon();
@@ -346,8 +347,7 @@ export class MapComponent implements OnInit {
   canWarp():boolean {
     var hasMirror = this.items.mirror;
     if (this.currentMap === 'light-world' && hasMirror && this.hasUsedMirror) {
-      this.warpButtonText = 'Mirror Portal Back to DW';
-      //this.currentRegion = 'all';
+      this.warpButtonText = 'Go Back to DW';
     }
     if (this.currentDungeon !== null) {
       if (hasMirror) {
@@ -580,8 +580,8 @@ export class MapComponent implements OnInit {
 
   getBootsDw() {
     this.items.add('glove', 'light-world');
-    this.items.add('glove', 'light-world');
-    this.items.add('boots', 'light-world');
+    this.items.add('book', 'light-world');
+    //this.items.add('boots', 'light-world');
     this.items.add('moonPearl', 'light-world');
     
   }

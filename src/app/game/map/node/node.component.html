@@ -1,9 +1,11 @@
 <div class="node"
   [ngStyle]="{'left':nodeX, 'top':nodeY, 'background-image': getDungeonBg()}"
   [ngClass]="[getNodeType(), getNodeState(), getNodeBgClass()]"
+  (click)="onNodeClick()"
   > 
   <div class='chest-count outline-text'>
     {{chestCountNum}}
-    <i class="fa fa-search" aria-hidden="true" *ngIf='isLookable'></i>
+    <i class="fa fa-search" aria-hidden="true" *ngIf='isLookable'
+      [ngClass]="nodeInfo.isFaded ? 'faded' : ''"></i>
   </div>
 </div>
