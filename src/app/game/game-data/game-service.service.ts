@@ -89,7 +89,8 @@ export class GameService {
         id: location.location,
         status: status,
         prize: location.item,
-        originalNode: location
+        originalNode: location,
+        isFaded: false
       };
     });
     this.overworldData.dwLocations.forEach((location) => {
@@ -100,7 +101,8 @@ export class GameService {
         id: location.location,
         status: 'unreachable unavailable',
         prize: location.item,
-        originalNode: location
+        originalNode: location,
+        isFaded: false
       };
     });
     this.dungeonsData.forEach((dungeon) => {
@@ -123,7 +125,8 @@ export class GameService {
             id: eachNode.content,
             status: eachNode.status.toString(),
             prize: [eachNode.content],
-            originalNode: eachNode
+            originalNode: eachNode,
+            isFaded: false
           };
         });
       });      
@@ -134,7 +137,8 @@ export class GameService {
         id: dungeon.startingMap.id,
         status: 'unavailable',
         prize: [],
-        originalNode: dungeon
+        originalNode: dungeon,
+        isFaded: false
       };
     });
   }
@@ -259,7 +263,8 @@ export class GameService {
             id: dungeon.startingMap.id,
             status: status,
             prize: [],
-            originalNode: dungeon
+            originalNode: dungeon,
+            isFaded: false
           });
         }        
       })
@@ -314,7 +319,8 @@ export class GameService {
             id: dungeon.startingMap.id,
             status: status,
             prize: [],
-            originalNode: dungeon
+            originalNode: dungeon,
+            isFaded: false
           });
         }   
       })
