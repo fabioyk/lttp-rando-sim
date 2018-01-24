@@ -537,7 +537,7 @@ export class MapComponent implements OnInit {
       'assets/item-icons/compass.png', 'assets/item-icons/compassEmpty.png', 
       'assets/item-icons/bigKey.png', 'assets/item-icons/bigKeyEmpty.png', 
       'assets/item-icons/map.png', 'assets/item-icons/mapEmpty.png',
-      'assets/item-icons/open_door.png'];
+      'assets/node-icons/open_door.png'];
     this.preloadedImages = [];
     images.forEach((imageUrl, index) => {
       this.preloadedImages[index] = new Image();
