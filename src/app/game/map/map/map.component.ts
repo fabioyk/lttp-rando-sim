@@ -178,9 +178,6 @@ export class MapComponent implements OnInit {
           }
           break;
         case DungeonNodeStatus.VIEWABLE_CLOSED_CHEST:
-          this.viewItem.emit([dungeonNode, this.currentMap]);
-          dungeonNode.originalNode.status = DungeonNodeStatus.VIEWABLE_GETABLE_CLOSED_CHEST.toString();
-          break;
         case DungeonNodeStatus.VIEWABLE_GETABLE_CLOSED_CHEST:
         case DungeonNodeStatus.CLOSED_CHEST:
           this.addPrizes(dungeonNode, this.currentDungeon.name);

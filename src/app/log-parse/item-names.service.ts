@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Items } from '../game/game-data/items';
 
 class ItemDescription {
   id: number;
@@ -634,6 +635,93 @@ export class ItemNamesService {
     }
     
     return null;
+  }
+
+  convertItemName(itemName:string, type:string, items:Items):[string, string] {
+    var res = this.getItemById(itemName);
+    var longName = res.longName, shortName = res.shortName;
+
+    var modifier = type === 'view' ? 1 : 0;
+    
+    if (res.longName.indexOf('Progressive') > -1) {
+      switch (res.shortName) {
+        case 'glove':
+          switch(items.glove + modifier) {
+            case 1:
+              longName = 'Power Gloves';
+              break;
+            case 2:
+              longName = 'Titan Mitts';
+              break;
+          }
+          shortName = 'glove' + (items.glove + modifier);
+          break;
+        case 'sword':
+          switch(items.sword + modifier) {
+            case 1:
+              longName = 'Fighter Sword';
+              break;
+            case 2:
+              longName = 'Master Sword';
+              break;
+            case 3:
+              longName = 'Tempered Sword';
+              break;
+            case 4:
+              longName = 'Golden Sword';
+              break;
+          }
+          shortName = 'sword' + (items.sword + modifier);
+          break;
+        case 'tunic':
+          switch(items.tunic + modifier) {
+            case 2:
+              longName = 'Blue Mail';
+              break;
+            case 3:
+              longName = 'Red Mail';
+              break;
+          }
+          shortName = 'tunic' + (items.tunic + modifier);
+          break;
+        case 'shield':
+          switch(items.shield + modifier) {
+            case 1:
+              longName = 'Blue Shield';
+              break;
+            case 2:
+              longName = 'Red Shield';
+              break;
+            case 3:
+              longName = 'Mirror Shield';
+              break;
+          }
+          shortName = 'shield' + (items.shield + modifier);
+          break;
+      }
+    }
+
+    if (res.shortName === 'bow') {
+      shortName = 'bow' + (items.bow + modifier*2);
+    }
+    if (res.shortName === 'silvers') {
+      shortName = 'bow1';
+    }
+    if (res.shortName === 'boomerang') {
+      shortName = 'boomerang1';
+    }
+    if (res.shortName === 'magicBoomerang') {
+      shortName = 'boomerang2';
+    }
+
+    if (res.shortName.indexOf('Agahnim') > -1) {
+      shortName = 'agahnim1';
+    }
+
+    if (res.shortName.indexOf('crystal') > -1) {
+      shortName = 'crystal';
+    }
+    return [shortName, longName];
   }
 
 }

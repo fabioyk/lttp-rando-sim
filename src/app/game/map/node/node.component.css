@@ -79,8 +79,13 @@
   
   background-position: center center;
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat;  
   border: solid black;
+}
+
+.icon-shown {
+  background-origin: content-box;
+  padding: 2px;
 }
 
 .open-door, .sk-door, .bk-door {

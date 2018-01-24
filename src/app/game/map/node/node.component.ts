@@ -51,7 +51,11 @@ export class NodeComponent implements OnInit {
     } else if (this.nodeType === 'dungeon') {
       return 'dungeon-type';
     } else {
-      return 'in-dungeon-type';
+      if (this.isIconShown()) {
+        return 'in-dungeon-type icon-shown';
+      } else {
+        return 'in-dungeon-type';
+      }      
     }
   }
 
@@ -61,18 +65,28 @@ export class NodeComponent implements OnInit {
       'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower', 'Ganons Tower'];
   
       return 'url("./assets/dungeon-tracker-icons/boss' + duns.indexOf(this.nodeInfo.tooltip) + '2.png")';
-    } else if (!this.nodeInfo.originalNode.isOpened && (
-      this.nodeInfo.isFaded 
-        || (this.nodeInfo.originalNode.canView 
-            && (this.nodeInfo.tooltip.indexOf('Tablet') === -1 && this.nodeInfo.status.indexOf('getable') > -1 && this.nodeInfo.status.indexOf('now') === -1 )))) {
-      return 'url("./assets/item-icons/' + this.itemNamesService.getItemById(this.nodeInfo.prize[0]).shortName.split('-')[0] + '.png")';      
+    } else if (this.isIconShown()) {
+      var itemId = this.nodeInfo.prize[0];
+      var newShortName = this.itemNamesService.convertItemName(itemId, 'view', this.items)[0];
+      return 'url("./assets/item-icons/' + newShortName.split('-')[0] + '.png")';      
     }
+  }
+
+  isIconShown() {    
+    return !this.nodeInfo.originalNode.isOpened 
+      && (this.nodeInfo.isFaded 
+        || (this.nodeInfo.originalNode.canView 
+          && this.nodeInfo.tooltip.indexOf('Tablet') === -1 
+          && this.nodeInfo.status.indexOf('getable') > -1 
+          && this.nodeInfo.status.indexOf('now') === -1 )
+        || (+this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST)
+        || (this.nodeInfo.tooltip === 'Ganon' && this.nodeInfo.status.indexOf('getable') > -1));
   }
 
   getNodeBgClass() {
     this.isLookable = false;
     if (this.nodeType === 'inside-dungeon') {
-      this.isLookable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST;
+      //this.isLookable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST;
       if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
           && +this.nodeInfo.status !== DungeonNodeStatus.VIEWABLE_CLOSED_CHEST) {
         return 'dungeon-unavailable';
@@ -111,7 +125,7 @@ export class NodeComponent implements OnInit {
         res += ' cleared';
       } else if (this.dungeonItems.isBossDefeated) {
         res += ' dun-defeated';
-      }
+      }      
       return res;
     } else {
       var res = '';
@@ -137,7 +151,7 @@ export class NodeComponent implements OnInit {
       }
       this.isLookable = (this.nodeInfo.status.indexOf('now-getable') > -1
         || this.nodeInfo.status.indexOf('now-g-getable') > -1
-        || this.nodeInfo.status.indexOf('viewable') > -1);
+        || this.nodeInfo.status.indexOf('viewable') > -1);      
       return res;
     } 
   }

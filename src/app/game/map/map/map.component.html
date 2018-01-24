@@ -4,6 +4,7 @@
     <app-node *ngFor='let lwNode of gameService.overworldData[currentMap === "light-world" ? "lwLocations" : "dwLocations"]'
       nodeType='overworld'
       [nodeInfo]='lwNode.mapNode'
+      [items]='items'
       (click)='onNodeClick(lwNode.mapNode)'
       (mouseover)='changeTooltip(lwNode.mapNode)'
       (mouseleave)='clearTooltip()'
