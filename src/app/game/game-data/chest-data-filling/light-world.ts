@@ -29,7 +29,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'King\'s Tomb', 30.8, 29.6,
       function(items:Items, config:Config) {
-        return items.boots && (items.glove === 2 || (items.mirror && items.canNorthWestDarkWorld(config)));
+        return items.boots && (items.glove === 2 || (items.mirror && items.canNorthWestDarkWorld()));
       },
       null,
       [l[3]]
@@ -120,10 +120,14 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Magic Bat', 16, 58,
       function(items:Items, config:Config) {
-        return (items.powder || (items.somaria && items.mushroom && config.canGlitch)) && (items.hammer || (items.moonPearl && items.mirror && items.glove === 2));
+        return items.powder && (items.hammer || (items.moonPearl && items.mirror && items.glove === 2));
       },
       null,
-      [l[30]]
+      [l[30]],
+      '',
+      function(items:Items, config:Config) {
+        return items.somaria && items.mushroom && (items.hammer || (items.moonPearl && items.mirror && items.glove === 2));
+      }
     ));
 
     itemLocations.push(new ItemLocation(
@@ -138,19 +142,27 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Hobo', 35.4, 69.7,
       function(items:Items, config:Config) {
-        return items.flippers || config.canGlitch;
+        return items.flippers;
       },
       null,
-      [l[32]]
+      [l[32]],
+      '',
+      function(items:Items, config:Config) {
+        return true;
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'King Zora', 47.7, 12.1,
       function(items:Items, config:Config) {
-        return items.flippers || items.glove || config.canGlitch;
+        return items.flippers || items.glove;
       },
       null,
-      [l[34]]
+      [l[34]],
+      '',
+      function(items:Items, config:Config) {
+        return true;
+      }
     ));
 
     itemLocations.push(new ItemLocation(
@@ -220,24 +232,36 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Lake Hylia Island', 36.1, 82.9,
       function(items:Items, config:Config) {
-        return (items.flippers || (items.boots && config.canGlitch)) && items.moonPearl && items.mirror 
-          && (items.canSouthDarkWorld(config) || items.canNorthEastDarkWorld(config));
+        return items.flippers && items.moonPearl && items.mirror 
+          && (items.canSouthDarkWorld() || items.canNorthEastDarkWorld());
       },
       function(items:Items, config:Config) {
         return true;
       },
-      [l[46]]
+      [l[46]],
+      '',
+      function(items:Items, config:Config) {
+        return items.boots && items.moonPearl && items.mirror 
+          && (items.canSouthDarkWorld(true) || items.canNorthEastDarkWorld(true));
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'Zora River Ledge', 47.7, 17.3,
       function(items:Items, config:Config) {
-        return items.flippers || (config.canGlitch && items.boots);
+        return items.flippers;
       },
       function(items:Items, config:Config) {
-        return items.glove || config.canGlitch;
+        return items.glove;
       },
-      [l[48]]
+      [l[48]],
+      '',
+      function(items:Items, config:Config) {
+        return items.boots;
+      },
+      function(items:Items, config:Config) {
+        return true;
+      },
     ));
 
     itemLocations.push(new ItemLocation(
@@ -252,10 +276,14 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Waterfall Fairy', 45, 19.3,
       function(items:Items, config:Config) {
-        return items.flippers || (config.canGlitch && items.moonPearl) || (config.canGlitch && items.boots);
+        return items.flippers;
       },
       null,
-      [l[50], l[51]]
+      [l[50], l[51]],
+      '',
+      function(items:Items, config:Config) {
+        return items.moonPearl || items.boots;
+      }
     ));
 
     itemLocations.push(new ItemLocation(
@@ -270,10 +298,14 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Sewers Bombable Wall', 26.8, 32.4,
       function(items:Items, config:Config) {
-        return config.mode === 'standard' ? true : (items.glove || ((items.lamp || config.canGlitch) && items.dungeonItemsArray[0].smallKeys > 0));
+        return config.mode === 'standard' ? true : (items.glove || (items.lamp && items.dungeonItemsArray[0].smallKeys > 0));
       },
       null,
-      [l[53], l[54], l[55]]
+      [l[53], l[54], l[55]],
+      '',
+      function(items:Items, config:Config) {
+        return items.dungeonItemsArray[0].smallKeys > 0;
+      }
     ));
 
     itemLocations.push(new ItemLocation(
@@ -288,83 +320,129 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Escape Dark Room Chest', 24.9, 45.8,
       function(items:Items, config:Config) {
-        return config.mode === 'standard' ? true : (items.lamp || config.canGlitch);
+        return config.mode === 'standard' ? true : items.lamp;
       },
       null,
-      [l[56]]
+      [l[56]],
+      '',
+      function(items:Items, config:Config) {
+        return true;
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'Old Man', 20.8, 20.4,
       function(items:Items, config:Config) {
-        return items.canWestDeathMountain(config) && items.hasLightsource(config);
+        return items.canWestDeathMountain() && items.lamp;
       },
       null,
-      [l[74]]
+      [l[74]],
+      '',
+      function(items:Items, config:Config) {
+        return items.canWestDeathMountain(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
       'Spectacle Rock Cave', 24.3, 14.8,
       function(items:Items, config:Config) {
-        return items.canWestDeathMountain(config);
+        return items.canWestDeathMountain();
       },
       function(items:Items, config:Config) {
-        return items.canWestDeathMountain(config);
+        return items.canWestDeathMountain();
       },
-      [l[75]]
+      [l[75]],
+      '',
+      function(items:Items, config:Config) {
+        return items.canWestDeathMountain(true);
+      },
+      function(items:Items, config:Config) {
+        return items.canWestDeathMountain(true);
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'Ether Tablet', 21, 3,
       function(items:Items, config:Config) {
-        return items.book && items.canWestDeathMountain(config) && (items.mirror || (items.hammer && items.hookshot)) 
+        return items.book && items.canWestDeathMountain() && (items.mirror || (items.hammer && items.hookshot)) 
           && (items.sword >= 2 || (items.hammer && config.mode === 'swordless'));
       },
       function(items:Items, config:Config) {
-        return items.book && items.canWestDeathMountain(config) && (items.mirror || (items.hammer && items.hookshot));
+        return items.book && items.canWestDeathMountain() && (items.mirror || (items.hammer && items.hookshot));
       },
-      [l[76]]
+      [l[76]],
+      '',
+      function(items:Items, config:Config) {
+        return items.book && items.canWestDeathMountain(true) && (items.mirror || (items.hammer && items.hookshot)) 
+          && (items.sword >= 2 || (items.hammer && config.mode === 'swordless'));
+      },
+      function(items:Items, config:Config) {
+        return items.book && items.canWestDeathMountain(true) && (items.mirror || (items.hammer && items.hookshot));
+      },
     ));
 
     itemLocations.push(new ItemLocation(
       'Top of Spectacle Rock', 25.4, 8.5,
       function(items:Items, config:Config) {
-        return items.canWestDeathMountain(config) && items.mirror;
+        return items.canWestDeathMountain() && items.mirror;
       },
       function(items:Items, config:Config) {
-        return items.canWestDeathMountain(config);
+        return items.canWestDeathMountain();
       },
-      [l[77]]
+      [l[77]],
+      '',
+      function(items:Items, config:Config) {
+        return items.canWestDeathMountain(true) && items.mirror;
+      },
+      function(items:Items, config:Config) {
+        return items.canWestDeathMountain(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
       'Paradox Cave', 41.4, 17.1,
       function(items:Items, config:Config) {
-        return items.canEastDeathMountain(config);
+        return items.canEastDeathMountain();
       },
       null,
-      [l[80], l[81], l[82], l[83], l[84], l[85], l[86]]
+      [l[80], l[81], l[82], l[83], l[84], l[85], l[86]],
+      '',
+      function(items:Items, config:Config) {
+        return items.canEastDeathMountain(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
       'Spiral Cave', 39.9, 9.3,
       function(items:Items, config:Config) {
-        return items.canEastDeathMountain(config);
+        return items.canEastDeathMountain();
       },
       null,
-      [l[78]]
+      [l[78]],
+      '',
+      function(items:Items, config:Config) {
+        return items.canEastDeathMountain(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
       'Floating Island', 40.2, 3,
       function(items:Items, config:Config) {
-        return items.canEastDeathMountain(config) 
+        return items.canEastDeathMountain() 
             && items.mirror && items.moonPearl && items.glove === 2;        
       },
       function(items:Items, config:Config) {
-        return items.canEastDeathMountain(config);
+        return items.canEastDeathMountain();
       },
-      [l[87]]
+      [l[87]],
+      '',
+      function(items:Items, config:Config) {
+        return items.canEastDeathMountain(true) 
+            && items.mirror && items.moonPearl && items.glove === 2;        
+      },
+      function(items:Items, config:Config) {
+        return items.canEastDeathMountain(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
@@ -379,19 +457,27 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'wdm', 28.6, 14.9,
       function(items:Items, config:Config) {
-        return items.canWestDeathMountain(config);
+        return items.canWestDeathMountain();
       },
       null,
-      ['warp']
+      ['warp'],
+      '',
+      function(items:Items, config:Config) {
+        return items.canWestDeathMountain(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
       'dm', 38.1, 22.9,
       function(items:Items, config:Config) {
-        return items.canEastDeathMountain(config) && items.glove === 2;
+        return items.canEastDeathMountain() && items.glove === 2;
       },
       null,
-      ['warp']
+      ['warp'],
+      '',
+      function(items:Items, config:Config) {
+        return items.canEastDeathMountain(true) && items.glove === 2;
+      },
     ));
 
     itemLocations.push(new ItemLocation(
@@ -424,19 +510,27 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'ip', 39.7, 87,
       function(items:Items, config:Config) {
-        return (items.flippers || config.canGlitch) && items.glove === 2;
+        return items.flippers && items.glove === 2;
       },
       null,
-      ['warp']
+      ['warp'],
+      '',
+      function(items:Items, config:Config) {
+        return items.glove === 2;
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'dm', 47, 6,
       function(items:Items, config:Config) {
-        return items.canEastDeathMountain(config) && items.glove === 2 && items.hammer;
+        return items.canEastDeathMountain() && items.glove === 2 && items.hammer;
       },
       null,
-      ['warp']
+      ['warp'],
+      '',
+      function(items:Items, config:Config) {
+        return items.canEastDeathMountain(true) && items.glove === 2 && items.hammer;
+      },
     ));
 
     itemLocations.push(new ItemLocation(

@@ -163,7 +163,7 @@ export class TrackerNodeComponent implements OnInit {
   }
 
   canViewDarkWorldMap() {
-    return this.items.canWestDeathMountain(this.config) 
+    return this.items.canWestDeathMountain(this.config.canGlitch) 
         || (this.items.glove && this.items.hammer) || this.items.glove === 2
         || this.items.agahnim;
   }

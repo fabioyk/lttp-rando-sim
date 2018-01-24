@@ -9,72 +9,96 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Superbunny Cave', 92.8, 14.7,
       function(items:Items, config:Config) {
-        return items.canDarkEastDeathMountain(config) && (items.moonPearl || config.canGlitch);
+        return items.canDarkEastDeathMountain() && items.moonPearl;
       },
       null,
       [l[97], l[98]],
-      'dm'
+      'dm',
+      function(items:Items, config:Config) {
+        return items.canDarkEastDeathMountain(true);
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'Hookshot Cave (bottom chest)', 91.6, 8.6,
       function(items:Items, config:Config) {
-        return items.canDarkEastDeathMountain(config) && items.moonPearl && (items.hookshot || items.boots);
+        return items.canDarkEastDeathMountain() && items.moonPearl && (items.hookshot || items.boots);
       },
       null,
       [l[102]],
-      'dm'
+      'dm',
+      function(items:Items, config:Config) {
+        return items.canDarkEastDeathMountain(true) && items.moonPearl && (items.hookshot || items.boots);
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'Hookshot Cave (3 top chests)', 91.6, 3.4,
       function(items:Items, config:Config) {
-        return items.canDarkEastDeathMountain(config) && items.moonPearl && (items.hookshot || (items.boots && config.canGlitch));
+        return items.canDarkEastDeathMountain() && items.moonPearl && items.hookshot;
       },
       null,
       [l[100], l[101], l[99]],
-      'dm'
+      'dm',
+      function(items:Items, config:Config) {
+        return items.canDarkEastDeathMountain(true) && items.moonPearl && (items.hookshot || items.boots);
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'Spike Cave', 78.6, 14.9,
       function(items:Items, config:Config) {
-        return items.canDarkWestDeathMountain(config) && items.hammer && items.glove
-            && ((items.hasInvincibilityItem(config) && items.hasMagicExtension(config)) || config.canGlitch || items.byrna);
+        return items.canDarkWestDeathMountain() && items.hammer && items.glove
+            && ((items.cape && (items.halfMagic || items.bottle)) || items.byrna);
       },
       null,
       [l[103]],
-      'wdm'
+      'wdm',
+      function(items:Items, config:Config) {
+        return items.canDarkWestDeathMountain(true) && items.hammer && items.glove;
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'Catfish', 96, 17.2,
       function(items:Items, config:Config) {
-        return items.canNorthEastDarkWorld(config) && items.moonPearl && items.glove;
+        return items.canNorthEastDarkWorld() && items.moonPearl && items.glove;
       },
       function(items:Items, config:Config) {
-        return items.canNorthEastDarkWorld(config) && items.moonPearl && items.glove;
+        return items.canNorthEastDarkWorld() && items.moonPearl && items.glove;
       },
       [l[104]],
-      'ow'
+      'ow',
+      function(items:Items, config:Config) {
+        return items.canNorthEastDarkWorld(true) && items.moonPearl && items.glove;
+      },
+      function(items:Items, config:Config) {
+        return items.canNorthEastDarkWorld(true) && items.moonPearl && items.glove;
+      },
     ));
 
     itemLocations.push(new ItemLocation(
       'Pyramid', 79, 43.5,
       function(items:Items, config:Config) {
-        return items.canNorthEastDarkWorld(config);
+        return items.canNorthEastDarkWorld();
       },
       function(items:Items, config:Config) {
-        return items.canNorthEastDarkWorld(config);
+        return items.canNorthEastDarkWorld();
       },
       [l[105]],
-      'ow'
+      'ow',
+      function(items:Items, config:Config) {
+        return items.canNorthEastDarkWorld(true);
+      },
+      function(items:Items, config:Config) {
+        return items.canNorthEastDarkWorld(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
       'Pyramid Fairy', 73.5, 48.5,
       function(items:Items, config:Config) {
-        return items.canSouthDarkWorld(config) && items.moonPearl 
+        return items.canSouthDarkWorld() && items.moonPearl 
             && (items.hammer || (items.mirror && items.agahnim))
             && items.crystal5 && items.crystal6;
       },
@@ -86,7 +110,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Bombable Hut', 55.4, 57.8,
       function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld(config);
+        return items.canNorthWestDarkWorld();
       },
       null,
       [l[108]],
@@ -96,7 +120,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'C-Shaped House', 60.8, 47.9,
       function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld(config);
+        return items.canNorthWestDarkWorld();
       },
       null,
       [l[109]],
@@ -106,7 +130,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Chest Game', 52.1, 46.4,
       function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld(config);
+        return items.canNorthWestDarkWorld();
       },
       null,
       [l[110]],
@@ -116,10 +140,10 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Hammer Pegs', 65.8, 60.1,
       function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld(config) && items.glove === 2 && items.hammer;
+        return items.canNorthWestDarkWorld() && items.glove === 2 && items.hammer;
       },
       function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld(config) && items.glove === 2 && items.hammer;
+        return items.canNorthWestDarkWorld() && items.glove === 2 && items.hammer;
       },
       [l[111]],
       'ow'
@@ -128,10 +152,10 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Bumper Cave', 67.1, 15.2,
       function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld(config) && items.glove && items.cape;
+        return items.canNorthWestDarkWorld() && items.glove && items.cape;
       },
       function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld(config);
+        return items.canNorthWestDarkWorld();
       },
       [l[112]],
       'ow'
@@ -140,7 +164,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Purple Chest', 65.2, 52.2,
       function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld(config) && items.glove === 2;
+        return items.canNorthWestDarkWorld() && items.glove === 2;
       },
       null,
       [l[114]],
@@ -150,7 +174,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Hype Cave', 80, 77.1,
       function(items:Items, config:Config) {
-        return items.canSouthDarkWorld(config);
+        return items.canSouthDarkWorld();
       },
       null,
       [l[115], l[116], l[117], l[118], l[120]],
@@ -160,7 +184,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Ol\' Stumpy', 65.5, 68.6,
       function(items:Items, config:Config) {
-        return items.canSouthDarkWorld(config);
+        return items.canSouthDarkWorld();
       },
       null,
       [l[119]],
@@ -170,10 +194,10 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Digging Game', 52.9, 69.2,
       function(items:Items, config:Config) {
-        return items.canSouthDarkWorld(config);
+        return items.canSouthDarkWorld();
       },
       function(items:Items, config:Config) {
-        return items.canSouthDarkWorld(config);
+        return items.canSouthDarkWorld();
       },
       [l[121]],
       'ow'
@@ -182,17 +206,20 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Mire Shed', 51.7, 79.5,
       function(items:Items, config:Config) {
-        return items.canMire() && (items.moonPearl || config.canGlitch);
+        return items.canMire() && items.moonPearl;
       },
       null,
       [l[122], l[123]],
-      'mire'
+      'mire',
+      function(items:Items, config:Config) {
+        return items.canMire() && (items.mirror || items.moonPearl);
+      }
     ));
 
     itemLocations.push(new ItemLocation(
       'Ganon', 75, 40.8,
       function(items:Items, config:Config) {
-        return items.canNorthEastDarkWorld(config) && items.agahnim2 && items.crystal1 &&
+        return items.canNorthEastDarkWorld() && items.agahnim2 && items.crystal1 &&
           items.crystal2 && items.crystal3 && items.crystal4 && items.crystal5 && items.crystal6
           && items.crystal7 && items.sword >= 2 && (items.lamp || items.fireRod);
       },
@@ -204,11 +231,11 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Bombos Tablet', 62.5, 92.2,
       function(items:Items, config:Config) {
-        return items.book && items.mirror && items.canSouthDarkWorld(config) 
+        return items.book && items.mirror && items.canSouthDarkWorld() 
           && (items.sword >= 2 || (items.hammer && config.mode === 'swordless'));
       },
       function(items:Items, config:Config) {
-        return items.book && items.mirror && items.canSouthDarkWorld(config);
+        return items.book && items.mirror && items.canSouthDarkWorld();
       },
       [l[33]],
       'ow'
@@ -217,10 +244,10 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'South of Grove', 62.5, 84.1,
       function(items:Items, config:Config) {
-        return items.mirror && items.canSouthDarkWorld(config);
+        return items.mirror && items.canSouthDarkWorld();
       },
       function(items:Items, config:Config) {
-        return items.mirror && items.canSouthDarkWorld(config);
+        return items.mirror && items.canSouthDarkWorld();
       },
       [l[37]],
       'ow'
@@ -229,10 +256,10 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Graveyard Ledge', 78.5, 27,
       function(items:Items, config:Config) {
-        return items.mirror && items.moonPearl && items.canNorthWestDarkWorld(config);
+        return items.mirror && items.moonPearl && items.canNorthWestDarkWorld();
       },
       function(items:Items, config:Config) {
-        return items.mirror && items.moonPearl && items.canNorthWestDarkWorld(config);
+        return items.mirror && items.moonPearl && items.canNorthWestDarkWorld();
       },
       [l[38]],
       'ow'
@@ -253,7 +280,7 @@ export class DarkWorld {
     itemLocations.push(new ItemLocation(
       'Blacksmiths', 57, 65.9,
       function(items:Items, config:Config) {
-        return items.canNorthWestDarkWorld(config) && items.glove === 2;
+        return items.canNorthWestDarkWorld() && items.glove === 2;
       },
       null,
       [l[113]],

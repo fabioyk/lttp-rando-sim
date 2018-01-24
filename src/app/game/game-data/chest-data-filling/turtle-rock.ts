@@ -9,7 +9,7 @@ export class TurtleRock {
   static setup (l:string[], config:Config):DungeonData {
     var trData = new DungeonData('Turtle Rock', l[198],
       function(items:Items, config:Config) {
-        return items.moonPearl && items.canDarkEastDeathMountain(config) && items.sword
+        return items.moonPearl && items.canDarkEastDeathMountain(config.canGlitch) && items.sword
             && items.hasMedallion('tr', config) && items.somaria && items.hammer;
       }, 93.8, 7
     );

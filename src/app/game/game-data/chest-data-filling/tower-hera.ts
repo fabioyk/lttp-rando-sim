@@ -9,7 +9,7 @@ export class TowerHera {
   static setup (l:string[], config:Config):DungeonData {
     var tohData = new DungeonData('Tower of Hera', l[94],
       function(items:Items, config:Config) {
-        return items.canWestDeathMountain(config) && (items.mirror || (items.hookshot && items.hammer));
+        return items.canWestDeathMountain(config.canGlitch) && (items.mirror || (items.hookshot && items.hammer));
       }, 62, 5.5
     );
 

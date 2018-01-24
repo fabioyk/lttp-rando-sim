@@ -46,8 +46,11 @@ footer {
 }
 
 .green-text {
-  color: lightgreen;
-  
+  color: lightgreen;  
+}
+
+.glitched-text {
+  color: deepskyblue;
 }
 
 .yellow-text {

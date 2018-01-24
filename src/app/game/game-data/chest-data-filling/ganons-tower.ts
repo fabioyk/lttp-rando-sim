@@ -9,7 +9,7 @@ export class GanonsTower {
   static setup (l:string[], config:Config):DungeonData {
     var gtData = new DungeonData('Ganons Tower', 'Agahnim 2',
       function(items:Items, config:Config) {
-        return items.canDarkEastDeathMountain(config)
+        return items.canDarkEastDeathMountain(config.canGlitch)
             && items.crystal1 && items.crystal2 && items.crystal3
             && items.crystal4 && items.crystal5 && items.crystal6
             && items.crystal7;

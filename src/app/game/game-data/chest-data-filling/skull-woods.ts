@@ -9,7 +9,7 @@ export class SkullWoods {
   static setup (l:string[], config:Config):DungeonData {
     var swData = new DungeonData('Skull Woods', l[158],
       function(items:Items, config:Config) {
-        return items.moonPearl && items.canNorthWestDarkWorld(config);
+        return items.moonPearl && items.canNorthWestDarkWorld(config.canGlitch);
       }, 6.6, 5.4
     );
 

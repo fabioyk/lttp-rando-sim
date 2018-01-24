@@ -116,6 +116,8 @@ export class NodeComponent implements OnInit {
         res += ' opened';
       } else if (this.nodeInfo.status.indexOf('now-getable') > -1) {
         res += ' open';
+      } else if (this.nodeInfo.status.indexOf('g-getable') > -1) {
+        res += ' glitched-open';
       } else if (this.nodeInfo.status.indexOf('viewable') > -1) {
         res += ' view';
       } else if (this.nodeInfo.status.indexOf('warp') > -1) {
@@ -127,7 +129,8 @@ export class NodeComponent implements OnInit {
       } else {
         res += ' open';
       }
-      this.isLookable = (this.nodeInfo.status.indexOf('now-getable') > -1 
+      this.isLookable = (this.nodeInfo.status.indexOf('now-getable') > -1
+        || this.nodeInfo.status.indexOf('now-g-getable') > -1
         || this.nodeInfo.status.indexOf('viewable') > -1);
       return res;
     } 
@@ -188,7 +191,8 @@ export class NodeComponent implements OnInit {
 
   onNodeClick() {
     if (this.isLookable && !this.nodeInfo.isFaded) {
-      if (this.nodeInfo.status.indexOf('viewable') > -1 || (this.nodeInfo.originalNode.canOpen && !this.nodeInfo.originalNode.canOpen(this.items, this.config)
+      if (this.nodeInfo.status.indexOf('viewable') > -1 
+      || (this.nodeInfo.originalNode.canOpen && !this.nodeInfo.originalNode.canOpen(this.items, this.config)
       && +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST)) {
         this.nodeInfo.isFaded = true;
       }

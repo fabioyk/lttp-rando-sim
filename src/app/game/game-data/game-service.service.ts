@@ -146,21 +146,30 @@ export class GameService {
   updateData(items:Items, world:string, region:string='') {
     this.overworldData.lwLocations.forEach((location) => {
       if (location.item[0] === 'warp') {
-        if (location.canGet(items, this.config)) {
+        if (location.canGet(items, this.config) || (location.canGlitch && location.canGlitch(items, this.config))) {
           location.mapNode.status = 'warp';
         } else {
           location.mapNode.status = 'invisible';
         }
       } else {     
         if (location.location !== 'Ether Tablet' && (location.mapNode.status === 'now-getable' 
-          || (location.mapNode.status === 'viewable' 
+          || ((location.mapNode.status === 'viewable' || location.mapNode.status === 'g-viewable' || (location.mapNode.status === 'g-getable' && location.canView))
             && location.canGet(items, this.config))
           || (location.canView && location.canGet(items, this.config) && location.mapNode.status === 'unavailable'))) {
           location.mapNode.status = 'now-getable';
         } else if (!location.canGet || location.canGet(items, this.config)) {
           location.mapNode.status = 'getable';
+        } else if (location.location !== 'Ether Tablet' && (location.mapNode.status === 'now-g-getable' 
+          || ((location.mapNode.status === 'viewable' || location.mapNode.status === 'g-viewable')
+            && location.canGlitch && location.canGlitch(items, this.config))
+          || (location.canViewGlitch && location.canGlitch && location.canGlitch(items, this.config) && location.mapNode.status === 'unavailable'))) {
+          location.mapNode.status = 'now-g-getable';        
+        } else if (location.canGlitch && location.canGlitch(items, this.config)) {
+          location.mapNode.status = 'g-getable';
         } else if (location.canView && location.canView(items, this.config)) {
           location.mapNode.status = 'viewable';
+        } else if (location.canViewGlitch && location.canViewGlitch(items, this.config)) {
+          location.mapNode.status = 'g-viewable';
         } else {
           location.mapNode.status = 'unavailable';
         }
@@ -171,14 +180,25 @@ export class GameService {
       if (location.region.indexOf(region) === -1) {
         status = 'unreachable';
       }   
-      if (location.location !== 'Bombos Tablet' && (location.mapNode.status.indexOf('now-getable') > -1 
+      if (location.location !== 'Bombos Tablet' 
+        && (location.mapNode.status.indexOf('now-getable') > -1 
           || (location.canView && location.mapNode.status.indexOf('unavailable') > -1
-          && location.canGet(items, this.config)))) {
+          && location.canGet(items, this.config)))
+        || (location.mapNode.status.indexOf('now-g-getable') > -1 && location.canGet(items, this.config))) {
         status += ' now-getable';
+      } else if (location.location !== 'Bombos Tablet' 
+        && (location.mapNode.status.indexOf('now-g-getable') > -1 
+          || (location.canViewGlitch && location.mapNode.status.indexOf('unavailable') > -1
+              && (location.canGlitch && location.canGlitch(items, this.config))))) {
+        status += ' now-g-getable';
       } else if (!location.canGet || location.canGet(items, this.config)) {
         status += ' getable';
+      } else if (location.canGlitch && location.canGlitch(items, this.config)) {
+        status += ' g-getable';
       } else if (location.canView && location.canView(items, this.config)) {
         status += ' viewable';
+      } else if (location.canViewGlitch && location.canViewGlitch(items, this.config)) {
+        status += ' g-viewable';
       } else {
         status += ' unavailable';
       }

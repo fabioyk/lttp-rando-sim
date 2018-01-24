@@ -350,33 +350,33 @@ export class Items {
   }
 
 
-  canWestDeathMountain(config:Config) {
-    return this.flute || (this.glove && this.hasLightsource(config));
+  canWestDeathMountain(isGlitched:boolean = false) {
+    return this.flute || (this.glove && (this.lamp || isGlitched));
   }
-  canEastDeathMountain(config:Config) {
-    return this.canWestDeathMountain(config) && (this.hookshot || (this.mirror && this.hammer));
+  canEastDeathMountain(isGlitched:boolean = false) {
+    return this.canWestDeathMountain(isGlitched) && (this.hookshot || (this.mirror && this.hammer));
   }
-  canDarkEastDeathMountain(config:Config) {
-    return this.glove === 2 && this.canEastDeathMountain(config);
+  canDarkEastDeathMountain(isGlitched:boolean = false) {
+    return this.glove === 2 && this.canEastDeathMountain(isGlitched);
   }
-  canDarkWestDeathMountain(config:Config) {
-    return this.canWestDeathMountain(config) && this.moonPearl;
+  canDarkWestDeathMountain(isGlitched:boolean = false) {
+    return this.canWestDeathMountain(isGlitched) && this.moonPearl;
   }
-  canNorthEastDarkWorld(config:Config) {
+  canNorthEastDarkWorld(isGlitched:boolean = false) {
     return this.agahnim
       || (this.hammer && this.glove && this.moonPearl)
-      || (this.glove === 2 && (this.flippers || (this.boots && config.canGlitch)) && this.moonPearl);
+      || (this.glove === 2 && (this.flippers || (this.boots && isGlitched)) && this.moonPearl);
   }
-  canNorthWestDarkWorld(config:Config) {
-    return (this.canNorthEastDarkWorld(config)
+  canNorthWestDarkWorld(isGlitched:boolean = false) {
+    return (this.canNorthEastDarkWorld(isGlitched)
         && (this.hookshot && (this.hammer || this.glove || this.flippers))
         || (this.hammer && this.glove)
         || this.glove === 2)
       && this.moonPearl;
   }
-  canSouthDarkWorld(config:Config) {
+  canSouthDarkWorld(isGlitched:boolean = false) {
     return this.moonPearl
-      && ((this.canNorthEastDarkWorld(config) && (this.hammer
+      && ((this.canNorthEastDarkWorld(isGlitched) && (this.hammer
         || (this.hookshot && (this.flippers || this.glove))))
         || (this.hammer && this.glove)
         || this.glove === 2);

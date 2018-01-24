@@ -61,9 +61,15 @@ export class MapComponent implements OnInit {
   }
 
   onNodeClick(nodeClicked:MapNode) {
-    if (nodeClicked.status.indexOf('now-getable') > -1 && !nodeClicked.isFaded) {
+    if ((nodeClicked.status.indexOf('now-getable') > -1 || nodeClicked.status.indexOf('now-g-getable') > -1) 
+        && !nodeClicked.isFaded) {
       this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
-      nodeClicked.status = 'getable';
+      if (nodeClicked.status.indexOf('now-getable') > -1) {
+        nodeClicked.status = 'getable';
+      } else {
+        console.log('here');
+        nodeClicked.status = 'g-getable';
+      }      
       this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
     } else if (nodeClicked.status.indexOf('getable') > -1) {
       if (!nodeClicked.originalNode.isOpened && nodeClicked.status.indexOf('unreachable') === -1) {
@@ -284,7 +290,8 @@ export class MapComponent implements OnInit {
       && !mapNode.originalNode.canOpen(this.items, this.config) ) {
         this.tooltip += '. ' + mapNode.originalNode.errorMessage;
     } else if (!this.currentDungeon 
-        && (mapNode.status === 'unreachable getable' || mapNode.status === 'unavailable getable')) {
+        && (mapNode.status.indexOf('getable') > -1 
+            && (mapNode.status.indexOf('unreachable') > -1 || mapNode.status.indexOf('unavailable') > -1))) {
       this.tooltip += '. Unreachable from here';
     }
     
@@ -374,7 +381,7 @@ export class MapComponent implements OnInit {
       || (this.items.hammer && this.items.glove && this.items.moonPearl)
       || (this.items.glove === 2 && this.items.moonPearl)
       || (this.items.flute && this.items.glove === 2)
-      || (this.items.canDarkEastDeathMountain(this.config) && this.config.canGlitch));
+      || (this.items.canDarkEastDeathMountain(this.config.canGlitch)));
   }
 
   getAvailableDungeonMapIndexes():number[] {
@@ -463,7 +470,7 @@ export class MapComponent implements OnInit {
             foundReds++;
           }
         });
-        return foundReds < 2 && this.currentMap === 'dark-world' && this.items.canSouthDarkWorld(this.config) && this.currentRegion === 'ow';
+        return foundReds < 2 && this.currentMap === 'dark-world' && this.items.canSouthDarkWorld(this.config.canGlitch) && this.currentRegion === 'ow';
       }
     }
 
@@ -481,7 +488,7 @@ export class MapComponent implements OnInit {
   }
 
   canViewTRMedallion():boolean {
-    return this.items.canDarkEastDeathMountain(this.config) && this.currentMap === 'dark-world'
+    return this.items.canDarkEastDeathMountain(this.config.canGlitch) && this.currentMap === 'dark-world'
       && (this.currentRegion === 'dm' || this.currentRegion === 'all');    
   }
   canViewMMMedallion():boolean {
