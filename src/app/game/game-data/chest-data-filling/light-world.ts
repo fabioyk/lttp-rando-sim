@@ -192,9 +192,7 @@ export class LightWorld {
       function(items:Items, config:Config) {
         return true;
       },
-      function(items:Items, config:Config) {
-        return true;
-      },
+      null,
       [l[42], l[35]]
     ));
 

@@ -62,6 +62,7 @@
   height: 5%;
   margin: -2.5% -2.5%;
   border: solid black;
+  background-size: cover;
 }
 .dungeon-type {
   width: 9%;

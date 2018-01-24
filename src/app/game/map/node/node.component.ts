@@ -6,6 +6,7 @@ import { DungeonNodeStatus } from '../../game-data/dungeon-node-status.enum';
 import { DungeonItems } from '../../game-data/dungeon-items';
 import { Items } from '../../game-data/items';
 import { Config } from '../../game-data/config';
+import { ItemNamesService } from '../../../log-parse/item-names.service';
 
 @Component({
   selector: 'app-node',
@@ -32,7 +33,7 @@ export class NodeComponent implements OnInit {
   isLookable: boolean;
   isFaded: boolean;
 
-  constructor() { }
+  constructor(private itemNamesService:ItemNamesService) { }
 
   ngOnInit() {
     this.nodeX = this.nodeInfo.x + '%';
@@ -60,6 +61,11 @@ export class NodeComponent implements OnInit {
       'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower', 'Ganons Tower'];
   
       return 'url("./assets/dungeon-tracker-icons/boss' + duns.indexOf(this.nodeInfo.tooltip) + '2.png")';
+    } else if (!this.nodeInfo.originalNode.isOpened && (
+      this.nodeInfo.isFaded 
+        || (this.nodeInfo.originalNode.canView 
+            && (this.nodeInfo.tooltip.indexOf('Tablet') === -1 && this.nodeInfo.status.indexOf('getable') > -1 && this.nodeInfo.status.indexOf('now') === -1 )))) {
+      return 'url("./assets/item-icons/' + this.itemNamesService.getItemById(this.nodeInfo.prize[0]).shortName.split('-')[0] + '.png")';      
     }
   }
 
