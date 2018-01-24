@@ -153,8 +153,8 @@ export class GameService {
         }
       } else {
         if (location.location !== 'Ether Tablet' && (location.mapNode.status === 'now-getable' 
-          || ((location.mapNode.status === 'viewable' || location.mapNode.status === 'g-viewable' || (location.mapNode.status === 'g-getable' && location.canView))
-            && location.canGet(items, this.config))
+          || ((location.mapNode.status === 'viewable' || location.mapNode.status === 'g-viewable' || (location.mapNode.status === 'g-getable' && location.canView)
+            || location.mapNode.status === 'now-g-getable') && location.canGet(items, this.config))
           || (location.canView && location.canGet(items, this.config) && location.mapNode.status === 'unavailable'))) {            
           if (location.mapNode.isFaded || location.mapNode.status === 'g-getable') {
             location.mapNode.status = 'getable';
