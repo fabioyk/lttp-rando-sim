@@ -67,7 +67,6 @@ export class MapComponent implements OnInit {
       if (nodeClicked.status.indexOf('now-getable') > -1) {
         nodeClicked.status = 'getable';
       } else {
-        console.log('here');
         nodeClicked.status = 'g-getable';
       }      
       this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
