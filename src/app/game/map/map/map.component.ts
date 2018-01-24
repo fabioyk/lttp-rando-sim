@@ -546,39 +546,25 @@ export class MapComponent implements OnInit {
   }
 
   getAll() {
-    this.items.add('sword', 'light-world');
-    this.items.add('sword', 'light-world');
-    this.items.add('glove', 'light-world');
-    this.items.add('glove', 'light-world');
-    this.items.add('bow', 'light-world');
-    this.items.add('moonPearl', 'light-world');
-    this.items.add('hookshot', 'light-world');
-    this.items.add('fireRod', 'light-world');
-    this.items.add('iceRod', 'light-world');
-    this.items.add('bombos', 'light-world');
-    this.items.add('ether', 'light-world');
-    this.items.add('quake', 'light-world');
-    this.items.add('lamp', 'light-world');
-    this.items.add('hammer', 'light-world');
-    this.items.add('flute', 'light-world');
-    this.items.add('somaria', 'light-world');
-    this.items.add('book', 'light-world');
-    this.items.add('cape', 'light-world');
-    this.items.add('mirror', 'light-world');
-    this.items.add('mushroom', 'light-world');
-    this.items.add('boots', 'light-world');
-    this.items.add('flippers', 'light-world');
-    this.items.add('crystal1', 'light-world');
-    this.items.add('crystal2', 'light-world');
-    this.items.add('crystal3', 'light-world');
-    this.items.add('crystal4', 'light-world');
-    this.items.add('crystal5', 'light-world');
-    this.items.add('crystal6', 'light-world');
-    this.items.add('crystal7', 'light-world');
-    this.items.add('pendantCourage', 'light-world');
-    this.items.add('pendantPower', 'light-world');
-    this.items.add('pendantWisdom', 'light-world');
-    this.items.add('agahnim2', 'light-world');
+    var list = [
+      'sword', 'sword', 'glove', 'glove', 'bow', 'moonPearl','hookshot','fireRod',
+      'iceRod', 'bombos','ether','quake', 'lamp','hammer', 'flute','somaria', 'book', 
+      'cape', 'mirror', 'mushroom', 'boots', 'flippers','crystal1', 'crystal2', 
+      'crystal3', 'crystal4', 'crystal5','crystal6','crystal7', 'pendantCourage',
+      'pendantPower', 'pendantWisdom','agahnim2', 'smallKey-2','smallKey-3',
+      'smallKey-4', 'smallKey-4',  'smallKey-5','smallKey-5','smallKey-5','smallKey-5',
+      'smallKey-5','smallKey-5','smallKey-6','smallKey-7','smallKey-7','smallKey-7',
+      'smallKey-8','smallKey-9','smallKey-9','smallKey-10','smallKey-10','smallKey-10',
+      'smallKey-11','smallKey-11','smallKey-11','smallKey-11','smallKey-12',
+      'smallKey-12','smallKey-12','smallKey-12', 'bigKey-1', 'bigKey-2', 'bigKey-3', 
+      'bigKey-5', 'bigKey-6', 'bigKey-7', 'bigKey-8', 'bigKey-9', 'bigKey-10', 'bigKey-11', 
+      'bigKey-12', 
+    ]
+    list.forEach((item) => {
+      this.items.add(item, 'light-world');
+    });
+    this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
+    
   }
 
   getBootsDw() {
