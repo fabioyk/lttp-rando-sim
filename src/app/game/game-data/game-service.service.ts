@@ -151,11 +151,12 @@ export class GameService {
         } else {
           location.mapNode.status = 'invisible';
         }
-      } else {
+      } else {        
         if (location.location !== 'Ether Tablet' && (location.mapNode.status === 'now-getable' 
           || ((location.mapNode.status === 'viewable' || location.mapNode.status === 'g-viewable' || (location.mapNode.status === 'g-getable' && location.canView)
             || location.mapNode.status === 'now-g-getable') && location.canGet(items, this.config))
           || (location.canView && location.canGet(items, this.config) && location.mapNode.status === 'unavailable'))) {            
+            
           if (location.mapNode.isFaded || location.mapNode.status === 'g-getable') {
             location.mapNode.status = 'getable';
           } else {
@@ -187,10 +188,11 @@ export class GameService {
       var status = '';
       if (location.region.indexOf(region) === -1) {
         status = 'unreachable';
-      }   
+      }
       if (location.location !== 'Bombos Tablet' 
         && (location.mapNode.status.indexOf('now-getable') > -1 
-          || (location.canView && location.mapNode.status.indexOf('unavailable') > -1
+          || (location.canView && (location.mapNode.status.indexOf('unavailable') > -1 
+            || location.mapNode.status.indexOf('viewable') > -1 )
           && location.canGet(items, this.config)))
         || (location.mapNode.status.indexOf('now-g-getable') > -1 && location.canGet(items, this.config))) {
         status += ' now-getable';
