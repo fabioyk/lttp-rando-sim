@@ -10,16 +10,23 @@ import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/observable/throw';
 import { Seed } from './seed';
 import { Status } from './status';
+import { environment } from 'environments/environment';
 
 
 @Injectable()
-export class SeedApiService {
-  private _apiUrl = 'https://lttp-rando-seed-api-dev.glitch.me/';
+export class SeedApiService {  
+  private _apiUrl = 'https://lttp-rando-seed-api.glitch.me/';
   public lastSeedData:string;
   public lastSeedNum:number;
   private webVersion = '1.2';
 
-  constructor(private _http: Http) { }
+  constructor(private _http: Http) {
+    if (environment.production) {
+      this._apiUrl = 'https://lttp-rando-seed-api.glitch.me/';
+    } else {
+      this._apiUrl = 'https://lttp-rando-seed-api-dev.glitch.me/';
+    }
+  }
 
   ping() {
     this._http.get(this._apiUrl);
@@ -27,6 +34,7 @@ export class SeedApiService {
 
   getSeed(mode:String, seed:string, isDailySeed:boolean=false):Observable<Seed> {
     let queryUrl;
+    
     if (isDailySeed) {
       queryUrl = this._apiUrl + 'api/daily?v='+this.webVersion+'&mode=' + mode;
     } else {
