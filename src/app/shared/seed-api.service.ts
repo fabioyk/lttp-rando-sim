@@ -9,13 +9,15 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/observable/throw';
 import { Seed } from './seed';
+import { Status } from './status';
 
 
 @Injectable()
 export class SeedApiService {
-  private _apiUrl = 'https://lttp-rando-seed-api.glitch.me/';
+  private _apiUrl = 'https://lttp-rando-seed-api-dev.glitch.me/';
   public lastSeedData:string;
   public lastSeedNum:number;
+  private webVersion = '1.2';
 
   constructor(private _http: Http) { }
 
@@ -26,9 +28,9 @@ export class SeedApiService {
   getSeed(mode:String, seed:string, isDailySeed:boolean=false):Observable<Seed> {
     let queryUrl;
     if (isDailySeed) {
-      queryUrl = this._apiUrl + 'api/daily?mode=' + mode;
+      queryUrl = this._apiUrl + 'api/daily?v='+this.webVersion+'&mode=' + mode;
     } else {
-      queryUrl = this._apiUrl + 'api/seed?mode=' + mode;
+      queryUrl = this._apiUrl + 'api/seed?v='+this.webVersion+'&mode=' + mode;
       if (seed) {
         queryUrl += '&seed=' + seed;
       }
@@ -60,6 +62,17 @@ export class SeedApiService {
       })
       .catch(this.handleError);
   }
+
+  getStatus():Observable<Status> {
+    let queryUrl = this._apiUrl + 'api/status?v=' + this.webVersion;
+    return this._http.get(queryUrl)
+      .map((response: Response) => {
+        var status = <Status> response.json();      
+        return status;
+      })
+      .catch(this.handleError);
+  }
+
 
   private handleError(error: Response) {
     console.error(error);

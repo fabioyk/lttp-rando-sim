@@ -26,6 +26,11 @@
   cursor: pointer;
 }
 
+.version-text {
+  font-size: 18px;
+  color: #555;
+}
+
 .in-between {
   flex-grow: 2;
 }

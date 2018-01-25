@@ -29,7 +29,21 @@ export class MainMenuComponent implements OnInit {
               private _route: ActivatedRoute) { }
 
   ngOnInit() {
-    this._seedService.ping();
+    this._seedService.getStatus()
+      .subscribe((status) => {
+        if (!status) {
+          this.errorMessage = 'Unable to connect to the server. Please try again later';
+        } else {
+          switch(status.type) {
+            case 'error':
+              this.errorMessage = status.msg;
+              break;
+            case 'warning':
+              this.errorMessage = status.msg;
+              break;
+          }
+        }
+      });
     setTimeout(() => {
       this.preloadMap();
     }, 1000);
