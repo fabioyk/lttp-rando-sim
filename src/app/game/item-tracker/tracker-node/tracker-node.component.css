@@ -45,16 +45,17 @@ div {
 .mm-medallion-text, .tr-medallion-text {
   position: absolute;
   font-weight: bold;
+  color: #DDD;
 }
 
 .mm-medallion-text {
-  bottom: 5px;
-  left: 5px;
+  top: 33px;
+  
 }
 
 .tr-medallion-text {
   top: 5px;
-  right: 5px;
+  right: 9px;
 }
 
 .dungeon-chest {
@@ -140,13 +141,12 @@ div {
   }
 
   .mm-medallion-text {
-    bottom: -2px;
-    left: -2px;
+    top: 10px;
   }
   
   .tr-medallion-text {
-    top: -2px;
-    right: -2px;
+    top: 0;
+    right: 0;
   }
 }
 

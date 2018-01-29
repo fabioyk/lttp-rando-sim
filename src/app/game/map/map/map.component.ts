@@ -573,7 +573,12 @@ export class MapComponent implements OnInit {
 
   getBootsDw() {
     this.items.add('glove', 'light-world');
+    this.items.add('glove', 'light-world');
+    this.items.add('flute', 'light-world');
     this.items.add('book', 'light-world');
+    this.items.add('hookshot', 'light-world');
+    this.items.add('hammer', 'light-world');
+    
     //this.items.add('boots', 'light-world');
     this.items.add('moonPearl', 'light-world');
     
