@@ -277,7 +277,11 @@ export class MapComponent implements OnInit {
   }
 
   changeTooltip(mapNode:MapNode) {
-    this.tooltip = mapNode.tooltip;
+    if (mapNode.prize[0] === 'warp') {
+      this.tooltip = 'Dark World Portal';
+    } else {
+      this.tooltip = mapNode.tooltip;
+    }    
     if (this.currentDungeon && mapNode.prize[0] === 'exit') {
       this.tooltip = 'Leave the Dungeon';
     } else if (this.currentDungeon 
