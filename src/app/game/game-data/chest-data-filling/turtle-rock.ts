@@ -265,22 +265,22 @@ export class TurtleRock {
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 1', 64, 24, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasInvincibilityItem(config);
+        return items.hasBeamReflection(config);
     }, l[196], 'Invincibility Item Required'));
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 2', 36, 36, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasInvincibilityItem(config);
+        return items.hasBeamReflection(config);
     }, l[195], 'Invincibility Item Required'));
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 3', 64, 48, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasInvincibilityItem(config);
+        return items.hasBeamReflection(config);
     }, l[194], 'Invincibility Item Required'));
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 4', 36, 60, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasInvincibilityItem(config);
+        return items.hasBeamReflection(config);
     }, l[193], 'Invincibility Item Required'));
     trData.dungeonMaps.push(laserBridge);
 
