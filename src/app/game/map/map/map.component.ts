@@ -61,6 +61,9 @@ export class MapComponent implements OnInit {
   }
 
   onNodeClick(nodeClicked:MapNode) {
+    if (nodeClicked.status.indexOf('unreachable') > -1) {
+      return;
+    }
     if ((nodeClicked.status.indexOf('now-getable') > -1 || nodeClicked.status.indexOf('now-g-getable') > -1) 
         && !nodeClicked.isFaded) {
       this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
