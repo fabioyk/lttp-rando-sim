@@ -1,9 +1,10 @@
-<div class='whole-app'>
+<div class='whole-app'
+  [ngClass]='isDarkTheme ? "dark-theme" : ""'>
   <div class="container">
     <div class="container-fluid top-container">
       <h1 class="top-container-title">
         <span class="not-selectable title stylized-font" (click)="onBackMainMenu()">
-          Z3R Simulator <span class="version-text">v1.2</span>
+          Z3R Simulator <span class="version-text">v1.3</span>
         </span> 
       </h1>
       <div class="in-between"></div>
@@ -11,7 +12,11 @@
         <button type="button" class="btn btn-default" 
           (click)="openModal(howToTemplate)">How To Play</button>
         <button type="button" class="btn btn-default" 
-          (click)="openModal(aboutTemplate)">About</button>        
+          (click)="openModal(aboutTemplate)">About</button>
+        <button type="button" class="btn btn-default" 
+          (click)="onToggleTheme()" tooltip='Dark/Light Theme'>
+          <i [(ngClass)]="buttonClass"></i>
+        </button>
       </div>    
     </div>    
     <router-outlet></router-outlet>
@@ -33,61 +38,64 @@
 </div>
 
 <ng-template #howToTemplate>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">How to Play</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <h3>Z3R Simulator</h3>
-    <p>
-      Click on <span class='green-text outline-text'>Green</span> locations to open them. 
-      The Item Tracker and Log are updated automatically.
-    </p>
-    <p>
-      Click on any location with a <span class='white-text outline-text'><i class="fa fa-search" aria-hidden="true"></i></span> 
-      to check what item it is before getting it.
-    </p>
-    <p>
-      Decide when to check the map or the medallions by using the <strong>buttons below the Map</strong>. 
-      Listening to the dungeon music is also supported.
-      Those buttons are unlocked as you get the necessary items. They will also be used to Save and Quit and mirror between worlds.
-    </p>
-    <p>
-      Pay close attention to where you are in the map when travelling the Dark World, 
-      you will need to use the right <img src="assets/node-icons/warp.png">
-      <span class='blue-text outline-text'>Portals</span> to get to the right destinations.
-    </p>
-    <p>
-      You can search the Item Log to remember where you got something, 
-      or filter out all those useless rupees.
-    </p>
-    <p>
-      You can play this just like you play a normal rando, 
-      thinking where you would be and what you would do, 
-      or just screw around and warp around the world getting everything.
-    </p>
-    <h3>Minor Glitches</h3>
-    <p>
-      If you activate <strong>Minor Glitches and Sequence Breaking</strong>, 
-      the following options are unlocked:
-    </p>
-    <ul class="list-inline">
-      <li>Dark Rooms</li>
-      <li>Fake Flippers</li>
-      <li>Water Walking</li>
-      <li>Super Bunny</li>
-      <li>Bomb Jumps</li>
-      <li>Hovering</li>
-    </ul>
-    <p>
-      Locations colored <span class='glitched-text outline-text'>Blue</span> are locations accessible through Minor Glitches
-    </p>
+  <div [ngClass]='isDarkTheme ? "dark-theme" : ""'>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">How to Play</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h3>Z3R Simulator</h3>
+      <p>
+        Click on <span class='green-text outline-text'>Green</span> locations to open them. 
+        The Item Tracker and Log are updated automatically.
+      </p>
+      <p>
+        Click on any location with a <span class='white-text outline-text'><i class="fa fa-search" aria-hidden="true"></i></span> 
+        to check what item it is before getting it.
+      </p>
+      <p>
+        Decide when to check the map or the medallions by using the <strong>buttons below the Map</strong>. 
+        Listening to the dungeon music is also supported.
+        Those buttons are unlocked as you get the necessary items. They will also be used to Save and Quit and mirror between worlds.
+      </p>
+      <p>
+        Pay close attention to where you are in the map when travelling the Dark World, 
+        you will need to use the right <img src="assets/node-icons/warp.png">
+        <span class='blue-text outline-text'>Portals</span> to get to the right destinations.
+      </p>
+      <p>
+        You can search the Item Log to remember where you got something, 
+        or filter out all those useless rupees.
+      </p>
+      <p>
+        You can play this just like you play a normal rando, 
+        thinking where you would be and what you would do, 
+        or just screw around and warp around the world getting everything.
+      </p>
+      <h3>Minor Glitches</h3>
+      <p>
+        If you activate <strong>Minor Glitches and Sequence Breaking</strong>, 
+        the following options are unlocked:
+      </p>
+      <ul class="list-inline">
+        <li>Dark Rooms</li>
+        <li>Fake Flippers</li>
+        <li>Water Walking</li>
+        <li>Super Bunny</li>
+        <li>Bomb Jumps</li>
+        <li>Hovering</li>
+      </ul>
+      <p>
+        Locations colored <span class='glitched-text outline-text'>Blue</span> are locations accessible through Minor Glitches
+      </p>
+    </div>
   </div>
 </ng-template>
 
 <ng-template #aboutTemplate>
+  <div [ngClass]='isDarkTheme ? "dark-theme" : ""'>
     <div class="modal-header">
       <h4 class="modal-title pull-left">About</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -107,12 +115,10 @@
         The design was heavily inspired by the <a href="https://www.twitch.tv/crossproduct">Crossproduct</a>'s Randomizer Tracker. The game logic is based on the VT8.28 version of the Randomizer.
       </p>
       <p>
-        I'm not sure how it will react to the pressure of more people visiting the website, since it's built on free resources, but hopefully it won't break too much.
-      </p>
-      <p>
         If you have any suggestions, questions, bug reports or just want to say hi, 
         feel free to join the <a href="https://discord.gg/nPJpFQB" target="_blank">Z3RSim Discord</a> 
         or catch me streaming at my <a href="https://www.twitch.tv/kyong92" target="_blank">Twitch page</a>.
       </p>
     </div>
-  </ng-template>
+  </div>
+</ng-template>

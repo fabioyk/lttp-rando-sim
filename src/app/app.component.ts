@@ -19,6 +19,8 @@ export class AppComponent {
   title = 'app';
   footerHeight: number;  
   window: Window;
+  isDarkTheme:boolean;
+  buttonClass:string;
   
   constructor(private _windowRef: WindowRefService,
               private _modalService: BsModalService,
@@ -28,6 +30,7 @@ export class AppComponent {
 
   ngOnInit() {
     self = this;
+    this.buttonClass = 'fa fa-moon-o';
   }
 
   openModal(template: TemplateRef<any>) {
@@ -38,4 +41,12 @@ export class AppComponent {
     this._router.navigate(['/']);    
   }
 
+  onToggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    if (this.isDarkTheme) {
+      this.buttonClass = 'fa fa-sun-o';
+    } else {
+      this.buttonClass = 'fa fa-moon-o';
+    }
+  }
 }

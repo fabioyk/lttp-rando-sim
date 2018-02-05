@@ -7,6 +7,17 @@ div {
   padding-right: 0;
 }
 
+.rupee-count {
+  color: #555;
+  padding-right: 6px;
+  text-align: end;
+  float: right;
+}
+
+:host-context(.dark-theme) .rupee-count {
+    color: var(--dark-text-light-color);
+}
+
 .col-xs-2 {
     padding: 0;
 }
@@ -30,7 +41,7 @@ div {
     .col-sm-5ths {
         width: 20%;
         float: left;
-    }
+    }    
 }
 
 @media (min-width: 992px) {
@@ -44,5 +55,12 @@ div {
     .col-lg-5ths {
         width: 20%;
         float: left;
+    }
+}
+
+@media (max-width: 768px) {
+    .rupee-count {
+        padding-right: 3px;
+        font-size: 12px;
     }
 }

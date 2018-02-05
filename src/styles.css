@@ -1,4 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --dark-background-color: #141414;
+  --dark-background-light-color: #444;
+  --dark-background-med-color: #777;
+  --dark-text-color: #EEE;
+  --dark-text-light-color: #BBB;
+}
+
 html {
   height: 100%;
   box-sizing: border-box;
@@ -40,4 +47,17 @@ a {
    1px -1px 0 #FFF,
    -1px 1px 0 #FFF,
     1px 1px 0 #FFF;
+}
+
+
+.dark-theme * .panel-default>.panel-heading,
+.dark-theme * .table-striped>tbody>tr:nth-of-type(odd) {
+  background-color: var(--dark-background-med-color);  
+  color: var(--dark-text-color);  
+}
+
+.dark-theme * .panel-body.card-block.card-body, 
+.dark-theme * .table-striped>tbody>tr:nth-of-type(even)  {
+  background-color: var(--dark-background-light-color);
+  color: var(--dark-text-color);
 }
