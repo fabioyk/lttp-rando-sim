@@ -60,6 +60,7 @@ export class GameComponent implements OnInit {
     } else if (this._router.url.indexOf('keysanity') > -1) {
       gameMode = 'keysanity'
     }
+    localStorage.setItem('modeSelected', gameMode);
 
     this.preloadIcons();
 
@@ -72,6 +73,7 @@ export class GameComponent implements OnInit {
         if (params.minorGlitches) {
           canGlitch = true;
         }
+        localStorage.setItem('glitchSelected', canGlitch ? 'yes' : 'no');
         if (params.seed && +params.seed === this._seedService.lastSeedNum) {
           this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch);
         } else {

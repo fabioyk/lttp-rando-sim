@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 import { SeedApiService } from '../../shared/seed-api.service';
 import { Seed } from '../../shared/seed';
 
@@ -29,6 +29,14 @@ export class MainMenuComponent implements OnInit {
               private _route: ActivatedRoute) { }
 
   ngOnInit() {
+    if (localStorage.getItem('modeSelected')) {
+      this.modeSelected = localStorage.getItem('modeSelected');
+      this.glitchSelected = localStorage.getItem('glitchSelected');      
+    } else {
+      localStorage.setItem('modeSelected', this.modeSelected);
+      localStorage.setItem('glitchSelected', this.glitchSelected);
+    }
+
     this._seedService.getStatus()
       .subscribe((status) => {
         if (!status) {
@@ -68,6 +76,9 @@ export class MainMenuComponent implements OnInit {
     this.lockedMode = this.modeSelected;
     this.lockedGlitch = this.glitchSelected;
     this.errorMessage = '';
+
+    localStorage.setItem('modeSelected', this.modeSelected);
+    localStorage.setItem('glitchSelected', this.glitchSelected);
 
     this._seedService.getSeed(this.lockedMode, this.seedNum, this.dailySeed)
       .subscribe((seed) => {
