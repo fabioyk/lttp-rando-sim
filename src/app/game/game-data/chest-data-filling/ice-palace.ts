@@ -213,6 +213,11 @@ export class IcePalace {
         return true;
     }, 'ip-map'));
     bkRoom.nodes.push(new DungeonNode(
+      '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'ip-first-fork'));
+    bkRoom.nodes.push(new DungeonNode(
       'Big Key Chest', 44, 72, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
@@ -354,12 +359,12 @@ export class IcePalace {
 
     var finalSwitch = new DungeonMapData('ip-final-switch', 'Crystal Switch Room');
     finalSwitch.nodes.push(new DungeonNode(
-      '', 72, 54, DungeonNodeStatus.SK_LOCKED,
+      '', 13, 53.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
-    }, 'ip-switch-room'));    
+    }, 'ip-switch-room'));
     finalSwitch.nodes.push(new DungeonNode(
-      '', 13, 53.5, DungeonNodeStatus.SWITCH,
+      '', 72, 54, DungeonNodeStatus.SWITCH,
     function(items:Items, config:Config) {
         return true;
     }, 'switch'));
