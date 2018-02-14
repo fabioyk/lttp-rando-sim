@@ -270,6 +270,19 @@ export class MapComponent implements OnInit {
       });
       this.items.ipSwitch = false;
     }
+
+    // Reset Switches
+    var switchDungeons = ['Swamp Palace', 'Misery Mire', 'Ice Palace'];
+    if (switchDungeons.indexOf(this.currentDungeon.name) > -1) {
+      this.currentDungeon.dungeonMaps.forEach((map) => {
+        map.nodes.forEach((node) => {
+          if (node.status == DungeonNodeStatus.SWITCH_FLIPPED) {
+            node.status = DungeonNodeStatus.SWITCH;
+          }
+        })
+      })
+    }
+
     if (this.currentDungeonMap) {
       this.currentDungeonMap.cleanPreload();
     }
