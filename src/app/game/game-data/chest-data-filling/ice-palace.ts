@@ -87,7 +87,7 @@ export class IcePalace {
     ipbj.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return !items.ipSwitch || config.canGlitch;
+        return !items.crystalSwitch || config.canGlitch;
     }, 'ip-plus', 'Switch on Red Required'));
     ipData.dungeonMaps.push(ipbj);
 
@@ -283,17 +283,17 @@ export class IcePalace {
     pushBlock.nodes.push(new DungeonNode(
       '', 42, 52, DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK,
     function(items:Items, config:Config) {
-        return items.ipSwitch;
+        return items.crystalSwitch;
     }, 'ip-switch-room', 'Switch on Blue Required'));
     pushBlock.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return !items.ipSwitch;
+        return !items.crystalSwitch;
     }, 'ip-icy-pot', 'Switch on Red Required'));
     pushBlock.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return !items.ipSwitch;
+        return !items.crystalSwitch;
     }, 'ip-fairy-drop', 'Switch on Red Required'));
     ipData.dungeonMaps.push(pushBlock);
 
@@ -302,12 +302,12 @@ export class IcePalace {
     pushBlockRight.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hookshot && !items.ipSwitch;
+        return items.hookshot && !items.crystalSwitch;
     }, 'ip-bc', 'Hookshot and Switch on Red Required'));
     pushBlockRight.nodes.push(new DungeonNode(
       '', 59, 47, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.ipSwitch;
+        return items.crystalSwitch;
     }, 'ip-switch-room', 'Switch on Blue Required'));
     pushBlockRight.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
@@ -330,7 +330,7 @@ export class IcePalace {
     fairyDrop.nodes.push(new DungeonNode(
       '', 31, 46, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.ipSwitch;
+        return items.crystalSwitch;
     }, 'ip-switch-room', 'Switch on Blue Required'));
     fairyDrop.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.SK_LOCKED,

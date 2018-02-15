@@ -20,8 +20,8 @@ export class MapComponent implements OnInit {
   @Input() items: Items;
   @Input() currentMap: string;
   @Input() config: Config;
-  @Output() addedItem = new EventEmitter<[MapNode, string]>();
-  @Output() viewItem = new EventEmitter<[MapNode, string]>();
+  @Output() addedItem = new EventEmitter<[MapNode, string, string]>();
+  @Output() viewItem = new EventEmitter<[MapNode, string, string]>();
   @Output() cantItem = new EventEmitter<[MapNode, string, boolean]>();
   @Output() finishedDungeon = new EventEmitter<[string, string]>();
   @Output() onGameFinished = new EventEmitter<string>();
@@ -63,6 +63,9 @@ export class MapComponent implements OnInit {
   onNodeClick(nodeClicked:MapNode) {
     if (nodeClicked.status.indexOf('unreachable') > -1) {
       return;
+    }
+    if (this.items.spFlooded) {
+      this.unfloodSwamp();
     }
     if ((nodeClicked.status.indexOf('now-getable') > -1 || nodeClicked.status.indexOf('now-g-getable') > -1) 
         && !nodeClicked.isFaded) {
@@ -112,6 +115,9 @@ export class MapComponent implements OnInit {
       }
       if (this.currentDungeon.name === 'Misery Mire') {
         this.items.mmMedallionChecked = true;
+      }
+      if (this.items.spFlooded && this.currentDungeon.name !== 'Swamp Palace') {
+        this.unfloodSwamp();
       }
     }    
   }
@@ -232,7 +238,7 @@ export class MapComponent implements OnInit {
           break;
       }
     } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()) {
-      this.viewItem.emit([dungeonNode, this.currentMap]);
+      this.viewItem.emit([dungeonNode, this.currentMap, dungeonNode.originalNode.errorMessage]);
     } else {
       this.cantItem.emit([dungeonNode, this.currentDungeon.name, true]);
     }
@@ -245,33 +251,30 @@ export class MapComponent implements OnInit {
       this.changeMap('dark-world');
     }
 
-    if (this.currentDungeon.name === 'Swamp Palace') {
-      this.currentDungeon.dungeonMaps.forEach(map => {
-        map.nodes.forEach(node => {
-          if (node.status == DungeonNodeStatus.WATER_SWITCH_FLIPPED) {
-            node.status = DungeonNodeStatus.WATER_SWITCH;
-            this.items.remove('flood', 'Swamp Palace');
-          }
-        });
-      });
-      this.items.spSwitch = false;
-    } else if (this.currentDungeon.name === 'Misery Mire') {
-      this.items.mmSwitch = false;
-    } else if (this.currentDungeon.name === 'Ice Palace') {
-      this.currentDungeon.dungeonMaps.forEach(map => {
-        if (map.id === 'ip-push-block') {
-          map.nodes.forEach(node => {
-            if (node.content == 'ip-switch-room') {
-              node.status = DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK;
-              this.items.ipBlockPushed = false;
-            }
-          });
+    this.resetIPBlock();
+    this.resetCrystalSwitch();
+    
+    if (this.currentDungeonMap) {
+      this.currentDungeonMap.cleanPreload();
+    }
+    
+    this.currentDungeon = null;
+    this.currentDungeonMap = null;
+    this.currentDungeonItems = null;
+  }
+
+  unfloodSwamp() {
+    this.gameService.dungeonsData[5].dungeonMaps.forEach(map => {
+      map.nodes.forEach(node => {
+        if (node.status == DungeonNodeStatus.WATER_SWITCH_FLIPPED) {
+          node.status = DungeonNodeStatus.WATER_SWITCH;
+          this.items.remove('flood', 'Swamp Palace');
         }
       });
-      this.items.ipSwitch = false;
-    }
+    });
+  }
 
-    // Reset Switches
+  resetCrystalSwitch() {
     var switchDungeons = ['Swamp Palace', 'Misery Mire', 'Ice Palace'];
     if (switchDungeons.indexOf(this.currentDungeon.name) > -1) {
       this.currentDungeon.dungeonMaps.forEach((map) => {
@@ -282,14 +285,22 @@ export class MapComponent implements OnInit {
         })
       })
     }
+    this.items.crystalSwitch = false;
+  }
 
-    if (this.currentDungeonMap) {
-      this.currentDungeonMap.cleanPreload();
+  resetIPBlock() {
+    if (this.currentDungeon && this.currentDungeon.name === 'Ice Palace') {
+      this.currentDungeon.dungeonMaps.forEach(map => {
+        if (map.id === 'ip-push-block') {
+          map.nodes.forEach(node => {
+            if (node.content == 'ip-switch-room') {
+              node.status = DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK;
+              this.items.ipBlockPushed = false;
+            }
+          });
+        }
+      });
     }
-    
-    this.currentDungeon = null;
-    this.currentDungeonMap = null;
-    this.currentDungeonItems = null;
   }
 
   changeTooltip(mapNode:MapNode) {
@@ -332,6 +343,9 @@ export class MapComponent implements OnInit {
   onSaveAndQuit() {
     this.currentRegion = 'ow';
     this.hasUsedMirror = false;
+    if (this.items.spFlooded) {
+      this.unfloodSwamp();
+    }
     if (this.currentDungeon) {
       var isLwDun = this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1;
       this.leaveDungeon();
@@ -363,7 +377,9 @@ export class MapComponent implements OnInit {
       }
       this.currentDungeonMap = this.currentDungeon.startingMap;
       this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
-      this.changeMap(this.currentDungeonMap.id);      
+      this.changeMap(this.currentDungeonMap.id);
+      this.resetCrystalSwitch();
+      this.resetIPBlock();
     }
   }
 
@@ -529,19 +545,10 @@ export class MapComponent implements OnInit {
       } else if (DungeonData.pegMaps.indexOf(this.currentMap) === -1) {
         return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'.png")';      
       } else {
-        var shouldFlip = false;
-        if (this.currentDungeon.name === 'Swamp Palace') {
-          shouldFlip = this.items.spSwitch;
-        } else if (this.currentDungeon.name === 'Ice Palace') {
-          shouldFlip = this.items.ipSwitch;
-        } else if (this.currentDungeon.name === 'Misery Mire') {
-          shouldFlip = this.items.mmSwitch;
-        }
-
         if (DungeonData.floodMaps.indexOf(this.currentMap) > -1 && this.items.spFlooded) {
-          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'-flooded'+(shouldFlip ? '-flipped' : '') + '.png")';          
+          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'-flooded'+(this.items.crystalSwitch ? '-flipped' : '') + '.png")';          
         } else {
-          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+(shouldFlip ? '-flipped' : '') + '.png")';
+          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+(this.items.crystalSwitch ? '-flipped' : '') + '.png")';
         }        
       }
       
