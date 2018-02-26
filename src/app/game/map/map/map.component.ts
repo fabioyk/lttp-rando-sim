@@ -360,16 +360,8 @@ export class MapComponent implements OnInit {
         }
       });
       this.items.ipSwitch = false;
-<<<<<<< HEAD
     }    
-
-    if (!this.config.isFullMap) {
-      this.currentDungeon = null;
-      this.currentDungeonMap = null;
-      this.currentDungeonItems = null;
-    }    
-=======
-    }
+  
 
     // Reset Switches
     var switchDungeons = ['Swamp Palace', 'Misery Mire', 'Ice Palace'];
@@ -387,10 +379,11 @@ export class MapComponent implements OnInit {
       this.currentDungeonMap.cleanPreload();
     }
     
-    this.currentDungeon = null;
-    this.currentDungeonMap = null;
-    this.currentDungeonItems = null;
->>>>>>> 503d622b8f547eb1f39f0ead9559f0dd29ddac18
+    if (!this.config.isFullMap) {
+      this.currentDungeon = null;
+      this.currentDungeonMap = null;
+      this.currentDungeonItems = null;
+    }    
   }
 
   changeTooltip(mapNode:MapNode) {
