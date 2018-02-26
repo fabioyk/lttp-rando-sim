@@ -5,3 +5,35 @@
 .super-text {
   vertical-align: super;
 }
+
+:host-context(.dark-theme) .control-label, .super-text {
+  color: var(--dark-text-color);
+}
+
+:host-context(.dark-theme) .form-control {
+  color: var(--dark-text-color);
+  background-color: var(--dark-background-color);
+}
+
+:host-context(.dark-theme) .form-control[disabled] {
+  color: var(--dark-text-color);
+  background-color: var(--dark-background-light-color);
+}
+
+:host-context(.dark-theme) .btn-default {
+  color: var(--dark-text-color);
+  background-color: var(--dark-background-color);  
+}
+
+:host-context(.dark-theme) .btn-default:focus, :host-context(.dark-theme) .btn-default:hover, 
+:host-context(.dark-theme) .btn-default:active, :host-context(.dark-theme) .active {
+  background-color: var(--dark-background-light-color);
+}
+
+:host-context(.dark-theme) .btn-default:active:hover {
+  background-color: var(--dark-background-med-color);
+}
+
+:host-context(.dark-theme) .btn.active {
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, .5);
+}

@@ -7,8 +7,23 @@
   padding-bottom: 4px;
 }
 
+:host-context(.dark-theme) .panel-heading {
+  color: var(--dark-text-color);
+  background-color: #555;
+  border-color: #888;
+}
+
+:host-context(.dark-theme) .panel-default {
+  border-color: #888;
+}
+
 .panel-body {
   padding: 8px;
+}
+
+:host-context(.dark-theme) .panel-body {
+  color: var(--dark-text-light-color);
+  background-color: #222;
 }
 
 .icon {

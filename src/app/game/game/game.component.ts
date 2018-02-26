@@ -60,6 +60,7 @@ export class GameComponent implements OnInit {
     } else if (this._router.url.indexOf('keysanity') > -1) {
       gameMode = 'keysanity'
     }
+    localStorage.setItem('modeSelected', gameMode);
 
     this.preloadIcons();
 
@@ -72,6 +73,7 @@ export class GameComponent implements OnInit {
         if (params.minorGlitches) {
           canGlitch = true;
         }
+<<<<<<< HEAD
         var fullMap = false;
         if (params.fullMap) {
           fullMap = true;
@@ -82,6 +84,9 @@ export class GameComponent implements OnInit {
           }
           
         }
+=======
+        localStorage.setItem('glitchSelected', canGlitch ? 'yes' : 'no');
+>>>>>>> 503d622b8f547eb1f39f0ead9559f0dd29ddac18
         if (params.seed && +params.seed === this._seedService.lastSeedNum) {
           this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch, fullMap);
         } else {

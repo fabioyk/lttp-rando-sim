@@ -12,14 +12,31 @@ hr {
   overflow-y: scroll;
 }
 
+:host-context(.dark-theme) .item-log-body {
+  background-color: #141414;
+}
+
 .panel-heading {
   display: flex;
   flex-wrap: nowrap;
 }
 
+:host-context(.dark-theme) .panel-heading {
+  background-color: midnightblue;  
+}
+
+:host-context(.dark-theme) .panel-heading, :host-context(.dark-theme) .panel-info {
+  border-color: mediumslateblue;
+}
+
 .form-control {
   display: initial;
   width: 100%;
+}
+
+:host-context(.dark-theme) .form-control {
+  color: var(--dark-text-color);
+  background-color: var(--dark-background-color);
 }
 
 .btn-default.active {

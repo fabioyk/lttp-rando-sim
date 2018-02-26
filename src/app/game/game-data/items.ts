@@ -115,7 +115,8 @@ export class Items {
     preDW: 0,
     preGo: 0,
     preGanon: 0,
-    startTime: 0
+    startTime: 0,
+    rupeeCount: 0
   }
   preEachDun = [];
   gtChestCount = 0;
@@ -226,12 +227,12 @@ export class Items {
           this.ipSwitch = !this.ipSwitch;
         }
         break;
-      case 'ip-switch-room': this.ipBlockPushed = true; break;
+      case 'ip-switch-room': this.ipBlockPushed = true; break;      
       default:
         if (this[itemName] !== undefined) {
           this[itemName] = true;
         }        
-    }
+    }    
 
     var dungeonItemNames = ['smallKey', 'bigKey', 'map', 'compass'];
     dungeonItemNames.forEach((dunItem) => {
@@ -279,6 +280,11 @@ export class Items {
       } else {
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;
       }      
+    }
+
+    if (itemName.indexOf('rupee') > -1) {
+      var num = +itemName.split('rupee')[0];
+      this.stats.rupeeCount += num;
     }
     
   }

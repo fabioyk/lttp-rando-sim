@@ -72,6 +72,9 @@ export class MapComponent implements OnInit {
   }
 
   onNodeClick(nodeClicked:MapNode) {
+    if (nodeClicked.status.indexOf('unreachable') > -1) {
+      return;
+    }
     if ((nodeClicked.status.indexOf('now-getable') > -1 || nodeClicked.status.indexOf('now-g-getable') > -1) 
         && !nodeClicked.isFaded) {
       this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
@@ -357,6 +360,7 @@ export class MapComponent implements OnInit {
         }
       });
       this.items.ipSwitch = false;
+<<<<<<< HEAD
     }    
 
     if (!this.config.isFullMap) {
@@ -364,10 +368,37 @@ export class MapComponent implements OnInit {
       this.currentDungeonMap = null;
       this.currentDungeonItems = null;
     }    
+=======
+    }
+
+    // Reset Switches
+    var switchDungeons = ['Swamp Palace', 'Misery Mire', 'Ice Palace'];
+    if (switchDungeons.indexOf(this.currentDungeon.name) > -1) {
+      this.currentDungeon.dungeonMaps.forEach((map) => {
+        map.nodes.forEach((node) => {
+          if (node.status == DungeonNodeStatus.SWITCH_FLIPPED) {
+            node.status = DungeonNodeStatus.SWITCH;
+          }
+        })
+      })
+    }
+
+    if (this.currentDungeonMap) {
+      this.currentDungeonMap.cleanPreload();
+    }
+    
+    this.currentDungeon = null;
+    this.currentDungeonMap = null;
+    this.currentDungeonItems = null;
+>>>>>>> 503d622b8f547eb1f39f0ead9559f0dd29ddac18
   }
 
   changeTooltip(mapNode:MapNode) {
-    this.tooltip = mapNode.tooltip;
+    if (mapNode.prize[0] === 'warp') {
+      this.tooltip = 'Dark World Portal';
+    } else {
+      this.tooltip = mapNode.tooltip;
+    }    
     if (this.currentDungeon && mapNode.prize[0] === 'exit') {
       this.tooltip = 'Leave the Dungeon';
     } else if (this.currentDungeon 
@@ -726,7 +757,12 @@ export class MapComponent implements OnInit {
 
   getBootsDw() {
     this.items.add('glove', 'light-world');
+    this.items.add('glove', 'light-world');
+    this.items.add('flute', 'light-world');
     this.items.add('book', 'light-world');
+    this.items.add('hookshot', 'light-world');
+    this.items.add('hammer', 'light-world');
+    
     //this.items.add('boots', 'light-world');
     this.items.add('moonPearl', 'light-world');
     

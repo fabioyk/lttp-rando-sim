@@ -9,3 +9,7 @@
   background-color: lightgray;
   border-radius: 5px;
 }
+
+:host-context(.dark-theme) h2 {
+  color: var(--dark-text-color);
+}

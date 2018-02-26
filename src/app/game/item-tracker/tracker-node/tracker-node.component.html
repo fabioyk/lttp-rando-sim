@@ -1,15 +1,15 @@
 <div class='node' *ngIf='isItem'
   [ngStyle]="{'background-image': getBgImg()}"
-  [ngClass]="isTransparent()">
-  <span class='not-selectable outline-text' 
-    *ngIf='itemName === "bombos" || itemName === "ether" || itemName === "quake"'
-    [ngClass]="checkMmMedallion()"
-    >MM</span>
-  <span class='not-selectable outline-text' 
-    *ngIf='itemName === "bombos" || itemName === "ether" || itemName === "quake"'
-    [ngClass]="checkTrMedallion()">TR</span>
+  [ngClass]="isTransparent()">  
   <span class='counter not-selectable outline-text' *ngIf='itemName === "health"'>{{getHealth()}}</span>
 </div>
+<span class='not-selectable outline-text mm-medallion-text' 
+    *ngIf='isItem && (itemName === "bombos" || itemName === "ether" || itemName === "quake")'
+    [ngClass]="checkMmMedallion()"
+    >MM</span>
+  <span class='not-selectable outline-text tr-medallion-text' 
+    *ngIf='isItem && (itemName === "bombos" || itemName === "ether" || itemName === "quake")'
+    [ngClass]="checkTrMedallion()">TR</span>
 <div class='dungeon-node' 
     *ngIf='!isItem'
     >

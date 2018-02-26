@@ -3,7 +3,11 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.dark-theme {
+  background-color: var(--dark-background-color);
 }
 
 .container {
@@ -26,9 +30,17 @@
   cursor: pointer;
 }
 
+.dark-theme * .title {
+  color: var(--dark-text-color);
+}
+
 .version-text {
   font-size: 18px;
   color: #555;
+}
+
+.dark-theme * .version-text {
+  color: var(--dark-text-light-color);
 }
 
 .in-between {
@@ -84,4 +96,32 @@ footer {
   .container {
     width: 100%;
   }
+}
+
+.dark-theme .modal-header, .dark-theme .modal-body {
+  background-color: var(--dark-background-color);
+  color: var(--dark-text-color);
+}
+
+.dark-theme .modal-header .close {
+  color: white;
+  opacity: 1;
+}
+
+.dark-theme * .btn-default {
+  color: var(--dark-text-color);
+  background-color: var(--dark-background-color);  
+}
+
+.dark-theme * .btn-default:focus, .dark-theme * .btn-default:hover, 
+.dark-theme * .btn-default:active, .dark-theme * .active {
+  background-color: var(--dark-background-light-color);
+}
+
+.dark-theme * .btn-default:active:hover {
+  background-color: var(--dark-background-med-color);
+}
+
+.dark-theme * .btn.active {
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, .5);
 }
