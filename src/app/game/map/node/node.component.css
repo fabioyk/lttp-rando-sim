@@ -161,6 +161,30 @@
 .empty {
   background-image: url('/assets/node-icons/empty.png');    
 }
+.portal {
+  background-image: url('/assets/node-icons/warp.png');      
+}
+.mirror {
+  background-image: url('/assets/item-icons/mirror.png');      
+}
+.sq-item {
+  width: 60%;
+  margin-left: -30%;
+  background-size: cover;
+  background-color: black;
+}
+.lw-linkshouse {
+  background-image: url('/assets/node-icons/links_house.png');  
+}
+.lw-sanctuary {
+  background-image: url('/assets/node-icons/sanctuary.png');  
+}
+.lw-flute1 {
+  background-image: url('/assets/node-icons/mountain_cave.png');  
+}
+.invisible {
+  opacity: 0;
+}
 
 .faded {
   /* color: #888; */

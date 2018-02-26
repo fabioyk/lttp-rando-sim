@@ -200,6 +200,16 @@ export class NodeComponent implements OnInit {
           return 'tt-floor-open';
         case DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK:
           return 'push-block';
+        case DungeonNodeStatus.PORTAL:
+          return 'portal';
+        case DungeonNodeStatus.MIRROR:
+          return 'mirror';
+        case DungeonNodeStatus.SQ_OPTION:
+          var res = 'sq-item ' + this.nodeInfo.prize[0];
+          if (this.nodeInfo.prize[0] === 'lw-flute1' && !this.nodeInfo.originalNode.canOpen(this.items, this.config)) {
+            res += ' invisible';
+          }
+          return res;          
         default:
           console.log(this.nodeInfo.status);
           return '';

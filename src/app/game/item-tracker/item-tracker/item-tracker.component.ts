@@ -29,13 +29,15 @@ export class ItemTrackerComponent implements OnInit {
   }
 
   getDungeons() {
-    if (this.config.variation !== 'key-sanity') {
-      return this.dungeonsData.filter((dungeon) => {
-        return dungeon.name !== "Aga Tower" && dungeon.name !== "Ganons Tower";        
-      });
+    var blacklist;
+    if (this.config.variation !== 'key-sanity') {    
+      blacklist = ['Aga Tower', 'Ganons Tower', 'Light World', 'Dark World', 'Hyrule Castle'];
     } else {
-      return this.dungeonsData;
+      blacklist = ['Light World', 'Dark World', 'Hyrule Castle'];      
     }
+    return this.dungeonsData.filter((dungeon) => {
+      return blacklist.indexOf(dungeon.name) === -1;
+    });
   }
 
 }

@@ -13,6 +13,7 @@ export class MainMenuComponent implements OnInit {
   shouldDisablePlay = false;
   modeSelected = 'standard';
   glitchSelected = 'yes';
+  mapSelected = 'no';
   seedNum = '';
   errorMessage = '';
   dailySeed = false;
@@ -22,7 +23,8 @@ export class MainMenuComponent implements OnInit {
   preloadedIcons = [];
 
   lockedMode;
-  lockedGlitch;  
+  lockedGlitch;
+  lockedMap;
 
   constructor(private _seedService: SeedApiService,
               private _router: Router,
@@ -67,6 +69,7 @@ export class MainMenuComponent implements OnInit {
     this.shouldDisablePlay = true;
     this.lockedMode = this.modeSelected;
     this.lockedGlitch = this.glitchSelected;
+    this.lockedMap = this.mapSelected;
     this.errorMessage = '';
 
     this._seedService.getSeed(this.lockedMode, this.seedNum, this.dailySeed)
@@ -80,6 +83,9 @@ export class MainMenuComponent implements OnInit {
           };
           if (this.lockedGlitch === 'yes') {
             queryParams.minorGlitches = true;
+          } 
+          if (this.lockedMap === 'yes') {
+            queryParams.fullMap = true;
           } 
           this._router.navigate(['/' + this.lockedMode], {queryParams: queryParams});
         }

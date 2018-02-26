@@ -18,7 +18,7 @@ export class CastleTower {
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));
+    }, config.isFullMap ? 'lw-hyrule-castle' : 'exit', '', [-1], 1));
     entrance.nodes.push(new DungeonNode(
       'Dark Maze', 50, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {

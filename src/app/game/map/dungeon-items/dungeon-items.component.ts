@@ -17,7 +17,7 @@ export class DungeonItemsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.isChestCountShown = (this.dungeonItems.dungeonName !== "Aga Tower" || this.config.variation === 'key-sanity') && this.dungeonItems.dungeonName !== "Ganons Tower"
+    this.isChestCountShown = (this.dungeonItems.dungeonName !== "Aga Tower" || this.config.variation === 'key-sanity') && this.dungeonItems.dungeonName !== "Ganons Tower" && this.dungeonItems.dungeonName !== "Hyrule Castle"
   }
 
   getDungeonChestCountBg() {

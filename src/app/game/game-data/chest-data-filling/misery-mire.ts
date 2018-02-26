@@ -19,7 +19,7 @@ export class MiseryMire {
       '', 75, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));
+    }, config.isFullMap ? 'dw-desert' : 'exit'));
     entrance.nodes.push(new DungeonNode(
       '', 7, 77, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {

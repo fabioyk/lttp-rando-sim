@@ -21,7 +21,7 @@ export class GanonsTower {
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));    
+    }, config.isFullMap ? 'dw-hera' : 'exit'));    
     entrance.nodes.push(new DungeonNode(
       '', 25, 14, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

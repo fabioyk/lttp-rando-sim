@@ -10,9 +10,12 @@ export class DungeonNode {
   errorMessage: string;
   mapNode:MapNode;
   _status:DungeonNodeStatus;
+  accessibleSectionArray: number[];
+  destinationSection: number;
 
   constructor(name:string, x:number, y:number, 
-      status:DungeonNodeStatus, canOpen:Function, content:string, errorMessage:string = '') {
+      status:DungeonNodeStatus, canOpen:Function, content:string, 
+      errorMessage:string = '', accessibleSectionArray:number[] = [-1], destinationSection:number = 0) {
     this.name = name;
     this.x = x;
     this.y = y;
@@ -21,6 +24,8 @@ export class DungeonNode {
     this.errorMessage = errorMessage;
     this.mapNode = new MapNode();
     this.status = status;
+    this.accessibleSectionArray = accessibleSectionArray;
+    this.destinationSection = destinationSection;
   }
 
   get status() {

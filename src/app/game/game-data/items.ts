@@ -50,6 +50,7 @@ export class Items {
   mmSwitch = false;
   ipSwitch = false;
   ipBlockPushed = false;
+  damFlooded = false;
 
   pendantCourage = false;
   pendantPower = false;
@@ -63,6 +64,14 @@ export class Items {
   dwMapOpen = false;
   mmMedallionChecked = false;
   trMedallionChecked = false;
+
+  hasPurpleChest = false;
+  hasBigBomb = false;
+  hasBlacksmiths = false;
+  oldManRescued = false;
+  blacksmithsRescued = false;
+
+  currentRegionInMap = 0;
 
   isKeysanity:boolean;
 
@@ -254,7 +263,7 @@ export class Items {
     const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room'];
     if (!isGroundKey && itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
         && itemName.indexOf('Agahnim 2') === -1 && itemName.indexOf('Ganon') === -1
-        && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {      
+        && dungeonStuff.indexOf(itemName) === -1 && DungeonData.nonDungeon.indexOf(region) === -1) {      
       if (!this.isKeysanity) {
         const dungeonItemsNames = ['bigKey', 'smallKey', 'map', 'compass'];
         var isDunItem = false;

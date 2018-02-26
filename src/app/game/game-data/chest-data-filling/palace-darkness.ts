@@ -18,7 +18,7 @@ export class PalaceDarkness {
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));
+    }, config.isFullMap ? 'dw-eastern-palace' : 'exit'));
     entrance.nodes.push(new DungeonNode(
       '', 25, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

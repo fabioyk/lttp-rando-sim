@@ -19,7 +19,7 @@ export class EasternPalace {
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));    
+    }, config.isFullMap ? 'lw-eastern-palace' : 'exit'));    
     entrance.nodes.push(new DungeonNode(
       'Cannonball Chest', 79.6, 58, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {

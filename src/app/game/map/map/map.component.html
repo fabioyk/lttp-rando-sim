@@ -1,5 +1,5 @@
 <div class="map"
-  [ngStyle]="{'background-image': getMapBg()}">
+  [ngStyle]="{'background-image': getMapBg()}" (click)='onMapClicked($event)'>
   <div *ngIf='!currentDungeon'>
     <app-node *ngFor='let lwNode of gameService.overworldData[currentMap === "light-world" ? "lwLocations" : "dwLocations"]'
       nodeType='overworld'
@@ -23,7 +23,10 @@
     
   </div>
   <div *ngIf='currentDungeon'>
-    <app-node *ngFor='let dunNode of currentDungeonMap.nodes'
+    <div *ngFor='let dunNode of currentDungeonMap.nodes'>
+      <app-node 
+          *ngIf='(dunNode.accessibleSectionArray.indexOf(-1) > -1 || dunNode.accessibleSectionArray.indexOf(this.items.currentRegionInMap) > -1)
+            && (dunNode.status !== 26 || items.mirror)'
         nodeType='inside-dungeon'
         [nodeInfo]='dunNode.mapNode'
         [items]='items'
@@ -32,7 +35,19 @@
         (click)='onDungeonNodeClick(dunNode.mapNode)'
         (mouseover)='changeTooltip(dunNode.mapNode)'
         (mouseleave)='clearTooltip()'>
-    </app-node>    
+      </app-node>
+    </div>
+    <app-node 
+          *ngIf='mirrorNode && mirrorMap === currentDungeonMap.id'
+        nodeType='inside-dungeon'
+        [nodeInfo]='mirrorNode.mapNode'
+        [items]='items'
+        [config]='config'
+        [dungeonItems]='currentDungeonItems'
+        (click)='onDungeonNodeClick(mirrorNode.mapNode)'
+        (mouseover)='changeTooltip(mirrorNode.mapNode)'
+        (mouseleave)='clearTooltip()'>
+      </app-node>
   </div>
 
   <div *ngIf='currentDungeonItems'>
@@ -52,6 +67,9 @@
   </button>
   <button class='btn btn-primary' (click)='onWarpClicked()' *ngIf='canWarp()'>
     {{warpButtonText}}
+  </button>
+  <button class='btn btn-primary' (click)='onFluteClicked()' *ngIf='canFlute()'>
+    <img class="icon" src="/assets/item-icons/flute.png">
   </button>
   <button class='btn btn-info' (click)='onCheckMap("lw")' *ngIf='!items.lwMapOpen && canViewMap("light-world")'>
     Check <img class="icon" src="/assets/item-icons/map.png">

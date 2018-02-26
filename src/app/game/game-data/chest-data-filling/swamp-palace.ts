@@ -19,7 +19,7 @@ export class SwampPalace {
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));
+    }, config.isFullMap ? 'dw-flute7' : 'exit'));
     entrance.nodes.push(new DungeonNode(
       'Entrance Chest', 36, 21, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {

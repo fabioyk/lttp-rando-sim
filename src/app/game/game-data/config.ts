@@ -10,6 +10,7 @@ export class Config {
   mode: string;
   
   canGlitch: boolean;
+  isFullMap: boolean;
 
   constructor() {
     this.canGlitch = false;
@@ -23,5 +24,6 @@ export class Config {
     this.logic = 'normal';
     this.goal = 'ganon';
     this.mode = 'standard';
+    this.isFullMap = false;
   }
 }

@@ -7,11 +7,13 @@ export class DungeonMapData {
   name: string;
   nodes: DungeonNode[];
   preloadedImages: HTMLImageElement[];
+  isIndoors:boolean;
 
-  constructor(id:string, name:string) {
+  constructor(id:string, name:string, isIndoors:boolean = false) {
     this.id = id;
     this.name = name;
     this.nodes = [];
+    this.isIndoors = isIndoors;
   }
 
   preloadImages(dunName:string) {

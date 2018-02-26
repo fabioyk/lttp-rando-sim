@@ -19,7 +19,7 @@ export class TurtleRock {
       '', 75, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));
+    }, config.isFullMap ? 'dw-trportal' : 'exit', '', [-1], 1));
     entrance.nodes.push(new DungeonNode(
       '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

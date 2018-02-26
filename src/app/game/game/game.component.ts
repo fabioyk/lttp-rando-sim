@@ -72,12 +72,22 @@ export class GameComponent implements OnInit {
         if (params.minorGlitches) {
           canGlitch = true;
         }
+        var fullMap = false;
+        if (params.fullMap) {
+          fullMap = true;
+          if (gameMode === 'standard') {
+            this.currentMap = 'lw-linkshouse';
+          } else {
+            this.currentMap = 'lw-sq';
+          }
+          
+        }
         if (params.seed && +params.seed === this._seedService.lastSeedNum) {
-          this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch);
+          this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch, fullMap);
         } else {
           this._seedService.getSeed(gameMode, params.seed)
             .subscribe((seed) => {
-              this.gameInit(seed.data, seed.seed, canGlitch);
+              this.gameInit(seed.data, seed.seed, canGlitch, fullMap);
             });
         }
       }
@@ -96,11 +106,12 @@ export class GameComponent implements OnInit {
 
   /// GAMEPLAY
 
-  gameInit(seedData:string, seedNumber:number, canGlitch:boolean) {
+  gameInit(seedData:string, seedNumber:number, canGlitch:boolean, isFullMap:boolean) {
     if (seedData) {
-      this.gameService.loadSeed(seedData, seedNumber, canGlitch);
+      this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap);
       this.items = new Items();
       this.config = this.gameService.config;
+      this.config.isFullMap = isFullMap;
       this.items.setup(this.config.variation === 'key-sanity', this.gameService.dungeonsData);
       this.itemLog = [];
       this.dungeonsData = this.gameService.dungeonsData;
