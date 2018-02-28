@@ -324,7 +324,7 @@ export class Items {
     return this.bow >= 3;
   }
   hasMeltyPower() {
-    return this.fireRod || this.bombos;
+    return this.fireRod || (this.bombos && this.sword);
   }
   hasBeamReflection(config:Config) {
     return this.cape || this.byrna || this.shield === 3 || config.canGlitch;
