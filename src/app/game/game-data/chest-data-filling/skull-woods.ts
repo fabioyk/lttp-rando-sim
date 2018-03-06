@@ -206,8 +206,8 @@ export class SkullWoods {
           return true;
       }, 'sw-part22'));
     } else {
-      part22.nodes.push(new DungeonNode(
-        '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
+      final.nodes.push(new DungeonNode(
+        '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
       function(items:Items, config:Config) {
           return true;
       }, 'dw-lostwoods', '', [-1], 1));

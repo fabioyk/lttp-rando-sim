@@ -33,11 +33,17 @@ export class MainMenuComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('modeSelected')) {
       this.modeSelected = localStorage.getItem('modeSelected');
-      this.glitchSelected = localStorage.getItem('glitchSelected');      
+      this.glitchSelected = localStorage.getItem('glitchSelected');
     } else {
       localStorage.setItem('modeSelected', this.modeSelected);
       localStorage.setItem('glitchSelected', this.glitchSelected);
     }
+    if (localStorage.getItem('mapSelected')) {
+      this.mapSelected = localStorage.getItem('mapSelected');
+    } else {
+      localStorage.setItem('mapSelected', this.mapSelected);      
+    }
+    
 
     this._seedService.getStatus()
       .subscribe((status) => {
@@ -82,6 +88,7 @@ export class MainMenuComponent implements OnInit {
 
     localStorage.setItem('modeSelected', this.modeSelected);
     localStorage.setItem('glitchSelected', this.glitchSelected);
+    localStorage.setItem('mapSelected', this.mapSelected);    
 
     this._seedService.getSeed(this.lockedMode, this.seedNum, this.dailySeed)
       .subscribe((seed) => {

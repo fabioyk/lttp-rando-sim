@@ -73,9 +73,9 @@
   border: solid black;
 }
 .in-dungeon-type {
-  width: 9%;
-  height: 9%;
-  margin: -4.5% -4.5%;
+  width: 6%;
+  height: 6%;
+  margin: -3% -3%;
   
   background-position: center center;
   background-size: cover;
@@ -89,9 +89,9 @@
 }
 
 .open-door, .sk-door, .bk-door {
-  width: 11%;
-  height: 7%;
-  margin: -3.5% -5.5%;
+  width: 9%;
+  height: 6%;
+  margin: -3% -4.5%;
 }
 
 .open-door {
@@ -105,9 +105,9 @@
 }
 
 .closed-chest, .open-chest {
-  width: 8%;
-  height: 8%;
-  margin: -4% -4%;
+  width: 6%;
+  height: 6%;
+  margin: -3% -3%;
 }
 
 .closed-chest {
@@ -118,9 +118,9 @@
 }
 
 .big-chest, .open-big-chest {
-  width: 10%;
-  height: 8%;
-  margin: -4% -5%;
+  width: 7.5%;
+  height: 6%;
+  margin: -3% -3.75%;
 }
 
 .big-chest {
@@ -176,7 +176,7 @@
 .lw-linkshouse {
   background-image: url('/assets/node-icons/links_house.png');  
 }
-.lw-sanctuary {
+.hc-sanctuary {
   background-image: url('/assets/node-icons/sanctuary.png');  
 }
 .lw-flute1 {

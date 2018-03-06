@@ -15,17 +15,17 @@ export class LightWorldMap {
 
     var entry = new DungeonMapData('lw-sq', 'Select where to start from', true);
     entry.nodes.push(new DungeonNode(
-      '', 50, 35, DungeonNodeStatus.SQ_OPTION,
+      'Link\'s House', 50, 35, DungeonNodeStatus.SQ_OPTION,
     function(items:Items, config:Config) {
         return true;
     }, 'lw-linkshouse'));
     entry.nodes.push(new DungeonNode(
-      '', 50, 51, DungeonNodeStatus.SQ_OPTION,
+      'Sanctuary', 50, 51, DungeonNodeStatus.SQ_OPTION,
     function(items:Items, config:Config) {
         return true;
-    }, 'lw-sanctuary'));
+    }, 'hc-sanctuary'));
     entry.nodes.push(new DungeonNode(
-      '', 50, 66, DungeonNodeStatus.SQ_OPTION,
+      'Mountain Cave', 50, 66, DungeonNodeStatus.SQ_OPTION,
     function(items:Items, config:Config) {
         return items.oldManRescued;
     }, 'lw-flute1')); 
@@ -390,39 +390,39 @@ export class LightWorldMap {
 
     m = new DungeonMapData('lw-flute7', 'Dam Entrance');
     m.nodes.push(new DungeonNode(
-      '', 4, 65, DungeonNodeStatus.OPEN_DOOR,
+      '', 6, 60, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'lw-desert'));
     m.nodes.push(new DungeonNode(
-      '', 87, 49, DungeonNodeStatus.OPEN_DOOR,
+      '', 89, 48, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'lw-dam'));
     m.nodes.push(new DungeonNode(
-      '', 74, 26, DungeonNodeStatus.OPEN_DOOR,
+      '', 81, 34, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'lw-south-house-portal'));
     m.nodes.push(new DungeonNode(
-      '', 97, 66, DungeonNodeStatus.OPEN_DOOR,
+      '', 93, 60, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'lw-minimoldorm-entrance'));
     m.nodes.push(new DungeonNode(
-      'Deliver Purple Chest', 36, 33, DungeonNodeStatus.CLOSED_CHEST,
+      'Deliver Purple Chest', 48, 36, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasPurpleChest; // TODO this
     }, l[114], 'Requires Purple Chest with you'));
     m.nodes.push(new DungeonNode(
-      'Sunken Chest', 75, 47, DungeonNodeStatus.CLOSED_CHEST,
+      'Sunken Chest', 81, 53, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[47], 'Requires Dam Flooded'));
     m.nodes.push(new DungeonNode(
-      'Bombos Tablet', 5, 80, DungeonNodeStatus.BOOK_CHECKABLE_ITEM,
+      'Bombos Tablet', 10, 45, DungeonNodeStatus.BOOK_CHECKABLE_ITEM,
     function(items:Items, config:Config) {
-        return true;
+        return items.sword >= 2;
     }, l[33], '', [1]));
     lwData.dungeonMaps.push(m);
 
@@ -472,7 +472,7 @@ export class LightWorldMap {
       '', 83, 32, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'lw-sanctuary'));
+    }, 'hc-sanctuary'));
     m.nodes.push(new DungeonNode(
       '', 30, 26, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -672,27 +672,27 @@ export class LightWorldMap {
         return true;
     }, 'lw-minimoldorm-entrance'));
     m.nodes.push(new DungeonNode(
-      'Mini Moldorm Cave Far Left Chest', 35, 10, DungeonNodeStatus.CLOSED_CHEST,
+      'Mini Moldorm Cave Far Left Chest', 35, 16, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[23]));
     m.nodes.push(new DungeonNode(
-      'Mini Moldorm Cave Left Chest', 42, 10, DungeonNodeStatus.CLOSED_CHEST,
+      'Mini Moldorm Cave Left Chest', 42, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[24]));
     m.nodes.push(new DungeonNode(
-      'Mini Moldorm Cave Right Chest', 57, 10, DungeonNodeStatus.CLOSED_CHEST,
+      'Mini Moldorm Cave Right Chest', 57, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[25]));
     m.nodes.push(new DungeonNode(
-      'Mini Moldorm Cave Far Right Chest', 65, 10, DungeonNodeStatus.CLOSED_CHEST,
+      'Mini Moldorm Cave Far Right Chest', 64, 16, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[26]));
     m.nodes.push(new DungeonNode(
-      'Mini Moldorm Cave NPC', 50, 15, DungeonNodeStatus.CLOSED_CHEST,
+      'Mini Moldorm Cave NPC', 49.5, 15, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[40]));
@@ -822,19 +822,6 @@ export class LightWorldMap {
     }, l[28]));
     lwData.dungeonMaps.push(m);
 
-    m = new DungeonMapData('lw-sanctuary', 'Sanctuary', true);
-    m.nodes.push(new DungeonNode(
-      '', 50, 87, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'lw-sanctuary-entrance'));
-    m.nodes.push(new DungeonNode(
-      'Sanctuary Chest', 45, 17, DungeonNodeStatus.CLOSED_CHEST,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[52]));
-    lwData.dungeonMaps.push(m);
-
     m = new DungeonMapData('lw-lumberjack', 'Lumberjack Tree');
     m.nodes.push(new DungeonNode(
       '', 67, 71, DungeonNodeStatus.OPEN_DOOR,
@@ -899,7 +886,7 @@ export class LightWorldMap {
       '', 50, 94, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'lw-graveyard'));
+    }, 'lw-graveyard', '', [-1], 2));
     m.nodes.push(new DungeonNode(
       'King\'s Tomb Chest', 50, 18, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -958,12 +945,12 @@ export class LightWorldMap {
 
     m = new DungeonMapData('lw-icerod', 'Ice Cave', true);
     m.nodes.push(new DungeonNode(
-      '', 24, 92, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'lw-flute8'));
     m.nodes.push(new DungeonNode(
-      'Ice Rod Chest', 20, 18, DungeonNodeStatus.CLOSED_CHEST,
+      'Ice Rod Chest', 45, 16, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[27]));
@@ -1089,12 +1076,12 @@ export class LightWorldMap {
 
     m = new DungeonMapData('lw-south-grove-cave', 'Cave South of Grove', true);
     m.nodes.push(new DungeonNode(
-      '', 25, 68, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 78, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'lw-south-grove', '', [-1], 1));
     m.nodes.push(new DungeonNode(
-      'South Grove Chest', 74, 43, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
+      'South Grove Chest', 32, 40, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[37]));
@@ -1249,7 +1236,7 @@ export class LightWorldMap {
     m.nodes.push(new DungeonNode(
       'Pedestal', 48, 28, DungeonNodeStatus.BOOK_CHECKABLE_ITEM,
     function(items:Items, config:Config) {
-        return true;
+        return items.pendantCourage && items.pendantPower && items.pendantWisdom;
     }, l[0]));
     lwData.dungeonMaps.push(m);
 
@@ -1324,7 +1311,7 @@ export class LightWorldMap {
       'Spectacle Rock Item', 53, 34, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.currentRegionInMap === 1;
-    }, l[77], ''));
+    }, l[77]));
     m.nodes.push(new DungeonNode(
       '', 45, 29, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -1367,9 +1354,9 @@ export class LightWorldMap {
       return true;
     }, 'lw-spectacle-rock'));
     m.nodes.push(new DungeonNode(
-      '', 18, 31, DungeonNodeStatus.BOOK_CHECKABLE_ITEM,
+      'Ether Tablet', 18, 31, DungeonNodeStatus.BOOK_CHECKABLE_ITEM,
     function(items:Items, config:Config) {
-      return true;
+      return items.sword >= 2;
     }, l[76]));
     m.nodes.push(new DungeonNode(
       'Spectacle Rock Item', 53, 60, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,

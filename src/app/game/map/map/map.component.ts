@@ -39,6 +39,7 @@ export class MapComponent implements OnInit {
 
   mirrorNode: DungeonNode;
   mirrorMap:string;
+  mirrorRegion: number;
   dungeonMirrorMap:string;
 
   dungeonFinishMap:string;
@@ -109,16 +110,17 @@ export class MapComponent implements OnInit {
 
   onDungeonClick(dungeonClicked:MapNode) {
     if (dungeonClicked.status.indexOf('getable') > -1 && dungeonClicked.status.indexOf('unavailable') === -1) {
-      this.changeDungeon(dungeonClicked.originalNode.startingMap);      
+      this.changeDungeon(dungeonClicked.originalNode.startingMap.id);      
     }    
   }
 
   nonDuns = ['lw', 'dw'];
   changeDungeon(destinationMap:string) {
+    console.log(destinationMap);
     if (this.currentDungeonMap) {
       this.currentDungeonMap.cleanPreload();
     }
-    if (this.nonDuns.indexOf(this.currentDungeonMap.id.split('-')[0]) > -1 && this.nonDuns.indexOf(destinationMap.split('-')[0]) === -1) {
+    if (this.currentDungeonMap && this.nonDuns.indexOf(this.currentDungeonMap.id.split('-')[0]) > -1 && this.nonDuns.indexOf(destinationMap.split('-')[0]) === -1) {
       this.dungeonFinishMap = this.currentDungeonMap.id;
       this.dungeonFinishRegion = this.items.currentRegionInMap;
       this.dungeonMirrorMap = destinationMap;
@@ -172,12 +174,15 @@ export class MapComponent implements OnInit {
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_DOOR.toString();
         case DungeonNodeStatus.SQ_OPTION:
         case DungeonNodeStatus.OPEN_DOOR:
-          if (dungeonNode.prize[0].split('-')[0] !== this.currentDungeonMap.id.split('-')[0]) {
-            this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;            
+          if (dungeonNode.prize[0] === 'ganon') {
+            this.addPrizes(dungeonNode, this.currentDungeon.name);          
+            this.onGameFinished.emit('');            
+          } else if (dungeonNode.prize[0] !== 'exit' && dungeonNode.prize[0].split('-')[0] !== this.currentDungeonMap.id.split('-')[0]) {            
             this.changeDungeon(dungeonNode.prize[0]);
-          } else {
             this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
+          } else {            
             this.changeMapInDungeon(dungeonNode.prize[0]);
+            this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
           }          
           break;
         case DungeonNodeStatus.SK_LOCKED:
@@ -218,6 +223,21 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.CLOSED_CHEST:
           if (dungeonNode.tooltip === 'Old Man') {
             this.items.oldManRescued = true;
+          }
+          if (dungeonNode.tooltip === 'Blacksmiths Item') {
+            this.items.blacksmithsRescued = true;
+          }
+          if (dungeonNode.tooltip === 'Spectacle Rock Item') {
+            this.currentDungeon.dungeonMaps.forEach((map) => {
+              map.nodes.forEach((node) => {
+                if (node.name === 'Spectacle Rock Item') {
+                  node.status = DungeonNodeStatus.OPEN_CHEST;
+                }
+              });
+            })
+          }
+          if (dungeonNode.originalNode.accessibleSectionArray[0] === -1 && +dungeonNode.status === DungeonNodeStatus.CLOSED_CHEST) {
+            this.items.currentRegionInMap = 0;
           }
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();
@@ -280,7 +300,11 @@ export class MapComponent implements OnInit {
             name[0] = 'dw';
           }
           this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
-          this.mirrorNode = dungeonNode.originalNode;
+          this.mirrorNode = null;
+          this.mirrorRegion = dungeonNode.originalNode.destinationSection;
+          setTimeout(() => {
+            this.mirrorNode = dungeonNode.originalNode;
+          }, 1);
           this.mirrorMap = name.join('-');
           this.changeDungeon(this.mirrorMap);          
           break;
@@ -297,17 +321,16 @@ export class MapComponent implements OnInit {
           dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
           break;
         case DungeonNodeStatus.BOOK_CHECKABLE_ITEM:
-          if (this.items.book && this.items.sword >= 2) {
+          if (this.items.book) {
             this.addPrizes(dungeonNode, this.currentDungeon.name);
             dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();            
-          } else if (this.items.book) {
-            this.viewItem.emit([dungeonNode, this.currentMap, this.currentRegion]);
           } else {
             this.cantItem.emit([dungeonNode, this.currentDungeon.name, true]);
           }
           break;
       }
-    } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()) {
+    } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()
+      || (dungeonNode.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM.toString() && this.items.book)) {
       this.viewItem.emit([dungeonNode, this.currentMap, this.currentRegion]);
     } else {
       this.cantItem.emit([dungeonNode, this.currentDungeon.name, true]);
@@ -539,75 +562,86 @@ export class MapComponent implements OnInit {
     var maps = [];
     var start, end;
 
-    if (this.currentMap === 'light-world') {
+    if (this.currentMap === 'light-world' || this.currentMap.substr(0, 2) === 'lw') {
       start = 1;
       end = 3;
     } else {
       start = 5;
       end = 11;
     }
-
-    for (var i = start; i <= end; i++) {
+    for (var i = start; i <= end; i++) {      
       if (this.items.dungeonItemsArray[i].mapPrizeStatus === DungeonItems.UNKNOWN 
           && this.items.dungeonItemsArray[i].hasMap) {
         maps.push(i);
       }
     }
-
     return maps;
   }
 
   onCheckMap(mapName:string) {
-    if (this.config.variation !== 'key-sanity') {
-      if (mapName === 'lw') {
-        this.items.lwMapOpen = true;
-        this.gameService.dungeonsData.forEach((dunData, i) => {
-          if (DungeonData.lwDungeons.indexOf(dunData.name) > -1) {
-            this.items.dungeonItemsArray[i+1].checkThisMap();
-          }
-        });
-      } else if (this.canViewMap('dark-world')) {
-        this.items.dwMapOpen = true;
-        this.gameService.dungeonsData.forEach((dunData, i) => {
-          if (DungeonData.lwDungeons.indexOf(dunData.name) === -1) {
-            this.items.dungeonItemsArray[i+1].checkThisMap();
-          }
-        });
-      } 
+    if (mapName === 'gp') {
+      this.gameService.dungeonsData.forEach((dunData, i) => {
+        if (this.itemNameService.getItemById(dunData.dungeonPrize).shortName === 'pendantCourage') {
+          this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.GREEN_PENDANT;
+        }
+      });
+    } else if (mapName === 'rc') {
+      this.gameService.dungeonsData.forEach((dunData, i) => {
+        var prize = this.itemNameService.getItemById(dunData.dungeonPrize).shortName;
+        if (prize === 'crystal5' || prize === 'crystal6') {
+          this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.RED_CRYSTAL;
+        }
+      });
     } else {
-      if (mapName === 'gp') {
-        this.gameService.dungeonsData.forEach((dunData, i) => {
-          if (this.itemNameService.getItemById(dunData.dungeonPrize).shortName === 'pendantCourage') {
-            this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.GREEN_PENDANT;
-          }
-        });
-      } else if (mapName === 'rc') {
-        this.gameService.dungeonsData.forEach((dunData, i) => {
-          var prize = this.itemNameService.getItemById(dunData.dungeonPrize).shortName;
-          if (prize === 'crystal5' || prize === 'crystal6') {
-            this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.RED_CRYSTAL;
-          }
-        });
+      if (this.config.variation !== 'key-sanity') {
+        if (mapName === 'lw') {
+          this.items.lwMapOpen = true;
+          this.gameService.dungeonsData.forEach((dunData, i) => {
+            if (DungeonData.lwDungeons.indexOf(dunData.name) > -1) {
+              this.items.dungeonItemsArray[i+1].checkThisMap();
+            }
+          });
+        } else if (this.canViewMap('dark-world')) {
+          this.items.dwMapOpen = true;
+          this.gameService.dungeonsData.forEach((dunData, i) => {
+            if (DungeonData.lwDungeons.indexOf(dunData.name) === -1) {
+              this.items.dungeonItemsArray[i+1].checkThisMap();
+            }
+          });
+        } 
       } else {
         var mapsToCheck = this.getAvailableDungeonMapIndexes();
         mapsToCheck.forEach((dunIndex) => {
           this.items.dungeonItemsArray[dunIndex].checkThisMap();
         })
       }
-      
-    }     
+    }       
   }
 
   canViewMap(world:string):boolean {
     if (this.config.isFullMap) {
       if (world === 'light-world') {
-        return this.currentDungeonMap.id.split('-')[0] === 'lw' && !this.currentDungeonMap.isIndoors;         
+        return this.currentDungeonMap.id.split('-')[0] === 'lw'          
+          && !this.currentDungeonMap.isIndoors && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'key-sanity');
       } else if (world === 'dark-world') {
-        return this.currentDungeonMap.id.split('-')[0] === 'dw' && !this.currentDungeonMap.isIndoors;                 
+        return this.currentDungeonMap.id.split('-')[0] === 'dw' 
+          && !this.currentDungeonMap.isIndoors  && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'key-sanity');
       } else if (world === 'green-pendant') {
-        return this.currentDungeonMap.id === 'lw-saha';
+        var foundGreen = false;
+        this.items.dungeonItemsArray.forEach((eachDunItems) => {
+          if (eachDunItems.mapPrizeStatus === DungeonItems.GREEN_PENDANT) {
+            foundGreen = true;
+          }
+        });
+        return this.currentDungeonMap.id === 'lw-saha' && !foundGreen;
       } else {
-        return this.currentDungeonMap.id === 'dw-bomb-shop';        
+        var foundReds = 0;
+        this.items.dungeonItemsArray.forEach((eachDunItems) => {
+          if (eachDunItems.mapPrizeStatus === DungeonItems.RED_CRYSTAL) {
+            foundReds++;
+          }
+        });
+        return this.currentDungeonMap.id === 'dw-bomb-shop' && foundReds < 2;        
       }
     }
     if (this.config.variation !== 'key-sanity') {

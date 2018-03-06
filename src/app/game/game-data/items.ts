@@ -164,8 +164,8 @@ export class Items {
     'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
 
     if (notItemLocation.indexOf(itemName) === -1) {
-      this.stats.totalCount++;
-      if (region === 'light-world' || region === 'dark-world') {
+      this.stats.totalCount++;      
+      if (region === 'light-world' || region === 'dark-world' || region === 'Light World' || region === 'Dark World') {
         this.stats.overworldCount++;
       } else {
         this.stats.dungeonCount++;

@@ -38,7 +38,7 @@
       </app-node>
     </div>
     <app-node 
-          *ngIf='mirrorNode && mirrorMap === currentDungeonMap.id'
+          *ngIf='mirrorNode && mirrorMap === currentDungeonMap.id && (mirrorRegion === -1 || mirrorRegion === this.items.currentRegionInMap)'
         nodeType='inside-dungeon'
         [nodeInfo]='mirrorNode.mapNode'
         [items]='items'

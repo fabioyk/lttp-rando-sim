@@ -50,6 +50,19 @@ export class HyruleCastle {
     }, 'lw-hyrule-castle', '', [-1], 1));
     hcData.dungeonMaps.push(m);
 
+    m = new DungeonMapData('hc-sanctuary', 'Sanctuary', true);
+    m.nodes.push(new DungeonNode(
+      '', 50, 87, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'lw-sanctuary-entrance'));
+    m.nodes.push(new DungeonNode(
+      'Sanctuary Chest', 45, 17, DungeonNodeStatus.CLOSED_CHEST,
+    function(items:Items, config:Config) {
+        return true;
+    }, l[52]));
+    hcData.dungeonMaps.push(m);
+
     m = new DungeonMapData('hc-map', 'Keyguard Room');
     m.nodes.push(new DungeonNode(
       '', 49, 39, DungeonNodeStatus.OPEN_DOOR,
@@ -155,7 +168,7 @@ export class HyruleCastle {
       '', 74, 9, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'lw-sanctuary'));
+    }, 'hc-sanctuary'));
     m.nodes.push(new DungeonNode(
       'Bombable Wall Chest 1', 14, 56, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
