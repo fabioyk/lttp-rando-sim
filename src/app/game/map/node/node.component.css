@@ -167,6 +167,24 @@
 .mirror {
   background-image: url('/assets/item-icons/mirror.png');      
 }
+.frog {
+  background-image: url('/assets/node-icons/frog.png');      
+}
+.purple-chest {
+  background-image: url('/assets/node-icons/purple-chest.png');      
+}
+.big-bomb {
+  background-image: url('/assets/node-icons/big-bomb.png');      
+}
+.tablet {
+  background-image: url('/assets/node-icons/tablet.png');      
+}
+.pedestal {
+  background-image: url('/assets/node-icons/pedestal.png');      
+}
+.duck {
+  background-image: url('/assets/node-icons/duck.png');      
+}
 .sq-item {
   width: 60%;
   margin-left: -30%;

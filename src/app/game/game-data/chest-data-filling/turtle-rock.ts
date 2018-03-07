@@ -155,7 +155,7 @@ export class TurtleRock {
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'tr-outside'));
+    }, config.isFullMap ? 'dw-tr-ledge' : 'tr-outside'));
     trData.dungeonMaps.push(doubPokey);
 
     var outside = new DungeonMapData('tr-outside', 'Corridor Outside');
@@ -194,7 +194,7 @@ export class TurtleRock {
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'tr-outside'));
+    }, config.isFullMap ? 'dw-tr-ledge' : 'tr-outside'));
     bc.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

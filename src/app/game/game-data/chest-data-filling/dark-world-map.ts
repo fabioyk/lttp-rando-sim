@@ -655,11 +655,11 @@ export class DarkWorldMap {
       '', 53, 83, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hammer;
-    }, 'dw-hammer-pegs')); // TODO find the map
+    }, 'dw-hammer-pegs'));
     m.nodes.push(new DungeonNode(
       '', 41, 17, DungeonNodeStatus.PURPLE_CHEST,
     function(items:Items, config:Config) {
-      return items.blacksmithsRescued; // TODO has delivered smiths
+      return items.blacksmithsRescued;
     }, ''));
     m.nodes.push(new DungeonNode(
       '', 43, 54, DungeonNodeStatus.MIRROR,
@@ -1083,6 +1083,24 @@ export class DarkWorldMap {
     function(items:Items, config:Config) {
       return items.hookshot || (config.canGlitch && items.boots);
     }, l[99]));
+    dwData.dungeonMaps.push(m);
+
+    m = new DungeonMapData('dw-tr-ledge', 'Turtle Rock Outside Corridor');
+    m.nodes.push(new DungeonNode(
+      '', 37, 48, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'tr-double-pokey'));
+    m.nodes.push(new DungeonNode(
+      '', 75, 48, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'tr-bc'));
+    m.nodes.push(new DungeonNode(
+      '', 74, 58, DungeonNodeStatus.MIRROR,
+    function(items:Items, config:Config) {
+        return true;
+    }, ''));
     dwData.dungeonMaps.push(m);
 
     dwData.startingMap = m;

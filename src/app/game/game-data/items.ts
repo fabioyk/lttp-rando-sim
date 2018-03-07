@@ -70,6 +70,7 @@ export class Items {
   hasBlacksmiths = false;
   oldManRescued = false;
   blacksmithsRescued = false;
+  isFluteActivated = false;
 
   currentRegionInMap = 0;
 
@@ -264,7 +265,7 @@ export class Items {
     const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room'];
     if (!isGroundKey && itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
         && itemName.indexOf('Agahnim 2') === -1 && itemName.indexOf('Ganon') === -1
-        && dungeonStuff.indexOf(itemName) === -1 && DungeonData.nonDungeon.indexOf(region) === -1) {      
+        && dungeonStuff.indexOf(itemName) === -1 && DungeonData.dungeonsWithDunItemsNames.indexOf(region) > -1) {      
       if (!this.isKeysanity) {
         const dungeonItemsNames = ['bigKey', 'smallKey', 'map', 'compass'];
         var isDunItem = false;

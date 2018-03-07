@@ -104,7 +104,7 @@ export class NodeComponent implements OnInit {
       }
       if (+this.nodeInfo.status === DungeonNodeStatus.WATER_SWITCH_FLIPPED
         || +this.nodeInfo.status === DungeonNodeStatus.BLIND_RESCUED
-        || +this.nodeInfo.status === DungeonNodeStatus.COLLECTED_GROUND_KEY
+        || +this.nodeInfo.status === DungeonNodeStatus.EMPTY
         || +this.nodeInfo.status === DungeonNodeStatus.OPEN_CHEST
         || +this.nodeInfo.status === DungeonNodeStatus.OPEN_BIG_CHEST
         || +this.nodeInfo.status === DungeonNodeStatus.TT_BOMB_FLOOR_DONE) {
@@ -180,7 +180,7 @@ export class NodeComponent implements OnInit {
           return 'closed-chest';
         case DungeonNodeStatus.GROUND_KEY:
           return 'spare-key';
-        case DungeonNodeStatus.COLLECTED_GROUND_KEY:
+        case DungeonNodeStatus.EMPTY:
           return 'empty';
         case DungeonNodeStatus.SWITCH:
           return 'switch-red';
@@ -201,9 +201,25 @@ export class NodeComponent implements OnInit {
         case DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK:
           return 'push-block';
         case DungeonNodeStatus.PORTAL:
-          return 'portal';
+          if (!this.nodeInfo.originalNode.canOpen(this.items, this.config)) {
+            return 'invisible';
+          } else {
+            return 'portal';
+          }          
         case DungeonNodeStatus.MIRROR:
           return 'mirror';
+        case DungeonNodeStatus.FROG:
+          return 'frog';
+        case DungeonNodeStatus.PURPLE_CHEST:
+          return 'purple-chest';
+        case DungeonNodeStatus.BIG_BOMB:
+          return 'big-bomb';
+        case DungeonNodeStatus.BOOK_CHECKABLE_ITEM:
+          return 'tablet';
+        case DungeonNodeStatus.PEDESTAL:
+          return 'pedestal';
+        case DungeonNodeStatus.DUCK:
+          return 'duck';
         case DungeonNodeStatus.SQ_OPTION:
           var res = 'sq-item ' + this.nodeInfo.prize[0];
           if (this.nodeInfo.prize[0] === 'lw-flute1' && !this.nodeInfo.originalNode.canOpen(this.items, this.config)) {

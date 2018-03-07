@@ -798,19 +798,23 @@ export class LightWorldMap {
       '', 9, 20, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'lw-well'));m.nodes.push(new DungeonNode(
+    }, 'lw-well'));
+    m.nodes.push(new DungeonNode(
       '', 51, 18, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'lw-blindshut'));m.nodes.push(new DungeonNode(
+    }, 'lw-blindshut'));
+    m.nodes.push(new DungeonNode(
       '', 38, 66, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'lw-chicken'));m.nodes.push(new DungeonNode(
+    }, 'lw-chicken'));
+    m.nodes.push(new DungeonNode(
       '', 64, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'lw-bar'));m.nodes.push(new DungeonNode(
+    }, 'lw-bar'));
+    m.nodes.push(new DungeonNode(
       '', 62, 64, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
@@ -820,6 +824,11 @@ export class LightWorldMap {
     function(items:Items, config:Config) {
         return true;
     }, l[28]));
+    m.nodes.push(new DungeonNode(
+      'Activate Flute', 50.5, 40, DungeonNodeStatus.DUCK,
+    function(items:Items, config:Config) {
+        return items.flute;
+    }, ''));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-lumberjack', 'Lumberjack Tree');
@@ -1234,7 +1243,7 @@ export class LightWorldMap {
         return true;
     }, 'lw-lostwoods'));
     m.nodes.push(new DungeonNode(
-      'Pedestal', 48, 28, DungeonNodeStatus.BOOK_CHECKABLE_ITEM,
+      'Pedestal', 48, 28, DungeonNodeStatus.PEDESTAL,
     function(items:Items, config:Config) {
         return items.pendantCourage && items.pendantPower && items.pendantWisdom;
     }, l[0]));
@@ -1437,12 +1446,12 @@ export class LightWorldMap {
     m = new DungeonMapData('lw-paradox2', 'Paradox Cave 2 Chests', true);
     // 0: from dm east, 1: from paradox 5
     m.nodes.push(new DungeonNode(
-      'Paradox Cave Upper - Left Chest', 71, 13, DungeonNodeStatus.CLOSED_CHEST,
+      'Paradox Cave Upper - Left Chest', 72, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.currentRegionInMap === 1 || items.mirror;
     }, l[85]));
     m.nodes.push(new DungeonNode(
-      'Paradox Cave Upper - Right Chest', 77, 14, DungeonNodeStatus.CLOSED_CHEST,
+      'Paradox Cave Upper - Right Chest', 78, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.currentRegionInMap === 1 || items.mirror;
     }, l[86]));
@@ -1455,36 +1464,36 @@ export class LightWorldMap {
       '', 87, 59, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.currentRegionInMap === 1 || items.mirror;
-    }, 'lw-paradox5'));
+    }, 'lw-paradox5', '', [-1], 1));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-paradox5', 'Paradox Cave 5 Chests', true);
     // 0: from dm east, 1: from paradox 2
     m.nodes.push(new DungeonNode(
-      'Paradox Cave Lower - Chest 1', 60, 10, DungeonNodeStatus.CLOSED_CHEST,
+      'Paradox Cave Lower - Chest 1', 61, 13, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return true;
-    }, l[80], '', config.canGlitch ? [-1] : [1]));
+    }, l[80], '', [1]));
     m.nodes.push(new DungeonNode(
-      'Paradox Cave Lower - Chest 2', 70, 10, DungeonNodeStatus.CLOSED_CHEST,
+      'Paradox Cave Lower - Chest 2', 70, 13, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return true;
-    }, l[81], '', config.canGlitch ? [-1] : [1]));
+    }, l[81], '', [1]));
     m.nodes.push(new DungeonNode(
-      'Paradox Cave Lower - Chest 3', 79, 10, DungeonNodeStatus.CLOSED_CHEST,
+      'Paradox Cave Lower - Chest 3', 73, 19, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return true;
-    }, l[82], '', config.canGlitch ? [-1] : [1]));
+    }, l[82], '', [1]));
     m.nodes.push(new DungeonNode(
-      'Paradox Cave Lower - Chest 4', 89, 10, DungeonNodeStatus.CLOSED_CHEST,
+      'Paradox Cave Lower - Chest 4', 79, 13, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return true;
-    }, l[83], '', config.canGlitch ? [-1] : [1]));
+    }, l[83], '', [1]));
     m.nodes.push(new DungeonNode(
-      'Paradox Cave Lower - Chest 5', 80, 20, DungeonNodeStatus.CLOSED_CHEST,
+      'Paradox Cave Lower - Chest 5', 88, 13, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return true;
-    }, l[84], '', config.canGlitch ? [-1] : [1]));
+    }, l[84], '', [1]));
     m.nodes.push(new DungeonNode(
       '', 67, 70, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -1494,7 +1503,7 @@ export class LightWorldMap {
       '', 87, 59, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return true;
-    }, 'lw-paradox2', '', config.canGlitch ? [-1] : [1], 1));
+    }, 'lw-paradox2', '', [1], 1));
     m.nodes.push(new DungeonNode(
       '', 50, 92, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -1505,6 +1514,27 @@ export class LightWorldMap {
     function(items:Items, config:Config) {
       return true;
     }, 'lw-trportal', '', config.canGlitch ? [-1] : [0]));
+    lwData.dungeonMaps.push(m);
+
+    m = new DungeonMapData('lw-tr-ledge', 'Mimic Cave Entrance');
+    m.nodes.push(new DungeonNode(
+      '', 75, 48, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'lw-mimic'));
+    lwData.dungeonMaps.push(m);
+
+    m = new DungeonMapData('lw-mimic', 'Mimic Cave', true);
+    m.nodes.push(new DungeonNode(
+      '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'lw-tr-ledge'));
+    m.nodes.push(new DungeonNode(
+      'Mimic Cave Chest', 50, 25, DungeonNodeStatus.CLOSED_CHEST,
+    function(items:Items, config:Config) {
+        return items.hammer;
+    }, l[79], 'Hammer Required'));
     lwData.dungeonMaps.push(m);
 
     lwData.startingMap = entry;

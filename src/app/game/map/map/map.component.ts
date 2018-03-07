@@ -175,7 +175,7 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.SQ_OPTION:
         case DungeonNodeStatus.OPEN_DOOR:
           if (dungeonNode.prize[0] === 'ganon') {
-            this.addPrizes(dungeonNode, this.currentDungeon.name);          
+            this.addPrizes(dungeonNode, this.currentDungeon.name);
             this.onGameFinished.emit('');            
           } else if (dungeonNode.prize[0] !== 'exit' && dungeonNode.prize[0].split('-')[0] !== this.currentDungeonMap.id.split('-')[0]) {            
             this.changeDungeon(dungeonNode.prize[0]);
@@ -239,12 +239,12 @@ export class MapComponent implements OnInit {
           if (dungeonNode.originalNode.accessibleSectionArray[0] === -1 && +dungeonNode.status === DungeonNodeStatus.CLOSED_CHEST) {
             this.items.currentRegionInMap = 0;
           }
-          this.addPrizes(dungeonNode, this.currentDungeon.name);
+          if (this.config.isFullMap && this.currentDungeonMap.isIndoors) {
+            this.addPrizes(dungeonNode, this.currentDungeonMap.name);            
+          } else {
+            this.addPrizes(dungeonNode, this.currentDungeon.name);            
+          }
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();
-          break;
-        case DungeonNodeStatus.OPEN_CHEST:
-          break;
-        case DungeonNodeStatus.OPEN_BIG_CHEST:
           break;
         case DungeonNodeStatus.BOSS:
           if (this.currentDungeon.name === 'Aga Tower' || this.currentDungeon.name === 'Ganons Tower') {
@@ -259,9 +259,9 @@ export class MapComponent implements OnInit {
           break;
         case DungeonNodeStatus.GROUND_KEY:
           this.items.add('smallKey-'+DungeonData.allDungeonNames.indexOf(this.currentDungeon.name), this.currentDungeon.name, true);
-          dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
           break;
-        case DungeonNodeStatus.COLLECTED_GROUND_KEY:
+        case DungeonNodeStatus.EMPTY:
           break;
         case DungeonNodeStatus.SWITCH_FLIPPED:
         case DungeonNodeStatus.SWITCH:
@@ -310,28 +310,41 @@ export class MapComponent implements OnInit {
           break;
         case DungeonNodeStatus.FROG:
           this.items.hasBlacksmiths = true;
-          dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
           break;
         case DungeonNodeStatus.PURPLE_CHEST:
           this.items.hasPurpleChest = true;
-          dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
           break;
           case DungeonNodeStatus.BIG_BOMB:
           this.items.hasBigBomb = true;
-          dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
           break;
-        case DungeonNodeStatus.BOOK_CHECKABLE_ITEM:
+        case DungeonNodeStatus.BOOK_CHECKABLE_ITEM:        
           if (this.items.book) {
             this.addPrizes(dungeonNode, this.currentDungeon.name);
-            dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();            
+            dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();            
           } else {
             this.cantItem.emit([dungeonNode, this.currentDungeon.name, true]);
           }
           break;
+        case DungeonNodeStatus.PEDESTAL:
+          this.addPrizes(dungeonNode, this.currentDungeon.name);
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
+          break;
+        case DungeonNodeStatus.DUCK:
+          this.items.isFluteActivated = true;
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
+          break;
       }
     } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()
-      || (dungeonNode.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM.toString() && this.items.book)) {
-      this.viewItem.emit([dungeonNode, this.currentMap, this.currentRegion]);
+      || ((dungeonNode.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM.toString()
+        || dungeonNode.status === DungeonNodeStatus.PEDESTAL.toString()) && this.items.book)) {
+      if (this.config.isFullMap && this.currentDungeonMap.isIndoors) {
+        this.viewItem.emit([dungeonNode, this.currentDungeonMap.name, this.currentRegion]);  
+      } else {
+        this.viewItem.emit([dungeonNode, this.currentDungeon.name, this.currentRegion]);
+      }      
     } else {
       this.cantItem.emit([dungeonNode, this.currentDungeon.name, true]);
     }
@@ -548,7 +561,9 @@ export class MapComponent implements OnInit {
     if (!this.config.isFullMap || !this.items.flute) {
       return false;
     }
-    if (this.currentDungeonMap.id.split('-')[0] === 'lw' && !this.currentDungeonMap.isIndoors) {
+    if (this.currentDungeonMap.id.split('-')[0] === 'lw' 
+        && !this.currentDungeonMap.isIndoors
+        && this.items.isFluteActivated) {
       return true;
     }
     return false;
@@ -597,14 +612,14 @@ export class MapComponent implements OnInit {
         if (mapName === 'lw') {
           this.items.lwMapOpen = true;
           this.gameService.dungeonsData.forEach((dunData, i) => {
-            if (DungeonData.lwDungeons.indexOf(dunData.name) > -1) {
+            if (i < 3) {
               this.items.dungeonItemsArray[i+1].checkThisMap();
             }
           });
         } else if (this.canViewMap('dark-world')) {
           this.items.dwMapOpen = true;
           this.gameService.dungeonsData.forEach((dunData, i) => {
-            if (DungeonData.lwDungeons.indexOf(dunData.name) === -1) {
+            if (i >= 4 && i <= 10) {
               this.items.dungeonItemsArray[i+1].checkThisMap();
             }
           });
@@ -778,6 +793,7 @@ export class MapComponent implements OnInit {
     list.forEach((item) => {
       this.items.add(item, 'light-world');
     });
+    this.items.isFluteActivated = true;
     this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
     
   }

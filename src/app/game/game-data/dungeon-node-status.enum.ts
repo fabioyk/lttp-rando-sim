@@ -10,7 +10,7 @@ export class DungeonNodeStatus {
   static OPEN_BIG_CHEST = 8;
   static BOSS = 9;
   static GROUND_KEY = 10;
-  static COLLECTED_GROUND_KEY = 11;
+  static EMPTY = 11;
   static SWITCH = 12;
   static WATER_SWITCH = 13;
   static BLIND_RESCUE = 14;
@@ -31,4 +31,6 @@ export class DungeonNodeStatus {
   static MEDALLION_OPENED = 29;
   static BOOK_CHECKABLE_ITEM = 30;
   static SQ_OPTION = 31;
+  static PEDESTAL = 32;
+  static DUCK = 33;
 }
