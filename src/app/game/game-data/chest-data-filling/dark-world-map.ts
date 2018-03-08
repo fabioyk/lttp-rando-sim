@@ -1054,32 +1054,32 @@ export class DarkWorldMap {
 
     m = new DungeonMapData('dw-hookshotcave', 'Hookshot Cave', true);
     m.nodes.push(new DungeonNode(
-      '', 62, 96, DungeonNodeStatus.OPEN_DOOR,
+      '', 74, 94, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return true;
     }, 'dw-trportal'));
     m.nodes.push(new DungeonNode(
-      '', 37, 47, DungeonNodeStatus.OPEN_DOOR,
+      '', 75, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return true;
     }, 'dw-trportal', '', [-1], 2));
     m.nodes.push(new DungeonNode(
-      'Hookshot Cave Bottom Chest', 46, 89, DungeonNodeStatus.CLOSED_CHEST,
+      'Hookshot Cave Bottom Chest', 52, 63, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.boots || items.hookshot;
     }, l[102]));
     m.nodes.push(new DungeonNode(
-      'Hookshot Cave Top Chest 1', 52, 63, DungeonNodeStatus.CLOSED_CHEST,
+      'Hookshot Cave Top Chest 1', 54, 26, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.hookshot || (config.canGlitch && items.boots);
     }, l[100]));
     m.nodes.push(new DungeonNode(
-      'Hookshot Cave Top Chest 2', 41, 70, DungeonNodeStatus.CLOSED_CHEST,
+      'Hookshot Cave Top Chest 2', 32, 42, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.hookshot || (config.canGlitch && items.boots);
     }, l[101]));
     m.nodes.push(new DungeonNode(
-      'Hookshot Cave Top Chest 3', 43, 79, DungeonNodeStatus.CLOSED_CHEST,
+      'Hookshot Cave Top Chest 3', 35, 58, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.hookshot || (config.canGlitch && items.boots);
     }, l[99]));

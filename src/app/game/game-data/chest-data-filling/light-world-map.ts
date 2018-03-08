@@ -1330,17 +1330,17 @@ export class LightWorldMap {
 
     m = new DungeonMapData('lw-spectacle-cave', 'Spectacle Rock Cave', true);
     m.nodes.push(new DungeonNode(
-      '', 62, 70, DungeonNodeStatus.OPEN_DOOR,
+      '', 25, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return true;
     }, 'lw-spectacle-rock', '', config.canGlitch ? [-1] : [0]));
     m.nodes.push(new DungeonNode(
-      '', 64, 51, DungeonNodeStatus.OPEN_DOOR,
+      '', 28, 53, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.hookshot;
     }, 'lw-flute1'));
     m.nodes.push(new DungeonNode(
-      'Spectacle Rock Cave Item', 68, 42, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
+      'Spectacle Rock Cave Item', 35, 36, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.currentRegionInMap === 1;
     }, l[75]));
