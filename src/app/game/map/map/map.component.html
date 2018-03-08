@@ -91,5 +91,9 @@
   </button>  
 </div>
 
-<button *ngIf='isDev' (click)='getAll()'>get All</button>
-<button *ngIf='isDev' (click)='getBootsDw()'>get Boots + DW</button>
+<div *ngIf='isDev'>
+  <br>
+  <br>
+  <button (click)='getAll()'>get All</button>
+  <button (click)='getBootsDw()'>get Some</button>
+</div>

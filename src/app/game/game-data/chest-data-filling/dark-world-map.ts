@@ -889,12 +889,12 @@ export class DarkWorldMap {
 
     m = new DungeonMapData('dw-bomb-shop', 'Bomb Shop', true);
     m.nodes.push(new DungeonNode(
-      '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 87, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return true;
     }, 'dw-flute4'));
     m.nodes.push(new DungeonNode(
-      '', 25, 25, DungeonNodeStatus.BIG_BOMB,
+      '', 37, 50, DungeonNodeStatus.BIG_BOMB,
     function(items:Items, config:Config) {
       return items.crystal5 && items.crystal6;
     }, ''));
@@ -1025,7 +1025,7 @@ export class DarkWorldMap {
       '', 74, 91, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return true;
-    }, 'dw-superbunny'));
+    }, 'dw-spectacle-rock'));
     m.nodes.push(new DungeonNode(
       'Spike Cave Chest', 20, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {

@@ -166,10 +166,10 @@ export class Items {
 
     if (notItemLocation.indexOf(itemName) === -1) {
       this.stats.totalCount++;      
-      if (region === 'light-world' || region === 'dark-world' || region === 'Light World' || region === 'Dark World') {
-        this.stats.overworldCount++;
-      } else {
+      if (region === 'Hyrule Castle' || DungeonData.dungeonsWithDunItemsCount.indexOf(region) > -1) {
         this.stats.dungeonCount++;
+      } else {
+        this.stats.overworldCount++;
       }
     }
 
@@ -265,7 +265,7 @@ export class Items {
     const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room'];
     if (!isGroundKey && itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
         && itemName.indexOf('Agahnim 2') === -1 && itemName.indexOf('Ganon') === -1
-        && dungeonStuff.indexOf(itemName) === -1 && DungeonData.dungeonsWithDunItemsNames.indexOf(region) > -1) {      
+        && dungeonStuff.indexOf(itemName) === -1 && DungeonData.dungeonsWithDunItemsCount.indexOf(region) > -1) {      
       if (!this.isKeysanity) {
         const dungeonItemsNames = ['bigKey', 'smallKey', 'map', 'compass'];
         var isDunItem = false;

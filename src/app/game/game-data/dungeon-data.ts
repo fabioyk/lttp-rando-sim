@@ -17,7 +17,7 @@ export class DungeonData {
     'sp-left', 'sp-south-switch', 'sp-switch'];
   static floodMaps = ['sp-south-switch', 'sp-switch'];
   static nonDungeon = ['light-world', 'dark-world', 'Light World', 'Dark World', 'Death Mountain', 'Hyrule Castle'];
-  static dungeonsWithDunItemsNames = ['Hyrule Castle', 'Eastern Palace', 'Desert Palace',
+  static dungeonsWithDunItemsCount = ['Eastern Palace', 'Desert Palace',
   'Tower of Hera', 'Aga Tower', 'Palace of Darkness', 'Swamp Palace', 'Skull Woods',
   'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
 
