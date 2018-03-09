@@ -306,7 +306,7 @@ export class MapComponent implements OnInit {
             this.mirrorNode = dungeonNode.originalNode;
           }, 1);
           this.mirrorMap = name.join('-');
-          this.changeDungeon(this.mirrorMap);          
+          this.changeDungeon(this.mirrorMap);
           break;
         case DungeonNodeStatus.FROG:
           this.items.hasBlacksmiths = true;
@@ -320,7 +320,7 @@ export class MapComponent implements OnInit {
           this.items.hasBigBomb = true;
           dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
           break;
-        case DungeonNodeStatus.BOOK_CHECKABLE_ITEM:        
+        case DungeonNodeStatus.BOOK_CHECKABLE_ITEM:
           if (this.items.book) {
             this.addPrizes(dungeonNode, this.currentDungeon.name);
             dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();            
@@ -802,9 +802,10 @@ export class MapComponent implements OnInit {
     this.items.add('glove', 'light-world');
     this.items.add('glove', 'light-world');
     this.items.add('flute', 'light-world');
+    this.items.isFluteActivated = true;    
     this.items.add('book', 'light-world');
     this.items.add('hookshot', 'light-world');
-    this.items.add('hammer', 'light-world');
+    this.items.add('mirror', 'light-world');
     
     //this.items.add('boots', 'light-world');
     this.items.add('moonPearl', 'light-world');

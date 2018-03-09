@@ -1,5 +1,7 @@
 import { DungeonNodeStatus } from "./dungeon-node-status.enum";
 import { MapNode } from "./map-node";
+import { Items } from "./items";
+import { Config } from "./config";
 
 export class DungeonNode {
   x: number;
@@ -34,5 +36,9 @@ export class DungeonNode {
   set status(newStatus:DungeonNodeStatus) {
     this._status = newStatus;
     this.mapNode.status = newStatus.toString();
+  }
+
+  static noReqs(items:Items, config:Config) {
+    return true;
   }
 }
