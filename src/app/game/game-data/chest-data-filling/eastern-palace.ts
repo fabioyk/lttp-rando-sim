@@ -95,13 +95,17 @@ export class EasternPalace {
     bigChestRoom.nodes.push(new DungeonNode(
       '', 50, 10, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hasBow() && items.hasLightsource(config);
-    }, 'ep-armos', 'Bow' + (config.canGlitch ? '' : ' and Lamp') + ' Required'));
+        return items.hasBow() && items.lamp;
+    }, 'ep-armos', 'Bow' + (config.canGlitch ? '' : ' and Lamp') + ' Required', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.hasBow();
+    }));
     bigChestRoom.nodes.push(new DungeonNode(
       '', 91, 27, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hasLightsource(config);
-    }, 'ep-bk', 'Lamp Required'));
+        return items.lamp;
+    }, 'ep-bk', 'Lamp Required', [-1], 0, 
+    DungeonNode.noReqs));
     epData.dungeonMaps.push(bigChestRoom);
 
     var bigKeyRoom = new DungeonMapData('ep-bk', 'Big Key Room');
@@ -118,8 +122,9 @@ export class EasternPalace {
     bigKeyRoom.nodes.push(new DungeonNode(
       '', 68, 27, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return true;
-    }, 'ep-bc'));
+        return items.lamp;
+    }, 'ep-bc', '', [-1], 0, 
+    DungeonNode.noReqs));
     epData.dungeonMaps.push(bigKeyRoom);
 
     var armosRoom = new DungeonMapData('ep-armos', 'Armos Room');

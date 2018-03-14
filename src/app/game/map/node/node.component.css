@@ -37,7 +37,7 @@
 .open, .open-state {
   background-color: lightgreen;
 }
-.glitched-open {
+.glitched-open, .glitched-state {
   background-color: deepskyblue;
 }
 .dun-defeated, .dun-open-state, .dungeon-defeated {
@@ -184,6 +184,12 @@
 }
 .duck {
   background-image: url('/assets/node-icons/duck.png');      
+}
+.hole {
+  background-image: url('/assets/node-icons/hole.png');      
+}
+.water-warp {
+  background-image: url('/assets/node-icons/water-warp.png');      
 }
 .sq-item {
   width: 60%;

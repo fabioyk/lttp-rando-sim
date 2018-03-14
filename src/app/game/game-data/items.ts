@@ -71,6 +71,10 @@ export class Items {
   oldManRescued = false;
   blacksmithsRescued = false;
   isFluteActivated = false;
+  isTROpened = false;
+
+  // 0: start. 1: uncle sword get. 2: zelda cell get. 3: sewers. 4: zelda rescued
+  gameState = 0;
 
   currentRegionInMap = 0;
 
@@ -130,14 +134,16 @@ export class Items {
 
   }
   
-  setup(isKeysanity:boolean, dungeonsData:DungeonData[]) {
+  setup(isKeysanity:boolean, dungeonsData:DungeonData[], isFullMap:boolean) {
     this.isKeysanity = isKeysanity;
 
     if (!isKeysanity) {
-      this.startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];
-      
+      this.startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];      
     } else {
       this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 28];
+    }
+    if (isFullMap) {
+      this.startingItemCount[11]--;
     }
 
     DungeonData.dungeonNames.forEach((dunName, index) => {

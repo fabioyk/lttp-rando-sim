@@ -77,9 +77,9 @@ export class GameComponent implements OnInit {
         if (params.fullMap) {
           fullMap = true;
           if (gameMode === 'standard') {
-            this.currentMap = 'lw-linkshouse';
+            this.currentMap = 'lw-linkshouse';            
           } else {
-            this.currentMap = 'lw-sq';
+            this.currentMap = 'lw-sq';            
           }
           
         }
@@ -114,7 +114,10 @@ export class GameComponent implements OnInit {
       this.items = new Items();
       this.config = this.gameService.config;
       this.config.isFullMap = isFullMap;
-      this.items.setup(this.config.variation === 'key-sanity', this.gameService.dungeonsData);
+      this.items.setup(this.config.variation === 'key-sanity', this.gameService.dungeonsData, isFullMap);
+      if (this.config.mode !== 'standard') {
+        this.items.gameState = 4;
+      }
       this.itemLog = [];
       this.dungeonsData = this.gameService.dungeonsData;
       this.gameState = 'playing';

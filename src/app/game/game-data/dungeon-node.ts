@@ -8,6 +8,7 @@ export class DungeonNode {
   y: number;
   name: string;
   canOpen: Function;
+  canGlitch: Function;
   content: string;
   errorMessage: string;
   mapNode:MapNode;
@@ -17,7 +18,8 @@ export class DungeonNode {
 
   constructor(name:string, x:number, y:number, 
       status:DungeonNodeStatus, canOpen:Function, content:string, 
-      errorMessage:string = '', accessibleSectionArray:number[] = [-1], destinationSection:number = 0) {
+      errorMessage:string = '', accessibleSectionArray:number[] = [-1], 
+      destinationSection:number = 0, canGlitch:Function = null) {
     this.name = name;
     this.x = x;
     this.y = y;
@@ -28,6 +30,7 @@ export class DungeonNode {
     this.status = status;
     this.accessibleSectionArray = accessibleSectionArray;
     this.destinationSection = destinationSection;
+    this.canGlitch = canGlitch;
   }
 
   get status() {
@@ -40,5 +43,15 @@ export class DungeonNode {
 
   static noReqs(items:Items, config:Config) {
     return true;
+  }
+
+  isDoable(items:Items, config:Config):number {
+    if (this.canOpen && this.canOpen(items, config)) {
+      return 2;
+    } else if (this.canGlitch && this.canGlitch(items, config)) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 }

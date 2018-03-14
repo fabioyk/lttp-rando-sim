@@ -17,17 +17,18 @@ export class CastleTower {
     entrance.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return true;
+      return true;
     }, config.isFullMap ? 'lw-hyrule-castle' : 'exit', '', [-1], 1));
     entrance.nodes.push(new DungeonNode(
       'Dark Maze', 50, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hasLightsource(config);
-    }, 'ct-maze', 'Lamp Required'));
+      return items.lamp;
+    }, 'ct-maze', 'Lamp Required', [-1], 0,
+    DungeonNode.noReqs));
     entrance.nodes.push(new DungeonNode(
       'Aga Tower First Chest', 72, 72, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return true;
+      return true;
     }, l[95]));
     ctData.dungeonMaps.push(entrance);
 

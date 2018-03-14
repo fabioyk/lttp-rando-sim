@@ -144,7 +144,7 @@ export class DarkWorldMap {
       '', 94, 65, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'dw-octorok-field', '', [-1], 1));
     m.nodes.push(new DungeonNode(
-      '', 49, 12, DungeonNodeStatus.OPEN_DOOR,
+      '', 49, 12, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
         return items.agahnim2;
     }, 'dw-ganon'));
@@ -169,8 +169,11 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       '', 51, 96, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.currentRegionInMap === 0 || (items.flippers || (items.boots && config.canGlitch));
-    }, 'dw-octorok-field', '', [-1], 1));
+        return items.currentRegionInMap === 0 || items.flippers;
+    }, 'dw-octorok-field', '', [-1], 1, 
+    function(items:Items, config:Config) {
+      return items.boots;
+    }));
     m.nodes.push(new DungeonNode(
       '', 30, 28, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -180,18 +183,27 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       '', 70, 32, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.currentRegionInMap === 0 || (items.flippers || (items.boots && config.canGlitch));
-    }, 'dw-flute2'));
+      return items.currentRegionInMap === 0 || items.flippers;
+    }, 'dw-flute2', '', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.boots;
+    }));
     m.nodes.push(new DungeonNode(
-      '', 52, 14, DungeonNodeStatus.OPEN_DOOR,
+      '', 52, 14, DungeonNodeStatus.WATER_WARP,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'dw-flute8', 'Flippers Required'));
+    }, 'dw-flute8', 'Flippers Required', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.currentRegionInMap === 0;
+    }));
     m.nodes.push(new DungeonNode(
       '', 65, 74, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
-        return items.currentRegionInMap === 0 || (items.flippers || (items.boots && config.canGlitch));
-    }, ''));
+        return items.currentRegionInMap === 0 || items.flippers;
+    }, '', '', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.boots;
+    }));
     m.nodes.push(new DungeonNode(
       '', 39, 48, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
@@ -413,7 +425,7 @@ export class DarkWorldMap {
         return items.flippers;
     }, 'dw-lake-hylea', 'Flippers Required'));
     m.nodes.push(new DungeonNode(
-      '', 50, 56, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 56, DungeonNodeStatus.WATER_WARP,
     function(items:Items, config:Config) {
         return items.flippers;
     }, 'dw-east-sanctuary', 'Flippers Required'));
@@ -426,8 +438,11 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       '', 15, 20, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.moonPearl || (items.mirror && config.canGlitch);
-    }, 'dw-mire-shed'));
+        return items.moonPearl;
+    }, 'dw-mire-shed', '', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.mirror;
+    }));
     m.nodes.push(new DungeonNode(
       '', 30, 21, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -547,13 +562,13 @@ export class DarkWorldMap {
 
     m = new DungeonMapData('dw-lostwoods', 'Skeleton Forest');
     m.nodes.push(new DungeonNode(
-      '', 63, 70, DungeonNodeStatus.OPEN_DOOR,
+      '', 63, 70, DungeonNodeStatus.HOLE,
     DungeonNode.noReqs, 'sw-left-drop', '', [0]));
     m.nodes.push(new DungeonNode(
-      '', 78, 67, DungeonNodeStatus.OPEN_DOOR,
+      '', 78, 67, DungeonNodeStatus.HOLE,
     DungeonNode.noReqs, 'sw-right-drop', '', [0]));
     m.nodes.push(new DungeonNode(
-      '', 76, 52, DungeonNodeStatus.OPEN_DOOR,
+      '', 76, 52, DungeonNodeStatus.HOLE,
     DungeonNode.noReqs, 'sw-northeast-bc', '', [0]));
     m.nodes.push(new DungeonNode(
       '', 73, 60, DungeonNodeStatus.OPEN_DOOR,
@@ -687,9 +702,9 @@ export class DarkWorldMap {
       'Triforce Room', 50, 12, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.sword >= 2 && items.hasFiresource();
-    }, 'ganon'));
+    }, 'Ganon'));
     m.nodes.push(new DungeonNode(
-      '', 49, 87, DungeonNodeStatus.OPEN_DOOR,
+      '', 49, 87, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
         return true;
     }, 'dw-hyrule-castle'));
@@ -764,11 +779,13 @@ export class DarkWorldMap {
     DungeonNode.noReqs, 'dw-superbunny'));
     m.nodes.push(new DungeonNode(
       '', 32, 51, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'dw-hookshotcave'));
+    function(items:Items, config:Config) {
+      return items.moonPearl && items.glove;
+    }, 'dw-hookshotcave'));
     m.nodes.push(new DungeonNode(
       '', 76, 57, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.somaria && items.moonPearl && items[config.trMedallion];
+      return items.somaria && items.moonPearl && items.isTROpened;
     }, 'tr-entry'));
     m.nodes.push(new DungeonNode(
       '', 46, 37, DungeonNodeStatus.MIRROR,
@@ -784,7 +801,10 @@ export class DarkWorldMap {
     m = new DungeonMapData('dw-east', 'Dark World East Death Mountain');
     m.nodes.push(new DungeonNode(
       '', 83, 27, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'dw-superbunny'));
+    function(items:Items, config:Config) {
+      return items.moonPearl;
+    }, 'dw-superbunny', '', [-1], 0, 
+    DungeonNode.noReqs));
     m.nodes.push(new DungeonNode(
       '', 75, 40, DungeonNodeStatus.MIRROR,
     DungeonNode.noReqs, ''));
@@ -797,9 +817,12 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       'Spike Cave Chest', 20, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-      return items.moonPearl && items.glove && items.hammer && (config.canGlitch 
-          || (items.byrna || (items.cape && items.hasMagicExtension(config))));
-    }, l[103]));
+      return items.moonPearl && items.glove && items.hammer 
+        && (items.byrna || (items.cape && items.hasMagicExtension(config)));
+    }, l[103], '', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.moonPearl && items.glove && items.hammer;
+    }));
     dwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('dw-superbunny', 'Superbunny Cave', true);
@@ -829,18 +852,27 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       'Hookshot Cave Top Chest 1', 54, 26, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-      return items.hookshot || (config.canGlitch && items.boots);
-    }, l[100]));
+      return items.hookshot;
+    }, l[100], '', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.boots;
+    }));
     m.nodes.push(new DungeonNode(
       'Hookshot Cave Top Chest 2', 32, 42, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-      return items.hookshot || (config.canGlitch && items.boots);
-    }, l[101]));
+      return items.hookshot;
+    }, l[101], '', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.boots;
+    }));
     m.nodes.push(new DungeonNode(
       'Hookshot Cave Top Chest 3', 35, 58, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-      return items.hookshot || (config.canGlitch && items.boots);
-    }, l[99]));
+      return items.hookshot;
+    }, l[99], '', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.boots;
+    }));
     dwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('dw-tr-ledge', 'Turtle Rock Outside Corridor');

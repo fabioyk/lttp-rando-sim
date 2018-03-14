@@ -28,8 +28,12 @@ export class HyruleCastle {
     entry.nodes.push(new DungeonNode(
       '', 49, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hasLightsource(config) || config.mode === 'standard'; // TODO seq break
-    }, 'hc-darkchest'));
+      return (items.lamp && config.mode !== 'standard') 
+        || (config.mode === 'standard' && items.gameState >= 2);
+    }, 'hc-darkchest', '', [-1], 0,
+    function(items:Items, config:Config) {
+      return config.mode !== 'standard';
+    }));
     hcData.dungeonMaps.push(entry);
 
     var m = new DungeonMapData('hc-left', 'Left Corridor');
@@ -46,7 +50,7 @@ export class HyruleCastle {
     m.nodes.push(new DungeonNode(
       '', 49, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return true;
+        return items.gameState === 4;
     }, 'lw-hyrule-castle', '', [-1], 1));
     hcData.dungeonMaps.push(m);
 

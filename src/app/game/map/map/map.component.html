@@ -62,7 +62,7 @@
   <span>{{tooltip}}</span>
 </div>
 <div class='menu-buttons'>
-  <button class='btn btn-danger' (click)='onSaveAndQuit()'>
+  <button class='btn btn-danger' (click)='onSaveAndQuit()' *ngIf='items.gameState === 4'>
     Save & Quit
   </button>
   <button class='btn btn-primary' (click)='onWarpClicked()' *ngIf='canWarp()'>

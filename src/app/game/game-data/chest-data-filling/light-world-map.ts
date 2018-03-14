@@ -69,13 +69,19 @@ export class LightWorldMap {
     DungeonNode.noReqs, 'lw-linkshouse'));
     m.nodes.push(new DungeonNode(
       '', 95, 63, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-octorok-field'));
+    function(items:Items, config:Config) {
+      return items.gameState === 4; 
+    }, 'lw-octorok-field'));
     m.nodes.push(new DungeonNode(
       '', 72, 71, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-south-house-portal'));
+    function(items:Items, config:Config) {
+      return items.gameState === 4; 
+    }, 'lw-south-house-portal'));
     m.nodes.push(new DungeonNode(
       '', 16, 71, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-south-grove'));
+    function(items:Items, config:Config) {
+      return items.gameState === 4; 
+    }, 'lw-south-grove'));
     m.nodes.push(new DungeonNode(
       '', 76, 27, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-hyrule-castle'));
@@ -127,10 +133,13 @@ export class LightWorldMap {
         return items.glove;
     }, 'lw-south-grove', 'Power Glove Required'));
     m.nodes.push(new DungeonNode(
-      '', 36, 54, DungeonNodeStatus.OPEN_DOOR,
+      '', 36, 54, DungeonNodeStatus.WATER_WARP,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'lw-east-sanctuary', 'Flippers Required'));
+    }, 'lw-east-sanctuary', 'Flippers Required', [-1], 0, 
+    function(items:Items, config:Config) {
+      return true;
+    }));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-south-grove', 'South of Grove');
@@ -158,27 +167,38 @@ export class LightWorldMap {
     DungeonNode.noReqs, 'lw-south-grove-cave', '', [1]));
     lwData.dungeonMaps.push(m);
 
-    m = new DungeonMapData('lw-hyrule-castle', 'Hyrule Castle'); // 1: top of castle
+    m = new DungeonMapData('lw-hyrule-castle', 'Hyrule Castle'); 
+    // 1: top of castle, 2: front of castle when locked in
     m.nodes.push(new DungeonNode(
       '', 82, 94, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-flute4'));
+    function(items:Items, config:Config) {
+      return items.gameState === 4 || items.currentRegionInMap !== 2; 
+    }, 'lw-flute4'));
     m.nodes.push(new DungeonNode(
       '', 95, 65, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.glove;
+        return items.glove && items.gameState === 4;
     }, 'lw-octorok-field', 'Power Glove Required'));
     m.nodes.push(new DungeonNode(
       '', 4, 30, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-sanctuary-entrance'));
+    function(items:Items, config:Config) {
+      return items.gameState === 4; 
+    }, 'lw-sanctuary-entrance'));
     m.nodes.push(new DungeonNode(
       '', 50, 25, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'hc-entry'));
+    function(items:Items, config:Config) {
+      return items.gameState === 4 || items.currentRegionInMap === 2; 
+    }, 'hc-entry'));
     m.nodes.push(new DungeonNode(
-      '', 88, 16, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-uncle'));
+      '', 88, 16, DungeonNodeStatus.HOLE,
+    function(items:Items, config:Config) {
+      return items.gameState === 4 || items.currentRegionInMap !== 2; 
+    }, 'lw-uncle'));
     m.nodes.push(new DungeonNode(
       '', 70, 21, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-uncle'));
+    function(items:Items, config:Config) {
+      return items.gameState === 4 || items.currentRegionInMap === 2; 
+    }, 'lw-uncle'));
     m.nodes.push(new DungeonNode(
       '', 49, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -205,10 +225,13 @@ export class LightWorldMap {
       '', 72, 32, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-flute2'));
     m.nodes.push(new DungeonNode(
-      '', 52, 14, DungeonNodeStatus.OPEN_DOOR,
+      '', 52, 14, DungeonNodeStatus.WATER_WARP,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'lw-south-house-portal', 'Flippers Required'));
+    }, 'lw-south-house-portal', 'Flippers Required', [-1], 0, 
+    function(items:Items, config:Config) {
+      return true;
+    }));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-small-shop', 'Northwest of Lake Hylea'); 
@@ -256,7 +279,7 @@ export class LightWorldMap {
         return items.glove === 2;
     }, '', '', [-1], 1));
     m.nodes.push(new DungeonNode(
-      '', 64, 67, DungeonNodeStatus.OPEN_DOOR,
+      '', 64, 67, DungeonNodeStatus.WATER_WARP,
     DungeonNode.noReqs, 'lw-zora-entrance'));
     m.nodes.push(new DungeonNode(
       '', 96, 80, DungeonNodeStatus.OPEN_DOOR,
@@ -357,27 +380,31 @@ export class LightWorldMap {
       '', 2, 64, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-fortune-teller'));
     m.nodes.push(new DungeonNode(
-      '', 23, 50, DungeonNodeStatus.OPEN_DOOR,
+      '', 23, 50, DungeonNodeStatus.WATER_WARP,
     function(items:Items, config:Config) {
-        return items.flippers;
+      return items.flippers;
     }, 'lw-flute8', 'Flippers Required'));
     m.nodes.push(new DungeonNode(
       '', 56, 41, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.boots;
+      return items.boots;
     }, 'lw-bonkrocks', 'Boots Required'));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-uncle', 'Hyrule Castle Secret Passage', true);
     m.nodes.push(new DungeonNode(
       '', 24, 94, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-hyrule-castle'));
+    function(items:Items, config:Config) {
+      return items.gameState >= 1;
+    }, 'lw-hyrule-castle', '', [-1], 2));
     m.nodes.push(new DungeonNode(
       'Link\'s Uncle', 45, 22, DungeonNodeStatus.CLOSED_CHEST,
     DungeonNode.noReqs, l[1]));
     m.nodes.push(new DungeonNode(
       'Secret Passage Chest', 76, 70, DungeonNodeStatus.CLOSED_CHEST,
-    DungeonNode.noReqs, l[2]));
+    function(items:Items, config:Config) {
+      return items.gameState >= 1;
+    }, l[2]));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-graveyard', 'Graveyard');
@@ -389,7 +416,7 @@ export class LightWorldMap {
       '', 96, 77, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-east-sanctuary'));
     m.nodes.push(new DungeonNode(
-      '', 15, 34, DungeonNodeStatus.OPEN_DOOR,
+      '', 15, 34, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
         return items.glove;
     }, 'hc-bombablewall'));
@@ -458,12 +485,18 @@ export class LightWorldMap {
       '', 20, 8, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'lw-waterfall', 'Flippers Required'));
+    }, 'lw-waterfall', 'Flippers Required', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.moonPearl || items.boots;
+    }));
     m.nodes.push(new DungeonNode(
-      '', 26, 61, DungeonNodeStatus.OPEN_DOOR,
+      '', 26, 61, DungeonNodeStatus.WATER_WARP,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'lw-lake-hylea', 'Flippers Required'));
+    }, 'lw-lake-hylea', 'Flippers Required', [-1], 0, 
+    function(items:Items, config:Config) {
+      return true;
+    }));
     m.nodes.push(new DungeonNode(
       '', 65, 5, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-zora-domain'));
@@ -480,12 +513,14 @@ export class LightWorldMap {
       '', 34, 74, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'lw-lake-hylea', 'Flippers Required'));
+    }, 'lw-lake-hylea', 'Flippers Required', [-1], 0, 
+    DungeonNode.noReqs));
     m.nodes.push(new DungeonNode(
-      '', 61, 69, DungeonNodeStatus.OPEN_DOOR,
+      '', 61, 69, DungeonNodeStatus.WATER_WARP,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'lw-sanctuary-entrance', 'Flippers Required'));
+    }, 'lw-sanctuary-entrance', 'Flippers Required', [-1], 0, 
+    DungeonNode.noReqs));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-hobo-entrance', 'Hobo Entrance');
@@ -593,7 +628,7 @@ export class LightWorldMap {
       '', 87, 96, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-race-game'));
     m.nodes.push(new DungeonNode(
-      '', 9, 20, DungeonNodeStatus.OPEN_DOOR,
+      '', 9, 20, DungeonNodeStatus.HOLE,
     DungeonNode.noReqs, 'lw-well'));
     m.nodes.push(new DungeonNode(
       '', 51, 18, DungeonNodeStatus.OPEN_DOOR,
@@ -621,8 +656,11 @@ export class LightWorldMap {
     m.nodes.push(new DungeonNode(
       '', 67, 71, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.glove && items.hasLightsource(config);
-    }, 'lw-flute1'));
+      return items.glove && items.lamp;
+    }, 'lw-flute1', '', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.glove;
+    }));
     m.nodes.push(new DungeonNode(
       '', 29, 19, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-lostwoods'));
@@ -633,7 +671,7 @@ export class LightWorldMap {
       '', 58, 10, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-lumberjack-item'));
     m.nodes.push(new DungeonNode(
-      '', 45, 30, DungeonNodeStatus.OPEN_DOOR,
+      '', 45, 30, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
         return items.agahnim && items.boots;
     }, 'lw-lumberjack-item', '', [-1], 1));
@@ -703,7 +741,10 @@ export class LightWorldMap {
       'Zora River Ledge', 43, 60, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, l[48]));
+    }, l[48], 'Flippers Required', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.boots;
+    }));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-icerod', 'Ice Cave', true);
@@ -821,7 +862,7 @@ export class LightWorldMap {
         return items.hammer || items.currentRegionInMap === 0;
     }, 'lw-kakariko'));
     m.nodes.push(new DungeonNode(
-      '', 59, 50, DungeonNodeStatus.OPEN_DOOR,
+      '', 59, 50, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
         return items.hammer || items.currentRegionInMap === 1;
     }, 'lw-bat'));
@@ -889,7 +930,7 @@ export class LightWorldMap {
       '', 16, 20, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-pedestal'));
     m.nodes.push(new DungeonNode(
-      '', 75, 52, DungeonNodeStatus.OPEN_DOOR,
+      '', 75, 52, DungeonNodeStatus.HOLE,
     DungeonNode.noReqs, 'lw-thief-hideout'));
     m.nodes.push(new DungeonNode(
       'Mushroom Item', 47, 34, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
@@ -959,8 +1000,9 @@ export class LightWorldMap {
     m.nodes.push(new DungeonNode(
       'Old Man', 29, 68, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-      return items.hasLightsource(config);
-    }, l[74]));
+      return items.lamp;
+    }, l[74], 'Lamp Required', [-1], 0, 
+    DungeonNode.noReqs));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-spectacle-rock', 'Spectacle Rock');
@@ -989,12 +1031,13 @@ export class LightWorldMap {
     m = new DungeonMapData('lw-spectacle-cave', 'Spectacle Rock Cave', true);
     m.nodes.push(new DungeonNode(
       '', 25, 93, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-spectacle-rock', '', config.canGlitch ? [-1] : [0]));
-    m.nodes.push(new DungeonNode(
-      '', 28, 53, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.hookshot;
-    }, 'lw-flute1'));
+      return items.currentRegionInMap === 0;
+    }, 'lw-spectacle-rock', '', [-1], 0,
+    DungeonNode.noReqs));
+    m.nodes.push(new DungeonNode(
+      '', 28, 53, DungeonNodeStatus.HOLE,
+    DungeonNode.noReqs, 'lw-flute1'));
     m.nodes.push(new DungeonNode(
       'Spectacle Rock Cave Item', 35, 36, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -1061,7 +1104,7 @@ export class LightWorldMap {
     }, 'lw-flute1'));
     m.nodes.push(new DungeonNode(
       '', 89, 27, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-paradox2'));
+    DungeonNode.noReqs, 'lw-paradox2', '', [-1], 1));
     m.nodes.push(new DungeonNode(
       '', 93, 65, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-paradox5'));
@@ -1082,16 +1125,16 @@ export class LightWorldMap {
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-paradox2', 'Paradox Cave 2 Chests', true);
-    // 0: from dm east, 1: from paradox 5
+    // 1: from dm east, 0: from paradox 5
     m.nodes.push(new DungeonNode(
       'Paradox Cave Upper - Left Chest', 72, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-      return items.currentRegionInMap === 1 || items.mirror;
+      return items.currentRegionInMap === 0 || items.mirror;
     }, l[85]));
     m.nodes.push(new DungeonNode(
       'Paradox Cave Upper - Right Chest', 78, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-      return items.currentRegionInMap === 1 || items.mirror;
+      return items.currentRegionInMap === 0 || items.mirror;
     }, l[86]));
     m.nodes.push(new DungeonNode(
       '', 75, 92, DungeonNodeStatus.OPEN_DOOR,
@@ -1099,7 +1142,7 @@ export class LightWorldMap {
     m.nodes.push(new DungeonNode(
       '', 87, 59, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.currentRegionInMap === 1 || items.mirror;
+      return items.currentRegionInMap === 0 || items.mirror;
     }, 'lw-paradox5', '', [-1], 1));
     lwData.dungeonMaps.push(m);
 
@@ -1121,11 +1164,11 @@ export class LightWorldMap {
       'Paradox Cave Lower - Chest 5', 88, 13, DungeonNodeStatus.CLOSED_CHEST,
     DungeonNode.noReqs, l[84], '', [1]));
     m.nodes.push(new DungeonNode(
-      '', 67, 70, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-paradox2', '', [-1], 1));
+      '', 67, 70, DungeonNodeStatus.HOLE,
+    DungeonNode.noReqs, 'lw-paradox2', '', [-1]));
     m.nodes.push(new DungeonNode(
       '', 87, 59, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-paradox2', '', [1], 1));
+    DungeonNode.noReqs, 'lw-paradox2', '', [1]));
     m.nodes.push(new DungeonNode(
       '', 50, 92, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-east', '', config.canGlitch ? [-1] : [0]));

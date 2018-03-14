@@ -177,7 +177,7 @@ export class GanonsTower {
         return true;
     }, 'gt-invisible-maze'));
     bobsRoom.nodes.push(new DungeonNode(
-      '', 68, 80, DungeonNodeStatus.OPEN_DOOR,
+      '', 68, 80, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
         return true;
     }, 'gt-armos'));
@@ -451,13 +451,19 @@ export class GanonsTower {
     moldorm2.nodes.push(new DungeonNode(
       'Moldorm Chest', 56.5, 73.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hookshot || (items.boots && config.canGlitch);
-    }, l[225], 'Hookshot Required'));
+        return items.hookshot;
+    }, l[225], 'Hookshot Required', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.boots;
+    }));
     moldorm2.nodes.push(new DungeonNode(
       '', 7, 77, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hookshot || (items.boots && config.canGlitch);
-    }, 'gt-aga2', 'Hookshot Required'));
+        return items.hookshot;
+    }, 'gt-aga2', 'Hookshot Required', [-1], 0, 
+    function(items:Items, config:Config) {
+      return items.boots;
+    }));
     gtData.dungeonMaps.push(moldorm2);
 
     var aga2 = new DungeonMapData('gt-aga2', 'Agahnim 2 Room');

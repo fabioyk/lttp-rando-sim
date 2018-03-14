@@ -33,4 +33,6 @@ export class DungeonNodeStatus {
   static SQ_OPTION = 31;
   static PEDESTAL = 32;
   static DUCK = 33;
+  static HOLE = 34;
+  static WATER_WARP = 35;
 }
