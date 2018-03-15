@@ -96,7 +96,10 @@ export class NodeComponent implements OnInit {
       if (!this.nodeInfo.originalNode.canOpen(this.items, this.config)
         && (!this.config.canGlitch || !this.nodeInfo.originalNode.canGlitch 
           || !this.nodeInfo.originalNode.canGlitch(this.items, this.config))
-          && +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST) {        
+          && (+this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
+            || ((+this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM
+              || +this.nodeInfo.status === DungeonNodeStatus.PEDESTAL)
+              && this.items.book))) {
         return 'view-state';
       }
       if (+this.nodeInfo.status === DungeonNodeStatus.BK_LOCKED

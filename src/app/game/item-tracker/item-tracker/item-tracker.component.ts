@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, isDevMode } from '@angular/core';
 import { Items } from '../../game-data/items';
 import { GameService } from '../../game-data/game-service.service';
 import { Config } from '../../game-data/config';
@@ -38,6 +38,23 @@ export class ItemTrackerComponent implements OnInit {
     return this.dungeonsData.filter((dungeon) => {
       return blacklist.indexOf(dungeon.name) === -1;
     });
+  }
+
+  onItemClicked(itemName:string) {
+    if (isDevMode()) {
+      if (typeof this.items[itemName] === 'boolean') {
+        if (this.items[itemName]) {
+          this.items[itemName] = false;
+        } else {
+          this.items[itemName] = true;
+        }      
+      } else {
+        this.items[itemName]++;
+        if (this.items[itemName] > 2) {
+          this.items[itemName] = 0;
+        }
+      }
+    }    
   }
 
 }

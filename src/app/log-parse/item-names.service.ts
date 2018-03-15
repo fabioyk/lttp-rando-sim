@@ -98,6 +98,11 @@ export class ItemNamesService {
       shortName: 'singleArrow',
       longName: 'Single Arrow'
     });
+    this.itemNames.push({
+      id: 19,
+      shortName: '10bombs',
+      longName: 'Ten Bombs'
+    });
 
     // Trackable Items (100~149)
     this.itemNames.push({

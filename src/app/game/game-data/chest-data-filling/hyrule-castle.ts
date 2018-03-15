@@ -16,17 +16,17 @@ export class HyruleCastle {
 
     var entry = new DungeonMapData('hc-entry', 'Hyrule Castle Entrance');
     entry.nodes.push(new DungeonNode(
-      '', 49, 88, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'lw-hyrule-castle'));
     entry.nodes.push(new DungeonNode(
-      '', 11, 51, DungeonNodeStatus.OPEN_DOOR,
+      '', 11, 52, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'hc-left'));
     entry.nodes.push(new DungeonNode(
-      '', 49, 10, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return (items.lamp && config.mode !== 'standard') 
         || (config.mode === 'standard' && items.gameState >= 2);
@@ -48,7 +48,7 @@ export class HyruleCastle {
         return true;
     }, 'hc-map'));
     m.nodes.push(new DungeonNode(
-      '', 49, 93, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.gameState === 4;
     }, 'lw-hyrule-castle', '', [-1], 1));
@@ -56,7 +56,7 @@ export class HyruleCastle {
 
     m = new DungeonMapData('hc-sanctuary', 'Sanctuary', true);
     m.nodes.push(new DungeonNode(
-      '', 50, 87, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 89, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'lw-sanctuary-entrance'));
@@ -69,7 +69,7 @@ export class HyruleCastle {
 
     m = new DungeonMapData('hc-map', 'Keyguard Room');
     m.nodes.push(new DungeonNode(
-      '', 49, 39, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 39, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'hc-left'));
@@ -92,12 +92,12 @@ export class HyruleCastle {
 
     m = new DungeonMapData('hc-boomerang', 'Boomerang Room');
     m.nodes.push(new DungeonNode(
-      '', 25, 64, DungeonNodeStatus.SK_LOCKED,
+      '', 25, 64.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'hc-map'));
     m.nodes.push(new DungeonNode(
-      '', 24, 34, DungeonNodeStatus.SK_LOCKED,
+      '', 25, 34, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'hc-zelda'));
@@ -107,7 +107,7 @@ export class HyruleCastle {
         return true;
     }, ''));
     m.nodes.push(new DungeonNode(
-      'Boomerang Chest', 74, 52, DungeonNodeStatus.CLOSED_CHEST,
+      'Boomerang Chest', 75, 52, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[57]));
@@ -115,7 +115,7 @@ export class HyruleCastle {
 
     m = new DungeonMapData('hc-zelda', 'Zelda\'s Cell');
     m.nodes.push(new DungeonNode(
-      '', 16, 34, DungeonNodeStatus.SK_LOCKED,
+      '', 17, 34, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'hc-boomerang'));
@@ -133,7 +133,7 @@ export class HyruleCastle {
         return true;
     }, 'hc-entry'));
     m.nodes.push(new DungeonNode(
-      '', 50, 9, DungeonNodeStatus.SK_LOCKED,
+      '', 50, 10, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'hc-keyrat'));
@@ -164,12 +164,12 @@ export class HyruleCastle {
 
     m = new DungeonMapData('hc-bombablewall', 'Sewers Bombable Wall');
     m.nodes.push(new DungeonNode(
-      '', 74, 93, DungeonNodeStatus.SK_LOCKED,
+      '', 75, 93, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
     }, 'hc-keyrat'));
     m.nodes.push(new DungeonNode(
-      '', 74, 9, DungeonNodeStatus.OPEN_DOOR,
+      '', 75, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'hc-sanctuary'));
