@@ -62,7 +62,7 @@ export class MiseryMire {
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'mm-two-bridges', '', [-1], 1));
+    }, 'mm-two-bridges'));
     westSpike.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -260,7 +260,7 @@ export class MiseryMire {
     }, 'mm-north-spike'));
     bigDoor.nodes.push(new DungeonNode(
       '', 50, 34, DungeonNodeStatus.BK_LOCKED,
-    DungeonNode.noReqs, 'mm-two-bridges'));
+    DungeonNode.noReqs, 'mm-two-bridges', '', [-1], 1));
     mmData.dungeonMaps.push(bigDoor);
 
     var bigChest = new DungeonMapData('mm-bc', 'Big Chest Room');
@@ -286,7 +286,7 @@ export class MiseryMire {
       '', 75, 60, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'mm-two-bridges'));
+    }, 'mm-two-bridges', '', [-1], 1));
     beforeVit.nodes.push(new DungeonNode(
       '', 25, 35, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
@@ -303,28 +303,28 @@ export class MiseryMire {
     mmData.dungeonMaps.push(vittyRoom);
 
     var bridgeRoom = new DungeonMapData('mm-two-bridges', 'Bridge Room');
-    // 0 left side, 1 right side
+    // 1 left side, 0 right side
     bridgeRoom.nodes.push(new DungeonNode(
       '', 50, 13, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.lamp && items.somaria;
-    }, 'mm-pre-vitty', 'Somaria ' +(config.canGlitch ? '' : 'and Lamp ') + 'required', [0], 0,
+    }, 'mm-pre-vitty', 'Somaria ' +(config.canGlitch ? '' : 'and Lamp ') + 'required', [1], 0,
     function(items:Items, config:Config) {
       return items.somaria;
     }));
     bridgeRoom.nodes.push(new DungeonNode(
       '', 50, 93, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'mm-big-door', '', [0]));
+    DungeonNode.noReqs, 'mm-big-door', '', [1]));
     bridgeRoom.nodes.push(new DungeonNode(
       '', 75, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.currentRegionInMap === 1 || items.hookshot;
+      return items.currentRegionInMap === 0 || items.hookshot;
     }, 'mm-west-spike'));
     bridgeRoom.nodes.push(new DungeonNode(
       'Map Chest', 75, 30, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-      return items.currentRegionInMap === 1 || items.hookshot;
-    }, l[181]));
+      return items.currentRegionInMap === 0 || items.hookshot;
+    }, l[181], '', [0, 1]));
     mmData.dungeonMaps.push(bridgeRoom);
 
     mmData.startingMap = entrance;

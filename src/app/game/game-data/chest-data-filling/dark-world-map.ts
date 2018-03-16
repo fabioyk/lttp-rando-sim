@@ -665,12 +665,12 @@ export class DarkWorldMap {
 
     m = new DungeonMapData('dw-fat-fairy', 'Pyramid Fairy', true);
     m.nodes.push(new DungeonNode(
-      '', 50, 86, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'dw-hyrule-castle'));
     m.nodes.push(new DungeonNode(
-      'Pyramid Fairy Chest 1', 44, 58, DungeonNodeStatus.CLOSED_CHEST,
+      'Pyramid Fairy Chest 1', 44, 57, DungeonNodeStatus.CLOSED_CHEST,
     DungeonNode.noReqs, l[106]));
     m.nodes.push(new DungeonNode(
       'Pyramid Fairy Chest 1', 56, 57, DungeonNodeStatus.CLOSED_CHEST,
@@ -766,7 +766,7 @@ export class DarkWorldMap {
 
     m = new DungeonMapData('dw-hera', 'Ganons Tower Entrance');
     m.nodes.push(new DungeonNode(
-      '', 74.5, 38, DungeonNodeStatus.OPEN_DOOR,
+      '', 75, 38, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.crystal1 && items.crystal2 && items.crystal3
         && items.crystal4 && items.crystal5 && items.crystal6
@@ -829,10 +829,10 @@ export class DarkWorldMap {
 
     m = new DungeonMapData('dw-spikecave', 'Spike Cave', true);
     m.nodes.push(new DungeonNode(
-      '', 74, 91, DungeonNodeStatus.OPEN_DOOR,
+      '', 75, 92, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'dw-spectacle-rock'));
     m.nodes.push(new DungeonNode(
-      'Spike Cave Chest', 20, 14, DungeonNodeStatus.CLOSED_CHEST,
+      'Spike Cave Chest', 21, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.moonPearl && items.glove && items.hammer 
         && (items.byrna || (items.cape && items.hasMagicExtension(config)));
@@ -862,7 +862,7 @@ export class DarkWorldMap {
       '', 75, 10, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'dw-trportal', '', [-1], 2));
     m.nodes.push(new DungeonNode(
-      'Hookshot Cave Bottom Chest', 52, 63, DungeonNodeStatus.CLOSED_CHEST,
+      'Hookshot Cave Bottom Chest', 42, 80, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.boots || items.hookshot;
     }, l[102]));

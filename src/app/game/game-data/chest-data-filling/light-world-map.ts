@@ -235,14 +235,14 @@ export class LightWorldMap {
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-small-shop', 'Northwest of Lake Hylea'); 
-    // 1: mirror on top of island
+    // 1: mirror on top of island, 2 swimmin
     m.nodes.push(new DungeonNode(
       '', 45, 4, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-octorok-field'));
     m.nodes.push(new DungeonNode(
       '', 91, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.flippers;
+        return items.flippers || items.currentRegionInMap > 0;
     }, 'lw-lake-hylea', 'Flippers Required'));
     m.nodes.push(new DungeonNode(
       'Lake Hylea Island', 79, 60, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
@@ -272,7 +272,7 @@ export class LightWorldMap {
     DungeonNode.noReqs, 'lw-octorok-field'));
     m.nodes.push(new DungeonNode(
       '', 38, 55, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-small-shop'));
+    DungeonNode.noReqs, 'lw-small-shop', '', [-1], 2));
     m.nodes.push(new DungeonNode(
       '', 68, 48, DungeonNodeStatus.PORTAL,
     function(items:Items, config:Config) {
@@ -457,13 +457,13 @@ export class LightWorldMap {
 
     m = new DungeonMapData('lw-saha', 'Sahasrahla\'s Hut', true);
     m.nodes.push(new DungeonNode(
-      '', 49, 92, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 93, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-eastern-palace'));
     m.nodes.push(new DungeonNode(
       'Sahasrahala\'s Hut Left Chest', 43, 34, DungeonNodeStatus.CLOSED_CHEST,
     DungeonNode.noReqs, l[9]));
     m.nodes.push(new DungeonNode(
-      'Sahasrahala\'s Hut Middle Chest', 49, 34, DungeonNodeStatus.CLOSED_CHEST,
+      'Sahasrahala\'s Hut Middle Chest', 49.5, 34, DungeonNodeStatus.CLOSED_CHEST,
     DungeonNode.noReqs, l[10]));
     m.nodes.push(new DungeonNode(
       'Sahasrahala\'s Hut Right Chest', 56, 34, DungeonNodeStatus.CLOSED_CHEST,

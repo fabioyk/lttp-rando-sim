@@ -116,7 +116,6 @@ export class MapComponent implements OnInit {
 
   nonDuns = ['lw', 'dw'];
   changeDungeon(destinationMap:string) {
-    console.log(destinationMap);
     if (this.currentDungeonMap) {
       this.currentDungeonMap.cleanPreload();
     }
@@ -130,6 +129,10 @@ export class MapComponent implements OnInit {
     }
     if (destinationMap === 'dw-trportal') {
       this.checkMedallion('tr');
+    }
+    this.resetDungeons();
+    if (destinationMap !== 'sp-entry') {
+      this.unfloodSwamp();
     }
     [this.currentDungeonMap, this.currentDungeon] = this.gameService.getMap(destinationMap);
     this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
@@ -182,6 +185,9 @@ export class MapComponent implements OnInit {
           } else if (dungeonNode.prize[0] === 'hc-sanctuary' && this.items.gameState === 3) {
             this.items.gameState = 4;
           }
+          if (this.items.spFlooded && dungeonNode.prize[0].substr(0, 2) === 'dw') {
+            this.unfloodSwamp();
+          }
           if (dungeonNode.prize[0] === 'Ganon') {
             this.addPrizes(dungeonNode, this.currentDungeon.name);
             this.onGameFinished.emit('');            
@@ -190,7 +196,7 @@ export class MapComponent implements OnInit {
             this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
           } else {            
             this.changeMapInDungeon(dungeonNode.prize[0]);
-            this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
+            this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;            
           }          
           break;
         case DungeonNodeStatus.SK_LOCKED:
@@ -213,6 +219,7 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.BK_LOCKED:
           if (this.currentDungeonItems.hasBigKey) {
             this.changeMapInDungeon(dungeonNode.prize[0]);
+            this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;            
           } else {
             this.cantItem.emit([dungeonNode, this.currentDungeon.name, false]);
           }
@@ -385,46 +392,10 @@ export class MapComponent implements OnInit {
       } else {
         this.changeMap('dark-world');
       }
-    }   
-
-    if (this.currentDungeon.name === 'Swamp Palace') {
-      this.currentDungeon.dungeonMaps.forEach(map => {
-        map.nodes.forEach(node => {
-          if (node.status == DungeonNodeStatus.WATER_SWITCH_FLIPPED) {
-            node.status = DungeonNodeStatus.WATER_SWITCH;
-            this.items.remove('flood', 'Swamp Palace');
-          }
-        });
-      });
-      this.items.spSwitch = false;
-    } else if (this.currentDungeon.name === 'Misery Mire') {
-      this.items.mmSwitch = false;
-    } else if (this.currentDungeon.name === 'Ice Palace') {
-      this.currentDungeon.dungeonMaps.forEach(map => {
-        if (map.id === 'ip-push-block') {
-          map.nodes.forEach(node => {
-            if (node.content == 'ip-switch-room') {
-              node.status = DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK;
-              this.items.ipBlockPushed = false;
-            }
-          });
-        }
-      });
-      this.items.ipSwitch = false;
-    }    
-  
-
-    // Reset Switches
-    var switchDungeons = ['Swamp Palace', 'Misery Mire', 'Ice Palace'];
-    if (switchDungeons.indexOf(this.currentDungeon.name) > -1) {
-      this.currentDungeon.dungeonMaps.forEach((map) => {
-        map.nodes.forEach((node) => {
-          if (node.status == DungeonNodeStatus.SWITCH_FLIPPED) {
-            node.status = DungeonNodeStatus.SWITCH;
-          }
-        })
-      })
+      this.unfloodSwamp();
     }
+  
+    this.resetDungeons();    
 
     if (this.currentDungeonMap) {
       this.currentDungeonMap.cleanPreload();
@@ -435,6 +406,48 @@ export class MapComponent implements OnInit {
       this.currentDungeonMap = null;
       this.currentDungeonItems = null;
     }    
+  }
+
+  unfloodSwamp() {
+    this.gameService.dungeonsData[5].dungeonMaps.forEach(map => {
+      map.nodes.forEach(node => {
+        if (node.status == DungeonNodeStatus.WATER_SWITCH_FLIPPED) {
+          node.status = DungeonNodeStatus.WATER_SWITCH;
+          this.items.remove('flood', 'Swamp Palace');
+        }
+      });
+    });
+  }
+
+  resetDungeons() {
+    this.items.mmSwitch = false;
+    this.items.spSwitch = false;
+    this.items.ipSwitch = false;
+
+    this.gameService.dungeonsData[8].dungeonMaps.forEach(map => {
+      if (map.id === 'ip-push-block') {
+        map.nodes.forEach(node => {
+          if (node.content == 'ip-switch-room') {
+            node.status = DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK;
+            this.items.ipBlockPushed = false;
+          }
+        });
+      }
+    });    
+
+    // Reset Switches
+    var switchDungeons = ['Swamp Palace', 'Misery Mire', 'Ice Palace'];
+    this.gameService.dungeonsData.forEach((dunData:DungeonData) => {
+      if (switchDungeons.indexOf(dunData.name) > -1) {
+        dunData.dungeonMaps.forEach((map) => {
+          map.nodes.forEach((node) => {
+            if (node.status == DungeonNodeStatus.SWITCH_FLIPPED) {
+              node.status = DungeonNodeStatus.SWITCH;
+            }
+          })
+        })
+      }
+    });
   }
 
   changeTooltip(mapNode:MapNode) {
@@ -790,8 +803,7 @@ export class MapComponent implements OnInit {
   }
 
   preloadMapsAndIcons() {
-    var images = ['assets/light-world.png', 'assets/dark-world.png',
-      'assets/node-icons/big_door.png', 'assets/node-icons/closed_big_chest.png',
+    var images = ['assets/node-icons/big_door.png', 'assets/node-icons/closed_big_chest.png',
       'assets/node-icons/closed_chest.png', 'assets/node-icons/key_door.png',
       'assets/node-icons/open_chest.png', 'assets/node-icons/open_big_chest.png',
       'assets/node-icons/small_key.png', 'assets/node-icons/warp.png',
@@ -799,6 +811,10 @@ export class MapComponent implements OnInit {
       'assets/item-icons/bigKey.png', 'assets/item-icons/bigKeyEmpty.png', 
       'assets/item-icons/map.png', 'assets/item-icons/mapEmpty.png',
       'assets/node-icons/open_door.png'];
+    if (!this.config.isFullMap) {
+      images.push('assets/light-world.png');
+      images.push('assets/dark-world.png');
+    }
     this.preloadedImages = [];
     images.forEach((imageUrl, index) => {
       this.preloadedImages[index] = new Image();
@@ -825,6 +841,7 @@ export class MapComponent implements OnInit {
       this.items.add(item, 'light-world');
     });
     this.items.isFluteActivated = true;
+    this.items.gameState = 4;
     this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
     
   }

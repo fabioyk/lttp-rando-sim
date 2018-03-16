@@ -87,26 +87,31 @@ export class NodeComponent implements OnInit {
     this.isLookable = false;
     if (this.nodeType === 'inside-dungeon') {
       //this.isLookable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST;
-      if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
+      var viewable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
+        || ((+this.nodeInfo.status === DungeonNodeStatus.PEDESTAL
+          || +this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM) 
+          && this.items.book);
+      var oneOfViewable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
+        || +this.nodeInfo.status === DungeonNodeStatus.PEDESTAL
+        || +this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM;
+      if ((!this.nodeInfo.originalNode.canOpen(this.items, this.config) || oneOfViewable) 
           && +this.nodeInfo.status !== DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
+            && (!this.items.book && (+this.nodeInfo.status === DungeonNodeStatus.PEDESTAL
+              || +this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM))
           && (!this.config.canGlitch || !this.nodeInfo.originalNode.canGlitch 
               || !this.nodeInfo.originalNode.canGlitch(this.items, this.config))) {
         return 'dungeon-unavailable';
       }
-      if (!this.nodeInfo.originalNode.canOpen(this.items, this.config)
+      if (viewable && !this.nodeInfo.originalNode.canOpen(this.items, this.config)
         && (!this.config.canGlitch || !this.nodeInfo.originalNode.canGlitch 
-          || !this.nodeInfo.originalNode.canGlitch(this.items, this.config))
-          && (+this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
-            || ((+this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM
-              || +this.nodeInfo.status === DungeonNodeStatus.PEDESTAL)
-              && this.items.book))) {
+          || !this.nodeInfo.originalNode.canGlitch(this.items, this.config))) {
         return 'view-state';
       }
       if (+this.nodeInfo.status === DungeonNodeStatus.BK_LOCKED
         || +this.nodeInfo.status === DungeonNodeStatus.BIG_CHEST) {
         if (this.dungeonItems.hasBigKey) {
           if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
-                && this.config.canGlitch && this.nodeInfo.originalNode.canGlitch(this.items, this.config)) {
+                && this.config.canGlitch && this.nodeInfo.originalNode.canGlitch && this.nodeInfo.originalNode.canGlitch(this.items, this.config)) {
             return 'glitched-state';
           } else {
             return 'dun-open-state';
@@ -118,7 +123,7 @@ export class NodeComponent implements OnInit {
       if (+this.nodeInfo.status === DungeonNodeStatus.SK_LOCKED) {
         if (this.dungeonItems.smallKeys > 0) {
           if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
-                && this.config.canGlitch && this.nodeInfo.originalNode.canGlitch(this.items, this.config)) {
+                && this.config.canGlitch && this.nodeInfo.originalNode.canGlitch && this.nodeInfo.originalNode.canGlitch(this.items, this.config)) {
             return 'glitched-state';
           } else {
             return 'dun-open-state';
@@ -136,7 +141,7 @@ export class NodeComponent implements OnInit {
         return 'opened-state';
       }
       if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
-        && this.config.canGlitch && this.nodeInfo.originalNode.canGlitch(this.items, this.config)) {
+        && this.config.canGlitch && this.nodeInfo.originalNode.canGlitch && this.nodeInfo.originalNode.canGlitch(this.items, this.config)) {
         return 'glitched-state';
       }
       return 'dun-open-state';

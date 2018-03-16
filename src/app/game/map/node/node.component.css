@@ -165,6 +165,8 @@
   background-image: url('/assets/node-icons/warp.png');      
 }
 .mirror {
+  border-radius: 50%;
+  background-color: lightgreen;
   background-image: url('/assets/item-icons/mirror.png');      
 }
 .frog {

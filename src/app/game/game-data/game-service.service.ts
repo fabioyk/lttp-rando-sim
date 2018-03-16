@@ -124,18 +124,37 @@ export class GameService {
       });
     }
     
+    var transitions = [
+      DungeonNodeStatus.OPEN_DOOR,
+      DungeonNodeStatus.SK_LOCKED,
+      DungeonNodeStatus.BK_LOCKED,
+      DungeonNodeStatus.WATER_WARP,
+      DungeonNodeStatus.HOLE
+    ]
     this.dungeonsData.forEach((dungeon) => {
       dungeon.dungeonMaps.forEach((map) => {
         map.nodes.forEach((eachNode, index) => {
-          if (eachNode.name === '' && (eachNode.status === DungeonNodeStatus.OPEN_DOOR
-            || eachNode.status === DungeonNodeStatus.SK_LOCKED
-            || eachNode.status === DungeonNodeStatus.BK_LOCKED)) {
+          if (eachNode.name === '' && transitions.indexOf(+eachNode.status) > -1) {
               var target = eachNode.content;
+              var found = false;
               dungeon.dungeonMaps.forEach((eachMap) => {
                 if (eachMap.id === target) {
                   eachNode.name = eachMap.name;
+                  found = true;
                 }
               });
+              if (!found) {
+                this.dungeonsData.forEach(dunData => {
+                  if (!found) {
+                    dunData.dungeonMaps.forEach(dunMap => {
+                      if (dunMap.id === target) {
+                        eachNode.name = dunMap.name;
+                        found = true;
+                      }
+                    }) 
+                  }                  
+                })
+              }
           }
           eachNode.mapNode = {
             x: eachNode.x ? eachNode.x : index * 10 + 15,
@@ -406,7 +425,6 @@ export class GameService {
         return [dunMapData, dunData];
       }
     }
-    console.log(mapName, dunIndex);
     return [null, null];
   }
 
