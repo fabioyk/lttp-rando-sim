@@ -48,6 +48,7 @@ export class Items {
   ttBlindDelivered = false;
   ttBombableFloor = false;
   ipBlockPushed = false;
+  damFlooded = false;
 
   pendantCourage = false;
   pendantPower = false;
@@ -61,6 +62,19 @@ export class Items {
   dwMapOpen = false;
   mmMedallionChecked = false;
   trMedallionChecked = false;
+
+  hasPurpleChest = false;
+  hasBigBomb = false;
+  hasBlacksmiths = false;
+  oldManRescued = false;
+  blacksmithsRescued = false;
+  isFluteActivated = false;
+  isTROpened = false;
+
+  // 0: start. 1: uncle sword get. 2: zelda cell get. 3: sewers. 4: zelda rescued
+  gameState = 0;
+
+  currentRegionInMap = 0;
 
   isKeysanity:boolean;
 
@@ -118,14 +132,16 @@ export class Items {
 
   }
   
-  setup(isKeysanity:boolean, dungeonsData:DungeonData[]) {
+  setup(isKeysanity:boolean, dungeonsData:DungeonData[], isFullMap:boolean) {
     this.isKeysanity = isKeysanity;
 
     if (!isKeysanity) {
-      this.startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];
-      
+      this.startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];      
     } else {
       this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 28];
+    }
+    if (isFullMap) {
+      this.startingItemCount[11]--;
     }
 
     DungeonData.dungeonNames.forEach((dunName, index) => {
@@ -153,11 +169,11 @@ export class Items {
     'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
 
     if (notItemLocation.indexOf(itemName) === -1) {
-      this.stats.totalCount++;
-      if (region === 'light-world' || region === 'dark-world') {
-        this.stats.overworldCount++;
-      } else {
+      this.stats.totalCount++;      
+      if (region === 'Hyrule Castle' || DungeonData.dungeonsWithDunItemsCount.indexOf(region) > -1) {
         this.stats.dungeonCount++;
+      } else {
+        this.stats.overworldCount++;
       }
     }
 
@@ -245,7 +261,7 @@ export class Items {
     const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room'];
     if (!isGroundKey && itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
         && itemName.indexOf('Agahnim 2') === -1 && itemName.indexOf('Ganon') === -1
-        && dungeonStuff.indexOf(itemName) === -1 && region !== 'light-world' && region !== 'dark-world') {      
+        && dungeonStuff.indexOf(itemName) === -1 && DungeonData.dungeonsWithDunItemsCount.indexOf(region) > -1) {      
       if (!this.isKeysanity) {
         const dungeonItemsNames = ['bigKey', 'smallKey', 'map', 'compass'];
         var isDunItem = false;

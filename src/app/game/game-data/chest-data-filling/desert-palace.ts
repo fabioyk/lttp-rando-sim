@@ -18,7 +18,7 @@ export class DesertPalace {
       '', 50, 83, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));
+    }, config.isFullMap ? 'lw-desert' : 'exit'));
     entrance.nodes.push(new DungeonNode(
       '', 7, 27, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -44,11 +44,20 @@ export class DesertPalace {
     function(items:Items, config:Config) {
         return true;
     }, 'dp-right'));
-    entrance.nodes.push(new DungeonNode(
-      'Desert Final Section', 7, 76, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return items.glove;
-    }, 'dp-first-tile', 'Power Gloves Required'));
+    if (!config.isFullMap) {
+      entrance.nodes.push(new DungeonNode(
+        'Desert Final Section', 7, 76, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return items.glove;
+      }, 'dp-first-tile', 'Power Gloves Required'));
+    } else {
+      entrance.nodes.push(new DungeonNode(
+        'Desert Ledge', 7, 76, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'lw-desert', '', [-1], 2));
+    }
+    
     dpData.dungeonMaps.push(entrance);
 
     var torch = new DungeonMapData('dp-torch', 'Torch Room');
@@ -118,7 +127,7 @@ export class DesertPalace {
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'dp-entry'));
+    }, config.isFullMap ? 'lw-desert' : 'dp-entry', '', [-1], 2));
     firstTile.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {

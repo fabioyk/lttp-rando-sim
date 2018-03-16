@@ -19,7 +19,7 @@ export class TurtleRock {
       '', 75, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));
+    }, config.isFullMap ? 'dw-trportal' : 'exit', '', [-1], 1));
     entrance.nodes.push(new DungeonNode(
       '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -155,7 +155,7 @@ export class TurtleRock {
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'tr-outside'));
+    }, config.isFullMap ? 'dw-tr-ledge' : 'tr-outside'));
     trData.dungeonMaps.push(doubPokey);
 
     var outside = new DungeonMapData('tr-outside', 'Corridor Outside');
@@ -194,7 +194,7 @@ export class TurtleRock {
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'tr-outside'));
+    }, config.isFullMap ? 'dw-tr-ledge' : 'tr-outside'));
     bc.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -229,8 +229,9 @@ export class TurtleRock {
     rollerSwitch.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hasLightsource(config);
-    }, 'tr-helma-bridge', 'Lamp Required'));
+        return items.lamp;
+    }, 'tr-helma-bridge', 'Lamp Required', [-1], 0, 
+    DungeonNode.noReqs));
     rollerSwitch.nodes.push(new DungeonNode(
       'Crystaroller Chest', 21.6, 54, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -242,8 +243,9 @@ export class TurtleRock {
     helmaBridge.nodes.push(new DungeonNode(
       '', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return true;
-    }, 'tr-roller-switch'));
+        return items.lamp;
+    }, 'tr-roller-switch', '', [-1], 0, 
+    DungeonNode.noReqs));
     helmaBridge.nodes.push(new DungeonNode(
       '', 32, 77, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {

@@ -92,7 +92,7 @@ export class SkullWoods {
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'sw-entry'));
+    }, config.isFullMap ? 'dw-lostwoods' : 'sw-entry'));
     bigChest.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -159,7 +159,7 @@ export class SkullWoods {
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'sw-entry'));
+    }, config.isFullMap ? 'dw-lostwoods' : 'sw-entry'));
     part2.nodes.push(new DungeonNode(
       '', 32, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -178,11 +178,19 @@ export class SkullWoods {
     function(items:Items, config:Config) {
         return true;
     }, 'sw-part21'));
-    part22.nodes.push(new DungeonNode(
-      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return items.fireRod;
-    }, 'sw-final', 'Fire Rod Required'));
+    if (!config.isFullMap) {
+      part22.nodes.push(new DungeonNode(
+        '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return items.fireRod;
+      }, 'sw-final', 'Fire Rod Required'));
+    } else {
+      part22.nodes.push(new DungeonNode(
+        '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'dw-lostwoods', '', [-1], 1));
+    }
     part22.nodes.push(new DungeonNode(
       '', 21, 28, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
@@ -191,11 +199,19 @@ export class SkullWoods {
     swData.dungeonMaps.push(part22);
 
     var final = new DungeonMapData('sw-final', 'Final Section');
-    final.nodes.push(new DungeonNode(
-      '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-part22'));
+    if (!config.isFullMap) {
+      final.nodes.push(new DungeonNode(
+        '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'sw-part22'));
+    } else {
+      final.nodes.push(new DungeonNode(
+        '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'dw-lostwoods', '', [-1], 1));
+    }
     final.nodes.push(new DungeonNode(
       'Mothula Room', 25, 9.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {

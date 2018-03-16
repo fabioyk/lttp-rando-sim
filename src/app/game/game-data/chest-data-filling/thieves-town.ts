@@ -18,7 +18,7 @@ export class ThievesTown {
       '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));
+    }, config.isFullMap ? 'dw-kakariko' : 'exit'));
     entrance.nodes.push(new DungeonNode(
       '', 87.5, 6, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {

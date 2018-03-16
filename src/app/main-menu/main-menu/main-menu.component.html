@@ -12,8 +12,8 @@
   </div>
 
   <div class="form-group">
-      <label for="game-mode" class="col-sm-4 control-label">Minor Glitches and Sequence Breaking</label>    
-      <div class="btn-group" id="game-mode" class="col-sm-8">
+      <label for="seq-break" class="col-sm-4 control-label">Minor Glitches and Sequence Breaking</label>    
+      <div class="btn-group" id="seq-break" class="col-sm-8">
         <label class="btn btn-default" [(ngModel)]="glitchSelected" name="no-breaking-button"
           btnRadio="no">Not Allowed</label>
         <label class="btn btn-default" [(ngModel)]="glitchSelected" name="yes-breaking-button"
@@ -21,6 +21,16 @@
       </div>
     </div>
   
+  <div class="form-group">
+    <label for="map-mode" class="col-sm-4 control-label">Map Mode</label>    
+    <div class="btn-group" id="map-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="mapSelected" name="simple-map-button"
+        btnRadio="no">Simple and Quick</label>
+      <label class="btn btn-default" [(ngModel)]="mapSelected" name="full-map-button"
+        btnRadio="yes">Full</label>
+    </div>
+  </div>
+
   <div class="form-group">
     <label for="seed-num-input" class="col-sm-4 control-label">Seed</label>
     <div class="col-sm-8 form-inline">

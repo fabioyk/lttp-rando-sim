@@ -13,6 +13,7 @@ export class MainMenuComponent implements OnInit {
   shouldDisablePlay = false;
   modeSelected = 'standard';
   glitchSelected = 'yes';
+  mapSelected = 'no';
   seedNum = '';
   errorMessage = '';
   dailySeed = false;
@@ -22,7 +23,8 @@ export class MainMenuComponent implements OnInit {
   preloadedIcons = [];
 
   lockedMode;
-  lockedGlitch;  
+  lockedGlitch;
+  lockedMap;
 
   constructor(private _seedService: SeedApiService,
               private _router: Router,
@@ -31,11 +33,17 @@ export class MainMenuComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('modeSelected')) {
       this.modeSelected = localStorage.getItem('modeSelected');
-      this.glitchSelected = localStorage.getItem('glitchSelected');      
+      this.glitchSelected = localStorage.getItem('glitchSelected');
     } else {
       localStorage.setItem('modeSelected', this.modeSelected);
       localStorage.setItem('glitchSelected', this.glitchSelected);
     }
+    if (localStorage.getItem('mapSelected')) {
+      this.mapSelected = localStorage.getItem('mapSelected');
+    } else {
+      localStorage.setItem('mapSelected', this.mapSelected);      
+    }
+    
 
     this._seedService.getStatus()
       .subscribe((status) => {
@@ -75,10 +83,12 @@ export class MainMenuComponent implements OnInit {
     this.shouldDisablePlay = true;
     this.lockedMode = this.modeSelected;
     this.lockedGlitch = this.glitchSelected;
+    this.lockedMap = this.mapSelected;
     this.errorMessage = '';
 
     localStorage.setItem('modeSelected', this.modeSelected);
     localStorage.setItem('glitchSelected', this.glitchSelected);
+    localStorage.setItem('mapSelected', this.mapSelected);    
 
     this._seedService.getSeed(this.lockedMode, this.seedNum, this.dailySeed)
       .subscribe((seed) => {
@@ -91,6 +101,9 @@ export class MainMenuComponent implements OnInit {
           };
           if (this.lockedGlitch === 'yes') {
             queryParams.minorGlitches = true;
+          } 
+          if (this.lockedMap === 'yes') {
+            queryParams.fullMap = true;
           } 
           this._router.navigate(['/' + this.lockedMode], {queryParams: queryParams});
         }

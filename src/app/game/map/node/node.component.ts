@@ -87,28 +87,62 @@ export class NodeComponent implements OnInit {
     this.isLookable = false;
     if (this.nodeType === 'inside-dungeon') {
       //this.isLookable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST;
-      if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
-          && +this.nodeInfo.status !== DungeonNodeStatus.VIEWABLE_CLOSED_CHEST) {
+      var viewable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
+        || ((+this.nodeInfo.status === DungeonNodeStatus.PEDESTAL
+          || +this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM) 
+          && this.items.book);
+      var oneOfViewable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
+        || +this.nodeInfo.status === DungeonNodeStatus.PEDESTAL
+        || +this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM;
+      if ((!this.nodeInfo.originalNode.canOpen(this.items, this.config) || oneOfViewable) 
+          && +this.nodeInfo.status !== DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
+            && (!this.items.book && (+this.nodeInfo.status === DungeonNodeStatus.PEDESTAL
+              || +this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM))
+          && (!this.config.canGlitch || !this.nodeInfo.originalNode.canGlitch 
+              || !this.nodeInfo.originalNode.canGlitch(this.items, this.config))) {
         return 'dungeon-unavailable';
       }
-      if (!this.nodeInfo.originalNode.canOpen(this.items, this.config)
-          && +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST) {        
+      if (viewable && !this.nodeInfo.originalNode.canOpen(this.items, this.config)
+        && (!this.config.canGlitch || !this.nodeInfo.originalNode.canGlitch 
+          || !this.nodeInfo.originalNode.canGlitch(this.items, this.config))) {
         return 'view-state';
       }
       if (+this.nodeInfo.status === DungeonNodeStatus.BK_LOCKED
         || +this.nodeInfo.status === DungeonNodeStatus.BIG_CHEST) {
-        return this.dungeonItems.hasBigKey ? 'dun-open-state' : 'dungeon-unavailable';
+        if (this.dungeonItems.hasBigKey) {
+          if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
+                && this.config.canGlitch && this.nodeInfo.originalNode.canGlitch && this.nodeInfo.originalNode.canGlitch(this.items, this.config)) {
+            return 'glitched-state';
+          } else {
+            return 'dun-open-state';
+          }
+        } else {
+          return 'dungeon-unavailable';
+        }
       }
       if (+this.nodeInfo.status === DungeonNodeStatus.SK_LOCKED) {
-        return this.dungeonItems.smallKeys > 0 ? 'dun-open-state' : 'dungeon-unavailable';
+        if (this.dungeonItems.smallKeys > 0) {
+          if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
+                && this.config.canGlitch && this.nodeInfo.originalNode.canGlitch && this.nodeInfo.originalNode.canGlitch(this.items, this.config)) {
+            return 'glitched-state';
+          } else {
+            return 'dun-open-state';
+          }
+        } else {
+          return 'dungeon-unavailable';
+        }        
       }
       if (+this.nodeInfo.status === DungeonNodeStatus.WATER_SWITCH_FLIPPED
         || +this.nodeInfo.status === DungeonNodeStatus.BLIND_RESCUED
-        || +this.nodeInfo.status === DungeonNodeStatus.COLLECTED_GROUND_KEY
+        || +this.nodeInfo.status === DungeonNodeStatus.EMPTY
         || +this.nodeInfo.status === DungeonNodeStatus.OPEN_CHEST
         || +this.nodeInfo.status === DungeonNodeStatus.OPEN_BIG_CHEST
         || +this.nodeInfo.status === DungeonNodeStatus.TT_BOMB_FLOOR_DONE) {
         return 'opened-state';
+      }
+      if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
+        && this.config.canGlitch && this.nodeInfo.originalNode.canGlitch && this.nodeInfo.originalNode.canGlitch(this.items, this.config)) {
+        return 'glitched-state';
       }
       return 'dun-open-state';
     } else if (this.nodeType !== 'overworld') {
@@ -180,7 +214,7 @@ export class NodeComponent implements OnInit {
           return 'closed-chest';
         case DungeonNodeStatus.GROUND_KEY:
           return 'spare-key';
-        case DungeonNodeStatus.COLLECTED_GROUND_KEY:
+        case DungeonNodeStatus.EMPTY:
           return 'empty';
         case DungeonNodeStatus.SWITCH:
           return 'switch-red';
@@ -200,6 +234,36 @@ export class NodeComponent implements OnInit {
           return 'tt-floor-open';
         case DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK:
           return 'push-block';
+        case DungeonNodeStatus.PORTAL:
+          if (!this.nodeInfo.originalNode.canOpen(this.items, this.config)) {
+            return 'invisible';
+          } else {
+            return 'portal';
+          }          
+        case DungeonNodeStatus.MIRROR:
+          return 'mirror';
+        case DungeonNodeStatus.FROG:
+          return 'frog';
+        case DungeonNodeStatus.PURPLE_CHEST:
+          return 'purple-chest';
+        case DungeonNodeStatus.BIG_BOMB:
+          return 'big-bomb';
+        case DungeonNodeStatus.BOOK_CHECKABLE_ITEM:
+          return 'tablet';
+        case DungeonNodeStatus.PEDESTAL:
+          return 'pedestal';
+        case DungeonNodeStatus.DUCK:
+          return 'duck';
+        case DungeonNodeStatus.HOLE:
+          return 'hole';
+        case DungeonNodeStatus.WATER_WARP:
+          return 'water-warp';
+        case DungeonNodeStatus.SQ_OPTION:
+          var res = 'sq-item ' + this.nodeInfo.prize[0];
+          if (this.nodeInfo.prize[0] === 'lw-flute1' && !this.nodeInfo.originalNode.canOpen(this.items, this.config)) {
+            res += ' invisible';
+          }
+          return res;          
         default:
           console.log(this.nodeInfo.status);
           return '';

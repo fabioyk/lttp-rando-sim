@@ -10,7 +10,7 @@ export class DungeonNodeStatus {
   static OPEN_BIG_CHEST = 8;
   static BOSS = 9;
   static GROUND_KEY = 10;
-  static COLLECTED_GROUND_KEY = 11;
+  static EMPTY = 11;
   static SWITCH = 12;
   static WATER_SWITCH = 13;
   static BLIND_RESCUE = 14;
@@ -21,4 +21,18 @@ export class DungeonNodeStatus {
   static WATER_SWITCH_FLIPPED = 19;
   static OPEN_DOOR_PUSH_BLOCK = 20;
   static VIEWABLE_GETABLE_CLOSED_CHEST = 21;
+  static WARP = 22;
+  static FROG = 23;
+  static PURPLE_CHEST = 24;
+  static BIG_BOMB = 25;
+  static MIRROR = 26;
+  static PORTAL = 27;
+  static MEDALLION = 28;
+  static MEDALLION_OPENED = 29;
+  static BOOK_CHECKABLE_ITEM = 30;
+  static SQ_OPTION = 31;
+  static PEDESTAL = 32;
+  static DUCK = 33;
+  static HOLE = 34;
+  static WATER_WARP = 35;
 }

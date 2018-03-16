@@ -18,7 +18,7 @@ export class TowerHera {
       '', 50, 90, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'exit'));
+    }, config.isFullMap ? 'lw-hera' : 'exit'));
     entrance.nodes.push(new DungeonNode(
       '', 28, 67, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

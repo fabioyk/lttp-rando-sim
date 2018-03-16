@@ -37,15 +37,27 @@ export class MapComponent implements OnInit {
   currentDungeon: DungeonData;
   currentDungeonItems: DungeonItems;
 
+  mirrorNode: DungeonNode;
+  mirrorMap:string;
+  mirrorRegion: number;
+  dungeonMirrorMap:string;
+
+  dungeonFinishMap:string;
+  dungeonFinishRegion:number;
+
   constructor(private gameService:GameService,
               private itemNameService:ItemNamesService) { }
 
   ngOnInit() {    
-    this.isDev = isDevMode();
-    
-    this.currentMap = 'light-world';
+    this.isDev = isDevMode();    
+    if (this.config.isFullMap) {      
+      [this.currentDungeonMap, this.currentDungeon] = this.gameService.getMap(this.currentMap);
+      this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
+      this.changeMap(this.currentDungeonMap.id);
+      this.currentDungeonItems = this.items.getDungeonItems(this.currentDungeon.name);      
+    }
     this.clearTooltip();
-    
+
     this.preloadMapsAndIcons();
   }
 
@@ -101,25 +113,41 @@ export class MapComponent implements OnInit {
 
   onDungeonClick(dungeonClicked:MapNode) {
     if (dungeonClicked.status.indexOf('getable') > -1 && dungeonClicked.status.indexOf('unavailable') === -1) {
-      if (this.currentDungeonMap) {
-        this.currentDungeonMap.cleanPreload();
-      }      
-      this.currentDungeon = dungeonClicked.originalNode;
-      this.currentDungeonMap = this.currentDungeon.startingMap;
-      this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
-      this.changeMap(this.currentDungeonMap.id);
-      this.items.visitDungeon(dungeonClicked.tooltip);
-      this.currentDungeonItems = this.items.getDungeonItems(dungeonClicked.tooltip);
-      if (this.currentDungeon.name === 'Turtle Rock') {
-        this.items.trMedallionChecked = true;
-      }
-      if (this.currentDungeon.name === 'Misery Mire') {
-        this.items.mmMedallionChecked = true;
-      }
-      if (this.items.spFlooded && this.currentDungeon.name !== 'Swamp Palace') {
-        this.unfloodSwamp();
-      }
+      this.changeDungeon(dungeonClicked.originalNode.startingMap.id);
     }    
+  }
+
+  nonDuns = ['lw', 'dw'];
+  changeDungeon(destinationMap:string) {
+    if (this.currentDungeonMap) {
+      this.currentDungeonMap.cleanPreload();
+    }
+    if (this.currentDungeonMap && this.nonDuns.indexOf(this.currentDungeonMap.id.split('-')[0]) > -1 && this.nonDuns.indexOf(destinationMap.split('-')[0]) === -1) {
+      this.dungeonFinishMap = this.currentDungeonMap.id;
+      this.dungeonFinishRegion = this.items.currentRegionInMap;
+      this.dungeonMirrorMap = destinationMap;
+    }
+    if (destinationMap === 'dw-desert') {
+      this.checkMedallion('mm');
+    }
+    if (destinationMap === 'dw-trportal') {
+      this.checkMedallion('tr');
+    }
+    this.resetDungeons();
+    if (destinationMap !== 'sp-entry') {
+      this.unfloodSwamp();
+    }
+    [this.currentDungeonMap, this.currentDungeon] = this.gameService.getMap(destinationMap);
+    this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
+    this.changeMap(this.currentDungeonMap.id);
+    this.items.visitDungeon(this.currentDungeon.name);
+    this.currentDungeonItems = this.items.getDungeonItems(this.currentDungeon.name);
+    if (this.currentDungeon.name === 'Turtle Rock') {
+      this.items.trMedallionChecked = true;
+    }
+    if (this.currentDungeon.name === 'Misery Mire') {
+      this.items.mmMedallionChecked = true;
+    }
   }
 
   changeMapInDungeon(destination:string) {
@@ -145,13 +173,34 @@ export class MapComponent implements OnInit {
 
   onDungeonNodeClick(dungeonNode:MapNode) {
     //this.onNodeMouseEnter(dungeonNode);
-    if (dungeonNode.originalNode.canOpen(this.items, this.config)) {
+    if (dungeonNode.originalNode.canOpen(this.items, this.config)
+      || (dungeonNode.originalNode.canGlitch && dungeonNode.originalNode.canGlitch(this.items, this.config))) {
       switch(+dungeonNode.status) {
         case DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
-          dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_DOOR.toString();          
+          dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_DOOR.toString();
+        case DungeonNodeStatus.SQ_OPTION:
+        case DungeonNodeStatus.HOLE:
+        case DungeonNodeStatus.WATER_WARP:
         case DungeonNodeStatus.OPEN_DOOR:
-          this.changeMapInDungeon(dungeonNode.prize[0]);
+          if (dungeonNode.prize[0] === 'hc-darkchest' && this.items.gameState === 2) {
+            this.items.gameState = 3;
+          } else if (dungeonNode.prize[0] === 'hc-sanctuary' && this.items.gameState === 3) {
+            this.items.gameState = 4;
+          }
+          if (this.items.spFlooded && dungeonNode.prize[0].substr(0, 2) === 'dw') {
+            this.unfloodSwamp();
+          }
+          if (dungeonNode.prize[0] === 'Ganon') {
+            this.addPrizes(dungeonNode, this.currentDungeon.name);
+            this.onGameFinished.emit('');            
+          } else if (dungeonNode.prize[0] !== 'exit' && dungeonNode.prize[0].split('-')[0] !== this.currentDungeonMap.id.split('-')[0]) {            
+            this.changeDungeon(dungeonNode.prize[0]);
+            this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
+          } else {            
+            this.changeMapInDungeon(dungeonNode.prize[0]);
+            this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;            
+          }          
           break;
         case DungeonNodeStatus.SK_LOCKED:
           if (this.currentDungeonItems.smallKeys > 0) {
@@ -173,6 +222,7 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.BK_LOCKED:
           if (this.currentDungeonItems.hasBigKey) {
             this.changeMapInDungeon(dungeonNode.prize[0]);
+            this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;            
           } else {
             this.cantItem.emit([dungeonNode, this.currentDungeon.name, false]);
           }
@@ -189,12 +239,32 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.VIEWABLE_CLOSED_CHEST:
         case DungeonNodeStatus.VIEWABLE_GETABLE_CLOSED_CHEST:
         case DungeonNodeStatus.CLOSED_CHEST:
-          this.addPrizes(dungeonNode, this.currentDungeon.name);
+          if (dungeonNode.tooltip === 'Old Man') {
+            this.items.oldManRescued = true;
+          } else if (dungeonNode.tooltip === 'Blacksmiths Item') {
+            this.items.blacksmithsRescued = true;
+          } else if (dungeonNode.tooltip === 'Spectacle Rock Item') {
+            this.currentDungeon.dungeonMaps.forEach((map) => {
+              map.nodes.forEach((node) => {
+                if (node.name === 'Spectacle Rock Item') {
+                  node.status = DungeonNodeStatus.OPEN_CHEST;
+                }
+              });
+            })
+          } else if (dungeonNode.tooltip === 'Link\'s Uncle' && this.items.gameState === 0) {
+            this.items.gameState = 1;
+          } else if (dungeonNode.tooltip === 'Zelda\'s Chest' && this.items.gameState === 1) {
+            this.items.gameState = 2;
+          }
+          if (dungeonNode.originalNode.accessibleSectionArray[0] === -1 && +dungeonNode.status === DungeonNodeStatus.CLOSED_CHEST) {
+            this.items.currentRegionInMap = 0;
+          }
+          if (this.config.isFullMap && this.currentDungeonMap.isIndoors) {
+            this.addPrizes(dungeonNode, this.currentDungeonMap.name);            
+          } else {
+            this.addPrizes(dungeonNode, this.currentDungeon.name);            
+          }
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();
-          break;
-        case DungeonNodeStatus.OPEN_CHEST:
-          break;
-        case DungeonNodeStatus.OPEN_BIG_CHEST:
           break;
         case DungeonNodeStatus.BOSS:
           if (this.currentDungeon.name === 'Aga Tower' || this.currentDungeon.name === 'Ganons Tower') {
@@ -209,9 +279,9 @@ export class MapComponent implements OnInit {
           break;
         case DungeonNodeStatus.GROUND_KEY:
           this.items.add('smallKey-'+DungeonData.allDungeonNames.indexOf(this.currentDungeon.name), this.currentDungeon.name, true);
-          dungeonNode.originalNode.status = DungeonNodeStatus.COLLECTED_GROUND_KEY.toString();
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
           break;
-        case DungeonNodeStatus.COLLECTED_GROUND_KEY:
+        case DungeonNodeStatus.EMPTY:
           break;
         case DungeonNodeStatus.SWITCH_FLIPPED:
         case DungeonNodeStatus.SWITCH:
@@ -236,31 +306,109 @@ export class MapComponent implements OnInit {
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.TT_BOMB_FLOOR_DONE.toString();
           break;
+        case DungeonNodeStatus.PORTAL:
+          var name = this.currentDungeonMap.id.split('-');
+          if (name[1] === 'trportal' && !this.items.isTROpened && this.items[this.config.trMedallion]) {
+            this.items.isTROpened = true;
+          }
+          name[0] = 'dw';
+          this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;          
+          this.changeDungeon(name.join('-'));          
+          break;
+        case DungeonNodeStatus.MIRROR:
+          var name = this.currentDungeonMap.id.split('-');
+          if (name[0] === 'dw') {
+            name[0] = 'lw';
+          } else {
+            name[0] = 'dw';
+          }
+          this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
+          this.mirrorNode = null;
+          this.mirrorRegion = dungeonNode.originalNode.destinationSection;
+          setTimeout(() => {
+            this.mirrorNode = dungeonNode.originalNode;
+          }, 1);
+          this.mirrorMap = name.join('-');
+          this.changeDungeon(this.mirrorMap);
+          break;
+        case DungeonNodeStatus.FROG:
+          this.items.hasBlacksmiths = true;
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
+          break;
+        case DungeonNodeStatus.PURPLE_CHEST:
+          this.items.hasPurpleChest = true;
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
+          break;
+          case DungeonNodeStatus.BIG_BOMB:
+          this.items.hasBigBomb = true;
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
+          break;
+        case DungeonNodeStatus.BOOK_CHECKABLE_ITEM:
+          if (this.items.book) {
+            this.addPrizes(dungeonNode, this.currentDungeon.name);
+            dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();            
+          } else {
+            this.cantItem.emit([dungeonNode, this.currentDungeon.name, true]);
+          }
+          break;
+        case DungeonNodeStatus.PEDESTAL:
+          this.addPrizes(dungeonNode, this.currentDungeon.name);
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
+          break;
+        case DungeonNodeStatus.DUCK:
+          this.items.isFluteActivated = true;
+          dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
+          break;
       }
-    } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()) {
-      this.viewItem.emit([dungeonNode, this.currentMap, dungeonNode.originalNode.errorMessage]);
+    } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()
+      || ((dungeonNode.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM.toString()
+        || dungeonNode.status === DungeonNodeStatus.PEDESTAL.toString()) && this.items.book)) {
+      if (this.config.isFullMap && this.currentDungeonMap.isIndoors) {
+        this.viewItem.emit([dungeonNode, this.currentDungeonMap.name, this.currentRegion]);  
+      } else {
+        this.viewItem.emit([dungeonNode, this.currentDungeon.name, this.currentRegion]);
+      }      
     } else {
       this.cantItem.emit([dungeonNode, this.currentDungeon.name, true]);
     }
   }
 
   leaveDungeon(isAgaBeingDefeated:boolean = false) {
-    if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 && (this.currentDungeon.name !== 'Aga Tower' || !isAgaBeingDefeated)) {
-      this.changeMap('light-world');
-    } else {
-      this.changeMap('dark-world');
+    if (this.currentDungeonMap) {
+      this.currentDungeonMap.cleanPreload();
     }
 
-    this.resetIPBlock();
-    this.resetCrystalSwitch();
-    
+    if (this.config.isFullMap) {
+      if (isAgaBeingDefeated || this.currentDungeon.name === 'Ganons Tower') {
+        this.changeDungeon('dw-hyrule-castle');
+      } else if (this.currentDungeon.name === 'Turtle Rock') {
+        this.changeDungeon('dw-trportal');
+      } else {
+        this.changeDungeon(this.dungeonFinishMap);
+        this.items.currentRegionInMap = this.dungeonFinishRegion;
+      }
+      this.dungeonFinishMap = '';
+      this.dungeonFinishRegion = 0;
+    } else {
+      if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 && (this.currentDungeon.name !== 'Aga Tower' || !isAgaBeingDefeated)) {
+        this.changeMap('light-world');
+      } else {
+        this.changeMap('dark-world');
+      }
+      this.unfloodSwamp();
+    }
+  
+    this.resetDungeons();    
+
     if (this.currentDungeonMap) {
       this.currentDungeonMap.cleanPreload();
     }
     
-    this.currentDungeon = null;
-    this.currentDungeonMap = null;
-    this.currentDungeonItems = null;
+    if (!this.config.isFullMap) {
+      this.currentDungeon = null;
+      this.currentDungeonMap = null;
+      this.currentDungeonItems = null;
+    }    
   }
 
   unfloodSwamp() {
@@ -274,33 +422,35 @@ export class MapComponent implements OnInit {
     });
   }
 
+  resetDungeons() {
+    this.items.mmSwitch = false;
+    this.items.spSwitch = false;
+    this.items.ipSwitch = false;
+
+    this.gameService.dungeonsData[8].dungeonMaps.forEach(map => {
+      if (map.id === 'ip-push-block') {
+        map.nodes.forEach(node => {
+          if (node.content == 'ip-switch-room') {
+            node.status = DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK;
+            this.items.ipBlockPushed = false;
+          }
+        });
+      }
+    });    
+
   resetCrystalSwitch() {
     var switchDungeons = ['Swamp Palace', 'Misery Mire', 'Ice Palace'];
-    if (switchDungeons.indexOf(this.currentDungeon.name) > -1) {
-      this.currentDungeon.dungeonMaps.forEach((map) => {
-        map.nodes.forEach((node) => {
-          if (node.status == DungeonNodeStatus.SWITCH_FLIPPED) {
-            node.status = DungeonNodeStatus.SWITCH;
-          }
-        })
-      })
-    }
-    this.items.crystalSwitch = false;
-  }
-
-  resetIPBlock() {
-    if (this.currentDungeon && this.currentDungeon.name === 'Ice Palace') {
-      this.currentDungeon.dungeonMaps.forEach(map => {
-        if (map.id === 'ip-push-block') {
-          map.nodes.forEach(node => {
-            if (node.content == 'ip-switch-room') {
-              node.status = DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK;
-              this.items.ipBlockPushed = false;
+    this.gameService.dungeonsData.forEach((dunData:DungeonData) => {
+      if (switchDungeons.indexOf(dunData.name) > -1) {
+        dunData.dungeonMaps.forEach((map) => {
+          map.nodes.forEach((node) => {
+            if (node.status == DungeonNodeStatus.SWITCH_FLIPPED) {
+              node.status = DungeonNodeStatus.SWITCH;
             }
-          });
-        }
-      });
-    }
+          })
+        })
+      }
+    });
   }
 
   changeTooltip(mapNode:MapNode) {
@@ -314,7 +464,8 @@ export class MapComponent implements OnInit {
     } else if (this.currentDungeon 
       && mapNode.originalNode.canOpen 
       && mapNode.originalNode.errorMessage 
-      && !mapNode.originalNode.canOpen(this.items, this.config) ) {
+      && !mapNode.originalNode.canOpen(this.items, this.config)
+      && (!mapNode.originalNode.canGlitch || !mapNode.originalNode.canGlitch(this.items, this.config)) ) {
         this.tooltip += '. ' + mapNode.originalNode.errorMessage;
     } else if (!this.currentDungeon 
         && (mapNode.status.indexOf('getable') > -1 
@@ -341,29 +492,55 @@ export class MapComponent implements OnInit {
   }
 
   onSaveAndQuit() {
-    this.currentRegion = 'ow';
-    this.hasUsedMirror = false;
-    if (this.items.spFlooded) {
-      this.unfloodSwamp();
-    }
-    if (this.currentDungeon) {
-      var isLwDun = this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1;
-      this.leaveDungeon();
-      if (!isLwDun && this.items.agahnim && this.items.mirror) {
-        this.changeMap('dark-world');
+    if (!this.config.isFullMap) {
+      this.currentRegion = 'ow';
+      this.hasUsedMirror = false;    
+      if (this.currentDungeon) {
+        var isLwDun = this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1;
+        this.leaveDungeon();
+        if (!isLwDun && this.items.agahnim && this.items.mirror) {
+          this.changeMap('dark-world');
+        } else {
+          this.changeMap('light-world');
+        }
       } else {
-        this.changeMap('light-world');
+        if (this.currentMap === 'dark-world' && this.items.agahnim && this.items.mirror) {
+          this.changeMap('dark-world');      
+        } else {
+          this.changeMap('light-world');
+        }      
       }
     } else {
-      if (this.currentMap === 'dark-world' && this.items.agahnim && this.items.mirror) {
-        this.changeMap('dark-world');      
+      if (this.mirrorNode) {
+        this.mirrorNode = null;
+        this.mirrorMap = '';
+      }
+      var isDwDun = this.gameService.dwDuns.indexOf(this.currentDungeon.name) > -1;
+      if (this.items.agahnim && this.items.mirror 
+          && (this.currentMap.split('-')[0] === 'dw' || isDwDun)) {
+        this.changeDungeon('dw-hyrule-castle');
       } else {
-        this.changeMap('light-world');
-      }      
+        this.changeDungeon('lw-sq');
+      }
     }
+    
   }
 
   onWarpClicked() {
+    if (this.config.isFullMap) {
+      if (!this.items.mirror) {
+        if (this.items.gameState === 2) {
+          this.changeDungeon('hc-zelda');
+        } else if (this.items.gameState === 3) {
+          this.changeDungeon('hc-darkchest');          
+        } else {
+          this.changeDungeon(this.dungeonMirrorMap);          
+        }
+      } else {
+        this.changeDungeon(this.dungeonMirrorMap);
+      }      
+      return;
+    }
     if (this.canWarpToDW()) {
       this.changeMap('dark-world');
     } else if (this.currentMap === 'dark-world') {
@@ -384,6 +561,17 @@ export class MapComponent implements OnInit {
   }
 
   canWarp():boolean {
+    if (this.config.isFullMap) {
+      if (this.currentDungeonMap.id === 'hc-sanctuary') {
+        return false;
+      }
+      if (this.items.mirror) {
+        this.warpButtonText = 'Mirror';
+      } else {
+        this.warpButtonText = 'Death Warp';
+      }
+      return this.nonDuns.indexOf(this.currentDungeonMap.id.split('-')[0]) === -1;
+    }
     var hasMirror = this.items.mirror;
     if (this.currentMap === 'light-world' && hasMirror && this.hasUsedMirror) {
       this.warpButtonText = 'Go Back to DW';
@@ -416,70 +604,108 @@ export class MapComponent implements OnInit {
       || (this.items.canDarkEastDeathMountain(this.config.canGlitch)));
   }
 
+  canFlute() {
+    if (!this.config.isFullMap || !this.items.flute) {
+      return false;
+    }
+    if (this.currentDungeonMap.id.split('-')[0] === 'lw' 
+        && !this.currentDungeonMap.isIndoors
+        && this.items.isFluteActivated) {
+      return true;
+    }
+    return false;
+  }
+
+  onFluteClicked() {
+    this.changeDungeon('lw-flute-map');
+  }
+
   getAvailableDungeonMapIndexes():number[] {
     var maps = [];
     var start, end;
 
-    if (this.currentMap === 'light-world') {
+    if (this.currentMap === 'light-world' || this.currentMap.substr(0, 2) === 'lw') {
       start = 1;
       end = 3;
     } else {
       start = 5;
       end = 11;
     }
-
-    for (var i = start; i <= end; i++) {
+    for (var i = start; i <= end; i++) {      
       if (this.items.dungeonItemsArray[i].mapPrizeStatus === DungeonItems.UNKNOWN 
           && this.items.dungeonItemsArray[i].hasMap) {
         maps.push(i);
       }
     }
-
     return maps;
   }
 
   onCheckMap(mapName:string) {
-    if (this.config.variation !== 'key-sanity') {
-      if (mapName === 'lw') {
-        this.items.lwMapOpen = true;
-        this.gameService.dungeonsData.forEach((dunData, i) => {
-          if (DungeonData.lwDungeons.indexOf(dunData.name) > -1) {
-            this.items.dungeonItemsArray[i+1].checkThisMap();
-          }
-        });
-      } else if (this.canViewMap('dark-world')) {
-        this.items.dwMapOpen = true;
-        this.gameService.dungeonsData.forEach((dunData, i) => {
-          if (DungeonData.lwDungeons.indexOf(dunData.name) === -1) {
-            this.items.dungeonItemsArray[i+1].checkThisMap();
-          }
-        });
-      } 
+    if (mapName === 'gp') {
+      this.gameService.dungeonsData.forEach((dunData, i) => {
+        if (this.itemNameService.getItemById(dunData.dungeonPrize).shortName === 'pendantCourage') {
+          this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.GREEN_PENDANT;
+        }
+      });
+    } else if (mapName === 'rc') {
+      this.gameService.dungeonsData.forEach((dunData, i) => {
+        var prize = this.itemNameService.getItemById(dunData.dungeonPrize).shortName;
+        if (prize === 'crystal5' || prize === 'crystal6') {
+          this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.RED_CRYSTAL;
+        }
+      });
     } else {
-      if (mapName === 'gp') {
-        this.gameService.dungeonsData.forEach((dunData, i) => {
-          if (this.itemNameService.getItemById(dunData.dungeonPrize).shortName === 'pendantCourage') {
-            this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.GREEN_PENDANT;
-          }
-        });
-      } else if (mapName === 'rc') {
-        this.gameService.dungeonsData.forEach((dunData, i) => {
-          var prize = this.itemNameService.getItemById(dunData.dungeonPrize).shortName;
-          if (prize === 'crystal5' || prize === 'crystal6') {
-            this.items.dungeonItemsArray[i+1].mapPrizeStatus = DungeonItems.RED_CRYSTAL;
-          }
-        });
+      if (this.config.variation !== 'key-sanity') {
+        if (mapName === 'lw') {
+          this.items.lwMapOpen = true;
+          this.gameService.dungeonsData.forEach((dunData, i) => {
+            if (i < 3) {
+              this.items.dungeonItemsArray[i+1].checkThisMap();
+            }
+          });
+        } else if (this.canViewMap('dark-world')) {
+          this.items.dwMapOpen = true;
+          this.gameService.dungeonsData.forEach((dunData, i) => {
+            if (i >= 4 && i <= 10) {
+              this.items.dungeonItemsArray[i+1].checkThisMap();
+            }
+          });
+        } 
       } else {
         var mapsToCheck = this.getAvailableDungeonMapIndexes();
         mapsToCheck.forEach((dunIndex) => {
           this.items.dungeonItemsArray[dunIndex].checkThisMap();
         })
       }
-      
-    }     
+    }       
   }
 
   canViewMap(world:string):boolean {
+    if (this.config.isFullMap) {
+      if (world === 'light-world') {
+        return this.currentDungeonMap.id.split('-')[0] === 'lw'          
+          && !this.currentDungeonMap.isIndoors && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'key-sanity');
+      } else if (world === 'dark-world') {
+        return this.currentDungeonMap.id.split('-')[0] === 'dw' 
+          && !this.currentDungeonMap.isIndoors  && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'key-sanity');
+      } else if (world === 'green-pendant') {
+        var foundGreen = false;
+        this.items.dungeonItemsArray.forEach((eachDunItems) => {
+          if (eachDunItems.mapPrizeStatus === DungeonItems.GREEN_PENDANT) {
+            foundGreen = true;
+          }
+        });
+        return this.currentDungeonMap.id === 'lw-saha' && !foundGreen;
+      } else {
+        var foundReds = 0;
+        this.items.dungeonItemsArray.forEach((eachDunItems) => {
+          if (eachDunItems.mapPrizeStatus === DungeonItems.RED_CRYSTAL) {
+            foundReds++;
+          }
+        });
+        return this.currentDungeonMap.id === 'dw-bomb-shop' && foundReds < 2;        
+      }
+    }
     if (this.config.variation !== 'key-sanity') {
       return this.currentMap === world;
     } else {      
@@ -510,25 +736,36 @@ export class MapComponent implements OnInit {
   }
 
   checkMedallion(dunName:string) {
-    if (dunName === 'tr' && this.canViewTRMedallion()) {
+    if (dunName === 'tr' && (this.canViewTRMedallion() || this.config.isFullMap)) {
       this.items.trMedallionChecked = true;
     }
-    if (dunName === 'mm' && this.canViewMMMedallion()) {
+    if (dunName === 'mm' && (this.canViewMMMedallion() || this.config.isFullMap)) {
       this.items.mmMedallionChecked = true;
     }
     this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
   }
 
   canViewTRMedallion():boolean {
+    if (this.config.isFullMap) {
+      return false;
+    }
     return this.items.canDarkEastDeathMountain(this.config.canGlitch) && this.currentMap === 'dark-world'
       && (this.currentRegion === 'dm' || this.currentRegion === 'all');    
   }
   canViewMMMedallion():boolean {
+    if (this.config.isFullMap) {
+      return false;
+    }
     return this.items.canMire() && this.currentMap === 'dark-world' 
       && (this.currentRegion === 'mire' || this.currentRegion === 'all');
   }
 
   changeMap(newMap:string) {
+    if (newMap === 'dw-desert') {
+      this.checkMedallion('mm');
+    } else if (newMap === 'dw-trportal') {
+      this.checkMedallion('tr');
+    }
     this.currentMap = newMap;
     this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
     this.clearTooltip();
@@ -555,9 +792,14 @@ export class MapComponent implements OnInit {
     }
   }
 
+  onMapClicked(event) {
+    if (this.isDev) {
+      console.log(event.offsetX/555*100, event.offsetY/555*100);
+    }    
+  }
+
   preloadMapsAndIcons() {
-    var images = ['assets/light-world.png', 'assets/dark-world.png',
-      'assets/node-icons/big_door.png', 'assets/node-icons/closed_big_chest.png',
+    var images = ['assets/node-icons/big_door.png', 'assets/node-icons/closed_big_chest.png',
       'assets/node-icons/closed_chest.png', 'assets/node-icons/key_door.png',
       'assets/node-icons/open_chest.png', 'assets/node-icons/open_big_chest.png',
       'assets/node-icons/small_key.png', 'assets/node-icons/warp.png',
@@ -565,6 +807,10 @@ export class MapComponent implements OnInit {
       'assets/item-icons/bigKey.png', 'assets/item-icons/bigKeyEmpty.png', 
       'assets/item-icons/map.png', 'assets/item-icons/mapEmpty.png',
       'assets/node-icons/open_door.png'];
+    if (!this.config.isFullMap) {
+      images.push('assets/light-world.png');
+      images.push('assets/dark-world.png');
+    }
     this.preloadedImages = [];
     images.forEach((imageUrl, index) => {
       this.preloadedImages[index] = new Image();
@@ -590,6 +836,8 @@ export class MapComponent implements OnInit {
     list.forEach((item) => {
       this.items.add(item, 'light-world');
     });
+    this.items.isFluteActivated = true;
+    this.items.gameState = 4;
     this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
     
   }
@@ -598,9 +846,10 @@ export class MapComponent implements OnInit {
     this.items.add('glove', 'light-world');
     this.items.add('glove', 'light-world');
     this.items.add('flute', 'light-world');
+    this.items.isFluteActivated = true;    
     this.items.add('book', 'light-world');
     this.items.add('hookshot', 'light-world');
-    this.items.add('hammer', 'light-world');
+    this.items.add('mirror', 'light-world');
     
     //this.items.add('boots', 'light-world');
     this.items.add('moonPearl', 'light-world');
