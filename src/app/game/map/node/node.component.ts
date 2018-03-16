@@ -96,8 +96,8 @@ export class NodeComponent implements OnInit {
         || +this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM;
       if ((!this.nodeInfo.originalNode.canOpen(this.items, this.config) || oneOfViewable) 
           && +this.nodeInfo.status !== DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
-            && (!this.items.book && (+this.nodeInfo.status === DungeonNodeStatus.PEDESTAL
-              || +this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM))
+            && (!this.items.book || (this.items.book && +this.nodeInfo.status !== DungeonNodeStatus.PEDESTAL
+              && +this.nodeInfo.status !== DungeonNodeStatus.BOOK_CHECKABLE_ITEM))
           && (!this.config.canGlitch || !this.nodeInfo.originalNode.canGlitch 
               || !this.nodeInfo.originalNode.canGlitch(this.items, this.config))) {
         return 'dungeon-unavailable';

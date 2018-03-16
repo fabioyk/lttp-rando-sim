@@ -114,7 +114,7 @@ export class GameComponent implements OnInit {
       this.items = new Items();
       this.config = this.gameService.config;
       this.config.isFullMap = isFullMap;
-      this.items.setup(this.config.variation === 'key-sanity', this.gameService.dungeonsData, isFullMap);
+      this.items.setup(this.config.variation === 'key-sanity', this.gameService.dungeonsData, isFullMap);      
       if (this.config.mode !== 'standard' && isFullMap) {
         this.items.gameState = 4;
       }

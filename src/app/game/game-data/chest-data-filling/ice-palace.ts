@@ -89,7 +89,7 @@ export class IcePalace {
     ipbj.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return !items.ipSwitch;
+        return !items.crystalSwitch;
     }, 'ip-plus', 'Switch on Red Required',
     [-1], 0, function(items:Items, config:Config) {
       return true;

@@ -423,9 +423,7 @@ export class MapComponent implements OnInit {
   }
 
   resetDungeons() {
-    this.items.mmSwitch = false;
-    this.items.spSwitch = false;
-    this.items.ipSwitch = false;
+    this.items.crystalSwitch = false;
 
     this.gameService.dungeonsData[8].dungeonMaps.forEach(map => {
       if (map.id === 'ip-push-block') {
@@ -436,7 +434,8 @@ export class MapComponent implements OnInit {
           }
         });
       }
-    });    
+    });
+  }
 
   resetCrystalSwitch() {
     var switchDungeons = ['Swamp Palace', 'Misery Mire', 'Ice Palace'];
@@ -556,7 +555,6 @@ export class MapComponent implements OnInit {
       this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
       this.changeMap(this.currentDungeonMap.id);
       this.resetCrystalSwitch();
-      this.resetIPBlock();
     }
   }
 
