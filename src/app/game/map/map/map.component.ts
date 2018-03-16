@@ -76,6 +76,9 @@ export class MapComponent implements OnInit {
     if (nodeClicked.status.indexOf('unreachable') > -1) {
       return;
     }
+    if (this.items.spFlooded) {
+      this.unfloodSwamp();
+    }
     if ((nodeClicked.status.indexOf('now-getable') > -1 || nodeClicked.status.indexOf('now-g-getable') > -1) 
         && !nodeClicked.isFaded) {
       this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
@@ -110,7 +113,7 @@ export class MapComponent implements OnInit {
 
   onDungeonClick(dungeonClicked:MapNode) {
     if (dungeonClicked.status.indexOf('getable') > -1 && dungeonClicked.status.indexOf('unavailable') === -1) {
-      this.changeDungeon(dungeonClicked.originalNode.startingMap.id);      
+      this.changeDungeon(dungeonClicked.originalNode.startingMap.id);
     }    
   }
 
@@ -435,7 +438,7 @@ export class MapComponent implements OnInit {
       }
     });    
 
-    // Reset Switches
+  resetCrystalSwitch() {
     var switchDungeons = ['Swamp Palace', 'Misery Mire', 'Ice Palace'];
     this.gameService.dungeonsData.forEach((dunData:DungeonData) => {
       if (switchDungeons.indexOf(dunData.name) > -1) {
@@ -551,7 +554,9 @@ export class MapComponent implements OnInit {
       }
       this.currentDungeonMap = this.currentDungeon.startingMap;
       this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
-      this.changeMap(this.currentDungeonMap.id);      
+      this.changeMap(this.currentDungeonMap.id);
+      this.resetCrystalSwitch();
+      this.resetIPBlock();
     }
   }
 
@@ -777,19 +782,10 @@ export class MapComponent implements OnInit {
       } else if (DungeonData.pegMaps.indexOf(this.currentMap) === -1) {
         return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'.png")';      
       } else {
-        var shouldFlip = false;
-        if (this.currentDungeon.name === 'Swamp Palace') {
-          shouldFlip = this.items.spSwitch;
-        } else if (this.currentDungeon.name === 'Ice Palace') {
-          shouldFlip = this.items.ipSwitch;
-        } else if (this.currentDungeon.name === 'Misery Mire') {
-          shouldFlip = this.items.mmSwitch;
-        }
-
         if (DungeonData.floodMaps.indexOf(this.currentMap) > -1 && this.items.spFlooded) {
-          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'-flooded'+(shouldFlip ? '-flipped' : '') + '.png")';          
+          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+'-flooded'+(this.items.crystalSwitch ? '-flipped' : '') + '.png")';          
         } else {
-          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+(shouldFlip ? '-flipped' : '') + '.png")';
+          return 'url("assets/maps/'+this.currentDungeon.name+'/'+this.currentMap+(this.items.crystalSwitch ? '-flipped' : '') + '.png")';
         }        
       }
       

@@ -43,12 +43,12 @@ export class MiseryMire {
     entrance.nodes.push(new DungeonNode(
       '', 93, 26, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, 'mm-map', 'Switch on Blue Required'));
     entrance.nodes.push(new DungeonNode(
       'Main Lobby Chest', 57, 14, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, l[178], 'Switch on Blue Required'));
     mmData.dungeonMaps.push(entrance);
 
@@ -94,7 +94,7 @@ export class MiseryMire {
     spikeRoom.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, 'mm-map', 'Switch on Blue Required'));
     mmData.dungeonMaps.push(spikeRoom);
 
@@ -120,7 +120,7 @@ export class MiseryMire {
     fishSpine.nodes.push(new DungeonNode(
       '', 75, 95, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, 'mm-lone-stalfo', 'Switch on Blue Required'));
     fishSpine.nodes.push(new DungeonNode(
       '', 93, 50, DungeonNodeStatus.OPEN_DOOR,
@@ -148,22 +148,22 @@ export class MiseryMire {
     mapRoom.nodes.push(new DungeonNode(
       '', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, 'mm-spike-room', 'Switch on Blue Required'));
     mapRoom.nodes.push(new DungeonNode(
       '', 32, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, 'mm-entry', 'Switch on Blue Required'));
     mapRoom.nodes.push(new DungeonNode(
       '', 68, 77, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, 'mm-bc', 'Switch on Blue Required'));
     mapRoom.nodes.push(new DungeonNode(
       'Map Chest', 41, 26, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, l[182]));
     mmData.dungeonMaps.push(mapRoom);
 
@@ -222,7 +222,7 @@ export class MiseryMire {
     compassRoom.nodes.push(new DungeonNode(
       'Compass Chest', 50, 47, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, l[180], 'Switch on Blue Required'));
     mmData.dungeonMaps.push(compassRoom);
 
@@ -272,7 +272,7 @@ export class MiseryMire {
     bigChest.nodes.push(new DungeonNode(
       '', 32, 25, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.mmSwitch;
+        return items.crystalSwitch;
     }, 'mm-map', 'Switch on Blue Required'));
     bigChest.nodes.push(new DungeonNode(
       'Big Chest', 50, 15, DungeonNodeStatus.BIG_CHEST,

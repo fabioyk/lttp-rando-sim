@@ -115,12 +115,12 @@ export class SwampPalace {
     switchRoom.nodes.push(new DungeonNode(
       'Water Switch', 27, 39, DungeonNodeStatus.WATER_SWITCH,
     function(items:Items, config:Config) {
-        return items.spSwitch;
+        return items.crystalSwitch;
     }, 'flood'));
     switchRoom.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.spSwitch;
+        return items.crystalSwitch;
     }, 'sp-south-switch', 'Switch on Blue Required'));
     spData.dungeonMaps.push(switchRoom);
 
@@ -133,7 +133,7 @@ export class SwampPalace {
     southSwitch.nodes.push(new DungeonNode(
       '', 75, 35, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.spSwitch;
+        return items.crystalSwitch;
     }, 'sp-switch', 'Switch on Blue Required'));
     southSwitch.nodes.push(new DungeonNode(
       '', 7, 51.5, DungeonNodeStatus.OPEN_DOOR,
@@ -174,7 +174,7 @@ export class SwampPalace {
     leftSide.nodes.push(new DungeonNode(
       'Big Key Chest', 92, 26.7, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return !items.spSwitch;
+        return !items.crystalSwitch;
     }, l[141], 'Switch on Red Required'));
     spData.dungeonMaps.push(leftSide);
 

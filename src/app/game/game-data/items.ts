@@ -43,12 +43,10 @@ export class Items {
   crystal6 = false;
   crystal7 = false;
   
-  spSwitch = false;
+  crystalSwitch = false;
   spFlooded = false;
   ttBlindDelivered = false;
   ttBombableFloor = false;
-  mmSwitch = false;
-  ipSwitch = false;
   ipBlockPushed = false;
   damFlooded = false;
 
@@ -225,15 +223,7 @@ export class Items {
       case 'blind': this.ttBlindDelivered = true; break;
       case 'tt-bomb': this.ttBombableFloor = true; break;
       case 'Ganon': this.ganon = true; this.stats.preGanon = this.stats.totalCount; break;
-      case 'switch':
-        if (region === 'Swamp Palace') {
-          this.spSwitch = !this.spSwitch;
-        } else if (region === 'Misery Mire') {
-          this.mmSwitch = !this.mmSwitch;
-        } else if (region === 'Ice Palace') {
-          this.ipSwitch = !this.ipSwitch;
-        }
-        break;
+      case 'switch': this.crystalSwitch = !this.crystalSwitch; break;
       case 'ip-switch-room': this.ipBlockPushed = true; break;      
       default:
         if (this[itemName] !== undefined) {
@@ -350,7 +340,7 @@ export class Items {
     return this.bow >= 3;
   }
   hasMeltyPower() {
-    return this.fireRod || this.bombos;
+    return this.fireRod || (this.bombos && this.sword);
   }
   hasBeamReflection(config:Config) {
     return this.cape || this.byrna || this.shield === 3 || config.canGlitch;
