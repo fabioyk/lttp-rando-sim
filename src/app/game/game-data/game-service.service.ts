@@ -52,7 +52,7 @@ export class GameService {
     this.config.isFullMap = isFullMap;
 
 
-    console.log('Loaded up seed '+this.config.vtSeedNumber);
+    //console.log('Loaded up seed '+this.config.vtSeedNumber);
     
     const medallions = ['bombos', 'ether', 'quake'];
     this.config.mmMedallion = medallions[logObj.mmMedallion];

@@ -43,8 +43,6 @@ export class SeedApiService {
         queryUrl += '&seed=' + seed;
       }
     }  
-
-    console.log(queryUrl);
     
     // var tempSeed = { seed: 156191,
     //   logic: 'no-glitches-29',
