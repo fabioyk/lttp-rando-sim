@@ -296,7 +296,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Sewers Bombable Wall', 26.8, 32.4,
       function(items:Items, config:Config) {
-        return config.mode === 'standard' ? true : (items.glove || (items.lamp && items.dungeonItemsArray[0].smallKeys > 0));
+        return config.mode.indexOf('standard') > -1 ? true : (items.glove || (items.lamp && items.dungeonItemsArray[0].smallKeys > 0));
       },
       null,
       [l[53], l[54], l[55]],
@@ -318,7 +318,7 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Escape Dark Room Chest', 24.9, 45.8,
       function(items:Items, config:Config) {
-        return config.mode === 'standard' ? true : items.lamp;
+        return config.mode.indexOf('standard') > -1 ? true : items.lamp;
       },
       null,
       [l[56]],

@@ -154,7 +154,9 @@ export class DarkWorldMap {
     m = new DungeonMapData('dw-hyrule-castle', 'Pyramid');
     m.nodes.push(new DungeonNode(
       '', 94, 65, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'dw-octorok-field', '', [-1], 1));
+    function(items:Items, config:Config) {
+      return items.moonPearl
+    }, 'dw-octorok-field', '', [-1], 1));
     m.nodes.push(new DungeonNode(
       '', 49, 12, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
@@ -607,7 +609,7 @@ export class DarkWorldMap {
       '', 23, 52, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'sw-part22', '', [1]));
     m.nodes.push(new DungeonNode(
-      '', 15, 19, DungeonNodeStatus.OPEN_DOOR,
+      '', 16, 20, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.fireRod;
     }, 'sw-final', '', [1]));
@@ -637,7 +639,7 @@ export class DarkWorldMap {
         return true;
     }, 'dw-kakariko'));
     m.nodes.push(new DungeonNode(
-      'C-House Chest', 59, 23, DungeonNodeStatus.CLOSED_CHEST,
+      'C-House Chest', 59.5, 25, DungeonNodeStatus.CLOSED_CHEST,
     DungeonNode.noReqs, l[109]));
     dwData.dungeonMaps.push(m);
 

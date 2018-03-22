@@ -5,6 +5,7 @@ export class Seed {
   difficulty: string;
   goal: string;
   mode: string;
+  weapons: string;
   data: string;
   error:string;
 }

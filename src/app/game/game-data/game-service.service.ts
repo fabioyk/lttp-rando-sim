@@ -45,11 +45,12 @@ export class GameService {
     this.config.difficulty = logObj.difficulty;
     this.config.goal = logObj.goal === '0' ? 'ganon' : 'other';
     this.config.logic = logObj.logic;
-    this.config.mode = logObj.mode === '0' ? 'standard' : 'open';
+    this.config.mode = logObj.mode === '0' ? 'standard' : (logObj.mode === '1' ? 'open' : 'standard-rando');
     this.config.variation = logObj.variation === '0' ? 'none' : 'key-sanity';
     this.config.vtSeedNumber = logObj.seed;
     this.config.canGlitch = canGlitch;
     this.config.isFullMap = isFullMap;
+
 
     console.log('Loaded up seed '+this.config.vtSeedNumber);
     

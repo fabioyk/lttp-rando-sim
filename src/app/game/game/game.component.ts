@@ -55,6 +55,8 @@ export class GameComponent implements OnInit {
     var gameMode = '';
     if (this._router.url.indexOf('open') > -1) {
       gameMode = 'open';
+    } else if (this._router.url.indexOf('standard-rando') > -1) {
+      gameMode = 'standard-rando';
     } else if (this._router.url.indexOf('standard') > -1) {
       gameMode = 'standard';
     } else if (this._router.url.indexOf('keysanity') > -1) {
@@ -76,7 +78,7 @@ export class GameComponent implements OnInit {
         var fullMap = false;
         if (params.fullMap) {
           fullMap = true;
-          if (gameMode === 'standard') {
+          if (gameMode.indexOf('standard') > -1) {
             this.currentMap = 'lw-linkshouse';            
           } else {
             this.currentMap = 'lw-sq';            
@@ -115,7 +117,7 @@ export class GameComponent implements OnInit {
       this.config = this.gameService.config;
       this.config.isFullMap = isFullMap;
       this.items.setup(this.config.variation === 'key-sanity', this.gameService.dungeonsData, isFullMap);      
-      if (this.config.mode !== 'standard' && isFullMap) {
+      if (this.config.mode.indexOf('standard') === -1 || !isFullMap) {
         this.items.gameState = 4;
       }
       this.itemLog = [];
@@ -127,7 +129,7 @@ export class GameComponent implements OnInit {
       }, 10000);
 
       this.seedDescription = '(' 
-        + (this.config.mode === 'standard' ? 'Standard' : (this.config.variation === 'none' ? 'Open' : 'Keysanity')) 
+        + (this.config.mode === 'standard' ? 'Standard Classic' : (this.config.mode === 'standard-rando' ? 'Standard Random Weapon' : (this.config.variation === 'none' ? 'Open' : 'Keysanity'))) 
         + ', ' + (this.config.canGlitch ? 'Minor Glitches' : 'No Glitches') 
         + ', Seed ' + seedNumber + ')';
     } else {
@@ -169,7 +171,13 @@ export class GameComponent implements OnInit {
       }      
     }
     if (!msg) {
-      msg = 'Tried to open ' + mapNode.tooltip + '. ' + mapNode.originalNode.errorMessage;
+      var typeMsg;
+      if (+mapNode.status < 10) {
+        typeMsg = 'Tried to go to ';
+      } else {
+        typeMsg = 'Tried to open ';
+      }
+      msg = typeMsg + mapNode.tooltip + '. ' + mapNode.originalNode.errorMessage;
     }
     
     this.itemLog.unshift({

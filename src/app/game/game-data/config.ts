@@ -8,6 +8,7 @@ export class Config {
   logic: string;
   goal: string;
   mode: string;
+  weapons: string;
   
   canGlitch: boolean;
   isFullMap: boolean;
@@ -24,6 +25,7 @@ export class Config {
     this.logic = 'normal';
     this.goal = 'ganon';
     this.mode = 'standard';
+    this.weapons = 'randomized';
     this.isFullMap = false;
   }
 }

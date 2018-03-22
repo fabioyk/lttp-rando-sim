@@ -3,7 +3,9 @@
     <label for="game-mode" class="col-sm-4 control-label">Game Mode</label>    
     <div class="btn-group" id="game-mode" class="col-sm-8">
       <label class="btn btn-default" [(ngModel)]="modeSelected" name="standard-button"
-        btnRadio="standard">Standard</label>
+        btnRadio="standard">Standard Classic</label>
+    <label class="btn btn-default" [(ngModel)]="modeSelected" name="standard-rando-button"
+        btnRadio="standard-rando">Standard Random Weapon</label>
       <label class="btn btn-default" [(ngModel)]="modeSelected" name="open-button"
         btnRadio="open">Open</label>
       <label class="btn btn-default" [(ngModel)]="modeSelected" name="keysanity-button"
@@ -22,12 +24,12 @@
     </div>
   
   <div class="form-group">
-    <label for="map-mode" class="col-sm-4 control-label">Map Mode</label>    
+    <label for="map-mode" class="col-sm-4 control-label">Overworld</label>    
     <div class="btn-group" id="map-mode" class="col-sm-8">
       <label class="btn btn-default" [(ngModel)]="mapSelected" name="simple-map-button"
-        btnRadio="no">Simple and Quick</label>
+        btnRadio="no">Simple</label>
       <label class="btn btn-default" [(ngModel)]="mapSelected" name="full-map-button"
-        btnRadio="yes">Full</label>
+        btnRadio="yes">Advanced</label>
     </div>
   </div>
 

@@ -71,17 +71,17 @@ export class LightWorldMap {
       '', 95, 63, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.gameState === 4; 
-    }, 'lw-octorok-field'));
+    }, 'lw-octorok-field', 'Zelda must be rescued first'));
     m.nodes.push(new DungeonNode(
       '', 72, 71, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.gameState === 4; 
-    }, 'lw-south-house-portal'));
+    }, 'lw-south-house-portal', 'Zelda must be rescued first'));
     m.nodes.push(new DungeonNode(
       '', 16, 71, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.gameState === 4; 
-    }, 'lw-south-grove'));
+    }, 'lw-south-grove', 'Zelda must be rescued first'));
     m.nodes.push(new DungeonNode(
       '', 76, 27, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-hyrule-castle'));
@@ -173,7 +173,7 @@ export class LightWorldMap {
       '', 82, 94, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.gameState === 4 || items.currentRegionInMap !== 2; 
-    }, 'lw-flute4'));
+    }, 'lw-flute4', 'Zelda must be rescued first'));
     m.nodes.push(new DungeonNode(
       '', 94, 65, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -183,24 +183,24 @@ export class LightWorldMap {
       '', 6, 30, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.gameState === 4; 
-    }, 'lw-sanctuary-entrance'));
+    }, 'lw-sanctuary-entrance', 'Zelda must be rescued first'));
     m.nodes.push(new DungeonNode(
       '', 50, 25, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.gameState === 4 || items.currentRegionInMap === 2; 
-    }, 'hc-entry'));
+    }, 'hc-entry', 'Zelda must be rescued first'));
     m.nodes.push(new DungeonNode(
       '', 88, 16, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
       return items.gameState === 4 || items.currentRegionInMap !== 2; 
-    }, 'lw-uncle'));
+    }, 'lw-uncle', 'Zelda must be rescued first'));
     m.nodes.push(new DungeonNode(
       '', 70, 21, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.gameState === 4 || items.currentRegionInMap === 2; 
-    }, 'lw-uncle'));
+    }, 'lw-uncle', 'Zelda must be rescued first'));
     m.nodes.push(new DungeonNode(
-      '', 49, 10, DungeonNodeStatus.OPEN_DOOR,
+      '', 50, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.sword >= 2 || items.cape;
     }, 'ct-entry', 'Master Sword or Cape Required', [1]));
@@ -396,7 +396,7 @@ export class LightWorldMap {
       '', 25, 94, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.gameState >= 1;
-    }, 'lw-hyrule-castle', '', [-1], 2));
+    }, 'lw-hyrule-castle', 'Talk to Uncle First', [-1], 2));
     m.nodes.push(new DungeonNode(
       'Link\'s Uncle', 50, 22, DungeonNodeStatus.CLOSED_CHEST,
     DungeonNode.noReqs, l[1]));
@@ -404,7 +404,7 @@ export class LightWorldMap {
       'Secret Passage Chest', 76.5, 70, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.gameState >= 1;
-    }, l[2]));
+    }, l[2], 'Talk to Uncle First'));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-graveyard', 'Graveyard');
@@ -1088,7 +1088,7 @@ export class LightWorldMap {
       '', 43, 50, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'lw-paradox5'));
     m.nodes.push(new DungeonNode(
-      '', 75, 47, DungeonNodeStatus.PORTAL,
+      '', 76, 48, DungeonNodeStatus.PORTAL,
     function(items:Items, config:Config) {
       return items.glove === 2 && items.hammer && items.moonPearl;
     }, ''));

@@ -40,6 +40,7 @@ export class MapComponent implements OnInit {
   mirrorNode: DungeonNode;
   mirrorMap:string;
   mirrorRegion: number;
+  mirrorOrigin: number;
   dungeonMirrorMap:string;
 
   dungeonFinishMap:string;
@@ -319,10 +320,17 @@ export class MapComponent implements OnInit {
           var name = this.currentDungeonMap.id.split('-');
           if (name[0] === 'dw') {
             name[0] = 'lw';
+            this.mirrorOrigin = this.items.currentRegionInMap;
+            this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
           } else {
             name[0] = 'dw';
+            if (this.mirrorOrigin) {
+              this.items.currentRegionInMap = this.mirrorOrigin;
+              this.mirrorOrigin = 0;
+            } else {
+              this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
+            }
           }
-          this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
           this.mirrorNode = null;
           this.mirrorRegion = dungeonNode.originalNode.destinationSection;
           setTimeout(() => {

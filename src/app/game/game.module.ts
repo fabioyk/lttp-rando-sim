@@ -27,7 +27,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
       { path: 'standard', component: GameComponent },
       { path: 'open', component: GameComponent },
       { path: 'keysanity', component: GameComponent },
-      
+      { path: 'standard-rando', component: GameComponent },      
     ])
   ],
   declarations: [GameComponent, EndStatsComponent],

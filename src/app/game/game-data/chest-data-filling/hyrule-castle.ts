@@ -28,11 +28,11 @@ export class HyruleCastle {
     entry.nodes.push(new DungeonNode(
       '', 50, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return (items.lamp && config.mode !== 'standard') 
-        || (config.mode === 'standard' && items.gameState >= 2);
-    }, 'hc-darkchest', '', [-1], 0,
+      return (items.lamp && config.mode.indexOf('standard') === -1)
+        || ((config.mode.indexOf('standard') > -1) && items.gameState >= 2);
+    }, 'hc-darkchest', (config.isFullMap && config.mode.indexOf('standard') > -1) ? 'Zelda must be accompanying you' : 'Lamp Required', [-1], 0,
     function(items:Items, config:Config) {
-      return config.mode !== 'standard';
+      return config.mode.indexOf('standard') === -1;
     }));
     hcData.dungeonMaps.push(entry);
 
@@ -51,7 +51,7 @@ export class HyruleCastle {
       '', 50, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.gameState === 4;
-    }, 'lw-hyrule-castle', '', [-1], 1));
+    }, 'lw-hyrule-castle', 'Zelda must be rescued first', [-1], 1));
     hcData.dungeonMaps.push(m);
 
     m = new DungeonMapData('hc-sanctuary', 'Sanctuary', true);
