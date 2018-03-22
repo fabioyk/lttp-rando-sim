@@ -5,6 +5,9 @@ export class DungeonData {
   static dungeonNames = ['light-world', 'Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower',
     'Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace',
     'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
+  static dungeonDataNames = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower',
+    'Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace',
+    'Misery Mire', 'Turtle Rock', 'Ganons Tower', 'Light World', 'Dark World', 'Hyrule Castle'];
   static allDungeonNames = ['Hyrule Castle', 'Eastern Palace', 'Desert Palace',
     'Tower of Hera', 'Aga Tower', 'Palace of Darkness', 'Swamp Palace', 'Skull Woods',
     'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower', 'Light World', 'Dark World'];
