@@ -381,7 +381,7 @@ export class DarkWorldMap {
     DungeonNode.noReqs, 'dw-sanctuary-entrance'));
     m.nodes.push(new DungeonNode(
       '', 94, 78, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'dw-east-sanctuary'));
+    DungeonNode.noReqs, 'dw-east-sanctuary', '', [-1], 1));
     m.nodes.push(new DungeonNode(
       '', 47, 78, DungeonNodeStatus.MIRROR,
     DungeonNode.noReqs, ''));
@@ -396,7 +396,7 @@ export class DarkWorldMap {
     m = new DungeonMapData('dw-flute2', 'Potion Shop');
     m.nodes.push(new DungeonNode(
       '', 6, 75, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'dw-east-sanctuary', '', [-1], 1));
+    DungeonNode.noReqs, 'dw-east-sanctuary', '', [-1], 0));
     m.nodes.push(new DungeonNode(
       '', 94, 32, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
