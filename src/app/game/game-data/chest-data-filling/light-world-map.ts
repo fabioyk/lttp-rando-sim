@@ -880,8 +880,11 @@ export class LightWorldMap {
     m.nodes.push(new DungeonNode(
       'Magic Bat', 75, 24, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.powder;
-    }, l[30]));
+      return items.powder;
+    }, l[30], 'Magic Powder Required', [-1], 0,
+    function(items:Items, config:Config) {
+      return items.somaria && items.mushroom;
+    }));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-blacksmiths', 'Blacksmiths', true);

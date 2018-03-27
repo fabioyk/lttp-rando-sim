@@ -256,6 +256,8 @@ export class MapComponent implements OnInit {
             this.items.gameState = 1;
           } else if (dungeonNode.tooltip === 'Zelda\'s Chest' && this.items.gameState === 1) {
             this.items.gameState = 2;
+          } else if (dungeonNode.tooltip === 'Potion Shop Item') {
+            this.items.mushroom = false;
           }
           if (dungeonNode.originalNode.accessibleSectionArray[0] === -1 && +dungeonNode.status === DungeonNodeStatus.CLOSED_CHEST) {
             this.items.currentRegionInMap = 0;
