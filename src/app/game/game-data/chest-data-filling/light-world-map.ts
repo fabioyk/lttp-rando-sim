@@ -906,7 +906,9 @@ export class LightWorldMap {
     }, 'lw-kakariko'));
     m.nodes.push(new DungeonNode(
       '', 73, 70, DungeonNodeStatus.PORTAL,
-    DungeonNode.noReqs, ''));
+    function(items:Items, config:Config) {
+      return items.glove;
+    }, ''));
     m.nodes.push(new DungeonNode(
       '', 75, 7, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

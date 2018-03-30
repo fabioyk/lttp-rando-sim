@@ -311,7 +311,8 @@ export class MapComponent implements OnInit {
           break;
         case DungeonNodeStatus.PORTAL:
           var name = this.currentDungeonMap.id.split('-');
-          if (name[1] === 'trportal' && !this.items.isTROpened && this.items[this.config.trMedallion]) {
+          if (name[1] === 'trportal' && !this.items.isTROpened 
+            && this.items[this.config.trMedallion] && this.items.sword) {
             this.items.isTROpened = true;
           }
           name[0] = 'dw';
