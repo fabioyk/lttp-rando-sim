@@ -31,9 +31,12 @@ export class PalaceDarkness {
     }, 'pod-fork1'));
     entrance.nodes.push(new DungeonNode(
       'Right Side', 75, 9.5, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
+      function(items:Items, config:Config) {
         return items.hasBow();
-    }, 'pod-right', 'Bow Required'));
+      }, 'pod-right', 'Bow Required', [-1], 0,
+      function(items:Items, config:Config) {
+        return items.hasBottle();
+      }));
     podData.dungeonMaps.push(entrance);
 
     var leftRoom = new DungeonMapData('pod-left', 'Shooter Room');
