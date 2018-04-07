@@ -235,19 +235,21 @@ export class LightWorldMap {
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-small-shop', 'Northwest of Lake Hylea'); 
-    // 1: mirror on top of island, 2 swimmin
+    // 3: mirror on top of island, 2 swimmin
     m.nodes.push(new DungeonNode(
       '', 45, 4, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-octorok-field'));
+    function(items:Items, config:Config) {
+      return items.flippers || items.currentRegionInMap !== 3; 
+    }, 'lw-octorok-field'));
     m.nodes.push(new DungeonNode(
       '', 91, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.flippers || items.currentRegionInMap > 0;
+        return items.flippers || (items.currentRegionInMap !== 3 && items.currentRegionInMap !== 0);
     }, 'lw-lake-hylea', 'Flippers Required'));
     m.nodes.push(new DungeonNode(
       'Lake Hylea Island', 79, 60, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.currentRegionInMap === 1;
+        return items.currentRegionInMap === 3;
     }, l[46]));
     lwData.dungeonMaps.push(m);
 

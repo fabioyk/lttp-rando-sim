@@ -208,7 +208,7 @@ export class DarkWorldMap {
         return items.flippers;
     }, 'dw-flute8', 'Flippers Required', [-1], 0, 
     function(items:Items, config:Config) {
-      return items.currentRegionInMap === 0;
+      return items.currentRegionInMap === 0 || items.boots;
     }));
     m.nodes.push(new DungeonNode(
       '', 65, 74, DungeonNodeStatus.MIRROR,
@@ -235,15 +235,18 @@ export class DarkWorldMap {
       '', 91, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'dw-lake-hylea', 'Flippers Required'));
+    }, 'dw-lake-hylea', 'Flippers Required', [-1], 0,
+    function(items:Items, config:Config) {
+      return items.currentRegionInMap === 1;
+    }));
     m.nodes.push(new DungeonNode(
       '', 29, 25, DungeonNodeStatus.MIRROR,
     DungeonNode.noReqs, '', '', [0]));
     m.nodes.push(new DungeonNode(
-      '', 78, 73, DungeonNodeStatus.MIRROR,
+      'Mirror Portal', 78, 73, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
-        return items.flippers || items.currentRegionInMap === 1;
-    }, '', '', [-1], 1));
+      return items.flippers || items.currentRegionInMap === 1;
+    }, '', 'Flippers Required to Mirror Back', [-1], 3));
     dwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('dw-eastern-palace', 'Palace of Darkness Courtyard');
@@ -265,22 +268,32 @@ export class DarkWorldMap {
     // 0: normal, 1: IP entrance
     m.nodes.push(new DungeonNode(
       '', 87, 16, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'dw-octorok-field', '', [0], 1));
+      function(items:Items, config:Config) {
+        return items.flippers      
+      }, 'dw-octorok-field', '', [0], 1, DungeonNode.noReqs));
     m.nodes.push(new DungeonNode(
       '', 38, 55, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'dw-small-shop', '', [0], 1));
+      function(items:Items, config:Config) {
+        return items.flippers      
+      }, 'dw-small-shop', '', [0], 1, DungeonNode.noReqs));
     m.nodes.push(new DungeonNode(
       '', 94, 80, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'dw-flute8', '', [0]));
+      function(items:Items, config:Config) {
+        return items.flippers      
+      }, 'dw-flute8', '', [0], 0, DungeonNode.noReqs));
     m.nodes.push(new DungeonNode(
       '', 68, 44, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'ip-entry', '', [1]));
+      function(items:Items, config:Config) {
+        return items.flippers      
+      }, 'ip-entry', '', [1], 0, DungeonNode.noReqs));
     m.nodes.push(new DungeonNode(
       '', 61, 50, DungeonNodeStatus.MIRROR,
-    DungeonNode.noReqs, '', '', [1]));
+      DungeonNode.noReqs, '', '', [1]));
     m.nodes.push(new DungeonNode(
       '', 44, 74, DungeonNodeStatus.MIRROR,
-    DungeonNode.noReqs, '', '', [0]));
+      function(items:Items, config:Config) {
+        return items.flippers      
+      }, '', '', [0]));
     dwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('dw-minimoldorm-entrance', 'Southwest Ice Lake Shore');
@@ -435,17 +448,19 @@ export class DarkWorldMap {
     m = new DungeonMapData('dw-flute8', 'East of Ice Lake');
     m.nodes.push(new DungeonNode(
       '', 34, 74, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
+      function(items:Items, config:Config) {
         return items.flippers;
-    }, 'dw-lake-hylea', 'Flippers Required'));
+      }, 'dw-lake-hylea', '', [-1], 0, DungeonNode.noReqs));
     m.nodes.push(new DungeonNode(
       '', 57, 78, DungeonNodeStatus.WATER_WARP,
-    function(items:Items, config:Config) {
+      function(items:Items, config:Config) {
         return items.flippers;
-    }, 'dw-east-sanctuary', 'Flippers Required'));
+      }, 'dw-east-sanctuary', '', [-1], 0, DungeonNode.noReqs));
     m.nodes.push(new DungeonNode(
       '', 80, 55, DungeonNodeStatus.MIRROR,
-    DungeonNode.noReqs, ''));
+      function(items:Items, config:Config) {
+        return items.flippers;
+      }, '', '', [-1], 0, DungeonNode.noReqs));
     dwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('dw-desert', 'Misery Mire Area');
