@@ -151,8 +151,11 @@ export class DesertPalace {
     function(items:Items, config:Config) {
         return items.hasFiresource()
           && (items.sword || items.hammer || items.hasBow() || items.fireRod || items.iceRod
-            || items.byrna || items.somaria || config.canGlitch);
-    }, 'dp-lanmo', 'Fire Source and Weapon Required'));
+            || items.byrna || items.somaria);
+    }, 'dp-lanmo', 'Fire Source and Weapon Required',
+      [-1], 0, function(items:Items, config:Config) {
+        return items.hasFiresource()
+      }));
     dpData.dungeonMaps.push(bigDoor);
 
     var lanmoRoom = new DungeonMapData('dp-lanmo', 'Lanmolas Room');
