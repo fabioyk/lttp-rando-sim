@@ -274,18 +274,20 @@ export class GanonsTower {
     hookshotRoom.nodes.push(new DungeonNode(
       '', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hookshot || config.canGlitch;
-    }, 'gt-stalfo', 'Hookshot Required'));
+        return items.hookshot;
+    }, 'gt-stalfo', 'Hookshot Required', [-1], 0, DungeonNode.noReqs));
     hookshotRoom.nodes.push(new DungeonNode(
       '', 68, 77, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hookshot || items.boots || config.canGlitch;
-    }, 'gt-double-firebar', 'Hookshot or Boots Required'));
+        return items.hookshot || items.boots;
+    }, 'gt-double-firebar', 'Hookshot or Boots Required', 
+      [-1], 0, DungeonNode.noReqs));
     hookshotRoom.nodes.push(new DungeonNode(
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hookshot || config.canGlitch;
-    }, 'gt-double-switch', 'Hookshot Required'));
+        return items.hookshot;
+    }, 'gt-double-switch', 'Hookshot Required', 
+      [-1], 0, DungeonNode.noReqs));
     gtData.dungeonMaps.push(hookshotRoom);
 
     var stalfos = new DungeonMapData('gt-stalfo', 'Stalfos Room');
@@ -351,13 +353,13 @@ export class GanonsTower {
     firesnake.nodes.push(new DungeonNode(
       '', 25, 69, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hookshot || config.canGlitch;
-    }, 'gt-teleports', 'Hookshot Required'));
+        return items.hookshot;
+    }, 'gt-teleports', 'Hookshot Required', [-1], 0, DungeonNode.noReqs));
     firesnake.nodes.push(new DungeonNode(
       'Firesnake Chest', 23.5, 52, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hookshot || config.canGlitch;
-    }, l[208], 'Hookshot Required'));
+        return items.hookshot;
+    }, l[208], 'Hookshot Required', [-1], 0, DungeonNode.noReqs));
     gtData.dungeonMaps.push(firesnake);
 
     var teleports = new DungeonMapData('gt-teleports', 'Teleport Room');
