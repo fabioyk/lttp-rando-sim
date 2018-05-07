@@ -176,7 +176,7 @@ export class MapComponent implements OnInit {
   onDungeonNodeClick(dungeonNode:MapNode) {
     //this.onNodeMouseEnter(dungeonNode);
     if (dungeonNode.originalNode.canOpen(this.items, this.config)
-      || (dungeonNode.originalNode.canGlitch && dungeonNode.originalNode.canGlitch(this.items, this.config))) {
+      || (this.config.canGlitch && dungeonNode.originalNode.canGlitch && dungeonNode.originalNode.canGlitch(this.items, this.config))) {
       switch(+dungeonNode.status) {
         case DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
