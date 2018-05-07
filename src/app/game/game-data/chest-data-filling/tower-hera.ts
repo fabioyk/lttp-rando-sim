@@ -13,7 +13,7 @@ export class TowerHera {
       }, 62, 5.5
     );
 
-    var entrance = new DungeonMapData('toh-entry', 'Entrance');
+    var entrance = new DungeonMapData('toh-entry', 'Tower of Hera Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 50, 90, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

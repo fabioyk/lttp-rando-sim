@@ -13,7 +13,7 @@ export class PalaceDarkness {
       }, 94, 40
     );
 
-    var entrance = new DungeonMapData('pod-entry', 'Entrance');
+    var entrance = new DungeonMapData('pod-entry', 'Palace of Darkness Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

@@ -14,7 +14,7 @@ export class IcePalace {
       }, 79.6, 85.8
     );
 
-    var entrance = new DungeonMapData('ip-entry', 'Entrance');
+    var entrance = new DungeonMapData('ip-entry', 'Ice Palace Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

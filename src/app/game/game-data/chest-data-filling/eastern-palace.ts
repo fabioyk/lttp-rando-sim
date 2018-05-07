@@ -14,7 +14,7 @@ export class EasternPalace {
       }, 93.6, 38.8
     );
 
-    var entrance = new DungeonMapData('ep-entry', 'Big Ball Room');
+    var entrance = new DungeonMapData('ep-entry', 'Eastern Palace Big Ball Room');
     entrance.nodes.push(new DungeonNode(
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

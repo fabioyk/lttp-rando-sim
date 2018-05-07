@@ -14,7 +14,7 @@ export class TurtleRock {
       }, 93.8, 7
     );
 
-    var entrance = new DungeonMapData('tr-entry', 'Main Lobby');
+    var entrance = new DungeonMapData('tr-entry', 'Turtle Rock Main Lobby');
     entrance.nodes.push(new DungeonNode(
       '', 75, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

@@ -13,7 +13,7 @@ export class SkullWoods {
       }, 6.6, 5.4
     );
 
-    var entrance = new DungeonMapData('sw-entry', 'Entrance');
+    var entrance = new DungeonMapData('sw-entry', 'Skull Woods Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 57.5, 87, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

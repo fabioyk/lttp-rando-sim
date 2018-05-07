@@ -13,7 +13,7 @@ export class DesertPalace {
       }, 7.6, 78.4
     );
 
-    var entrance = new DungeonMapData('dp-entry', 'Big Hall');
+    var entrance = new DungeonMapData('dp-entry', 'Desert Palace Big Hall');
     entrance.nodes.push(new DungeonNode(
       '', 50, 83, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

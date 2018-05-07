@@ -14,7 +14,7 @@ export class MiseryMire {
       }, 11.6, 82.9
     );
 
-    var entrance = new DungeonMapData('mm-entry', 'Main Lobby');
+    var entrance = new DungeonMapData('mm-entry', 'Misery Mire Main Lobby');
     entrance.nodes.push(new DungeonNode(
       '', 75, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

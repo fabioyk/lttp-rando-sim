@@ -13,7 +13,7 @@ export class ThievesTown {
       }, 12.8, 47.9
     );
 
-    var entrance = new DungeonMapData('tt-entry', 'Great Hall');
+    var entrance = new DungeonMapData('tt-entry', 'Thieves Town Great Hall');
     entrance.nodes.push(new DungeonNode(
       '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

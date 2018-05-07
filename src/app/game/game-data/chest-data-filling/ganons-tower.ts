@@ -16,7 +16,7 @@ export class GanonsTower {
       }, 55, 4.5
     );
 
-    var entrance = new DungeonMapData('gt-entry', 'Entrance');
+    var entrance = new DungeonMapData('gt-entry', 'Ganons Tower Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

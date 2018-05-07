@@ -14,7 +14,7 @@ export class SwampPalace {
       }, 47, 91
     );
 
-    var entrance = new DungeonMapData('sp-entry', 'Entrance');
+    var entrance = new DungeonMapData('sp-entry', 'Swamp Palace Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
