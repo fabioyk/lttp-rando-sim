@@ -307,10 +307,12 @@ export class MiseryMire {
     bridgeRoom.nodes.push(new DungeonNode(
       '', 50, 13, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.lamp && items.somaria;
-    }, 'mm-pre-vitty', 'Somaria ' +(config.canGlitch ? '' : 'and Lamp ') + 'required', [1], 0,
+      return items.lamp && items.somaria && items.currentRegionInMap === 1;
+    }, 'mm-pre-vitty', 
+      ('Somaria ' +(config.canGlitch ? 'and Boots if hovering ' : 'and Lamp ') + 'required'), 
+      [0, 1], 0,
     function(items:Items, config:Config) {
-      return items.somaria;
+      return items.somaria && (items.currentRegionInMap === 1 || items.boots);
     }));
     bridgeRoom.nodes.push(new DungeonNode(
       '', 50, 93, DungeonNodeStatus.OPEN_DOOR,
@@ -319,12 +321,12 @@ export class MiseryMire {
       '', 75, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.currentRegionInMap === 0 || items.hookshot;
-    }, 'mm-west-spike'));
+    }, 'mm-west-spike', 'Hookshot Required'));
     bridgeRoom.nodes.push(new DungeonNode(
       'Map Chest', 75, 30, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.currentRegionInMap === 0 || items.hookshot;
-    }, l[181], '', [0, 1]));
+    }, l[181], 'Hookshot Required', [0, 1]));
     mmData.dungeonMaps.push(bridgeRoom);
 
     mmData.startingMap = entrance;
