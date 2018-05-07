@@ -142,6 +142,7 @@ export class MapComponent implements OnInit {
     this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
     this.changeMap(this.currentDungeonMap.id);
     this.items.visitDungeon(this.currentDungeon.name);
+    this.checkMapsLeft();
     this.currentDungeonItems = this.items.getDungeonItems(this.currentDungeon.name);
     if (this.currentDungeon.name === 'Turtle Rock') {
       this.items.trMedallionChecked = true;
@@ -498,6 +499,7 @@ export class MapComponent implements OnInit {
     this.finishedDungeon.emit([this.currentDungeon.dungeonPrize, this.currentDungeon.name]);    
     this.currentDungeonItems.isBossDefeated = true;
     this.currentDungeonItems.checkThisMap();
+    this.checkMapsLeft();
     this.leaveDungeon(isAgaTower);
   }
 
@@ -686,7 +688,64 @@ export class MapComponent implements OnInit {
           this.items.dungeonItemsArray[dunIndex].checkThisMap();
         })
       }
-    }       
+    }
+    this.checkMapsLeft();
+  }
+
+  checkMapsLeft() {
+    var crystalsKnown = 0;
+    var pendantsKnown = 0;
+    var crystalsSeen = 0;
+    var pendantsSeen = 0;
+    var gpSeen = 0;
+    var redsSeen = 0;
+    var unknowns = 0;    
+
+    for (var i = 1; i <= 11; i++) {
+      if (i !== 4) {
+        switch (this.items.dungeonItemsArray[i].mapPrizeStatus) {
+          case DungeonItems.UNKNOWN:
+            unknowns++;
+            break;
+          case DungeonItems.RED_CRYSTAL:
+            redsSeen++;
+          case DungeonItems.CRYSTAL:
+            crystalsKnown++;
+          case DungeonItems.SOME_CRYSTAL:
+            crystalsSeen++;
+            break;
+          case DungeonItems.GREEN_PENDANT:
+            gpSeen = 1;            
+          case DungeonItems.PENDANT:
+            pendantsKnown++;
+          case DungeonItems.SOME_PENDANT:
+            pendantsSeen++;
+        }
+      }
+    }
+
+    var markCrystals = pendantsSeen === 3;
+    var markPendants = crystalsSeen === 7;
+    var colorCrystals = redsSeen === 2 || crystalsKnown >= 6 
+      || (crystalsKnown === 5 && redsSeen === 0);
+    var colorPendants = gpSeen === 1 || pendantsKnown >= 2;
+
+    for (var i = 1; i <= 11; i++) {
+      if (i !== 4) {
+        if (this.items.dungeonItemsArray[i].mapPrizeStatus === DungeonItems.UNKNOWN) {
+          if (markCrystals) {
+            this.items.dungeonItemsArray[i].mapPrizeStatus = DungeonItems.SOME_CRYSTAL;
+          } else if (markPendants) {
+            this.items.dungeonItemsArray[i].mapPrizeStatus = DungeonItems.SOME_PENDANT;
+          }          
+        }
+        if (colorCrystals && this.items.dungeonItemsArray[i].mapPrizeStatus === DungeonItems.SOME_CRYSTAL) {
+          this.items.dungeonItemsArray[i].mapPrizeStatus = DungeonItems.CRYSTAL;
+        } else if (colorPendants && this.items.dungeonItemsArray[i].mapPrizeStatus === DungeonItems.SOME_PENDANT) {
+          this.items.dungeonItemsArray[i].mapPrizeStatus = DungeonItems.PENDANT;
+        }
+      }
+    }
   }
 
   canViewMap(world:string):boolean {
