@@ -176,7 +176,8 @@ export class MapComponent implements OnInit {
   onDungeonNodeClick(dungeonNode:MapNode) {
     //this.onNodeMouseEnter(dungeonNode);
     if (dungeonNode.originalNode.canOpen(this.items, this.config)
-      || (this.config.canGlitch && dungeonNode.originalNode.canGlitch && dungeonNode.originalNode.canGlitch(this.items, this.config))) {
+      || (this.config.canGlitch && dungeonNode.originalNode.canGlitch 
+        && dungeonNode.originalNode.canGlitch(this.items, this.config) )) {
       switch(+dungeonNode.status) {
         case DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
@@ -326,6 +327,24 @@ export class MapComponent implements OnInit {
             name[0] = 'lw';
             this.mirrorOrigin = this.items.currentRegionInMap;
             this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
+            setTimeout(() => {
+              this.mirrorNode = new DungeonNode(dungeonNode.originalNode.name,
+                dungeonNode.originalNode.x, dungeonNode.originalNode.y,
+                dungeonNode.originalNode.status, DungeonNode.noReqs,
+                dungeonNode.originalNode.content, dungeonNode.originalNode.errorMessage,
+                [dungeonNode.originalNode.destinationSection], this.mirrorOrigin);
+              this.mirrorNode.mapNode = {
+                x: dungeonNode.originalNode.mapNode.x,
+                y: dungeonNode.originalNode.mapNode.y,
+                tooltip: dungeonNode.originalNode.mapNode.tooltip,
+                id: dungeonNode.originalNode.mapNode.id,
+                status: dungeonNode.originalNode.mapNode.status,
+                prize: dungeonNode.originalNode.mapNode.prize,
+                originalNode: this.mirrorNode,
+                isFaded: dungeonNode.originalNode.mapNode.isFaded
+              };
+              console.log(this.mirrorNode);
+            }, 1);
           } else {
             name[0] = 'dw';
             if (this.mirrorOrigin) {
@@ -336,10 +355,7 @@ export class MapComponent implements OnInit {
             }
           }
           this.mirrorNode = null;
-          this.mirrorRegion = dungeonNode.originalNode.destinationSection;
-          setTimeout(() => {
-            this.mirrorNode = dungeonNode.originalNode;
-          }, 1);
+          this.mirrorRegion = dungeonNode.originalNode.destinationSection;          
           this.mirrorMap = name.join('-');
           this.changeDungeon(this.mirrorMap);
           break;

@@ -308,7 +308,7 @@ export class LightWorldMap {
       '', 86, 56, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'lw-lake-hylea'));
+    }, 'lw-lake-hylea', 'Flippers Required'));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-flute7', 'Dam Entrance');

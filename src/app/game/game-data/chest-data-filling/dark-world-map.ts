@@ -64,15 +64,15 @@ export class DarkWorldMap {
         return items.flippers && (items.hammer || items.currentRegionInMap === 1);
     }, 'dw-lake-hylea', 'Flippers Required'));
     m.nodes.push(new DungeonNode(
-      '', 17, 90, DungeonNodeStatus.MIRROR,
+      'Mirror', 17, 90, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
         return items.hammer || items.currentRegionInMap === 0;
-    }, ''));
+    }, '', 'No Hammer', [-1], 0));
     m.nodes.push(new DungeonNode(
-      '', 26, 49, DungeonNodeStatus.MIRROR,
+      'Mirror', 26, 49, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
         return items.hammer || items.currentRegionInMap === 1;
-    }, ''));
+    }, '', 'No Hammer', [-1], 0));
     m.nodes.push(new DungeonNode(
       '', 40, 72, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
