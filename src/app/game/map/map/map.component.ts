@@ -555,6 +555,8 @@ export class MapComponent implements OnInit {
   }
 
   onWarpClicked() {
+    this.resetCrystalSwitch();
+    this.items.crystalSwitch = false;
     if (this.config.isFullMap) {
       if (!this.items.mirror) {
         if (this.items.gameState === 2) {
