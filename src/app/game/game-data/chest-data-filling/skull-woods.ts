@@ -16,9 +16,7 @@ export class SkullWoods {
     var entrance = new DungeonMapData('sw-entry', 'Entrance');
     entrance.nodes.push(new DungeonNode(
       '', 57.5, 87, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'exit'));
+    DungeonNode.noReqs, 'exit'));
     entrance.nodes.push(new DungeonNode(
       '', 27.5, 87, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -49,135 +47,91 @@ export class SkullWoods {
     var compass = new DungeonMapData('sw-left-drop', 'Compass Room');
     compass.nodes.push(new DungeonNode(
       '', 75, 9.5, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-gibdo-stalfo'));
+      DungeonNode.noReqs, 'sw-gibdo-stalfo', 'up'));
     compass.nodes.push(new DungeonNode(
       'Compass Chest', 76.5, 45, DungeonNodeStatus.CLOSED_CHEST,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[152]));
+      DungeonNode.noReqs, l[152], 'c'));
     compass.nodes.push(new DungeonNode(
       '', 93, 77, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-right-drop'));
+      DungeonNode.noReqs, 'sw-right-drop', 'right'));
     swData.dungeonMaps.push(compass);
 
     var gibdoStalfo = new DungeonMapData('sw-gibdo-stalfo', 'Pot Prison Room');
     gibdoStalfo.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-left-drop'));
+      DungeonNode.noReqs, 'sw-left-drop', 'down'));
     gibdoStalfo.nodes.push(new DungeonNode(
       'Pot Prison Chest', 22, 28.5, DungeonNodeStatus.CLOSED_CHEST,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[155]));
+      DungeonNode.noReqs, l[155], 'c'));
     gibdoStalfo.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.SK_LOCKED,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-bc'));
+      DungeonNode.noReqs, 'sw-bc', 'right'));
     swData.dungeonMaps.push(gibdoStalfo);
 
     var bigChest = new DungeonMapData('sw-bc', 'Big Chest Room');
     bigChest.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.SK_LOCKED,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-gibdo-stalfo'));
+      DungeonNode.noReqs, 'sw-gibdo-stalfo', 'left'));
     bigChest.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, config.isFullMap ? 'dw-lostwoods' : 'sw-entry'));
+      DungeonNode.noReqs, config.isFullMap ? 'dw-lostwoods' : 'sw-entry', 'exit'));
     bigChest.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-map'));
+      DungeonNode.noReqs, 'sw-map', 'right'));
     bigChest.nodes.push(new DungeonNode(
       'Big Chest', 50, 39.4, DungeonNodeStatus.BIG_CHEST,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[150]));
+      DungeonNode.noReqs, l[150], 'bc'));
     swData.dungeonMaps.push(bigChest);
 
     var rightFall = new DungeonMapData('sw-right-drop', 'Pinball Room');
     rightFall.nodes.push(new DungeonNode(
       '', 75, 9.5, DungeonNodeStatus.SK_LOCKED,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-map'));
+      DungeonNode.noReqs, 'sw-map', 'up'));
     rightFall.nodes.push(new DungeonNode(
       'Pinball Chest', 51.5, 45, DungeonNodeStatus.CLOSED_CHEST,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[156]));
+      DungeonNode.noReqs, l[156], 'c'));
     swData.dungeonMaps.push(rightFall);
 
     var mapRoom = new DungeonMapData('sw-map', 'Map Room');
     mapRoom.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.SK_LOCKED,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-right-drop'));
+      DungeonNode.noReqs, 'sw-right-drop', 'down'));
     mapRoom.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-bc'));
+      DungeonNode.noReqs, 'sw-bc', 'left'));
     mapRoom.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-northeast-bc'));
+      DungeonNode.noReqs, 'sw-northeast-bc', 'up'));
     mapRoom.nodes.push(new DungeonNode(
       'Map Chest', 79, 28, DungeonNodeStatus.CLOSED_CHEST,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[153]));
+      DungeonNode.noReqs, l[153], 'c'));
     swData.dungeonMaps.push(mapRoom);
 
     var northeastBc = new DungeonMapData('sw-northeast-bc', 'Circle of Pots Room');
     northeastBc.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-map'));
+      DungeonNode.noReqs, 'sw-map', 'down'));
     northeastBc.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-bc'));
+      DungeonNode.noReqs, 'sw-bc', 'left'));
     swData.dungeonMaps.push(northeastBc);
 
     var part2 = new DungeonMapData('sw-part21', 'Big Key Room');
     part2.nodes.push(new DungeonNode(
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, config.isFullMap ? 'dw-lostwoods' : 'sw-entry'));
+      DungeonNode.noReqs, config.isFullMap ? 'dw-lostwoods' : 'sw-entry', 'exit'));
     part2.nodes.push(new DungeonNode(
       '', 32, 77, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-part22'));
+      DungeonNode.noReqs, 'sw-part22', 'left'));
     part2.nodes.push(new DungeonNode(
       'Big Key Chest', 51.5, 25, DungeonNodeStatus.CLOSED_CHEST,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[151]));
+      DungeonNode.noReqs, l[151], 'c'));
     swData.dungeonMaps.push(part2);
 
     var part22 = new DungeonMapData('sw-part22', 'Key Pot Room');
     part22.nodes.push(new DungeonNode(
       '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'sw-part21'));
+      DungeonNode.noReqs, 'sw-part21', 'right'));
     if (!config.isFullMap) {
       part22.nodes.push(new DungeonNode(
         '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
@@ -187,15 +141,11 @@ export class SkullWoods {
     } else {
       part22.nodes.push(new DungeonNode(
         '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
-      function(items:Items, config:Config) {
-          return true;
-      }, 'dw-lostwoods', '', [-1], 1));
+        DungeonNode.noReqs, 'dw-lostwoods', 'exit', [-1], 1));
     }
     part22.nodes.push(new DungeonNode(
-      '', 21, 28, DungeonNodeStatus.GROUND_KEY,
-    function(items:Items, config:Config) {
-        return true;
-    }, ''));
+      'Small Key', 21, 28, DungeonNodeStatus.GROUND_KEY,
+      DungeonNode.noReqs, '', 'key'));
     swData.dungeonMaps.push(part22);
 
     var final = new DungeonMapData('sw-final', 'Final Section');
@@ -208,28 +158,22 @@ export class SkullWoods {
     } else {
       final.nodes.push(new DungeonNode(
         '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
-      function(items:Items, config:Config) {
-          return true;
-      }, 'dw-lostwoods', '', [-1], 1));
+        DungeonNode.noReqs, 'dw-lostwoods', 'exit', [-1], 1));
     }
     final.nodes.push(new DungeonNode(
       'Mothula Room', 25, 9.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.sword;
-    }, 'sw-mothula', 'Sword Required'));
+    }, 'sw-mothula', 'up'));
     final.nodes.push(new DungeonNode(
       'Bridge Room Chest', 33, 74, DungeonNodeStatus.CLOSED_CHEST,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[154]));
+      DungeonNode.noReqs, l[154], 'c'));
     swData.dungeonMaps.push(final);
 
     var mothulaRoom = new DungeonMapData('sw-mothula', 'Mothula Room');
     mothulaRoom.nodes.push(new DungeonNode(
       'Mothula', 50, 50, DungeonNodeStatus.BOSS,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[157]));
+      DungeonNode.noReqs, l[157], 'boss'));
     swData.dungeonMaps.push(mothulaRoom);
     
     swData.startingMap = entrance;

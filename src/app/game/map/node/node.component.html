@@ -4,7 +4,7 @@
   (click)="onNodeClick()"
   > 
   <div class='chest-count outline-text'>
-    {{chestCountNum}}
+    {{nodeInfo.originalNode.errorMessage}}
     <i class="fa fa-search" aria-hidden="true" *ngIf='isLookable'
       [ngClass]="nodeInfo.isFaded ? 'faded' : ''"></i>
   </div>

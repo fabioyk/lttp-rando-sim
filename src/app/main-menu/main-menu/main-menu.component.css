@@ -2,8 +2,21 @@
   max-width: 300px;
 }
 
+.row {
+  margin-top: 15%;
+}
+
 .super-text {
   vertical-align: super;
+}
+
+p {
+  color: var(--dark-text-color);
+  font-size: 22px;
+}
+
+.col-xs-3 {
+  text-align:center;
 }
 
 :host-context(.dark-theme) .control-label, .super-text {

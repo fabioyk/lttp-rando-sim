@@ -1,59 +1,26 @@
-<form class="form-horizontal">
-  <div class="form-group">
-    <label for="game-mode" class="col-sm-4 control-label">Game Mode</label>    
-    <div class="btn-group" id="game-mode" class="col-sm-8">
-      <label class="btn btn-default" [(ngModel)]="modeSelected" name="standard-button"
-        btnRadio="standard">Standard Classic</label>
-    <label class="btn btn-default" [(ngModel)]="modeSelected" name="standard-rando-button"
-        btnRadio="standard-rando">Standard Random Weapon</label>
-      <label class="btn btn-default" [(ngModel)]="modeSelected" name="open-button"
-        btnRadio="open">Open</label>
-      <label class="btn btn-default" [(ngModel)]="modeSelected" name="keysanity-button"
-        btnRadio="keysanity">Keysanity</label>
-    </div>
+<div class='row'>
+  <div class='col-xs-3'>
+    <img src='assets/item-icons/sword.png'>
+    <p>Standard Uncle Sword</p>
+    <p>!classic</p>
+    <p>{{voteArr[0]}} votes</p>
   </div>
-
-  <div class="form-group">
-      <label for="seq-break" class="col-sm-4 control-label">Minor Glitches and Sequence Breaking</label>    
-      <div class="btn-group" id="seq-break" class="col-sm-8">
-        <label class="btn btn-default" [(ngModel)]="glitchSelected" name="no-breaking-button"
-          btnRadio="no">Not Allowed</label>
-        <label class="btn btn-default" [(ngModel)]="glitchSelected" name="yes-breaking-button"
-          btnRadio="yes">Allowed</label>
-      </div>
-    </div>
-  
-  <div class="form-group">
-    <label for="map-mode" class="col-sm-4 control-label">Overworld</label>    
-    <div class="btn-group" id="map-mode" class="col-sm-8">
-      <label class="btn btn-default" [(ngModel)]="mapSelected" name="simple-map-button"
-        btnRadio="no">Simple</label>
-      <label class="btn btn-default" [(ngModel)]="mapSelected" name="full-map-button"
-        btnRadio="yes">Advanced</label>
-    </div>
+  <div class='col-xs-3'>
+    <img src='assets/item-icons/bow2.png'>
+    <p>Standard Randomized</p>
+    <p>!standard</p>
+    <p>{{voteArr[1]}} votes</p>
   </div>
-
-  <div class="form-group">
-    <label for="seed-num-input" class="col-sm-4 control-label">Seed</label>
-    <div class="col-sm-8 form-inline">
-        <input type="text" name="seedSelect" class="form-control" id="seed-num-input"
-        placeholder="Random" maxlength="10" [(ngModel)]="seedNum" [disabled]='dailySeed'
-        (keyup.enter)="onSubmit()">
-        <button type="button" class="btn btn-default" 
-          [(ngModel)]="dailySeed" (click)='onDailySeedClick()'
-          name="dailyButton" btnCheckbox>Daily Seed</button> 
-          <abbr class="super-text not-selectable"
-            tooltip="A new seed every day! Resets at Midnight UTC / 7PM EST">?</abbr>
-    </div>    
+  <div class='col-xs-3'>
+    <img src='assets/item-icons/flute.png'>
+    <p>Open</p>
+    <p>!open</p>
+    <p>{{voteArr[2]}} votes</p>
   </div>
-  <div class="form-group">
-    <div class="col-sm-offset-4 col-sm-8">
-      <button class="btn btn-primary" (click)="onSubmit()" 
-        type="button" [disabled]='shouldDisablePlay'>Play</button>      
-    </div>
-  </div>
-  <alert type="danger" *ngIf="errorMessage">
-    {{errorMessage}}
-  </alert>
-</form>
-
+  <div class='col-xs-3'>
+    <img src='assets/item-icons/bigKey.png'>
+    <p>Keysanity</p>
+    <p>!keysanity</p>
+    <p>{{voteArr[3]}} votes</p>
+  </div>  
+</div>

@@ -10,6 +10,11 @@ import { DungeonNodeStatus } from '../../game-data/dungeon-node-status.enum';
 import { DungeonItems } from '../../game-data/dungeon-items';
 import { ItemNamesService } from '../../../log-parse/item-names.service';
 import { DungeonNode } from '../../game-data/dungeon-node';
+import { TpServerService } from '../../../shared/tp-server.service';
+import { WebsocketService } from '../../../shared/websocket.service';
+import { CurrentStatus, NodeOption } from '../../../shared/current-status';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -46,11 +51,17 @@ export class MapComponent implements OnInit {
   dungeonFinishMap:string;
   dungeonFinishRegion:number;
 
-  constructor(private gameService:GameService,
-              private itemNameService:ItemNamesService) { }
+  ioConnection: Subscription;
+  commandConnection: Subscription;
+  currentOptions:NodeOption[] = [];
 
-  ngOnInit() {    
-    this.isDev = isDevMode();    
+  constructor(private gameService:GameService,
+              private itemNameService:ItemNamesService,
+              private wSocket:WebsocketService,
+              private _router:Router) { }
+
+  ngOnInit() {        
+    //this.isDev = isDevMode();    
     if (this.config.isFullMap) {      
       [this.currentDungeonMap, this.currentDungeon] = this.gameService.getMap(this.currentMap);
       this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
@@ -60,6 +71,8 @@ export class MapComponent implements OnInit {
     this.clearTooltip();
 
     this.preloadMapsAndIcons();
+
+    this.initConnection();
   }
 
   ngOnChanges() {
@@ -72,6 +85,185 @@ export class MapComponent implements OnInit {
       this.currentDungeonItems = null;
     }
   }
+
+
+
+  initConnection() {
+    this.ioConnection = this.wSocket.onMessage()
+      .subscribe((option:string) => {        
+        console.log('Received option '+option);
+        var optName = '';
+        var pickedNode;
+        this.currentOptions.forEach((eachOpt) => {
+          if (eachOpt.abbrev === option) {
+            optName = eachOpt.name;
+          }
+        });
+        this.currentDungeonMap.nodes.forEach((eachNode) => {
+          if (!pickedNode && eachNode.errorMessage === option
+            && (!eachNode.canOpen || eachNode.canOpen(this.items, this.config)
+            || (eachNode.canGlitch && eachNode.canGlitch(this.items, this.config))
+            || ((eachNode.status === DungeonNodeStatus.PEDESTAL || eachNode.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM)
+                && this.items.book))) {
+            pickedNode = eachNode;
+          }
+        });
+        if (optName) {
+          if (option === 'chests') {
+            this.currentDungeonMap.nodes.forEach((eachNode) => {
+              if (DungeonNodeStatus.CHESTS.indexOf(+eachNode.status) > -1
+                && (!eachNode.canOpen || eachNode.canOpen(this.items, this.config)
+                || (eachNode.canGlitch && eachNode.canGlitch(this.items, this.config)))
+                || eachNode.status === DungeonNodeStatus.GROUND_KEY) {
+                this.onDungeonNodeClick(eachNode.mapNode);
+                
+              }
+            });
+          } else if (optName === 'Mirror Back') {
+            this.onDungeonNodeClick(this.mirrorNode.mapNode);
+          } else if (option === 'warp') {
+            this.onWarpClicked();
+          } else if (optName === 'Flute') {
+            this.onFluteClicked();
+          } else if (optName === 'Check Map') {
+            if (!this.items.lwMapOpen && this.canViewMap("light-world")) {
+              this.onCheckMap('lw');
+            } else {
+              this.onCheckMap('dw');
+            }            
+          } else if (optName === 'Check Green Pendant') {
+            this.onCheckMap('gp');
+          } else if (optName === 'Check 5/6 Crystals') {
+            this.onCheckMap('rc');
+          } else if (optName === 'Save & Quit') {
+            this.onSaveAndQuit();
+          } else {
+            this.onDungeonNodeClick(pickedNode.mapNode);
+          }          
+        } else {
+          console.log('Unknown Option: '+option);
+        }
+        this.autoMapping();
+        this.sendStatus();
+        /// GET OPTION
+      });      
+    this.commandConnection = this.wSocket.onCommand()
+      .subscribe(comStr => {
+        console.log('received command '+comStr);
+        if (comStr === 'status') {
+          this.sendStatus();
+        }
+        if (comStr === 'reset') {
+          this.ioConnection.unsubscribe();
+          this.commandConnection.unsubscribe();
+          this._router.navigate(['/']);          
+        }
+      })
+
+  }
+
+  sendStatus() {
+    this.currentOptions = [];
+
+    var prevAbbrevs = [];
+    var chestCounter = 0;
+
+    this.currentDungeonMap.nodes.forEach(dunNode => {
+      if ((dunNode.accessibleSectionArray.indexOf(-1) > -1 || dunNode.accessibleSectionArray.indexOf(this.items.currentRegionInMap) > -1)
+        && (dunNode.status !== 10 || this.items.mirror) && DungeonNodeStatus.OPENED.indexOf(+dunNode.status) === -1) {
+        if (!dunNode.canOpen || dunNode.canOpen(this.items, this.config)
+          || (dunNode.canGlitch && dunNode.canGlitch(this.items, this.config))
+          || ((dunNode.status === DungeonNodeStatus.PEDESTAL || dunNode.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM)
+              && this.items.book)) {
+          var abbrev = dunNode.errorMessage;
+          if (!abbrev) {
+            console.log('no abbrev');
+            console.log(dunNode);
+          } else {
+            if ((abbrev.length === 2 && abbrev.charAt(0) === 'c') 
+              || abbrev === 'bc' || abbrev === 'key' || abbrev === 'c') {
+              chestCounter++;
+            }
+          }
+         
+          if (abbrev && prevAbbrevs.indexOf(abbrev) === -1) {
+            prevAbbrevs.push(abbrev);
+            this.currentOptions.push({
+              abbrev: abbrev,
+              name: dunNode.name
+            });
+          }          
+        }
+      }
+    });
+
+    if (this.mirrorNode && this.mirrorMap === this.currentDungeonMap.id 
+      && (this.mirrorRegion === -1 || this.mirrorRegion === this.items.currentRegionInMap)) {
+        this.currentOptions.push({
+          abbrev: this.mirrorNode.errorMessage,
+          name: 'Mirror Back'
+        });
+    }
+
+    if (chestCounter > 1) {
+      this.currentOptions.push({
+        abbrev: 'chests',
+        name: 'Get All Chests/Keys'
+      });
+    }
+    if (this.canWarp()) {
+      this.currentOptions.push({
+        abbrev: 'warp',
+        name: this.warpButtonText
+      });
+    }
+    if (this.canFlute()) {
+      this.currentOptions.push({
+        abbrev: 'flute',
+        name: 'Flute'
+      });
+    }
+    if ((!this.items.lwMapOpen && this.canViewMap("light-world")) 
+      || (!this.items.dwMapOpen && this.canViewMap("dark-world"))) {
+      this.currentOptions.push({
+        abbrev: 'map',
+        name: 'Check Map'
+      });
+    }
+    if (this.canViewMap('green-pendant')) {
+      this.currentOptions.push({
+        abbrev: 'gp',
+        name: 'Check Green Pendant'
+      });
+    }
+    if (this.canViewMap('red-crystals')) {
+      this.currentOptions.push({
+        abbrev: 'reds',
+        name: 'Check 5/6 Crystals'
+      });
+    }
+
+    if (this.items.gameState === 4) {
+      this.currentOptions.push({
+        abbrev: 'sq',
+        name: 'Save & Quit'
+      });
+    }
+
+    var st:CurrentStatus = {
+      seed: this.config.vtSeedNumber,
+      variation: this.config.variation, 
+      mode: this.config.mode,
+      weapons: this.config.weapons, 
+      options: this.currentOptions, 
+      gameStatus: this.items.gameState.toString() //todo finished
+    };
+
+    console.log(st);
+    this.wSocket.sendStatus(st);
+  }
+
+
 
   onNodeClick(nodeClicked:MapNode) {
     if (nodeClicked.status.indexOf('unreachable') > -1) {
@@ -216,6 +408,26 @@ export class MapComponent implements OnInit {
                 });
               }
             });
+
+            //enter door
+            if (dungeonNode.prize[0] === 'hc-darkchest' && this.items.gameState === 2) {
+              this.items.gameState = 3;
+            } else if (dungeonNode.prize[0] === 'hc-sanctuary' && this.items.gameState === 3) {
+              this.items.gameState = 4;
+            }
+            if (this.items.spFlooded && dungeonNode.prize[0].substr(0, 2) === 'dw') {
+              this.unfloodSwamp();
+            }
+            if (dungeonNode.prize[0] === 'Ganon') {
+              this.addPrizes(dungeonNode, this.currentDungeon.name);
+              this.onGameFinished.emit('');            
+            } else if (dungeonNode.prize[0] !== 'exit' && dungeonNode.prize[0].split('-')[0] !== this.currentDungeonMap.id.split('-')[0]) {            
+              this.changeDungeon(dungeonNode.prize[0]);
+              this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;
+            } else {            
+              this.changeMapInDungeon(dungeonNode.prize[0]);
+              this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;            
+            }    
           }  else {
             this.cantItem.emit([dungeonNode, this.currentDungeon.name, false]);
           }
@@ -629,6 +841,18 @@ export class MapComponent implements OnInit {
     this.changeDungeon('lw-flute-map');
   }
 
+  autoMapping() {
+    if (!this.items.lwMapOpen && this.canViewMap("light-world")) {
+      this.onCheckMap('lw');
+    } else if (!this.items.dwMapOpen && this.canViewMap("dark-world")) {
+      this.onCheckMap('dw');
+    } else if (this.canViewMap('green-pendant')) {
+      this.onCheckMap('gp');
+    } else if (this.canViewMap('red-crystals')) {
+      this.onCheckMap('rc');      
+    }
+  }
+
   getAvailableDungeonMapIndexes():number[] {
     var maps = [];
     var start, end;
@@ -851,17 +1075,7 @@ export class MapComponent implements OnInit {
     
   }
 
-  getBootsDw() {
-    this.items.add('glove', 'light-world');
-    this.items.add('glove', 'light-world');
-    this.items.add('flute', 'light-world');
-    this.items.isFluteActivated = true;    
-    this.items.add('book', 'light-world');
-    this.items.add('hookshot', 'light-world');
-    this.items.add('mirror', 'light-world');
-    
-    //this.items.add('boots', 'light-world');
-    this.items.add('moonPearl', 'light-world');
-    
+  getBootsDw() {  
+    this.sendStatus();
   }
 }

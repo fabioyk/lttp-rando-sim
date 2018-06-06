@@ -16,6 +16,8 @@ import { HttpModule } from '@angular/http';
 import { ItemNamesService } from './log-parse/item-names.service';
 import { WindowRefService } from "./shared/window-ref.service";
 import { FormsModule } from '@angular/forms';
+import { WebsocketService } from './shared/websocket.service';
+import { TpServerService } from './shared/tp-server.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { FormsModule } from '@angular/forms';
       { path: 'standard-rando', component: GameComponent },  
     ])
   ],
-  providers: [GameService, SeedApiService, ItemNamesService, WindowRefService],
+  providers: [GameService, SeedApiService, ItemNamesService, 
+    WindowRefService, WebsocketService, TpServerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

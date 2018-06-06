@@ -47,7 +47,7 @@ export class GameComponent implements OnInit {
               private _location: Location) { }
 
   ngOnInit() {
-    this.isDev = isDevMode();
+    //this.isDev = isDevMode();
 
     this.gameState = 'loading';
     this._seedService.ping();
@@ -130,8 +130,8 @@ export class GameComponent implements OnInit {
 
       this.seedDescription = '(' 
         + (this.config.mode === 'standard' ? 'Standard Classic' : (this.config.mode === 'standard-rando' ? 'Standard Random Weapon' : (this.config.variation === 'none' ? 'Open' : 'Keysanity'))) 
-        + ', ' + (this.config.canGlitch ? 'Minor Glitches' : 'No Glitches') 
-        + ', Seed ' + seedNumber + ')';
+        + ', ' + (this.config.canGlitch ? 'Minor Glitches)' : 'No Glitches)')
+        
     } else {
       this._router.navigate(['/']);      
     }

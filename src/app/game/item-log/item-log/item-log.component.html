@@ -1,15 +1,4 @@
 <div class='panel panel-info'>
-  <div class='panel-heading'>
-    <button class='btn btn-default' type='button' name='showImportantButton' tooltip='Show Only Important Items'
-      [(ngModel)]='filterArgs.onlyImportantShown' btnCheckbox><i class="fa fa-filter" aria-hidden="true">
-        </i><span class='visible-xs-inline visible-sm-inline'> Filter Trash Items</span>
-    </button>
-    <input type='text' class='form-control' name='searchForm' 
-      [(ngModel)]='filterArgs.searchQuery' placeholder='Search'>
-    <button *ngIf='filterArgs.searchQuery !== ""' (click)='onCleanText()' class='btn btn-default'>
-      <i class="fa fa-times" aria-hidden="true"></i>
-    </button>
-  </div>
   <div class='panel-body item-log-body' >
     <app-item-line *ngFor='let entry of (itemLogList | logSearch:filterArgs)'
       [itemLogEntry]='entry' [items]='items'>

@@ -5,6 +5,7 @@ import { seeds } from './temp/seeds';
 import { WindowRefService } from "./shared/window-ref.service";
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
+import { WebsocketService } from './shared/websocket.service';
 
 var self;
 
@@ -24,12 +25,14 @@ export class AppComponent {
   
   constructor(private _windowRef: WindowRefService,
               private _modalService: BsModalService,
-              private _router: Router) {
+              private _router: Router,
+              private wSocket: WebsocketService) {
     this.window = _windowRef.nativeWindow;
   }
 
   ngOnInit() {
     self = this;
+    this.wSocket.initSocket();
     this.buttonClass = 'fa fa-moon-o';
     if (localStorage.getItem('isDarkTheme')) {
       this.isDarkTheme = localStorage.getItem('isDarkTheme') === 'true';
@@ -43,7 +46,7 @@ export class AppComponent {
   }
 
   onBackMainMenu() {
-    this._router.navigate(['/']);    
+    this._router.navigate(['/']);
   }
 
   onToggleTheme() {
