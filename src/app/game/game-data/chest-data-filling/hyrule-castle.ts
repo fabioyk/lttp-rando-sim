@@ -166,8 +166,9 @@ export class HyruleCastle {
     m.nodes.push(new DungeonNode(
       '', 75, 93, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return true;
-    }, 'hc-keyrat'));
+        return (items.lamp && config.mode.indexOf('standard') === -1)
+        || (config.mode.indexOf('standard') > -1);
+    }, 'hc-keyrat', 'Lamp Required', [-1], 0, DungeonNode.noReqs));
     m.nodes.push(new DungeonNode(
       '', 75, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

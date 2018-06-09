@@ -343,7 +343,6 @@ export class MapComponent implements OnInit {
                 originalNode: this.mirrorNode,
                 isFaded: dungeonNode.originalNode.mapNode.isFaded
               };
-              console.log(this.mirrorNode);
             }, 1);
           } else {
             name[0] = 'dw';
