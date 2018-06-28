@@ -197,10 +197,10 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       '', 70, 38, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.currentRegionInMap === 0 || items.flippers;
+      return (items.currentRegionInMap === 0 && (items.flippers || items.glove || items.hammer)) || items.flippers;
     }, 'dw-flute2', '', [-1], 0, 
     function(items:Items, config:Config) {
-      return items.boots;
+      return items.currentRegionInMap === 1 && items.boots;
     }));
     m.nodes.push(new DungeonNode(
       '', 52, 14, DungeonNodeStatus.WATER_WARP,
@@ -208,10 +208,10 @@ export class DarkWorldMap {
         return items.flippers;
     }, 'dw-flute8', 'Flippers Required', [-1], 0, 
     function(items:Items, config:Config) {
-      return items.currentRegionInMap === 0 || items.boots;
+      return (items.currentRegionInMap === 0 && (items.flippers || items.glove || items.hammer)) || (items.currentRegionInMap === 1 && items.boots);
     }));
     m.nodes.push(new DungeonNode(
-      '', 65, 74, DungeonNodeStatus.MIRROR,
+      'Mirror Right Side', 65, 74, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
         return items.currentRegionInMap === 0 || items.flippers;
     }, '', '', [-1], 0, 
@@ -219,7 +219,7 @@ export class DarkWorldMap {
       return items.boots;
     }));
     m.nodes.push(new DungeonNode(
-      '', 39, 48, DungeonNodeStatus.MIRROR,
+      'Mirror Left Side', 39, 48, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
         return items.currentRegionInMap === 1 
         || (items.hookshot && (items.flippers || items.glove || items.hammer));
