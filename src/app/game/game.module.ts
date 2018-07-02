@@ -11,6 +11,8 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { TpLogComponent } from './tp-log/tp-log.component';
+import { TpLogRedirectComponent } from './tp-log-redirect/tp-log-redirect.component';
 
 @NgModule({
   imports: [
@@ -27,10 +29,11 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
       { path: 'standard', component: GameComponent },
       { path: 'open', component: GameComponent },
       { path: 'keysanity', component: GameComponent },
-      { path: 'standard-rando', component: GameComponent },      
+      { path: 'standard-rando', component: GameComponent },    
+      { path: 'log', component: TpLogComponent }  
     ])
   ],
-  declarations: [GameComponent, EndStatsComponent],
+  declarations: [GameComponent, EndStatsComponent, TpLogComponent, TpLogRedirectComponent],
   exports: [GameComponent]
 })
 export class GameModule { }
