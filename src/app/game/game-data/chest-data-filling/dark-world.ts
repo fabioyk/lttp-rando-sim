@@ -57,7 +57,7 @@ export class DarkWorld {
       '',
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return items.canInvertedEastDarkDeathMountain() && items.glove && (items.hookshot || items.boots);
+          return items.canInvertedEastDarkDeathMountain(true) && items.glove && (items.hookshot || items.boots);
         }
         return items.canDarkEastDeathMountain(true) && items.moonPearl && (items.hookshot || items.boots);
       }
