@@ -446,14 +446,14 @@ export class DarkWorld {
   
       itemLocations.push(new ItemLocation(
         'dm', 98.6, 3.4,
-        function(items:Items, config:Config) {
-          return (items.canEastDeathMountain() && items.glove === 2 && items.hammer);
+        function(items:Items, config:Config) {          
+          return (items.canInvertedEastDarkDeathMountain() && items.glove === 2 && items.hammer && items.moonPearl);
         },
         null,
         ['warp'],
         '',
         function(items:Items, config:Config) {
-          return (items.canEastDeathMountain(true) && items.glove === 2 && items.hammer);
+          return (items.canInvertedEastDarkDeathMountain(true) && items.glove === 2 && items.hammer && items.moonPearl);
         },
       ));
   
