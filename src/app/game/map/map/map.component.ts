@@ -149,9 +149,10 @@ export class MapComponent implements OnInit {
   }
 
   onDungeonClick(dungeonClicked:MapNode) {
-    if (this.config.noLogic || (dungeonClicked.status.indexOf('getable') > -1 && dungeonClicked.status.indexOf('unavailable') === -1)) {
-      if (dungeonClicked.id === 'Turtle Rock') {
+    if (this.config.noLogic || (dungeonClicked.status.indexOf('getable') > -1 && dungeonClicked.status.indexOf('unavailable') === -1)) {      
+      if (dungeonClicked.id === 'tr-entry') {
         this.changeDungeon('tr-entry');
+        dungeonClicked.originalNode.startingMap.id = 'tr-entry';
       } else {
         this.changeDungeon(dungeonClicked.originalNode.startingMap.id);
       }      
@@ -484,6 +485,7 @@ export class MapComponent implements OnInit {
       if (isAgaBeingDefeated || this.currentDungeon.name === 'Ganons Tower') {
         this.changeDungeon('dw-hyrule-castle');
       } else if (this.currentDungeon.name === 'Turtle Rock') {
+        this.currentDungeon.startingMap.id = 'tr-entry';
         this.changeDungeon('dw-trportal');
       } else {
         this.changeDungeon(this.dungeonFinishMap);
