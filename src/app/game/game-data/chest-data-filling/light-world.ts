@@ -567,7 +567,7 @@ export class LightWorld {
       '',
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return false;
+          return items.canInvertedEastDeathMountain(true) && items.moonPearl;
         }
         return items.canEastDeathMountain(true);
       },
