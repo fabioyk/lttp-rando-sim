@@ -10,9 +10,9 @@ export class CastleTower {
     let xs = [49.6, 55];
     let ys = [39, 4.5];
     var ctData = new DungeonData('Aga Tower', 'Agahnim',
-      function(items:Items, config:Config) {
+      function(items:Items, config:Config) {        
         return (config.mode !== 'inverted' && (items.cape || items.sword >= 2))
-          || (config.mode === 'inverted' && items.canWestDeathMountain(config.canGlitch));
+          || (config.mode === 'inverted' && items.canInvertedEastDarkDeathMountain(config.canGlitch));
       }, xs[config.mode === 'inverted' ? 1 : 0], ys[config.mode === 'inverted' ? 1 : 0]
     );
 

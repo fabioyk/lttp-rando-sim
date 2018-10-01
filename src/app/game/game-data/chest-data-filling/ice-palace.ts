@@ -12,7 +12,7 @@ export class IcePalace {
         if (config.mode === 'inverted') {
           return items.flippers
             || (config.canGlitch && (
-              items.flute
+              (items.flute && items.canInvertedLW())
               || (items.canInvertedNEDW(true) && (items.hammer || items.glove)) // can bomb?
               || (items.canInvertedLW() && items.mirror && items.moonPearl)
               || items.boots)

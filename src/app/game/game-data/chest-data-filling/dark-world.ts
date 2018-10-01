@@ -381,12 +381,18 @@ export class DarkWorld {
       itemLocations.push(new ItemLocation(
         'wdm', 75.6, 14.9,
         function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return items.canInvertedEastDarkDeathMountain();
+          }
           return (items.canWestDeathMountain());
         },
         null,
         ['warp'],
         '',
         function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return items.canInvertedEastDarkDeathMountain(true);
+          }
           return (items.canWestDeathMountain(true));
         },
       ));

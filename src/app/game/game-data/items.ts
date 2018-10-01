@@ -411,7 +411,7 @@ export class Items {
         && this.canWestDeathMountain(isGlitched));
   }
   canInvertedEastDarkDeathMountain(isGlitched:boolean = false) {
-    return this.canWestDeathMountain(isGlitched);
+    return (this.flute && this.canInvertedLW()) || (this.glove && (this.lamp || isGlitched));
   }
   canInvertedNEDW(isGlitched:boolean = false) {
     return this.hammer || this.flippers || (this.mirror && this.canInvertedLW())

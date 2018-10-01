@@ -227,10 +227,10 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Lumberjack Tree', 15.1, 7.6,
       function(items:Items, config:Config) {
-        return items.agahnim && items.boots && (config.mode !== 'inverted' || items.moonPearl);
+        return items.agahnim && items.boots && (config.mode !== 'inverted' || (items.moonPearl && items.canInvertedLW()));
       },
       function(items:Items, config:Config) {
-        return true;
+        return config.mode !== 'inverted' || items.canInvertedLW();
       },
       [l[36]]
     ));    
@@ -444,12 +444,18 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Old Man', 20.8, 20.4,
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain() && items.lamp;
+        }
         return items.canWestDeathMountain() && items.lamp;
       },
       null,
       [l[74]],
       '',
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain(true);
+        }
         return items.canWestDeathMountain(true);
       },
     ));
@@ -457,17 +463,29 @@ export class LightWorld {
     itemLocations.push(new ItemLocation(
       'Spectacle Rock Cave', 24.3, 14.8,
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain();
+        }
         return items.canWestDeathMountain();
       },
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain();
+        }
         return items.canWestDeathMountain();
       },
       [l[75]],
       '',
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain(true);
+        }
         return items.canWestDeathMountain(true);
       },
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain(true);
+        }
         return items.canWestDeathMountain(true);
       }
     ));
@@ -516,7 +534,7 @@ export class LightWorld {
       },
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return items.canWestDeathMountain();
+          return items.canInvertedEastDarkDeathMountain();
         }
         return items.canWestDeathMountain();
       },
@@ -529,6 +547,9 @@ export class LightWorld {
         return items.canWestDeathMountain(true) && items.mirror;
       },
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain(true);
+        }
         return items.canWestDeathMountain(true);
       },
     ));
