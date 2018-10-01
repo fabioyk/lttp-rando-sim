@@ -26,9 +26,9 @@ export class EndStatsComponent implements OnInit {
 
   generateItemLocationsCheckedTable() {
     var res = [];
-    res.push(['Overworld', this.items.stats.overworldCount + (this.config.isFullMap ? '/95' : '/100')]);
-    res.push(['Dungeons', this.items.stats.dungeonCount + (this.config.isFullMap ? '/140' : '/116')]);
-    res.push(['Total', '216' + (this.config.isFullMap ? '/235' : '/216')]);
+    res.push(['Overworld', this.items.stats.overworldCount +  '/100']);
+    res.push(['Dungeons', this.items.stats.dungeonCount + '/116']);
+    res.push(['Total', this.items.stats.totalCount + '/216']);
     return res;
   }
   generateItemCompletionTable() {
