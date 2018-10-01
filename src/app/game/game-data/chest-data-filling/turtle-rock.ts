@@ -75,7 +75,7 @@ export class TurtleRock {
     chainChomp.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return true;
+        return items.somaria;
     }, 'tr-entry'));
     chainChomp.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.SK_LOCKED,
@@ -251,9 +251,11 @@ export class TurtleRock {
     helmaBridge.nodes.push(new DungeonNode(
       '', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.lamp;
+        return items.lamp && items.somaria;
     }, 'tr-roller-switch', '', [-1], 0, 
-    DungeonNode.noReqs));
+    function(items:Items, config:Config) {
+      return items.somaria;
+    }));
     helmaBridge.nodes.push(new DungeonNode(
       '', 32, 77, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
