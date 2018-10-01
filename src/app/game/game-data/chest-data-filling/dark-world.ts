@@ -280,7 +280,7 @@ export class DarkWorld {
         ['Ganon'],
         'ow'
       ));
-      
+
       itemLocations.push(new ItemLocation(
         'Blacksmiths', 57, 65.9,
         function(items:Items, config:Config) {
@@ -379,7 +379,7 @@ export class DarkWorld {
       ));
   
       itemLocations.push(new ItemLocation(
-        'wdm', 78.6, 14.9,
+        'wdm', 75.6, 14.9,
         function(items:Items, config:Config) {
           return (items.canWestDeathMountain());
         },
