@@ -250,7 +250,7 @@ export class DarkWorldMap {
       'Island Mirror Portal', 78, 73, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
       return items.flippers || items.currentRegionInMap === 0;
-    }, '', 'Flippers Required to Mirror Back', [-1], 0));
+    }, '', 'Flippers Required to Mirror Back', [-1], 3, null, [3], 0));
     dwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('dw-eastern-palace', 'Palace of Darkness Courtyard');
