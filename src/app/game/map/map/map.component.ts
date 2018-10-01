@@ -957,7 +957,7 @@ export class MapComponent implements OnInit {
       return false;
     }
     if (this.config.mode === 'inverted') {
-      return this.items.canMire(this.config);
+      return this.items.canMire(this.config) && this.currentMap === 'dark-world';
     }
     return this.items.canMire(this.config) && this.currentMap === 'dark-world' 
       && (this.currentRegion === 'mire' || this.currentRegion === 'all');
