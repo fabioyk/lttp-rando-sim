@@ -9,8 +9,8 @@ import { DungeonNodeStatus } from "../dungeon-node-status.enum";
 export class EasternPalace {
   static setup (l:string[], config:Config):DungeonData {
     var epData = new DungeonData('Eastern Palace', l[66],
-      function(items:Items, config:Config) {
-        return true;
+      function(items:Items, config:Config) {        
+        return config.mode !== 'inverted' || (items.canInvertedLW() && (items.moonPearl || config.canGlitch));
       }, 93.6, 38.8
     );
 

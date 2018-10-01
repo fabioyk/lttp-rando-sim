@@ -174,14 +174,17 @@ export class NodeComponent implements OnInit {
         res += ' glitched-open';
       } else if (this.nodeInfo.status.indexOf('viewable') > -1) {
         res += ' view';
-      } else if (this.nodeInfo.status.indexOf('warp') > -1) {
+      } else if (this.nodeInfo.prize[0] === 'warp') {
         res += ' warp';
-      } else if (this.nodeInfo.status.indexOf('invisible') > -1) {
-        res += ' invisible';
+      } else if (this.nodeInfo.prize.includes('tr-ledge')) {
+        res += ' tr-ledge';      
       } else if (this.nodeInfo.status.indexOf('unavailable') > -1) {
         res += ' unavailable';
       } else {
         res += ' open';
+      }
+      if (this.nodeInfo.status.indexOf('invisible') > -1 && !this.config.noLogic) {
+        res += ' invisible';
       }
       this.isLookable = (this.nodeInfo.status.indexOf('now-getable') > -1
         || this.nodeInfo.status.indexOf('now-g-getable') > -1
@@ -235,7 +238,7 @@ export class NodeComponent implements OnInit {
         case DungeonNodeStatus.OPEN_DOOR_PUSH_BLOCK:
           return 'push-block';
         case DungeonNodeStatus.PORTAL:
-          if (!this.nodeInfo.originalNode.canOpen(this.items, this.config)) {
+          if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) && !this.config.noLogic) {
             return 'invisible';
           } else {
             return 'portal';
@@ -274,7 +277,7 @@ export class NodeComponent implements OnInit {
   }
 
   onNodeClick() {
-    if (this.isLookable && !this.nodeInfo.isFaded) {
+    if (!this.config.noLogic && this.isLookable && !this.nodeInfo.isFaded) {
       if (this.nodeInfo.status.indexOf('viewable') > -1 
       || (this.nodeInfo.originalNode.canOpen && !this.nodeInfo.originalNode.canOpen(this.items, this.config)
       && +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST)) {

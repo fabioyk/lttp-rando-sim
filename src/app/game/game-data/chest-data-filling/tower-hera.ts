@@ -9,6 +9,9 @@ export class TowerHera {
   static setup (l:string[], config:Config):DungeonData {
     var tohData = new DungeonData('Tower of Hera', l[94],
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.moonPearl && items.hammer && items.canInvertedEastDeathMountain(config.canGlitch);
+        }
         return items.canWestDeathMountain(config.canGlitch) && (items.mirror || (items.hookshot && items.hammer));
       }, 62, 5.5
     );
@@ -96,6 +99,11 @@ export class TowerHera {
     function(items:Items, config:Config) {
         return true;
     }, l[93]));
+    moldormRoom.nodes.push(new DungeonNode(
+      '', 72, 67, DungeonNodeStatus.HOLE,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'toh-upstairs'));
     tohData.dungeonMaps.push(moldormRoom);
 
     tohData.startingMap = entrance;

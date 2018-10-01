@@ -13,6 +13,8 @@ export class Config {
   canGlitch: boolean;
   isFullMap: boolean;
 
+  noLogic: boolean;
+
   constructor() {
     this.canGlitch = false;
 
@@ -27,5 +29,7 @@ export class Config {
     this.mode = 'standard';
     this.weapons = 'randomized';
     this.isFullMap = false;
+
+    this.noLogic = false;
   }
 }

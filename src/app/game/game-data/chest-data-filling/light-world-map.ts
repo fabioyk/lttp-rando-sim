@@ -410,21 +410,25 @@ export class LightWorldMap {
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-graveyard', 'Graveyard');
-    // 1: gy ledge, 2: warp to kings tomb
+    // 3: gy ledge, 2: warp to kings tomb
     m.nodes.push(new DungeonNode(
       '', 5, 78, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-sanctuary-entrance'));
+    function(items:Items, config:Config) {
+      return items.currentRegionInMap !== 2 || items.glove === 2;
+    }, 'lw-sanctuary-entrance'));
     m.nodes.push(new DungeonNode(
       '', 94, 78, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-east-sanctuary'));
+    function(items:Items, config:Config) {
+      return items.currentRegionInMap !== 2 || items.glove === 2;
+    }, 'lw-east-sanctuary'));
     m.nodes.push(new DungeonNode(
       '', 15.5, 34.5, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
-        return items.glove;
+        return (items.currentRegionInMap !== 2 && items.glove) || items.glove === 2;
     }, 'hc-bombablewall'));
     m.nodes.push(new DungeonNode(
       '', 56, 20, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-gy-ledge', '', [1]));
+    DungeonNode.noReqs, 'lw-gy-ledge', '', [3]));
     m.nodes.push(new DungeonNode(
       '', 81, 37.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -574,7 +578,7 @@ export class LightWorldMap {
         return items.book;
     }, 'dp-entry', 'Book Required'));
     m.nodes.push(new DungeonNode(
-      '', 9, 65, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
+      'Desert Ledge Item', 9, 65, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.currentRegionInMap === 2;
     }, l[45]));
@@ -987,7 +991,7 @@ export class LightWorldMap {
     m = new DungeonMapData('lw-gy-ledge', 'Graveyard Ledge Cave', true);
     m.nodes.push(new DungeonNode(
       '', 50, 93, DungeonNodeStatus.OPEN_DOOR,
-    DungeonNode.noReqs, 'lw-graveyard', '', [-1], 1));
+    DungeonNode.noReqs, 'lw-graveyard', '', [-1], 3));
     m.nodes.push(new DungeonNode(
       'Graveyard Ledge Chest', 51, 29, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     DungeonNode.noReqs, l[38]));

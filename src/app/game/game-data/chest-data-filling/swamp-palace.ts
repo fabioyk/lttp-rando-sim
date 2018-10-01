@@ -9,6 +9,9 @@ export class SwampPalace {
   static setup (l:string[], config:Config):DungeonData {
     var spData = new DungeonData('Swamp Palace', l[149],
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.moonPearl && items.mirror && items.flippers && items.canInvertedLW();
+        }
         return items.moonPearl && items.mirror && items.flippers
           && items.canSouthDarkWorld(config.canGlitch);
       }, 47, 91

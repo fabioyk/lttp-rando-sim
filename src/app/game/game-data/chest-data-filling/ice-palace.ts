@@ -8,7 +8,16 @@ import { DungeonNodeStatus } from "../dungeon-node-status.enum";
 export class IcePalace {
   static setup (l:string[], config:Config):DungeonData {
     var ipData = new DungeonData('Ice Palace', l[176],
-      function(items:Items, config:Config) {
+      function(items:Items, config:Config) { // TODO fairy?
+        if (config.mode === 'inverted') {
+          return items.flippers
+            || (config.canGlitch && (
+              items.flute
+              || (items.canInvertedNEDW(true) && (items.hammer || items.glove)) // can bomb?
+              || (items.canInvertedLW() && items.mirror && items.moonPearl)
+              || items.boots)
+            )             
+        }
         return (items.flippers || config.canGlitch) && (items.moonPearl || config.canGlitch)
             && items.glove === 2;
       }, 79.6, 85.8
@@ -23,7 +32,7 @@ export class IcePalace {
     entrance.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.hasMeltyPower() && items.moonPearl;
+      return items.hasMeltyPower() && (items.moonPearl || config.mode === 'inverted');
     }, 'ip-first-fork', 'Fire Rod or Bombos Required', [-1], 0,
     function(items:Items, config:Config) {
       return items.hasMeltyPower();

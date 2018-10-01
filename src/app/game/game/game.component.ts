@@ -61,6 +61,10 @@ export class GameComponent implements OnInit {
       gameMode = 'standard';
     } else if (this._router.url.indexOf('keysanity') > -1) {
       gameMode = 'keysanity'
+    } else if (this._router.url.indexOf('tourney') > -1) {
+      gameMode = 'tourney'
+    } else if (this._router.url.indexOf('inverted') > -1) {
+      gameMode = 'inverted';
     }
     localStorage.setItem('modeSelected', gameMode);
 
@@ -68,9 +72,9 @@ export class GameComponent implements OnInit {
 
     this.sub = this._route.queryParams.subscribe(
       params => {
-        if (!params.seed) {
+        /*if (!params.seed) {
           this._router.navigate(['/']);
-        }
+        }*/
         var canGlitch = false;
         if (params.minorGlitches) {
           canGlitch = true;
@@ -80,10 +84,11 @@ export class GameComponent implements OnInit {
           fullMap = true;
           if (gameMode.indexOf('standard') > -1) {
             this.currentMap = 'lw-linkshouse';            
+          } else if (gameMode === 'inverted') {
+            fullMap = false;
           } else {
-            this.currentMap = 'lw-sq';            
+            this.currentMap = 'lw-sq';
           }
-          
         }
         localStorage.setItem('glitchSelected', canGlitch ? 'yes' : 'no');
         if (params.seed && +params.seed === this._seedService.lastSeedNum) {
@@ -111,11 +116,22 @@ export class GameComponent implements OnInit {
   /// GAMEPLAY
 
   gameInit(seedData:string, seedNumber:number, canGlitch:boolean, isFullMap:boolean) {
-    if (seedData) {
+    if (seedData) {      
       this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap);
       this.items = new Items();
       this.config = this.gameService.config;
       this.config.isFullMap = isFullMap;
+      let startingMap = 'light-world';
+      if (!isFullMap) {
+        startingMap = this.config.mode === 'inverted' ? 'dark-world' : 'light-world';
+        this.currentMap = startingMap;
+        this.lastWorld = startingMap;
+      }
+      
+      if (this.config.mode === 'inverted') {
+        DungeonData.lwDungeons = ['Eastern Palace', 'Desert Palace', 'Tower of Hera'];        
+      }
+      
       this.items.setup(this.config.variation === 'key-sanity', this.gameService.dungeonsData, isFullMap);      
       if (this.config.mode.indexOf('standard') === -1 || !isFullMap) {
         this.items.gameState = 4;
@@ -123,24 +139,26 @@ export class GameComponent implements OnInit {
       this.itemLog = [];
       this.dungeonsData = this.gameService.dungeonsData;
       this.gameState = 'playing';
-      this.gameService.updateData(this.items, 'light-world', 'light-world');
+      if (isFullMap) {
+        this.gameService.updateData(this.items, startingMap, startingMap);
+      } else {
+        this.gameService.updateData(this.items, startingMap, 'ow');
+      }
+      
       setTimeout(() => {
         this.preloadMaps();
       }, 10000);
 
       this.seedDescription = '(' 
-        + (this.config.mode === 'standard' ? 'Standard Classic' : (this.config.mode === 'standard-rando' ? 'Standard Random Weapon' : (this.config.variation === 'none' ? 'Open' : 'Keysanity'))) 
-        + ', ' + (this.config.canGlitch ? 'Minor Glitches' : 'No Glitches') 
-        + ', Seed ' + seedNumber + ')';
+        + (this.config.mode === 'standard' ? 'Standard Classic' : (this.config.mode === 'standard-rando' ? 'Standard Random Weapon' : (this.config.mode === 'inverted' ? 'Inverted' : (this.config.variation === 'none' ? 'Open' : 'Keysanity'))))
+        + ', ' + (this.config.canGlitch ? 'Minor Glitches' : 'No Glitches') //+ ', Seed ' + seedNumber 
+        + ')';
     } else {
       this._router.navigate(['/']);      
     }
   }
 
-  onAddedItem([mapNode, map, region], type:string) {    
-    if (mapNode.tooltip === 'Potion Shop') {
-      this.items.mushroom = false;
-    }
+  onAddedItem([mapNode, map, region], type:string) {
     mapNode.prize.forEach((prize, i) => {
       if (type !== 'view') {
         this.items.add(this._itemNamesService.getItemById(prize).shortName, map);        

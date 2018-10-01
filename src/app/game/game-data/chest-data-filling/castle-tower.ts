@@ -7,10 +7,13 @@ import { DungeonNodeStatus } from "../dungeon-node-status.enum";
 
 export class CastleTower {
   static setup (l:string[], config:Config):DungeonData {
+    let xs = [49.6, 55];
+    let ys = [39, 4.5];
     var ctData = new DungeonData('Aga Tower', 'Agahnim',
       function(items:Items, config:Config) {
-        return items.cape || items.sword >= 2;
-      }, 49.6, 39
+        return (config.mode !== 'inverted' && (items.cape || items.sword >= 2))
+          || (config.mode === 'inverted' && items.canWestDeathMountain(config.canGlitch));
+      }, xs[config.mode === 'inverted' ? 1 : 0], ys[config.mode === 'inverted' ? 1 : 0]
     );
 
     var entrance = new DungeonMapData('ct-entry', 'Aga Tower Entrance');

@@ -26,9 +26,9 @@ export class EndStatsComponent implements OnInit {
 
   generateItemLocationsCheckedTable() {
     var res = [];
-    res.push(['Overworld', this.items.stats.overworldCount + (this.config.isFullMap ? '/95' : '/101')]);
-    res.push(['Dungeons', this.items.stats.dungeonCount + (this.config.isFullMap ? '/140' : '/131')]);
-    res.push(['Total', this.items.stats.totalCount + (this.config.isFullMap ? '/235' : '/232')]);
+    res.push(['Overworld', this.items.stats.overworldCount + (this.config.isFullMap ? '/95' : '/100')]);
+    res.push(['Dungeons', this.items.stats.dungeonCount + (this.config.isFullMap ? '/140' : '/116')]);
+    res.push(['Total', '216' + (this.config.isFullMap ? '/235' : '/216')]);
     return res;
   }
   generateItemCompletionTable() {
@@ -38,7 +38,6 @@ export class EndStatsComponent implements OnInit {
     res.push(['Swords', this.items.sword + '/4']);
     res.push(['Shields', this.items.shield + '/3']);
     res.push(['Mails', this.items.tunic + '/3']);
-    res.push(['Capacity Upgrades', this.items.stats.capacityUpgrades + '/15']);
     res.push(['Heart Pieces', this.items.stats.heartPieces + '/24']);
     res.push(['Heart Containers', this.items.stats.heartContainers + '/11']);
     return res;
@@ -47,7 +46,7 @@ export class EndStatsComponent implements OnInit {
     var res = [];
     res.push(['Maps', this.items.stats.maps + '/12']);
     res.push(['Compasses', this.items.stats.compasses + '/11']);
-    res.push(['Small Keys', this.items.stats.sks + (this.config.isFullMap ? '/48' : '/44')]);
+    res.push(['Small Keys', this.items.stats.sks + (this.config.isFullMap ? '/47' : '/44')]);
     res.push(['Big Keys', this.items.stats.bks + '/11']);
     res.push(['Big Chests', this.items.stats.bigChests + '/11']);
     res.push(['Pendants', this.getPendantCount() + '/3']);

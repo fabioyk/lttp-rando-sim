@@ -46,6 +46,9 @@ export class TrackerNodeComponent implements OnInit {
 
   getBgImg() {
     if (this.value === true || this.value === false) {
+      if (this.itemName === 'boots' && this.config.noLogic) {
+        return 'url("./assets/item-icons/boots_go.png")';  
+      }
       return 'url("./assets/item-icons/' + this.itemName + '.png")';
     } else {
       return 'url("./assets/item-icons/' + this.itemName + (this.value > 0 ? this.value : '') + '.png")';      

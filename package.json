@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prod": "ng build --prod --base-href \"http://z3rsim.com\""
+    "prod": "ng build --prod --base-href \"https://z3rsim.com\""
   },
   "private": true,
   "dependencies": {

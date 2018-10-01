@@ -33,6 +33,10 @@ export class GameService {
   overworldData: OverworldData;
   dungeonAbbrevs = ['ep', 'dp', 'toh', 'ct', 'pod', 'sp', 'sw', 'tt',
     'ip', 'mm', 'tr', 'gt', 'lw', 'dw', 'hc'];
+  
+  lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
+  dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
+    
 
   constructor(private _itemNamesService: ItemNamesService) { }
 
@@ -45,7 +49,19 @@ export class GameService {
     this.config.difficulty = logObj.difficulty;
     this.config.goal = logObj.goal === '0' ? 'ganon' : 'other';
     this.config.logic = logObj.logic;
-    this.config.mode = logObj.mode === '0' ? 'standard' : (logObj.mode === '1' ? 'open' : 'standard-rando');
+    switch(logObj.mode) {
+      case '0': this.config.mode = 'standard'; break;
+      case '1': this.config.mode = 'open'; break;
+      case '2': this.config.mode = 'standard-rando'; break;
+      case '3': this.config.mode = 'inverted'; break;
+    }    
+    if (this.config.mode === 'inverted') {
+      this.lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Ganons Tower'];
+      this.dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower'];
+    } else {
+      this.lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
+      this.dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
+    }
     this.config.variation = logObj.variation === '0' ? 'none' : 'key-sanity';
     this.config.vtSeedNumber = logObj.seed;
     this.config.canGlitch = canGlitch;
@@ -91,6 +107,8 @@ export class GameService {
         var status = '';
         if (location.item[0] === 'warp') {
           status = 'invisible';
+        } else if (location.item[0] === 'tr-ledge') {
+          status = 'tr-ledge';
         } else {
           if (location.canView) {
             status = 'viewable';
@@ -112,12 +130,24 @@ export class GameService {
         };
       });
       this.overworldData.dwLocations.forEach((location) => {
+        var status = '';
+        if (location.item[0] === 'warp') {
+          status = 'invisible';
+        } else {
+          if (location.canView) {
+            status = 'viewable';
+          } else if (!location.canGet) {
+            status = 'getable';
+          } else {
+            status = 'unavailable';
+          }    
+        }
         location.mapNode = {
           x: (location.x-50)*2,
           y: location.y,
           tooltip: location.location,
           id: location.location,
-          status: 'unreachable unavailable',
+          status: status,
           prize: location.item,
           originalNode: location,
           isFaded: false
@@ -185,7 +215,13 @@ export class GameService {
   updateData(items:Items, world:string, region:string='') {
     if (this.overworldData) {
       this.overworldData.lwLocations.forEach((location) => {
-        if (location.item[0] === 'warp') {
+        if (location.item[0] === 'tr-ledge') {
+          if (location.canGet(items, this.config) || (location.canGlitch && location.canGlitch(items, this.config))) {
+            location.mapNode.status = 'tr-ledge';
+          } else {
+            location.mapNode.status = 'invisible';
+          }
+        } else if (location.item[0] === 'warp') {
           if (location.canGet(items, this.config) || (location.canGlitch && location.canGlitch(items, this.config))) {
             location.mapNode.status = 'warp';
           } else {
@@ -225,35 +261,43 @@ export class GameService {
         }
       });
       this.overworldData.dwLocations.forEach((location) => {
-        var status = '';
-        if (location.region.indexOf(region) === -1) {
-          status = 'unreachable';
-        }
-        if (location.location !== 'Bombos Tablet' 
-          && (location.mapNode.status.indexOf('now-getable') > -1 
-            || (location.canView && (location.mapNode.status.indexOf('unavailable') > -1 
-              || location.mapNode.status.indexOf('viewable') > -1 )
-            && location.canGet(items, this.config)))
-          || (location.mapNode.status.indexOf('now-g-getable') > -1 && location.canGet(items, this.config))) {
-          status += ' now-getable';
-        } else if (location.location !== 'Bombos Tablet' 
-          && (location.mapNode.status.indexOf('now-g-getable') > -1 
-            || (location.canViewGlitch && location.mapNode.status.indexOf('unavailable') > -1
-                && (location.canGlitch && location.canGlitch(items, this.config))))) {
-          status += ' now-g-getable';
-        } else if (!location.canGet || location.canGet(items, this.config)) {
-          status += ' getable';
-        } else if (location.canGlitch && location.canGlitch(items, this.config)) {
-          status += ' g-getable';
-        } else if (location.canView && location.canView(items, this.config)) {
-          status += ' viewable';
-        } else if (location.canViewGlitch && location.canViewGlitch(items, this.config)) {
-          status += ' g-viewable';
+        if (location.item[0] === 'warp') {
+          if (location.canGet(items, this.config) || (location.canGlitch && location.canGlitch(items, this.config))) {
+            location.mapNode.status = 'warp';
+          } else {
+            location.mapNode.status = 'invisible';
+          }
         } else {
-          status += ' unavailable';
-        }
-
-        location.mapNode.status = status;      
+          var status = '';
+          if (location.region.indexOf(region) === -1 && this.config.mode !== 'inverted') {
+            status = 'unreachable';
+          }
+          if (location.location !== 'Bombos Tablet' 
+            && (location.mapNode.status.indexOf('now-getable') > -1 
+              || (location.canView && (location.mapNode.status.indexOf('unavailable') > -1 
+                || location.mapNode.status.indexOf('viewable') > -1 )
+              && location.canGet(items, this.config)))
+            || (location.mapNode.status.indexOf('now-g-getable') > -1 && location.canGet(items, this.config))) {
+            status += ' now-getable';
+          } else if (location.location !== 'Bombos Tablet' 
+            && (location.mapNode.status.indexOf('now-g-getable') > -1 
+              || (location.canViewGlitch && location.mapNode.status.indexOf('unavailable') > -1
+                  && (location.canGlitch && location.canGlitch(items, this.config))))) {
+            status += ' now-g-getable';
+          } else if (!location.canGet || location.canGet(items, this.config)) {
+            status += ' getable';
+          } else if (location.canGlitch && location.canGlitch(items, this.config)) {
+            status += ' g-getable';
+          } else if (location.canView && location.canView(items, this.config)) {
+            status += ' viewable';
+          } else if (location.canViewGlitch && location.canViewGlitch(items, this.config)) {
+            status += ' g-viewable';
+          } else {
+            status += ' unavailable';
+          }
+  
+          location.mapNode.status = status;   
+        }           
       });
 
       if (world === 'light-world') {
@@ -270,27 +314,30 @@ export class GameService {
         this.dungeonsData.forEach((dungeon) => {
           if (this.lwDuns.indexOf(dungeon.name) === -1) {
             var status = 'unavailable';
-  
-            if (region && region !== 'all') {
-              if ((region === 'ip' && dungeon.name === 'Ice Palace')
-                || (region === 'mire' && dungeon.name === 'Misery Mire')
-                || (region === 'dm' 
-                  && (dungeon.name === 'Turtle Rock' || dungeon.name === 'Ganons Tower'))
-                || (region === 'ow' && (dungeon.name !== 'Ice Palace' 
-                    && dungeon.name !== 'Misery Mire' 
-                    && dungeon.name !== 'Turtle Rock'
-                    && dungeon.name !== 'Ganons Tower' ))) {
+            
+            if (this.config.mode === 'inverted') {
+              status = 'reachable';
+            } else {
+              if (region && region !== 'all') {
+                if ((region === 'ip' && dungeon.name === 'Ice Palace')
+                  || (region === 'mire' && dungeon.name === 'Misery Mire')
+                  || (region === 'dm' 
+                    && (dungeon.name === 'Turtle Rock' || dungeon.name === 'Ganons Tower'))
+                  || (region === 'ow' && (dungeon.name !== 'Ice Palace' 
+                      && dungeon.name !== 'Misery Mire' 
+                      && dungeon.name !== 'Turtle Rock'
+                      && dungeon.name !== 'Ganons Tower' ))) {
+                  if (dungeon.canEnter(items, this.config)) {
+                    status = 'getable';
+                  }
+                }
+              } else {
                 if (dungeon.canEnter(items, this.config)) {
                   status = 'getable';
                 }
               }
-            } else {
-              if (dungeon.canEnter(items, this.config)) {
-                status = 'getable';
-              }
-            }
-  
-            if ((region === 'ip' && dungeon.name === 'Ice Palace')
+
+              if ((region === 'ip' && dungeon.name === 'Ice Palace')
               || (region === 'mire' && dungeon.name === 'Misery Mire')
               || (region === 'dm' 
                 && (dungeon.name === 'Turtle Rock' || dungeon.name === 'Ganons Tower'))
@@ -298,9 +345,10 @@ export class GameService {
                   && dungeon.name !== 'Misery Mire' 
                   && dungeon.name !== 'Turtle Rock'
                   && dungeon.name !== 'Ganons Tower' ))) {
-              status = 'reachable';
-            } else {
-              status = 'unavailable';
+                status = 'reachable';
+              } else {
+                status = 'unavailable';
+              }
             }
   
             if (dungeon.canEnter(items, this.config)) {
@@ -314,11 +362,9 @@ export class GameService {
           }   
         })
       }
-    }    
+    }  
   }
 
-  lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
-  dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
   getAccessibleDungeons(items:Items, world:string, region:string=''):MapNode[] {
     var accNodes:MapNode[] = [];
 
@@ -426,6 +472,7 @@ export class GameService {
         return [dunMapData, dunData];
       }
     }
+    console.log('Map not found');
     return [null, null];
   }
 

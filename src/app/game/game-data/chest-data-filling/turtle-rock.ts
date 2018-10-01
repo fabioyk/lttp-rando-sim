@@ -9,10 +9,13 @@ export class TurtleRock {
   static setup (l:string[], config:Config):DungeonData {
     var trData = new DungeonData('Turtle Rock', l[198],
       function(items:Items, config:Config) {
-        return items.moonPearl && items.canDarkEastDeathMountain(config.canGlitch) && items.sword
+        return ((items.moonPearl && items.canDarkEastDeathMountain(config.canGlitch) && config.mode !== 'inverted') 
+          || (config.mode === 'inverted' && (items.glove === 2 && items.canInvertedEastDarkDeathMountain(config.canGlitch))
+              || (items.moonPearl && ((items.hammer && items.mirror) || items.hookshot)
+                  && items.canWestDeathMountain(config.canGlitch)))) && items.sword
             && items.hasMedallion('tr', config) && items.somaria && items.hammer;
-      }, 93.8, 7
-    );
+      }, 93.8, 10
+    ); // todo implement enter middle/bottom
 
     var entrance = new DungeonMapData('tr-entry', 'Turtle Rock Main Lobby');
     entrance.nodes.push(new DungeonNode(
@@ -155,7 +158,7 @@ export class TurtleRock {
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, config.isFullMap ? 'dw-tr-ledge' : 'tr-outside'));
+    }, config.mode === 'inverted' ? 'tr-bc' : (config.isFullMap ? 'dw-tr-ledge' : 'tr-outside')));
     trData.dungeonMaps.push(doubPokey);
 
     var outside = new DungeonMapData('tr-outside', 'Corridor Outside');
@@ -181,29 +184,34 @@ export class TurtleRock {
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'tr-outside'));
+    }, config.mode === 'inverted' ? 'tr-inverted-ledge' : 'tr-outside'));
     mimic.nodes.push(new DungeonNode(
       'Mimic Cave Chest', 50, 25, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hammer;
-    }, l[79], 'Hammer Required'));
+        return items.hammer && items.moonPearl;
+    }, l[79], 'Hammer and Pearl Required'));
     trData.dungeonMaps.push(mimic);
 
     var bc = new DungeonMapData('tr-bc', 'Big Chest Room');
     bc.nodes.push(new DungeonNode(
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
+      if (config.mode === 'inverted') {
+        return items.mirror;
+      } else {
         return true;
-    }, config.isFullMap ? 'dw-tr-ledge' : 'tr-outside'));
+      }
+    }, config.mode === 'inverted' ? 'tr-inverted-ledge' : (config.isFullMap ? 'dw-tr-ledge' : 'tr-outside')));
     bc.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return true;
-    }, 'tr-big-door'));
+        return items.somaria || items.hookshot;
+    }, 'tr-big-door', 'Somaria or Hookshot Required', [-1], 0,
+      DungeonNode.noReqs));
     bc.nodes.push(new DungeonNode(
       'Big Chest', 50, 39.5, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
-        return true;
+        return items.somaria || items.hookshot;
     }, l[190]));
     trData.dungeonMaps.push(bc);
 
@@ -284,6 +292,13 @@ export class TurtleRock {
     function(items:Items, config:Config) {
         return items.hasBeamReflection(config);
     }, l[193], 'Invincibility Item Required'));
+    if (config.mode === 'inverted') {
+      laserBridge.nodes.push(new DungeonNode(
+        '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return items.mirror;
+      }, 'tr-inverted-ledge'));
+    }
     trData.dungeonMaps.push(laserBridge);
 
     var beforeTri = new DungeonMapData('tr-before-tri', 'Final Somaria Ride');
@@ -306,6 +321,33 @@ export class TurtleRock {
         return true;
     }, l[197]));
     trData.dungeonMaps.push(trinexx);
+
+    var invertedLedge = new DungeonMapData('tr-inverted-ledge', 'Turtle Rock Other Entrances');
+    invertedLedge.nodes.push(new DungeonNode(
+      '', 75, 37, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'tr-mimic'));
+    invertedLedge.nodes.push(new DungeonNode(
+      '', 75, 44, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+      return items.mirror && items.moonPearl;
+    }, 'tr-bc', 'Mirror Required', [-1], 0,
+    function(items:Items, config:Config) {
+      return items.mirror
+    }));
+    invertedLedge.nodes.push(new DungeonNode(
+      '', 56, 56, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return items.mirror && items.moonPearl;
+    }, 'tr-laser-bridge', 'Mirror Required', [-1], 0,
+    function(items:Items, config:Config) {
+      return items.mirror
+    }));
+    invertedLedge.nodes.push(new DungeonNode(
+      '', 48.5, 94, DungeonNodeStatus.OPEN_DOOR,
+    DungeonNode.noReqs, 'exit'));
+    trData.dungeonMaps.push(invertedLedge);
 
     trData.startingMap = entrance;
 

@@ -164,11 +164,11 @@ export class Items {
     
     var notItemLocation = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room',
       'crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7',
-      'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2'];
+      'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
     var bossItems = ['crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7',
     'pendantCourage', 'pendantPower', 'pendantWisdom', 'Agahnim', 'Agahnim 2', 'Ganon'];
 
-    if (notItemLocation.indexOf(itemName) === -1) {
+    if (notItemLocation.indexOf(itemName) === -1 && !isGroundKey) {
       this.stats.totalCount++;      
       if (region === 'Hyrule Castle' || DungeonData.dungeonsWithDunItemsCount.indexOf(region) > -1) {
         this.stats.dungeonCount++;
@@ -393,8 +393,29 @@ export class Items {
         || (this.hammer && this.glove)
         || this.glove === 2);
   }
-  canMire() {
-    return this.flute && this.glove === 2;
+  canMire(config) {
+    if (config.mode === 'inverted') {
+      return (this.flute && this.canInvertedLW()) || (this.mirror && this.canInvertedLW());
+    } else {
+      return this.flute && this.glove === 2;
+    }    
+  }
+
+  canInvertedLW() {
+    return this.agahnim 
+      || (this.moonPearl && ((this.hammer && this.glove) || this.glove === 2));
+  }
+  canInvertedEastDeathMountain(isGlitched:boolean = false) {
+    return (this.glove === 2 && this.canInvertedEastDarkDeathMountain(isGlitched))
+      || (this.moonPearl && this.hookshot
+        && this.canWestDeathMountain(isGlitched));
+  }
+  canInvertedEastDarkDeathMountain(isGlitched:boolean = false) {
+    return this.canWestDeathMountain(isGlitched);
+  }
+  canInvertedNEDW(isGlitched:boolean = false) {
+    return this.hammer || this.flippers || (this.mirror && this.canInvertedLW())
+      || (isGlitched && this.boots);
   }
 
   getDungeonItems(dungeon:string):DungeonItems {

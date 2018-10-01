@@ -37,7 +37,8 @@ import { FormsModule } from '@angular/forms';
       { path: 'standard', component: GameComponent },
       { path: 'open', component: GameComponent },  
       { path: 'keysanity', component: GameComponent },  
-      { path: 'standard-rando', component: GameComponent },  
+      { path: 'standard-rando', component: GameComponent }, 
+      { path: 'inverted', component: GameComponent}
     ])
   ],
   providers: [GameService, SeedApiService, ItemNamesService, WindowRefService],

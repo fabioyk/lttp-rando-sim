@@ -3,13 +3,15 @@
     <label for="game-mode" class="col-sm-4 control-label">Game Mode</label>    
     <div class="btn-group" id="game-mode" class="col-sm-8">
       <label class="btn btn-default" [(ngModel)]="modeSelected" name="standard-button"
-        btnRadio="standard">Standard Classic</label>
+        btnRadio="standard" (click)='onIsInverted(false)'>Standard Classic</label>
     <label class="btn btn-default" [(ngModel)]="modeSelected" name="standard-rando-button"
-        btnRadio="standard-rando">Standard Random Weapon</label>
+        btnRadio="standard-rando" (click)='onIsInverted(false)'>Standard Random Weapon</label>
       <label class="btn btn-default" [(ngModel)]="modeSelected" name="open-button"
-        btnRadio="open">Open</label>
+        btnRadio="open" (click)='onIsInverted(false)'>Open</label>
       <label class="btn btn-default" [(ngModel)]="modeSelected" name="keysanity-button"
-        btnRadio="keysanity">Keysanity</label>
+        btnRadio="keysanity" (click)='onIsInverted(false)'>Keysanity</label>
+      <label class="btn btn-default" [(ngModel)]="modeSelected" name="keysanity-button"
+        btnRadio="inverted" (click)='onIsInverted(true)'>Inverted</label>
     </div>
   </div>
 
@@ -29,10 +31,10 @@
       <label class="btn btn-default" [(ngModel)]="mapSelected" name="simple-map-button"
         btnRadio="no">Simple</label>
       <label class="btn btn-default" [(ngModel)]="mapSelected" name="full-map-button"
-        btnRadio="yes">Advanced</label>
+        btnRadio="yes" [ngStyle]="{'display': isAdvancedOWEnabled}">Advanced</label>
     </div>
   </div>
-
+<!--
   <div class="form-group">
     <label for="seed-num-input" class="col-sm-4 control-label">Seed</label>
     <div class="col-sm-8 form-inline">
@@ -46,6 +48,7 @@
             tooltip="A new seed every day! Resets at Midnight UTC / 7PM EST">?</abbr>
     </div>    
   </div>
+  -->
   <div class="form-group">
     <div class="col-sm-offset-4 col-sm-8">
       <button class="btn btn-primary" (click)="onSubmit()" 

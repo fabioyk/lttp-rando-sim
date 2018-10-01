@@ -10,7 +10,7 @@ export class HyruleCastle {
   static setup (l:string[], config:Config):DungeonData {
     var hcData = new DungeonData('Hyrule Castle', '',
       function(items:Items, config:Config) {
-        return true;
+        return config.mode !== 'inverted' || (items.canInvertedLW() && (config.canGlitch || items.moonPearl));
       }, 0, 0
     );
 

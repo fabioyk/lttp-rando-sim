@@ -9,7 +9,10 @@ export class DesertPalace {
   static setup (l:string[], config:Config):DungeonData {
     var dpData = new DungeonData('Desert Palace', l[73],
       function(items:Items, config:Config) {
-        return items.book || (items.canMire() && items.mirror);
+        if (config.mode === 'inverted') {
+          return items.book && items.canInvertedLW() && (items.moonPearl || config.canGlitch);
+        }
+        return items.book || (items.canMire(config) && items.mirror);
       }, 7.6, 78.4
     );
 

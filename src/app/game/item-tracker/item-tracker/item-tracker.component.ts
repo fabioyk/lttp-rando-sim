@@ -41,7 +41,10 @@ export class ItemTrackerComponent implements OnInit {
   }
 
   onItemClicked(itemName:string) {
-    if (isDevMode()) {
+    if (itemName === 'boots') {
+      this.config.noLogic = !this.config.noLogic;
+    }
+    /*if (isDevMode()) {
       if (typeof this.items[itemName] === 'boolean') {
         if (this.items[itemName]) {
           this.items[itemName] = false;
@@ -54,7 +57,9 @@ export class ItemTrackerComponent implements OnInit {
           this.items[itemName] = 0;
         }
       }
-    }    
+      this._gameService.updateData(this.items, 'light-world');
+      this._gameService.updateData(this.items, 'dark-world');
+    }    */
   }
 
 }

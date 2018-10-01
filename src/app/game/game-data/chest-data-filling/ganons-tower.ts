@@ -7,13 +7,16 @@ import { DungeonNodeStatus } from "../dungeon-node-status.enum";
 
 export class GanonsTower {
   static setup (l:string[], config:Config):DungeonData {
+    let xs = [49.6, 55];
+    let ys = [39, 4.5];
     var gtData = new DungeonData('Ganons Tower', 'Agahnim 2',
       function(items:Items, config:Config) {
-        return items.canDarkEastDeathMountain(config.canGlitch)
+        return ((config.mode !== 'inverted' && items.canDarkEastDeathMountain(config.canGlitch))
+              || (config.mode === 'inverted' && items.canInvertedLW()))
             && items.crystal1 && items.crystal2 && items.crystal3
             && items.crystal4 && items.crystal5 && items.crystal6
             && items.crystal7;
-      }, 55, 4.5
+      }, xs[config.mode === 'inverted' ? 0 : 1], ys[config.mode === 'inverted' ? 0 : 1]
     );
 
     var entrance = new DungeonMapData('gt-entry', 'Ganons Tower Entrance');

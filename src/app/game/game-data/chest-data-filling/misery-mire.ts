@@ -9,7 +9,7 @@ export class MiseryMire {
   static setup (l:string[], config:Config):DungeonData {
     var mmData = new DungeonData('Misery Mire', l[185],
       function(items:Items, config:Config) {
-        return items.moonPearl && items.canMire() && items.hasMedallion('mm', config) && items.sword
+        return (items.moonPearl || config.mode === 'inverted') && items.canMire(config) && items.hasMedallion('mm', config) && items.sword
             && (items.boots || items.hookshot);
       }, 11.6, 82.9
     );

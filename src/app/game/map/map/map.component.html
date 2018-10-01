@@ -5,6 +5,7 @@
       nodeType='overworld'
       [nodeInfo]='lwNode.mapNode'
       [items]='items'
+      [config]='config'
       (click)='onNodeClick(lwNode.mapNode)'
       (mouseover)='changeTooltip(lwNode.mapNode)'
       (mouseleave)='clearTooltip()'
@@ -14,6 +15,7 @@
       <app-node *ngIf='(gameService.lwDuns.indexOf(dun.name) > -1 && currentMap === "light-world") || (gameService.lwDuns.indexOf(dun.name) === -1 && currentMap === "dark-world")'
           nodeType='dungeon'
           [nodeInfo]='dun.mapNode'        
+          [config]='config'
           [dungeonItems]='items.getDungeonItems(dun.name)'
           (click)='onDungeonClick(dun.mapNode)'
           (mouseover)='changeTooltip(dun.mapNode)'
@@ -38,7 +40,8 @@
       </app-node>
     </div>
     <app-node 
-          *ngIf='mirrorNode && mirrorMap === currentDungeonMap.id && (mirrorRegion === -1 || mirrorRegion === this.items.currentRegionInMap)'
+          *ngIf='mirrorNode && mirrorMap === currentDungeonMap.id 
+          && (mirrorNode.accessibleSectionArray.indexOf(-1) > -1 || mirrorNode.accessibleSectionArray.indexOf(this.items.currentRegionInMap) > -1)'
         nodeType='inside-dungeon'
         [nodeInfo]='mirrorNode.mapNode'
         [items]='items'

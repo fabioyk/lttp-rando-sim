@@ -9,6 +9,9 @@ export class PalaceDarkness {
   static setup (l:string[], config:Config):DungeonData {
     var podData = new DungeonData('Palace of Darkness', l[138],
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedNEDW(config.canGlitch);
+        }
         return items.canNorthEastDarkWorld(config.canGlitch) && items.moonPearl;
       }, 94, 40
     );

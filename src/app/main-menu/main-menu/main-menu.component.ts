@@ -17,6 +17,7 @@ export class MainMenuComponent implements OnInit {
   seedNum = '';
   errorMessage = '';
   dailySeed = false;
+  isAdvancedOWEnabled = 'inline-block';
 
   preloadedMap;
   preloadedBosses = [];
@@ -43,6 +44,13 @@ export class MainMenuComponent implements OnInit {
     } else {
       localStorage.setItem('mapSelected', this.mapSelected);      
     }
+    if (this.modeSelected === 'inverted') {
+      this.mapSelected = 'no';
+      this.isAdvancedOWEnabled = 'none';
+    } else {
+      this.isAdvancedOWEnabled = 'inline-block';
+    }
+    
     
 
     this._seedService.getStatus()
@@ -97,7 +105,7 @@ export class MainMenuComponent implements OnInit {
           this.shouldDisablePlay = false;
         } else {
           var queryParams:any = {
-            seed: seed.seed
+            //seed: seed.seed
           };
           if (this.lockedGlitch === 'yes') {
             queryParams.minorGlitches = true;
@@ -111,6 +119,15 @@ export class MainMenuComponent implements OnInit {
         this.preloadedIcons = null;
         this.preloadedBosses = null;
       });
+  }
+
+  onIsInverted(isInverted:boolean) {
+    if (isInverted) {
+      this.mapSelected = 'no';
+      this.isAdvancedOWEnabled = 'none';
+    } else {
+      this.isAdvancedOWEnabled = 'inline-block';
+    }
   }
 
   preloadMap() {

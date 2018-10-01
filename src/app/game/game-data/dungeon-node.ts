@@ -19,7 +19,8 @@ export class DungeonNode {
   constructor(name:string, x:number, y:number, 
       status:DungeonNodeStatus, canOpen:Function, content:string, 
       errorMessage:string = '', accessibleSectionArray:number[] = [-1], 
-      destinationSection:number = 0, canGlitch:Function = null) {
+      destinationSection:number = 0, canGlitch:Function = null, 
+      public mirrorAccessibleSectionArray:number[] = [-1], public mirrorDestinationSection:number = 0) {
     this.name = name;
     this.x = x;
     this.y = y;
