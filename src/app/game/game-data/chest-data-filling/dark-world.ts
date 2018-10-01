@@ -266,21 +266,21 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         return items.canMire(config) && (items.mirror || items.moonPearl || config.mode === 'inverted');
       }
-    ));
-
-    itemLocations.push(new ItemLocation(
-      'Ganon', 75, 40.8,
-      function(items:Items, config:Config) {
-        return items.canNorthEastDarkWorld() && items.agahnim2 && items.crystal1 &&
-          items.crystal2 && items.crystal3 && items.crystal4 && items.crystal5 && items.crystal6
-          && items.crystal7 && items.sword >= 2 && (items.lamp || items.fireRod);
-      },
-      null,
-      ['Ganon'],
-      'ow'
-    ));
+    ));    
 
     if (config.mode !== 'inverted') {
+      itemLocations.push(new ItemLocation(
+        'Ganon', 75, 40.8,
+        function(items:Items, config:Config) {
+          return items.canNorthEastDarkWorld() && items.agahnim2 && items.crystal1 &&
+            items.crystal2 && items.crystal3 && items.crystal4 && items.crystal5 && items.crystal6
+            && items.crystal7 && items.sword >= 2 && (items.lamp || items.fireRod);
+        },
+        null,
+        ['Ganon'],
+        'ow'
+      ));
+      
       itemLocations.push(new ItemLocation(
         'Blacksmiths', 57, 65.9,
         function(items:Items, config:Config) {

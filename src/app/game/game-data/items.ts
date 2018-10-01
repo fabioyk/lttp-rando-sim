@@ -393,7 +393,7 @@ export class Items {
         || (this.hammer && this.glove)
         || this.glove === 2);
   }
-  canMire(config) {
+  canMire(config):boolean {
     if (config.mode === 'inverted') {
       return (this.flute && this.canInvertedLW()) || (this.mirror && this.canInvertedLW());
     } else {
@@ -401,9 +401,9 @@ export class Items {
     }    
   }
 
-  canInvertedLW() {
-    return this.agahnim 
-      || (this.moonPearl && ((this.hammer && this.glove) || this.glove === 2));
+  canInvertedLW():boolean {
+    return (this.agahnim > 0) 
+      || (this.moonPearl && ((this.hammer && (this.glove > 0)) || this.glove === 2));
   }
   canInvertedEastDeathMountain(isGlitched:boolean = false) {
     return (this.glove === 2 && this.canInvertedEastDarkDeathMountain(isGlitched))
