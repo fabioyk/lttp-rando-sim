@@ -93,7 +93,7 @@ export class LightWorld {
         null,
         [l[18], l[19], l[20], l[21], l[6]], '',
         function (items:Items, config:Config) {
-          return items.canInvertedLW();
+          return items.canInvertedLW() && items.mirror;
         }
       ));
       itemLocations.push(new ItemLocation(
