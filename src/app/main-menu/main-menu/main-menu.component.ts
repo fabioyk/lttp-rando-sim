@@ -98,27 +98,34 @@ export class MainMenuComponent implements OnInit {
     localStorage.setItem('glitchSelected', this.glitchSelected);
     localStorage.setItem('mapSelected', this.mapSelected);    
 
-    this._seedService.getSeed(this.lockedMode, this.seedNum, this.dailySeed)
-      .subscribe((seed) => {
-        if (!seed || seed.error) {
-          this.errorMessage = seed.error;
-          this.shouldDisablePlay = false;
-        } else {
-          var queryParams:any = {
-            //seed: seed.seed
-          };
-          if (this.lockedGlitch === 'yes') {
-            queryParams.minorGlitches = true;
-          } 
-          if (this.lockedMap === 'yes') {
-            queryParams.fullMap = true;
-          } 
-          this._router.navigate(['/' + this.lockedMode], {queryParams: queryParams});
-        }
-        this.preloadedMap = null;
-        this.preloadedIcons = null;
-        this.preloadedBosses = null;
-      });
+    var queryParams:any = {
+      //seed: seed.seed
+    };
+    if (this.lockedGlitch === 'yes') {
+      queryParams.minorGlitches = true;
+    } 
+    if (this.lockedMap === 'yes') {
+      queryParams.fullMap = true;
+    } 
+    this._router.navigate(['/' + this.lockedMode], {queryParams: queryParams});
+
+    this.preloadedMap = null;
+    this.preloadedIcons = null;
+    this.preloadedBosses = null;
+
+    // no more seed generation on main menu since it's all random
+    // this._seedService.getSeed(this.lockedMode, this.seedNum, this.dailySeed)
+    //   .subscribe((seed) => {
+    //     if (!seed || seed.error) {
+    //       this.errorMessage = seed.error;
+    //       this.shouldDisablePlay = false;
+    //     } else {
+          
+    //     }
+    //     this.preloadedMap = null;
+    //     this.preloadedIcons = null;
+    //     this.preloadedBosses = null;
+    //   });
   }
 
   onIsInverted(isInverted:boolean) {
