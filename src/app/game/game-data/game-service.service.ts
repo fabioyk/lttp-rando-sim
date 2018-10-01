@@ -269,9 +269,9 @@ export class GameService {
           }
         } else {
           var status = '';
-          if (location.region.indexOf(region) === -1 && this.config.mode !== 'inverted') {
-            status = 'unreachable';
-          }
+          // if (location.region.indexOf(region) === -1 && this.config.mode !== 'inverted') {
+          //   status = 'unreachable';
+          // }
           if (location.location !== 'Bombos Tablet' 
             && (location.mapNode.status.indexOf('now-getable') > -1 
               || (location.canView && (location.mapNode.status.indexOf('unavailable') > -1 
