@@ -331,7 +331,7 @@ export class TurtleRock {
     invertedLedge.nodes.push(new DungeonNode(
       '', 75, 44, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.mirror && items.moonPearl;
+      return items.mirror;
     }, 'tr-bc', 'Mirror Required', [-1], 0,
     function(items:Items, config:Config) {
       return items.mirror
@@ -339,7 +339,7 @@ export class TurtleRock {
     invertedLedge.nodes.push(new DungeonNode(
       '', 56, 56, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.mirror && items.moonPearl;
+        return items.mirror;
     }, 'tr-laser-bridge', 'Mirror Required', [-1], 0,
     function(items:Items, config:Config) {
       return items.mirror
