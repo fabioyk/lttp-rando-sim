@@ -15,7 +15,7 @@ export class TurtleRock {
                   && items.canWestDeathMountain(config.canGlitch)))) && items.sword
             && items.hasMedallion('tr', config) && items.somaria && items.hammer;
       }, 93.8, 10
-    ); // todo implement enter middle/bottom
+    );
 
     var entrance = new DungeonMapData('tr-entry', 'Turtle Rock Main Lobby');
     entrance.nodes.push(new DungeonNode(
