@@ -492,7 +492,7 @@ export class MapComponent implements OnInit {
       this.dungeonFinishMap = '';
       this.dungeonFinishRegion = 0;
     } else {
-      if (this.currentDungeon.name !== 'Aga Tower' && isAgaBeingDefeated) {
+      if (this.currentDungeon.name === 'Aga Tower' && isAgaBeingDefeated) {
         this.changeMap(this.otherWorld);
       } else if (this.gameService.lwDuns.indexOf(this.currentDungeon.name) > -1 || this.currentDungeonMap.id === 'tr-inverted-ledge') {
         this.changeMap('light-world');
