@@ -949,6 +949,9 @@ export class MapComponent implements OnInit {
     if (this.config.isFullMap) {
       return false;
     }
+    if (this.config.mode === 'inverted') {
+      return this.items.canInvertedEastDarkDeathMountain(this.config.canGlitch) && this.currentMap === 'dark-world';
+    }
     return this.items.canDarkEastDeathMountain(this.config.canGlitch) && this.currentMap === 'dark-world'
       && (this.currentRegion === 'dm' || this.currentRegion === 'all');    
   }

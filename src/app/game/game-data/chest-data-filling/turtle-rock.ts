@@ -9,10 +9,10 @@ export class TurtleRock {
   static setup (l:string[], config:Config):DungeonData {
     var trData = new DungeonData('Turtle Rock', l[198],
       function(items:Items, config:Config) {
-        return ((items.moonPearl && items.canDarkEastDeathMountain(config.canGlitch) && config.mode !== 'inverted') 
-          || (config.mode === 'inverted' && (items.glove === 2 && items.canInvertedEastDarkDeathMountain(config.canGlitch))
-              || (items.moonPearl && ((items.hammer && items.mirror) || items.hookshot)
-                  && items.canWestDeathMountain(config.canGlitch)))) && items.sword
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain(config.canGlitch) && items.somaria && items.sword && items.hasMedallion('tr', config);
+        }
+        return (items.moonPearl && items.canDarkEastDeathMountain(config.canGlitch)) && items.sword
             && items.hasMedallion('tr', config) && items.somaria && items.hammer;
       }, 93.8, 10
     );
