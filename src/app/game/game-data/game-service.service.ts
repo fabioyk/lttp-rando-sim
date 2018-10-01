@@ -228,7 +228,7 @@ export class GameService {
             location.mapNode.status = 'invisible';
           }
         } else {     
-          if (location.location !== 'Ether Tablet' && (location.mapNode.status === 'now-getable' 
+          if (location.location !== 'Ether Tablet' && location.location !== 'Bombos Tablet' && (location.mapNode.status === 'now-getable' 
             || ((location.mapNode.status === 'viewable' || location.mapNode.status === 'g-viewable' || (location.mapNode.status === 'g-getable' && location.canView)
               || location.mapNode.status === 'now-g-getable') && location.canGet(items, this.config))
             || (location.canView && location.canGet(items, this.config) && location.mapNode.status === 'unavailable'))) {            
@@ -240,7 +240,7 @@ export class GameService {
             }          
           } else if (!location.canGet || location.canGet(items, this.config)) {
             location.mapNode.status = 'getable';
-          } else if (location.location !== 'Ether Tablet' && (location.mapNode.status === 'now-g-getable' 
+          } else if (location.location !== 'Ether Tablet' && location.location !== 'Bombos Tablet' && (location.mapNode.status === 'now-g-getable' 
             || ((location.mapNode.status === 'viewable' || location.mapNode.status === 'g-viewable')
               && location.canGlitch && location.canGlitch(items, this.config))
             || (location.canViewGlitch && location.canGlitch && location.canGlitch(items, this.config) && location.mapNode.status === 'unavailable'))) {
@@ -272,14 +272,14 @@ export class GameService {
           // if (location.region.indexOf(region) === -1 && this.config.mode !== 'inverted') {
           //   status = 'unreachable';
           // }
-          if (location.location !== 'Bombos Tablet' 
+          if (location.location !== 'Bombos Tablet' && location.location !== 'Ether Tablet' 
             && (location.mapNode.status.indexOf('now-getable') > -1 
               || (location.canView && (location.mapNode.status.indexOf('unavailable') > -1 
                 || location.mapNode.status.indexOf('viewable') > -1 )
               && location.canGet(items, this.config)))
             || (location.mapNode.status.indexOf('now-g-getable') > -1 && location.canGet(items, this.config))) {
             status += ' now-getable';
-          } else if (location.location !== 'Bombos Tablet' 
+          } else if (location.location !== 'Bombos Tablet' && location.location !== 'Ether Tablet'
             && (location.mapNode.status.indexOf('now-g-getable') > -1 
               || (location.canViewGlitch && location.mapNode.status.indexOf('unavailable') > -1
                   && (location.canGlitch && location.canGlitch(items, this.config))))) {
