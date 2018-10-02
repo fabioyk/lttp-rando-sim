@@ -461,7 +461,7 @@ export class LightWorld {
     ));
 
     itemLocations.push(new ItemLocation(
-      'Spectacle Rock Cave', 24.3, 14.8,
+      'Spectacle Rock Cave', 25.8, 14.8,
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
           return items.canInvertedEastDarkDeathMountain();
@@ -475,6 +475,36 @@ export class LightWorld {
         return items.canWestDeathMountain();
       },
       [l[75]],
+      '',
+      function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain(true);
+        }
+        return items.canWestDeathMountain(true);
+      },
+      function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain(true);
+        }
+        return items.canWestDeathMountain(true);
+      }
+    ));
+
+    itemLocations.push(new ItemLocation(
+      'Spectacle Rock Hint', 23.3, 14.8,
+      function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain();
+        }
+        return items.canWestDeathMountain();
+      },
+      function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedEastDarkDeathMountain();
+        }
+        return items.canWestDeathMountain();
+      },
+      ['=13'],
       '',
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {

@@ -78,15 +78,33 @@ export class EasternPalace {
       '', 79, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'ep-bc'));
+    }, 'ep-tile'));
     epData.dungeonMaps.push(compassRoom);
+
+    var tileRoom = new DungeonMapData('ep-tile', 'Hint Tile Room');
+    tileRoom.nodes.push(new DungeonNode(
+      '', 21, 53.5, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'ep-compass'));    
+    tileRoom.nodes.push(new DungeonNode(
+      'Hint Tile', 50, 41, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '1'));
+    tileRoom.nodes.push(new DungeonNode(
+      '', 78, 53.5, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'ep-bc'));
+    epData.dungeonMaps.push(tileRoom);
 
     var bigChestRoom = new DungeonMapData('ep-bc', 'Big Chest Room');
     bigChestRoom.nodes.push(new DungeonNode(
       '', 9, 27, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'ep-compass'));    
+    }, 'ep-tile'));    
     bigChestRoom.nodes.push(new DungeonNode(
       'Big Chest', 50, 44, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
@@ -113,7 +131,7 @@ export class EasternPalace {
       '', 50, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return true;
-    }, 'ep-bc'));    
+    }, 'ep-tile'));    
     bigKeyRoom.nodes.push(new DungeonNode(
       'Big Key Chest', 51.5, 27, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {

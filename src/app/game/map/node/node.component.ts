@@ -74,6 +74,7 @@ export class NodeComponent implements OnInit {
 
   isIconShown() {    
     return !this.nodeInfo.originalNode.isOpened 
+      && this.nodeInfo.prize[0].charAt(0) !== '='
       && (this.nodeInfo.isFaded 
         || (this.nodeInfo.originalNode.canView 
           && this.nodeInfo.tooltip.indexOf('Tablet') === -1 
@@ -183,6 +184,9 @@ export class NodeComponent implements OnInit {
       } else {
         res += ' open';
       }
+      if (this.nodeInfo.prize[0].charAt(0) === '=') {
+        res += ' big-hint-tile';
+      }
       if (this.nodeInfo.status.indexOf('invisible') > -1 && !this.config.noLogic) {
         res += ' invisible';
       }
@@ -261,6 +265,8 @@ export class NodeComponent implements OnInit {
           return 'hole';
         case DungeonNodeStatus.WATER_WARP:
           return 'water-warp';
+        case DungeonNodeStatus.HINT:
+          return 'hint-tile';
         case DungeonNodeStatus.SQ_OPTION:
           var res = 'sq-item ' + this.nodeInfo.prize[0];
           if (this.nodeInfo.prize[0] === 'lw-flute1' && !this.nodeInfo.originalNode.canOpen(this.items, this.config)) {

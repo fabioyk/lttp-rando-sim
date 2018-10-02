@@ -189,6 +189,12 @@
 .pedestal {
   background-image: url('/assets/node-icons/pedestal.png');      
 }
+.hint-tile {
+  background-image: url('/assets/node-icons/hint_tile.png');      
+}
+.big-hint-tile {
+  background-image: url('/assets/item-icons/hintTile.png');      
+}
 .duck {
   background-image: url('/assets/node-icons/duck.png');      
 }

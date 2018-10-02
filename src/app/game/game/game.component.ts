@@ -91,14 +91,14 @@ export class GameComponent implements OnInit {
           }
         }
         localStorage.setItem('glitchSelected', canGlitch ? 'yes' : 'no');
-        if (params.seed && +params.seed === this._seedService.lastSeedNum) {
-          this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch, fullMap);
-        } else {
+        //if (params.seed && +params.seed === this._seedService.lastSeedNum) {
+          //this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch, fullMap, );
+        //} else {
           this._seedService.getSeed(gameMode, params.seed)
             .subscribe((seed) => {
-              this.gameInit(seed.data, seed.seed, canGlitch, fullMap);
+              this.gameInit(seed.data, seed.seed, canGlitch, fullMap, seed.hints);
             });
-        }
+        //}
       }
     );    
   }
@@ -115,12 +115,13 @@ export class GameComponent implements OnInit {
 
   /// GAMEPLAY
 
-  gameInit(seedData:string, seedNumber:number, canGlitch:boolean, isFullMap:boolean) {
+  gameInit(seedData:string, seedNumber:number, canGlitch:boolean, isFullMap:boolean, hints:string[]) {
     if (seedData) {      
       this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap);
       this.items = new Items();
       this.config = this.gameService.config;
       this.config.isFullMap = isFullMap;
+      this.config.hints = this.shuffleArray(hints);
       let startingMap = 'light-world';
       if (!isFullMap) {
         startingMap = this.config.mode === 'inverted' ? 'dark-world' : 'light-world';
@@ -209,6 +210,19 @@ export class GameComponent implements OnInit {
     
   }
 
+  onHintChecked([mapNode, region, hintText]) {
+    console.log(mapNode);
+    console.log(region);
+    this.itemLog.unshift({
+      item: 'hint',
+      shortName: 'hintTile',
+      longName: hintText,
+      location: mapNode.tooltip,
+      region: region.indexOf('-') === -1 ? region : mapNode.tooltip,
+      type: 'hint'
+    });
+  }
+
   onDungeonFinished([prizeName, mapName]) {
     if (prizeName.indexOf('Agahnim') === -1) {
       this.items.add(
@@ -253,6 +267,24 @@ export class GameComponent implements OnInit {
     });
   }
 
+  shuffleArray(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
 
   /// FINISHED
 

@@ -45,13 +45,27 @@ export class CastleTower {
       '', 43, 77, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return true;
-    }, 'ct-top'));
+    }, 'ct-tile'));
     maze.nodes.push(new DungeonNode(
       'Aga Tower Dark Chest', 11, 43, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[96]));
     ctData.dungeonMaps.push(maze);
+
+    var tile = new DungeonMapData('ct-tile', 'Hint Tile Room');
+    tile.nodes.push(new DungeonNode(
+      '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'ct-maze'));
+    tile.nodes.push(new DungeonNode(
+      '', 13, 53, DungeonNodeStatus.OPEN_DOOR,
+    DungeonNode.noReqs, 'ct-top'));
+    tile.nodes.push(new DungeonNode(
+      'Hint Tile', 28, 20, DungeonNodeStatus.HINT,
+    DungeonNode.noReqs, '0'));
+    ctData.dungeonMaps.push(tile);
 
     var top = new DungeonMapData('ct-top', 'Top of the Tower');
     top.nodes.push(new DungeonNode(

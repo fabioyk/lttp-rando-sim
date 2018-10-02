@@ -37,6 +37,11 @@ export class IcePalace {
     function(items:Items, config:Config) {
       return items.hasMeltyPower();
     }));
+    entrance.nodes.push(new DungeonNode(
+      'Hint Tile', 50, 20, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '8'));
     ipData.dungeonMaps.push(entrance);
     
 
@@ -55,7 +60,7 @@ export class IcePalace {
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'ip-conveyor-room'));
+    }, 'ip-tile'));
     ipData.dungeonMaps.push(firstFork);
 
     var compass = new DungeonMapData('ip-compass', 'Compass Room');
@@ -69,6 +74,19 @@ export class IcePalace {
     function(items:Items, config:Config) {
         return true;
     }, l[169]));
+    ipData.dungeonMaps.push(compass);
+
+    var compass = new DungeonMapData('ip-tile', 'Giant Stalfo Room');
+    compass.nodes.push(new DungeonNode(
+      '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'ip-conveyor-room'));
+    compass.nodes.push(new DungeonNode(
+      'Hint Tile', 50, 19, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '9'));
     ipData.dungeonMaps.push(compass);
 
     var conveyor = new DungeonMapData('ip-conveyor-room', 'Conveyor Room');
@@ -180,6 +198,11 @@ export class IcePalace {
     function(items:Items, config:Config) {
         return true;
     }, 'ip-double-jelly'));
+    tallRoom.nodes.push(new DungeonNode(
+      'Hint Tile', 50, 9.5, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '10'));
     ipData.dungeonMaps.push(tallRoom);
 
     var spikeRoom = new DungeonMapData('ip-spike-room', 'Spike Room');

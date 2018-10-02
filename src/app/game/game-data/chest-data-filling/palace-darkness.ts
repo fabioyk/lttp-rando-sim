@@ -33,13 +33,10 @@ export class PalaceDarkness {
         return true;
     }, 'pod-fork1'));
     entrance.nodes.push(new DungeonNode(
-      'Right Side', 75, 9.5, DungeonNodeStatus.OPEN_DOOR,
+      '', 75, 9.5, DungeonNodeStatus.OPEN_DOOR,
       function(items:Items, config:Config) {
-        return items.hasBow();
-      }, 'pod-right', 'Bow Required', [-1], 0,
-      function(items:Items, config:Config) {
-        return items.hasBottle();
-      }));
+        return true;
+      }, 'pod-tile'));
     podData.dungeonMaps.push(entrance);
 
     var leftRoom = new DungeonMapData('pod-left', 'Shooter Room');
@@ -55,12 +52,33 @@ export class PalaceDarkness {
     }, l[124]));
     podData.dungeonMaps.push(leftRoom);
 
+    var hintRoom = new DungeonMapData('pod-tile', 'Hint Tile Room');
+    hintRoom.nodes.push(new DungeonNode(
+      '', 53, 53, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'pod-entry'));
+    hintRoom.nodes.push(new DungeonNode(
+      'Hint Tile', 50, 20, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '5'));
+    hintRoom.nodes.push(new DungeonNode(
+      'Right Side', 50, 87, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+        return items.hasBow();
+      }, 'pod-right', 'Bow Required', [-1], 0,
+      function(items:Items, config:Config) {
+        return items.hasBottle();
+      }));
+    podData.dungeonMaps.push(hintRoom);
+
     var rightRoom = new DungeonMapData('pod-right', 'Map Room');
     rightRoom.nodes.push(new DungeonNode(
       '', 63, 78, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'pod-entry'));
+    }, 'pod-tile'));
     rightRoom.nodes.push(new DungeonNode(
       'Map Chest', 63, 57.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -124,7 +142,7 @@ export class PalaceDarkness {
       '', 80, 42, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'pod-entry'));
+    }, 'pod-tile'));
     dropRoom.nodes.push(new DungeonNode(
       'Stalfos Basement Chest', 48.5, 53, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {

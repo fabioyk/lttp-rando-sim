@@ -50,7 +50,7 @@ export class ItemLineComponent implements OnInit {
         }        
       });
 
-      if (this.itemLogEntry.type === 'cant') {
+      if (this.itemLogEntry.type === 'cant' || this.itemLogEntry.type === 'hint') {
         this.textLine = this.itemLogEntry.longName;
         return;
       }

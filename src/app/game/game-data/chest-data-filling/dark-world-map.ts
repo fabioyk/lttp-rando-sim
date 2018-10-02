@@ -467,6 +467,11 @@ export class DarkWorldMap {
       function(items:Items, config:Config) {
         return items.flippers;
       }, '', '', [-1], 0, DungeonNode.noReqs));
+    m.nodes.push(new DungeonNode(
+      '', 60, 14, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+        return items.glove;
+      }, 'dw-hint-cave'));
     dwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('dw-desert', 'Misery Mire Area');
@@ -931,6 +936,19 @@ export class DarkWorldMap {
     function(items:Items, config:Config) {
         return true;
     }, ''));
+    dwData.dungeonMaps.push(m);
+
+    m = new DungeonMapData('dw-hint-cave', 'South East Dark World');
+    m.nodes.push(new DungeonNode(
+      '', 50, 87, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'dw-flute8'));
+    m.nodes.push(new DungeonNode(
+      '', 50, 19, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '14'));
     dwData.dungeonMaps.push(m);
 
     dwData.startingMap = m;

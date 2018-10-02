@@ -108,7 +108,7 @@ export class GameService {
         if (location.item[0] === 'warp') {
           status = 'invisible';
         } else if (location.item[0] === 'tr-ledge') {
-          status = 'tr-ledge';
+          status = 'tr-ledge';        
         } else {
           if (location.canView) {
             status = 'viewable';
@@ -117,6 +117,9 @@ export class GameService {
           } else {
             status = 'unavailable';
           }    
+        }
+        if (location.item[0].charAt(0) === '=') {
+          status += ' hint';
         }
         location.mapNode = {
           x: location.x*2,
@@ -141,6 +144,9 @@ export class GameService {
           } else {
             status = 'unavailable';
           }    
+        }
+        if (location.item[0].charAt(0) === '=') {
+          status += ' hint';
         }
         location.mapNode = {
           x: (location.x-50)*2,
@@ -259,6 +265,9 @@ export class GameService {
             location.mapNode.status = 'unavailable';
           }
         }
+        if (location.item[0].charAt(0) === '=') {
+          location.mapNode.status += ' hint';
+        }
       });
       this.overworldData.dwLocations.forEach((location) => {
         if (location.item[0] === 'warp') {
@@ -296,8 +305,12 @@ export class GameService {
             status += ' unavailable';
           }
   
-          location.mapNode.status = status;   
-        }           
+          location.mapNode.status = status;
+
+          if (location.item[0].charAt(0) === '=') {
+            location.mapNode.status += ' hint';
+          }
+        }
       });
 
       if (world === 'light-world') {

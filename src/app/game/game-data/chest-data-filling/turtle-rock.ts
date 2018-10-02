@@ -10,19 +10,37 @@ export class TurtleRock {
     var trData = new DungeonData('Turtle Rock', l[198],
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return items.canInvertedEastDarkDeathMountain(config.canGlitch) && items.somaria && items.sword && items.hasMedallion('tr', config);
+          return items.canInvertedEastDarkDeathMountain(config.canGlitch) && items.sword && items.hasMedallion('tr', config);
         }
         return (items.moonPearl && items.canDarkEastDeathMountain(config.canGlitch)) && items.sword
-            && items.hasMedallion('tr', config) && items.somaria && items.hammer;
+            && items.hasMedallion('tr', config) && items.hammer;
       }, 93.8, 10
     );
 
-    var entrance = new DungeonMapData('tr-entry', 'Turtle Rock Main Lobby');
+    var newEntrance = new DungeonMapData('tr-entry', 'Turtle Rock Entrance');
+    newEntrance.nodes.push(new DungeonNode(
+      '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, config.isFullMap ? 'dw-trportal' : 'exit', '', [-1], 1));
+    newEntrance.nodes.push(new DungeonNode(
+      '', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return items.somaria;
+    }, 'tr-hall'));
+    newEntrance.nodes.push(new DungeonNode(
+      'Hint Tile', 36, 78.5, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '12'));
+    trData.dungeonMaps.push(newEntrance);
+
+    var entrance = new DungeonMapData('tr-hall', 'Main Lobby');
     entrance.nodes.push(new DungeonNode(
       '', 75, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, config.isFullMap ? 'dw-trportal' : 'exit', '', [-1], 1));
+    }, 'tr-entry'));
     entrance.nodes.push(new DungeonNode(
       '', 25, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -45,7 +63,7 @@ export class TurtleRock {
       '', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'tr-entry'));
+    }, 'tr-hall'));
     compass.nodes.push(new DungeonNode(
       'Compass Chest', 50, 58, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -58,7 +76,7 @@ export class TurtleRock {
       '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'tr-entry'));
+    }, 'tr-hall'));
     mapRoom.nodes.push(new DungeonNode(
       'Roller Room Left Chest', 44, 17.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -76,7 +94,7 @@ export class TurtleRock {
       '', 50, 88, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
         return items.somaria;
-    }, 'tr-entry'));
+    }, 'tr-hall'));
     chainChomp.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
@@ -351,7 +369,7 @@ export class TurtleRock {
     DungeonNode.noReqs, 'exit'));
     trData.dungeonMaps.push(invertedLedge);
 
-    trData.startingMap = entrance;
+    trData.startingMap = newEntrance;
 
     return trData;
   }

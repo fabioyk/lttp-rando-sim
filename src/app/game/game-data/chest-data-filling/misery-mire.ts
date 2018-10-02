@@ -205,7 +205,7 @@ export class MiseryMire {
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.hasFiresource();
-    }, 'mm-bk', 'Fire Source Required'));
+    }, 'mm-tile', 'Fire Source Required'));
     mmData.dungeonMaps.push(fourTorch);
 
     var compassRoom = new DungeonMapData('mm-compass', 'Compass Room');
@@ -225,6 +225,24 @@ export class MiseryMire {
         return items.crystalSwitch;
     }, l[180], 'Switch on Blue Required'));
     mmData.dungeonMaps.push(compassRoom);
+
+    var tileRoom = new DungeonMapData('mm-tile', 'Moving Wall Room');
+    tileRoom.nodes.push(new DungeonNode(
+      '', 32, 76.5, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'mm-four-torch'));
+    tileRoom.nodes.push(new DungeonNode(
+      '', 56.5, 76.5, DungeonNodeStatus.HOLE,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'mm-bk'));
+    tileRoom.nodes.push(new DungeonNode(
+      'Hint Tile', 36, 33, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '11'));
+    mmData.dungeonMaps.push(tileRoom);
 
     var bkRoom = new DungeonMapData('mm-bk', 'Big Key Room');
     bkRoom.nodes.push(new DungeonNode(

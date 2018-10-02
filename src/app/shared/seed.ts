@@ -7,5 +7,6 @@ export class Seed {
   mode: string;
   weapons: string;
   data: string;
+  hints: string[];
   error:string;
 }

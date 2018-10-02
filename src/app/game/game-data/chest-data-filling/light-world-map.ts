@@ -1053,10 +1053,15 @@ export class LightWorldMap {
       '', 28, 53, DungeonNodeStatus.HOLE,
     DungeonNode.noReqs, 'lw-flute1'));
     m.nodes.push(new DungeonNode(
-      'Spectacle Rock Cave Item', 35, 36, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
+      'Spectacle Rock Cave Item', 36, 38, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
       return items.currentRegionInMap === 1;
     }, l[75]));
+    m.nodes.push(new DungeonNode(
+      'Hint Tile', 36, 31, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+      return items.currentRegionInMap === 1;
+    }, '13'));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-hera', 'Tower of Hera Entrance');

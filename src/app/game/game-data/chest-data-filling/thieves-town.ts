@@ -80,12 +80,30 @@ export class ThievesTown {
       '', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'tt-bombable-floor'));
+    }, 'tt-tile'));
     hellway.nodes.push(new DungeonNode(
       '', 68, 26, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'tt-fork'));
+    ttData.dungeonMaps.push(hellway);
+
+    var hellway = new DungeonMapData('tt-tile', 'Hint Tile Room');
+    hellway.nodes.push(new DungeonNode(
+      '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'tt-hellway'));
+    hellway.nodes.push(new DungeonNode(
+      '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return true;
+    }, 'tt-bombable-floor'));
+    hellway.nodes.push(new DungeonNode(
+      'Hint Tile', 34, 20.5, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '7'));
     ttData.dungeonMaps.push(hellway);
 
     var fork = new DungeonMapData('tt-fork', 'Conveyor Belt Circle');
@@ -160,7 +178,7 @@ export class ThievesTown {
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'tt-hellway'));
+    }, 'tt-tile'));
     bombableFloor.nodes.push(new DungeonNode(
       'Attic Chest', 22, 29, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {

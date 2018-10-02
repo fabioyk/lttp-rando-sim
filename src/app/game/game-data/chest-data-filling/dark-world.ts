@@ -7,6 +7,30 @@ export class DarkWorld {
     var itemLocations:ItemLocation[] = [];
 
     itemLocations.push(new ItemLocation(
+      'SE Dark World Hint', 95, 78,
+      function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.flippers && items.glove;
+        }
+        return (items.canNorthEastDarkWorld() || items.canNorthWestDarkWorld()) && items.flippers && items.glove && items.moonPearl;
+      },
+      null,
+      ['=14'],
+      '',
+      function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.glove && ((items.flute && items.canInvertedLW())
+              || (items.canInvertedNEDW(true) && (items.hammer || items.glove))
+              || (items.canInvertedLW() && items.mirror)
+              || items.boots);
+        }
+        return items.glove && items.moonPearl && (
+          items.canNorthEastDarkWorld(true)
+          || (items.canNorthWestDarkWorld(true) && items.boots));          
+      }
+    ));
+
+    itemLocations.push(new ItemLocation(
       'Superbunny Cave', 92.8, 14.7,
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {

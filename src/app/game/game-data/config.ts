@@ -15,6 +15,8 @@ export class Config {
 
   noLogic: boolean;
 
+  hints: string[];
+
   constructor() {
     this.canGlitch = false;
 
@@ -29,6 +31,8 @@ export class Config {
     this.mode = 'standard';
     this.weapons = 'randomized';
     this.isFullMap = false;
+
+    this.hints = [];
 
     this.noLogic = false;
   }

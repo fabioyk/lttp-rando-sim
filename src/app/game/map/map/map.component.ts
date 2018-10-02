@@ -23,6 +23,7 @@ export class MapComponent implements OnInit {
   @Output() addedItem = new EventEmitter<[MapNode, string, string]>();
   @Output() viewItem = new EventEmitter<[MapNode, string, string]>();
   @Output() cantItem = new EventEmitter<[MapNode, string, boolean]>();
+  @Output() hintCheck = new EventEmitter<[MapNode, string, string]>();
   @Output() finishedDungeon = new EventEmitter<[string, string]>();
   @Output() onGameFinished = new EventEmitter<string>();
   tooltip:string;
@@ -94,14 +95,18 @@ export class MapComponent implements OnInit {
       } else if (nodeClicked.prize[0] === 'tr-ledge') {      
         this.changeDungeon('tr-inverted-ledge');
       } else if (nodeClicked.status !== 'opened' && (!nodeClicked.originalNode.canView || nodeClicked.isFaded)) {
-        this.addPrizes(nodeClicked, this.currentMap);
-        if (nodeClicked.originalNode) {
-          nodeClicked.originalNode.isOpened = true;
-        }
-        nodeClicked.status = 'opened'
-        if (nodeClicked.tooltip === 'Ganon') {
-          this.onGameFinished.emit('');
-        }
+        if (nodeClicked.prize[0].charAt(0) === '=') {
+          this.hintCheck.emit([nodeClicked, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);
+        } else {
+          this.addPrizes(nodeClicked, this.currentMap);
+          if (nodeClicked.originalNode) {
+            nodeClicked.originalNode.isOpened = true;
+          }
+          nodeClicked.status = 'opened'
+          if (nodeClicked.tooltip === 'Ganon') {
+            this.onGameFinished.emit('');
+          }
+        }        
       } else if (nodeClicked.status !== 'opened' && nodeClicked.originalNode.canView) {
         this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
         nodeClicked.isFaded = true;
@@ -123,16 +128,20 @@ export class MapComponent implements OnInit {
         nodeClicked.status = 'g-getable';
       }      
       this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
-    } else if (nodeClicked.status.indexOf('getable') > -1) {
+    } else if (nodeClicked.status.indexOf('getable') > -1) {      
       if (!nodeClicked.originalNode.isOpened && nodeClicked.status.indexOf('unreachable') === -1) {
-        this.addPrizes(nodeClicked, this.currentMap);
-        if (nodeClicked.originalNode) {
-          nodeClicked.originalNode.isOpened = true;
-        }
-        nodeClicked.status = 'opened'
-        if (nodeClicked.tooltip === 'Ganon') {
-          this.onGameFinished.emit('');
-        }
+        if (nodeClicked.prize[0].charAt(0) === '=') {
+          this.hintCheck.emit([nodeClicked, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);
+        } else {
+          this.addPrizes(nodeClicked, this.currentMap);
+          if (nodeClicked.originalNode) {
+            nodeClicked.originalNode.isOpened = true;
+          }
+          nodeClicked.status = 'opened'
+          if (nodeClicked.tooltip === 'Ganon') {
+            this.onGameFinished.emit('');
+          }
+        }        
       }
     } else if (nodeClicked.status.indexOf('viewable') > -1) {
       this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
@@ -311,8 +320,6 @@ export class MapComponent implements OnInit {
             this.items.gameState = 1;
           } else if (dungeonNode.tooltip === 'Zelda\'s Chest' && this.items.gameState === 1) {
             this.items.gameState = 2;
-          } else if (dungeonNode.tooltip === 'Potion Shop Item') {
-            this.items.mushroom = false;
           }
           if (dungeonNode.originalNode.accessibleSectionArray[0] === -1 && +dungeonNode.status === DungeonNodeStatus.CLOSED_CHEST) {
             this.items.currentRegionInMap = 0;
@@ -461,6 +468,9 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.DUCK:
           this.items.isFluteActivated = true;
           dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
+          break;
+        case DungeonNodeStatus.HINT:
+          this.hintCheck.emit([dungeonNode, this.currentDungeon.name, this.config.hints[+dungeonNode.prize[0]]]);          
           break;
       }
     } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()

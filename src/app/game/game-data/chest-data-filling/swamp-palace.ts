@@ -10,9 +10,9 @@ export class SwampPalace {
     var spData = new DungeonData('Swamp Palace', l[149],
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return items.moonPearl && items.mirror && items.flippers && items.canInvertedLW();
+          return items.moonPearl && items.mirror && items.canInvertedLW();
         }
-        return items.moonPearl && items.mirror && items.flippers
+        return items.moonPearl && items.mirror
           && items.canSouthDarkWorld(config.canGlitch);
       }, 47, 91
     );
@@ -26,13 +26,18 @@ export class SwampPalace {
     entrance.nodes.push(new DungeonNode(
       'Entrance Chest', 36, 21, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return true;
+        return items.flippers;
     }, l[139]));
     entrance.nodes.push(new DungeonNode(
       '', 25, 9.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return true;
+        return items.flippers;
     }, 'sp-tall-room'));
+    entrance.nodes.push(new DungeonNode(
+      'Hint Tile', 60, 41, DungeonNodeStatus.HINT,
+    function(items:Items, config:Config) {
+        return true;
+    }, '6'));
     spData.dungeonMaps.push(entrance);
 
     var tallRoom = new DungeonMapData('sp-tall-room', 'Key Pot Corridor');
