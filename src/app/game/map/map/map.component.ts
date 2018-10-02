@@ -92,7 +92,7 @@ export class MapComponent implements OnInit {
       if (nodeClicked.prize[0] === 'warp') {
         this.currentRegion = nodeClicked.id;
         this.changeMap(this.otherWorld);
-      } else if (nodeClicked.prize[0] === 'tr-ledge') {      
+      } else if (nodeClicked.prize[0] === 'tr-ledge') {
         this.changeDungeon('tr-inverted-ledge');
       } else if (nodeClicked.status !== 'opened' && (!nodeClicked.originalNode.canView || nodeClicked.isFaded)) {
         if (nodeClicked.prize[0].charAt(0) === '=') {

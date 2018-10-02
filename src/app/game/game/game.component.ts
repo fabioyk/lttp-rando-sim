@@ -211,8 +211,6 @@ export class GameComponent implements OnInit {
   }
 
   onHintChecked([mapNode, region, hintText]) {
-    console.log(mapNode);
-    console.log(region);
     this.itemLog.unshift({
       item: 'hint',
       shortName: 'hintTile',
