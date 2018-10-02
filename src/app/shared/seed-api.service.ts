@@ -18,7 +18,7 @@ export class SeedApiService {
   private _apiUrl = 'https://lttp-rando-seed-api.glitch.me/';
   public lastSeedData:string;
   public lastSeedNum:number;
-  private webVersion = '3.0';
+  private webVersion = '3.1';
 
   constructor(private _http: Http) {
     if (environment.production) {
