@@ -94,18 +94,16 @@ export class MapComponent implements OnInit {
         this.changeMap(this.otherWorld);
       } else if (nodeClicked.prize[0] === 'tr-ledge') {
         this.changeDungeon('tr-inverted-ledge');
-      } else if (nodeClicked.status !== 'opened' && (!nodeClicked.originalNode.canView || nodeClicked.isFaded)) {
-        if (nodeClicked.prize[0].charAt(0) === '=') {
-          this.hintCheck.emit([nodeClicked, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);
-        } else {
-          this.addPrizes(nodeClicked, this.currentMap);
-          if (nodeClicked.originalNode) {
-            nodeClicked.originalNode.isOpened = true;
-          }
-          nodeClicked.status = 'opened'
-          if (nodeClicked.tooltip === 'Ganon') {
-            this.onGameFinished.emit('');
-          }
+      } else if (nodeClicked.prize[0].charAt(0) === '=') {
+        this.hintCheck.emit([nodeClicked, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);        
+      } else if (nodeClicked.status !== 'opened' && (!nodeClicked.originalNode.canView || nodeClicked.isFaded)) {        
+        this.addPrizes(nodeClicked, this.currentMap);
+        if (nodeClicked.originalNode) {
+          nodeClicked.originalNode.isOpened = true;
+        }
+        nodeClicked.status = 'opened'
+        if (nodeClicked.tooltip === 'Ganon') {
+          this.onGameFinished.emit('');
         }        
       } else if (nodeClicked.status !== 'opened' && nodeClicked.originalNode.canView) {
         this.viewItem.emit([nodeClicked, this.currentMap, this.currentRegion]);
