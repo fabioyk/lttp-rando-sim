@@ -388,7 +388,7 @@ export class MapComponent implements OnInit {
             setTimeout(() => {
               this.mirrorNode = new DungeonNode(dungeonNode.originalNode.name,
                 dungeonNode.originalNode.x, dungeonNode.originalNode.y,
-                dungeonNode.originalNode.status, DungeonNode.noReqs,
+                dungeonNode.originalNode.status, dungeonNode.originalNode.canOpen,
                 dungeonNode.originalNode.content, dungeonNode.originalNode.errorMessage,
                 dungeonNode.originalNode.mirrorAccessibleSectionArray, 
                 dungeonNode.originalNode.mirrorDestinationSection, dungeonNode.originalNode.canGlitch,
@@ -411,7 +411,7 @@ export class MapComponent implements OnInit {
             setTimeout(() => {
               this.mirrorNode = new DungeonNode(dungeonNode.originalNode.name,
                 dungeonNode.originalNode.x, dungeonNode.originalNode.y,
-                dungeonNode.originalNode.status, DungeonNode.noReqs,
+                dungeonNode.originalNode.status, dungeonNode.originalNode.canOpen,
                 dungeonNode.originalNode.content, dungeonNode.originalNode.errorMessage,
                 [dungeonNode.originalNode.mirrorAccessibleSectionArray], 
                 dungeonNode.originalNode.mirrorDestinationSection, dungeonNode.originalNode.canGlitch,

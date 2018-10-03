@@ -510,7 +510,7 @@ export class DarkWorldMap {
       '', 94, 81, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.glove === 2;
-    }, 'dw-blacksmiths-entrance', 'Titan Mitts Required'));
+    }, 'dw-blacksmiths-entrance', 'Titan Mitts Required', [-1], 1));
     m.nodes.push(new DungeonNode(
       '', 87, 96, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'dw-race-game', '', [-1], 1));
@@ -576,12 +576,12 @@ export class DarkWorldMap {
     }, ''));
     m.nodes.push(new DungeonNode(
       '', 43, 54, DungeonNodeStatus.MIRROR,
-    DungeonNode.noReqs, ''));
+    DungeonNode.noReqs, 'Mirror', '', [-1], 0, null, [-1], 1));
     m.nodes.push(new DungeonNode(
       '', 63, 34, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
-      return true;
-    }, '', '', [0], 1, null, [1]));
+      return items.currentRegionInMap === 1 || items.hammer;
+    }, 'Magic Bat Mirror', 'Hammer Required', [-1], 1, null, [-1], 1));
     dwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('dw-kak-portal', 'Kakariko Dark World Portal');
@@ -685,7 +685,7 @@ export class DarkWorldMap {
       '', 50, 87, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'dw-blacksmiths-entrance'));
+    }, 'dw-blacksmiths-entrance', '', [-1], 1));
     m.nodes.push(new DungeonNode(
       'Hammer Pegs Item', 50, 45, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     DungeonNode.noReqs, l[111]));
