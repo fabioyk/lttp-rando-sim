@@ -133,7 +133,6 @@ export class MainMenuComponent implements OnInit {
     if (this.lockedMap === 'yes') {
       queryParams.fullMap = true;
     } 
-    console.log(queryParams);
     this._router.navigate(['/' + this.modeSelected], {queryParams: queryParams});
 
     this.preloadedMap = null;

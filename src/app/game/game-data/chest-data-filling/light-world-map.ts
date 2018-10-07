@@ -202,8 +202,8 @@ export class LightWorldMap {
     m.nodes.push(new DungeonNode(
       '', 50, 10, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.sword >= 2 || items.cape;
-    }, 'ct-entry', 'Master Sword or Cape Required', [1]));
+        return items.sword >= 2 || items.cape || (items.hammer && config.weapons === 'swordless');
+    }, 'ct-entry', config.weapons !== 'swordless' ? 'Master Sword or Cape Required' : 'Hammer or Cape Required', [1]));
     m.nodes.push(new DungeonNode(
       '', 29, 5, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'hc-left', '', [1]));

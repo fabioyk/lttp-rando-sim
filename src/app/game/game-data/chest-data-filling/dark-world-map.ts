@@ -486,7 +486,7 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       '', 30, 21, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.moonPearl && items[config.mmMedallion] && items.sword
+        return items.moonPearl && items[config.mmMedallion] && (items.sword || config.weapons === 'swordless')
           && (items.boots || items.hookshot);
     }, 'mm-entry'));
     m.nodes.push(new DungeonNode(
