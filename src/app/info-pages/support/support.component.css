@@ -1,7 +1,9 @@
-.golden {
-  color: #f96854;
-}
-
 :host-context(.dark-theme) h3, :host-context(.dark-theme) p {
   color: var(--dark-text-color);
+}
+
+.golden {
+  color: chocolate !important;
+  font-weight: bold;
+  font-size: 17px;
 }
