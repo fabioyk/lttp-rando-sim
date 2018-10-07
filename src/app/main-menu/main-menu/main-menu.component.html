@@ -1,32 +1,100 @@
+<h3>Generate Seed</h3>
 <form class="form-horizontal">
   <div class="form-group">
-    <label for="game-mode" class="col-sm-4 control-label">Game Mode</label>    
+    <label for="game-mode" class="col-sm-4 control-label">State 
+      <span class="question-mark" container="body" popover="Do we rescue Zelda? Do we start in the Light World?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>    
     <div class="btn-group" id="game-mode" class="col-sm-8">
       <label class="btn btn-default" [(ngModel)]="modeSelected" name="standard-button"
-        btnRadio="standard" (click)='onIsInverted(false)'>Standard Classic</label>
-    <label class="btn btn-default" [(ngModel)]="modeSelected" name="standard-rando-button"
-        btnRadio="standard-rando" (click)='onIsInverted(false)'>Standard Random Weapon</label>
+        btnRadio="standard" (click)='onIsInverted(false)'>Standard</label>
       <label class="btn btn-default" [(ngModel)]="modeSelected" name="open-button"
         btnRadio="open" (click)='onIsInverted(false)'>Open</label>
-      <label class="btn btn-default" [(ngModel)]="modeSelected" name="keysanity-button"
-        btnRadio="keysanity" (click)='onIsInverted(false)'>Keysanity</label>
-      <label class="btn btn-default" [(ngModel)]="modeSelected" name="keysanity-button"
+      <label class="btn btn-default" [(ngModel)]="modeSelected" name="inverted-button"
         btnRadio="inverted" (click)='onIsInverted(true)'>Inverted</label>
     </div>
   </div>
 
   <div class="form-group">
-      <label for="seq-break" class="col-sm-4 control-label">Minor Glitches and Sequence Breaking</label>    
-      <div class="btn-group" id="seq-break" class="col-sm-8">
-        <label class="btn btn-default" [(ngModel)]="glitchSelected" name="no-breaking-button"
-          btnRadio="no">Not Allowed</label>
-        <label class="btn btn-default" [(ngModel)]="glitchSelected" name="yes-breaking-button"
-          btnRadio="yes">Allowed</label>
-      </div>
+    <label for="swords-mode" class="col-sm-4 control-label">Swords
+      <span class="question-mark" container="body" popover="Does uncle give us a sword? Can we get swords at all?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="swords-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="swordsSelected" name="randomized-button"
+        btnRadio="randomized">Randomized</label>
+      <label class="btn btn-default" [(ngModel)]="swordsSelected" name="uncle-button"
+        btnRadio="uncle">Uncle Assured</label>
+      <label class="btn btn-default" [(ngModel)]="swordsSelected" name="swordless-button"
+        btnRadio="swordless">Swordless</label>
     </div>
+  </div>
+
+  <div class="form-group">
+    <label for="goal-mode" class="col-sm-4 control-label">Goal
+      <span class="question-mark" container="body" popover="7 Crystals? 3 Pendants? Everything including Agahnim?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="goal-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="goalSelected" name="ganon-button"
+        btnRadio="ganon">Defeat Ganon</label>
+      <label class="btn btn-default" [(ngModel)]="goalSelected" name="alldungeons-button"
+        btnRadio="dungeons">All Dungeons</label>
+      <label class="btn btn-default" [(ngModel)]="goalSelected" name="pedestal-button"
+        btnRadio="pedestal">Master Sword Pedestal</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="diff-mode" class="col-sm-4 control-label">Difficulty
+      <span class="question-mark" container="body" popover="How many safeties, hearts and swords are going to be available?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="diff-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="diffSelected" name="easy-button"
+        btnRadio="easy">Easy</label>
+      <label class="btn btn-default" [(ngModel)]="diffSelected" name="normal-button"
+        btnRadio="normal">Normal</label>
+      <label class="btn btn-default" [(ngModel)]="diffSelected" name="hard-button"
+        btnRadio="hard">Hard</label>
+      <label class="btn btn-default" [(ngModel)]="diffSelected" name="expert-button"
+        btnRadio="expert">Expert</label>
+      <label class="btn btn-default" [(ngModel)]="diffSelected" name="insane-button"
+        btnRadio="insane">Insane</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="var-mode" class="col-sm-4 control-label">Variation
+      <span class="question-mark" container="body" popover="Keys stay inside dungeons or not?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="var-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="variationSelected" name="no-var-button"
+        btnRadio="none">None</label>
+      <label class="btn btn-default" [(ngModel)]="variationSelected" name="keysanity-button"
+        btnRadio="keysanity">Keysanity</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="seq-break" class="col-sm-4 control-label">Minor Glitches and Sequence Breaking
+      <span class="question-mark" container="body" popover="Glitches are never required, but should you be able to use them?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="seq-break" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="glitchSelected" name="no-breaking-button"
+        btnRadio="no">Not Allowed</label>
+      <label class="btn btn-default" [(ngModel)]="glitchSelected" name="yes-breaking-button"
+        btnRadio="yes">Allowed</label>
+    </div>
+  </div>
   
   <div class="form-group">
-    <label for="map-mode" class="col-sm-4 control-label">Overworld</label>    
+    <label for="map-mode" class="col-sm-4 control-label">Overworld
+      <span class="question-mark" container="body" popover="Do you want to travel the overworld screen by screen?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
     <div class="btn-group" id="map-mode" class="col-sm-8">
       <label class="btn btn-default" [(ngModel)]="mapSelected" name="simple-map-button"
         btnRadio="no">Simple</label>
@@ -60,3 +128,28 @@
   </alert>
 </form>
 
+<div class="container support-text">
+    <p>After popular request, we've added ways for you to support Z3RSim directly. Check it out at our <a (click)="redirect('support')">Support Us</a> page!</p>
+</div>
+
+<accordion>
+  <accordion-group heading="v3.2 Changelog" isOpen=true isDisabled=true>
+    <dl>
+      <dt>New Interface</dt>
+      <dd>Some changes made to the presentation, with a new navigation bar and a few extra pages.</dd>
+      <dt>New Options</dt>
+      <dd>With the change to generating the seeds directly, we can now finally support a plethora of different options
+        and customizations. Expert Swordless All Dungeons Keysanity or Standard Uncle Assured, whatever combination you 
+        want to try is there, with even more options coming soon.
+      </dd>
+      <dt>Added Silver Arrows Hint</dt>
+      <dd>With the addition of Swordless and Ganon effectively requiring silver arrows in that mode, when you defeat
+        Agahnim 2 you'll receive the Silver Arrows Hint.
+      </dd>
+      <dt>New Pages</dt>
+      <dd>Added Changelog, where you can see each major version update so far.</dd>
+      <dd>Added Support Us, where you can support the development of this website.</dd>
+      <dd>Added About page, with some misc information on how this website came to be.</dd>
+    </dl>
+  </accordion-group>
+</accordion>

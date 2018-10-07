@@ -9,8 +9,9 @@ export class MiseryMire {
   static setup (l:string[], config:Config):DungeonData {
     var mmData = new DungeonData('Misery Mire', l[185],
       function(items:Items, config:Config) {
-        return (items.moonPearl || config.mode === 'inverted') && items.canMire(config) && items.hasMedallion('mm', config) && items.sword
-            && (items.boots || items.hookshot);
+        return (items.moonPearl || config.mode === 'inverted') && items.canMire(config) 
+          && items.hasMedallion('mm', config) && (items.sword || config.weapons === 'swordless')
+          && (items.boots || items.hookshot);
       }, 11.6, 82.9
     );
 
@@ -308,8 +309,8 @@ export class MiseryMire {
     beforeVit.nodes.push(new DungeonNode(
       '', 25, 35, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return true;
-    }, 'mm-vitty'));
+        return items.hammer || items.sword || items.bow;
+    }, 'mm-vitty', 'Weapon Required'));
     mmData.dungeonMaps.push(beforeVit);
 
     var vittyRoom = new DungeonMapData('mm-vitty', 'Vitreous Room');

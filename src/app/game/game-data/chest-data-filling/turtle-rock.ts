@@ -10,9 +10,9 @@ export class TurtleRock {
     var trData = new DungeonData('Turtle Rock', l[198],
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return items.canInvertedEastDarkDeathMountain(config.canGlitch) && items.sword && items.hasMedallion('tr', config);
+          return items.canInvertedEastDarkDeathMountain(config.canGlitch) && (items.sword || config.weapons === 'swordless') && items.hasMedallion('tr', config);
         }
-        return (items.moonPearl && items.canDarkEastDeathMountain(config.canGlitch)) && items.sword
+        return (items.moonPearl && items.canDarkEastDeathMountain(config.canGlitch)) && (items.sword || config.weapons === 'swordless')
             && items.hasMedallion('tr', config) && items.hammer;
       }, 93.8, 10
     );
@@ -330,8 +330,8 @@ export class TurtleRock {
     beforeTri.nodes.push(new DungeonNode(
       '', 38.2, 9.5, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return items.fireRod && items.iceRod;
-    }, 'tr-trinexx', 'Fire Rod and Ice Rod Required'));
+        return items.fireRod && items.iceRod && (items.sword || items.hammer);
+    }, 'tr-trinexx', 'Fire Rod, Ice Rod and Weapon Required'));
     trData.dungeonMaps.push(beforeTri);
 
     var trinexx = new DungeonMapData('tr-trinexx', 'Trinexx Room');

@@ -21,6 +21,7 @@ export class AppComponent {
   window: Window;
   isDarkTheme:boolean;
   buttonClass:string;
+  colorMode:string;
   
   constructor(private _windowRef: WindowRefService,
               private _modalService: BsModalService,
@@ -32,28 +33,41 @@ export class AppComponent {
     self = this;
     this.buttonClass = 'fa fa-moon-o';
     if (localStorage.getItem('isDarkTheme')) {
-      this.isDarkTheme = localStorage.getItem('isDarkTheme') === 'true';
+      this.isDarkTheme = localStorage.getItem('isDarkTheme') === 'true';      
     } else {
       localStorage.setItem('isDarkTheme', 'false');      
     }
+    this.onToggleTheme(false);
+    this.setColorModeText();
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this._modalService.show(template);
   }
 
-  onBackMainMenu() {
-    this._router.navigate(['/']);    
-  }
-
-  onToggleTheme() {
-    this.isDarkTheme = !this.isDarkTheme;
+  onToggleTheme(shouldSwap:boolean = true) {
+    if (shouldSwap) {
+      this.isDarkTheme = !this.isDarkTheme;
+    }    
     if (this.isDarkTheme) {
-      this.buttonClass = 'fa fa-sun-o';
+      this.buttonClass = 'fa fa-moon-o';
       localStorage.setItem('isDarkTheme', 'true');
     } else {
-      this.buttonClass = 'fa fa-moon-o';
+      this.buttonClass = 'fa fa-sun-o';
       localStorage.setItem('isDarkTheme', 'false');
     }
+    this.setColorModeText();
+  }
+
+  setColorModeText() {
+    if (this.isDarkTheme) {
+      this.colorMode = 'Dark Theme';
+    } else {
+      this.colorMode = 'Light Theme';
+    }
+  }
+
+  redirect(target:string) {
+    this._router.navigate(['/' + target]);
   }
 }

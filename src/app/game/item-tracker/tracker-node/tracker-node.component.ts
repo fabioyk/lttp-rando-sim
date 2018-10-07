@@ -179,10 +179,4 @@ export class TrackerNodeComponent implements OnInit {
     }
     return false;
   }
-
-  getHealth() {
-    return 3 + this.items.stats.heartContainers + Math.floor(this.items.stats.heartPieces/4);
-
-
-  }
 }

@@ -32,16 +32,16 @@ export class SeedApiService {
     this._http.get(this._apiUrl);
   }
 
-  getSeed(mode:String, seed:string, isDailySeed:boolean=false):Observable<Seed> {
+  getSeed(mode:String, queryParams:any, isDailySeed:boolean=false):Observable<Seed> {
     let queryUrl;
     
     if (isDailySeed) {
       queryUrl = this._apiUrl + 'api/daily?v='+this.webVersion+'&mode=' + mode;
     } else {
       queryUrl = this._apiUrl + 'api/seed?v='+this.webVersion+'&mode=' + mode;
-      if (seed) {
-        queryUrl += '&seed=' + seed;
-      }
+      Object.keys(queryParams).forEach(key => {
+        queryUrl += '&' + key + '=' + queryParams[key];
+      });
     }  
 
     // if (mode === 'inverted') {

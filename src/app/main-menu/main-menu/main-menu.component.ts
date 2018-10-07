@@ -12,7 +12,11 @@ import { Seed } from '../../shared/seed';
 export class MainMenuComponent implements OnInit {
   shouldDisablePlay = false;
   modeSelected = 'standard';
+  swordsSelected = 'randomized';
+  goalSelected = 'ganon';
+  diffSelected = 'normal';  
   glitchSelected = 'yes';
+  variationSelected = 'none';
   mapSelected = 'no';
   seedNum = '';
   errorMessage = '';
@@ -32,12 +36,20 @@ export class MainMenuComponent implements OnInit {
               private _route: ActivatedRoute) { }
 
   ngOnInit() {
-    if (localStorage.getItem('modeSelected')) {
+    if (localStorage.getItem('swordsSelected')) {
       this.modeSelected = localStorage.getItem('modeSelected');
+      this.swordsSelected = localStorage.getItem('swordsSelected');
+      this.goalSelected = localStorage.getItem('goalSelected');
+      this.diffSelected = localStorage.getItem('diffSelected');
       this.glitchSelected = localStorage.getItem('glitchSelected');
+      this.variationSelected = localStorage.getItem('variationSelected');
     } else {
       localStorage.setItem('modeSelected', this.modeSelected);
+      localStorage.setItem('swordsSelected', this.swordsSelected);
+      localStorage.setItem('goalSelected', this.goalSelected);
+      localStorage.setItem('diffSelected', this.diffSelected);
       localStorage.setItem('glitchSelected', this.glitchSelected);
+      localStorage.setItem('variationSelected', this.variationSelected);
     }
     if (localStorage.getItem('mapSelected')) {
       this.mapSelected = localStorage.getItem('mapSelected');
@@ -50,8 +62,7 @@ export class MainMenuComponent implements OnInit {
     } else {
       this.isAdvancedOWEnabled = 'inline-block';
     }
-    
-    
+      
 
     this._seedService.getStatus()
       .subscribe((status) => {
@@ -95,19 +106,35 @@ export class MainMenuComponent implements OnInit {
     this.errorMessage = '';
 
     localStorage.setItem('modeSelected', this.modeSelected);
+    localStorage.setItem('swordsSelected', this.swordsSelected);
+    localStorage.setItem('goalSelected', this.goalSelected);
+    localStorage.setItem('diffSelected', this.diffSelected);
+    localStorage.setItem('variationSelected', this.variationSelected);
     localStorage.setItem('glitchSelected', this.glitchSelected);
     localStorage.setItem('mapSelected', this.mapSelected);    
 
-    var queryParams:any = {
-      //seed: seed.seed
+    var queryParams:any = {  
     };
+    if (this.swordsSelected !== 'randomized') {
+      queryParams.swords = this.swordsSelected;
+    }
+    if (this.goalSelected !== 'ganon') {
+      queryParams.goal = this.goalSelected;
+    }
+    if (this.diffSelected !== 'normal') {
+      queryParams.diff = this.diffSelected;
+    }
+    if (this.variationSelected !== 'none') {
+      queryParams.variation = this.variationSelected;
+    }
     if (this.lockedGlitch === 'yes') {
       queryParams.minorGlitches = true;
     } 
     if (this.lockedMap === 'yes') {
       queryParams.fullMap = true;
     } 
-    this._router.navigate(['/' + this.lockedMode], {queryParams: queryParams});
+    console.log(queryParams);
+    this._router.navigate(['/' + this.modeSelected], {queryParams: queryParams});
 
     this.preloadedMap = null;
     this.preloadedIcons = null;
@@ -177,5 +204,9 @@ export class MainMenuComponent implements OnInit {
       this.preloadedIcons[i] = new Image();
       this.preloadedIcons[i].src = iconUrl;
     })
+  }
+
+  redirect(target:string) {
+    this._router.navigate(['/' + target]);
   }
 }

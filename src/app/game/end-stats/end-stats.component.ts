@@ -12,6 +12,50 @@ export class EndStatsComponent implements OnInit {
   @Input() items:Items;
   @Input() config:Config;
 
+  totals = {
+    easy: {
+      containers: 11,
+      pieces: 24,
+      swords: 4,
+      mails: 3,
+      shields: 3,
+      aItems: 7
+    },
+    normal: {
+      containers: 11,
+      pieces: 24,
+      swords: 4,
+      mails: 3,
+      shields: 3,
+      aItems: 6
+
+    },
+    hard: {
+      containers: 6,
+      pieces: 20,
+      swords: 3,
+      mails: 2,
+      shields: 2,
+      aItems: 5
+    },
+    expert: {
+      containers: 1,
+      pieces: 20,
+      swords: 2,
+      mails: 1,
+      shields: 1,
+      aItems: 5
+    },
+    insane: {
+      containers: 0,
+      pieces: 0,
+      swords: 2,
+      mails: 1,
+      shields: 0,
+      aItems: 5,
+    }
+  }
+
   constructor(private _gameService:GameService) { }
 
   ngOnInit() {
@@ -34,12 +78,12 @@ export class EndStatsComponent implements OnInit {
   generateItemCompletionTable() {
     var res = [];
     res.push(['Y Items', this.getYItemCount() + '/27']);
-    res.push(['A Items', this.getOtherItemCount() + '/6']);
-    res.push(['Swords', this.items.sword + '/4']);
-    res.push(['Shields', this.items.shield + '/3']);
-    res.push(['Mails', this.items.tunic + '/3']);
-    res.push(['Heart Pieces', this.items.stats.heartPieces + '/24']);
-    res.push(['Heart Containers', this.items.stats.heartContainers + '/11']);
+    res.push(['A Items', this.getOtherItemCount() + '/' + this.totals[this.config.difficulty].aItems]);
+    res.push(['Swords', this.items.sword + '/' + this.totals[this.config.difficulty].swords]);
+    res.push(['Shields', this.items.shield + '/' + this.totals[this.config.difficulty].shields]);
+    res.push(['Mails', this.items.tunic + '/' + this.totals[this.config.difficulty].mails]);
+    res.push(['Heart Pieces', this.items.stats.heartPieces + '/' + this.totals[this.config.difficulty].pieces]);
+    res.push(['Heart Containers', this.items.stats.heartContainers + '/' + + this.totals[this.config.difficulty].containers]);
     return res;
   }
   generateDungeonCompletionTable() {
@@ -183,13 +227,14 @@ export class EndStatsComponent implements OnInit {
   getOtherItemCount():number {
     var counter = 0;
 
-    var otherItems = ['moonPearl', 'flippers', 'halfMagic', 'boots'];
+    var otherItems = ['moonPearl', 'flippers', 'boots'];
     otherItems.forEach((itemName) => {
       if (this.items[itemName]) {
         counter++;
       }
     });
 
+    counter += this.items.halfMagic;
     counter += this.items.glove;
 
     return counter;

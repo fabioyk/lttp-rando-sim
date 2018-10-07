@@ -55,14 +55,8 @@ export class GameComponent implements OnInit {
     var gameMode = '';
     if (this._router.url.indexOf('open') > -1) {
       gameMode = 'open';
-    } else if (this._router.url.indexOf('standard-rando') > -1) {
-      gameMode = 'standard-rando';
     } else if (this._router.url.indexOf('standard') > -1) {
       gameMode = 'standard';
-    } else if (this._router.url.indexOf('keysanity') > -1) {
-      gameMode = 'keysanity'
-    } else if (this._router.url.indexOf('tourney') > -1) {
-      gameMode = 'tourney'
     } else if (this._router.url.indexOf('inverted') > -1) {
       gameMode = 'inverted';
     }
@@ -75,10 +69,32 @@ export class GameComponent implements OnInit {
         /*if (!params.seed) {
           this._router.navigate(['/']);
         }*/
+        var qParams:any = {};
         var canGlitch = false;
         if (params.minorGlitches) {
           canGlitch = true;
         }
+        if (params.swords) {
+          qParams.swords = params.swords;
+        } else {
+          qParams.swords = 'randomized';
+        }
+        if (params.goal) {
+          qParams.goal = params.goal;
+        } else {
+          qParams.goal = 'ganon';
+        }
+        if (params.diff) {
+          qParams.diff = params.diff;
+        } else {
+          qParams.diff = 'normal';
+        }
+        if (params.variation) {
+          qParams.variation = params.variation;
+        } else {
+          qParams.variation = 'none';
+        }
+
         var fullMap = false;
         if (params.fullMap) {
           fullMap = true;
@@ -94,9 +110,9 @@ export class GameComponent implements OnInit {
         //if (params.seed && +params.seed === this._seedService.lastSeedNum) {
           //this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch, fullMap, );
         //} else {
-          this._seedService.getSeed(gameMode, params.seed)
+          this._seedService.getSeed(gameMode, qParams)
             .subscribe((seed) => {
-              this.gameInit(seed.data, seed.seed, canGlitch, fullMap, seed.hints);
+              this.gameInit(seed.data, qParams, canGlitch, fullMap, seed.hints, seed.silversHint);
             });
         //}
       }
@@ -115,13 +131,23 @@ export class GameComponent implements OnInit {
 
   /// GAMEPLAY
 
-  gameInit(seedData:string, seedNumber:number, canGlitch:boolean, isFullMap:boolean, hints:string[]) {
+  gameInit(seedData:string, qParams:any, canGlitch:boolean, isFullMap:boolean, hints:string[], silversHint) {
     if (seedData) {      
-      this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap);
+      this.gameService.loadSeed(seedData, 123456, canGlitch, isFullMap);
       this.items = new Items();
       this.config = this.gameService.config;
       this.config.isFullMap = isFullMap;
       this.config.hints = this.shuffleArray(hints);
+      this.config.silversHint = silversHint;
+      this.config.variation = qParams.variation;
+      this.config.goal = qParams.goal;
+      this.config.difficulty = qParams.diff;
+      if (this.config.difficulty === 'easy') {
+        this.items.startingHearts = 6;
+      } else {
+        this.items.startingHearts = 3;
+      }
+      this.config.weapons = qParams.swords;
       let startingMap = 'light-world';
       if (!isFullMap) {
         startingMap = this.config.mode === 'inverted' ? 'dark-world' : 'light-world';
@@ -133,7 +159,7 @@ export class GameComponent implements OnInit {
         DungeonData.lwDungeons = ['Eastern Palace', 'Desert Palace', 'Tower of Hera'];        
       }
       
-      this.items.setup(this.config.variation === 'key-sanity', this.gameService.dungeonsData, isFullMap);      
+      this.items.setup(this.config.variation === 'keysanity', this.gameService.dungeonsData, isFullMap);      
       if (this.config.mode.indexOf('standard') === -1 || !isFullMap) {
         this.items.gameState = 4;
       }
@@ -150,10 +176,34 @@ export class GameComponent implements OnInit {
         this.preloadMaps();
       }, 10000);
 
-      this.seedDescription = '(' 
-        + (this.config.mode === 'standard' ? 'Standard Classic' : (this.config.mode === 'standard-rando' ? 'Standard Random Weapon' : (this.config.mode === 'inverted' ? 'Inverted' : (this.config.variation === 'none' ? 'Open' : 'Keysanity'))))
-        + ', ' + (this.config.canGlitch ? 'Minor Glitches' : 'No Glitches') //+ ', Seed ' + seedNumber 
-        + ')';
+      this.seedDescription = '(';
+      switch(this.config.difficulty) {
+        case 'easy': this.seedDescription += 'Easy '; break;
+        case 'hard': this.seedDescription += 'Hard '; break;
+        case 'expert': this.seedDescription += 'Expert '; break;
+        case 'insane': this.seedDescription += 'Insane '; break;
+      }
+      switch(this.config.variation) {
+        case 'keysanity': this.seedDescription += 'Keysanity '; break;
+      }
+      switch(this.config.mode) {
+        case 'standard': this.seedDescription += 'Standard '; break;
+        case 'open': this.seedDescription += 'Open '; break;
+        case 'inverted': this.seedDescription += 'Inverted '; break;
+      }      
+      switch(this.config.weapons) {
+        case 'uncle': this.seedDescription += 'Uncle Assured '; break;
+        case 'swordless': this.seedDescription += 'Swordless '; break;
+      }
+      switch(this.config.goal) {
+        case 'pedestal': this.seedDescription += 'Pedestal '; break;
+        case 'dungeons': this.seedDescription += 'All Dungeons '; break;
+        case 'triforce-hunt': this.seedDescription += 'Triforce Hunt '; break;
+      }
+      switch(this.config.canGlitch) {
+        case true: this.seedDescription += ' NMG)'; break;
+        case false: this.seedDescription += ' No Glitches)'; break;
+      }
     } else {
       this._router.navigate(['/']);      
     }
@@ -161,8 +211,8 @@ export class GameComponent implements OnInit {
 
   onAddedItem([mapNode, map, region], type:string) {
     mapNode.prize.forEach((prize, i) => {
-      if (type !== 'view') {
-        this.items.add(this._itemNamesService.getItemById(prize).shortName, map);        
+      if (type !== 'view') {        
+        this.items.add(this._itemNamesService.getItemById(prize).shortName, map);
       }
       var itemData = this._itemNamesService.convertItemName(prize, type, this.items);
       this.itemLog.unshift({
@@ -173,6 +223,28 @@ export class GameComponent implements OnInit {
         region: map,
         type: type
       });
+      if (type !== 'view' && this.config.difficulty === 'easy') {
+        if (this.items.sword === 4) {
+          this.gameService.addItemReplacement('Progressive Sword');
+        }
+        if (this.items.shield === 3) {
+          this.gameService.addItemReplacement('Progressive Shield');
+        }
+        if (this.items.tunic === 3) {
+          this.gameService.addItemReplacement('Progressive Armor');
+        }
+        if (this.items.bottle === 4) {
+          this.gameService.addItemReplacement('Bottle');
+        }
+        if (this.items.totalHealth >= 20) {
+          this.gameService.addItemReplacement('Heart Container');
+          this.gameService.addItemReplacement('Heart Container (refill)');
+        }
+        if (this.items.lamp) {
+          this.gameService.addItemReplacement('Lamp');
+        }
+        this.gameService.updateData(this.items, map, region);
+      }
     });
     this.gameService.updateData(this.items, map, region);
   }
@@ -210,13 +282,13 @@ export class GameComponent implements OnInit {
     
   }
 
-  onHintChecked([mapNode, region, hintText]) {
+  onHintChecked([tooltip, region, hintText]) {
     this.itemLog.unshift({
       item: 'hint',
       shortName: 'hintTile',
       longName: hintText,
-      location: mapNode.tooltip,
-      region: region.indexOf('-') === -1 ? region : mapNode.tooltip,
+      location: tooltip,
+      region: region.indexOf('-') === -1 ? region : tooltip,
       type: 'hint'
     });
   }

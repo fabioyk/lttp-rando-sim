@@ -11,7 +11,7 @@ export class CastleTower {
     let ys = [39, 4.5];
     var ctData = new DungeonData('Aga Tower', 'Agahnim',
       function(items:Items, config:Config) {        
-        return (config.mode !== 'inverted' && (items.cape || items.sword >= 2))
+        return (config.mode !== 'inverted' && (items.cape || (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer))))
           || (config.mode === 'inverted' && items.canInvertedEastDarkDeathMountain(config.canGlitch));
       }, xs[config.mode === 'inverted' ? 1 : 0], ys[config.mode === 'inverted' ? 1 : 0]
     );
@@ -76,8 +76,8 @@ export class CastleTower {
     top.nodes.push(new DungeonNode(
       'Agahnim\'s Fight', 50, 16, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.sword;
-    }, 'ct-aga', 'Sword Required'));
+        return items.sword || (config.weapons === 'swordless' && (items.hammer || items.net));
+    }, 'ct-aga', config.weapons !== 'swordless' ? 'Sword Required' : 'Hammer or Bug Net Required'));
     ctData.dungeonMaps.push(top);
 
     var aga = new DungeonMapData('ct-aga', 'Agahnim Room');

@@ -1,10 +1,45 @@
+<nav class="navbar navbar-inverse navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand"><span class="not-selectable title stylized-font" (click)="redirect('')">
+            Z3R Simulator <span class="version-text">v3.2</span>
+          </span> </a>
+      </div>
+  
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a (click)="redirect('')">Generate Seed</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a type="button" 
+            (click)="onToggleTheme()">
+            <i [(ngClass)]="buttonClass"></i> {{colorMode}}</a></li>
+          <li><a (click)="openModal(howToTemplate)">How To Play</a></li>
+          <li><a (click)="redirect('changelog')">Changelog</a></li>
+          <li><a (click)="redirect('support')">Support Us</a></li>
+          <li><a (click)="redirect('about')">About</a></li>          
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 <div class='whole-app'
   [ngClass]='isDarkTheme ? "dark-theme" : ""'>
   <div class="container">
+    
+
+    <!--
     <div class="container-fluid top-container">
       <h1 class="top-container-title">
         <span class="not-selectable title stylized-font" (click)="onBackMainMenu()">
-          Z3R Simulator <span class="version-text">v3.1</span>
+          Z3R Simulator <span class="version-text">v3.2</span>
         </span> 
       </h1>
       <div class="in-between"></div>
@@ -19,6 +54,7 @@
         </button>
       </div>    
     </div>    
+    -->
     <router-outlet></router-outlet>
   </div>    
   <footer>
@@ -94,45 +130,6 @@
       </ul>
       <p>
         Locations colored <span class='glitched-text outline-text'>Blue</span> are locations accessible through Minor Glitches
-      </p>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #aboutTemplate>
-  <div [ngClass]='isDarkTheme ? "dark-theme" : ""'>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">About</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <h3>v2.0 Patch Notes</h3>
-      <p>
-        <strong>v29</strong> is implemented! With support for both the good old Standard Mode and the new shiny Randomized Weapon at Uncle.
-      </p>
-      <p><strong>Advanced Overworld Maps</strong> is now another way to play. A much more faithful and longer experience, 
-        where you will need to navigate the overworld just like in game. Routing becomes much more important, remembering locations being opened is relevant,
-        and even where do you mirror, chest sequencing, etc. Be prepared to spend a little more time to complete these.</p>        
-      <p>A few minor improvements and graphical changes have been added, for example you can now Hookshot the Bridge Chest in Misery Mire</p>
-      <p>If anything is broken, please report it in our Discord server or contact me directly. Some stability and performance improvements will be coming soon.</p>
-      <h3>About this Website</h3>
-      <p>
-        This tool is a personal project I've been working on to facilitate routing practice.
-        Based on the Z3 Randomizer I developed this tool to simulate a playthrough of that very closely, while still making it fast and quick,
-        so I could play a seed in 5 minutes instead of 2 hours.
-      </p>
-      <p>
-        It's mobile friendly(ish) so you can play during your commute to work or for a quick seed before sleeping. Hopefully you guys have as much fun with Rando as I have. <i class="fa fa-heart" aria-hidden="true"></i>
-      </p>
-      <p>
-        The design was heavily inspired by the <a href="https://www.twitch.tv/crossproduct">Crossproduct</a>'s Randomizer Tracker. The game logic is based on the VT8.29 version of the Randomizer.
-      </p>
-      <p>
-        If you have any suggestions, questions, bug reports or just want to say hi, 
-        feel free to join the <a href="https://discord.gg/nPJpFQB" target="_blank">Z3RSim Discord</a> 
-        or catch me streaming at my <a href="https://www.twitch.tv/kyong92" target="_blank">Twitch page</a>.
       </p>
     </div>
   </div>

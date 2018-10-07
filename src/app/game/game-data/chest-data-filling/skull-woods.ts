@@ -215,7 +215,7 @@ export class SkullWoods {
     final.nodes.push(new DungeonNode(
       'Mothula Room', 25, 9.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.sword;
+        return items.sword || config.weapons === 'swordless';
     }, 'sw-mothula', 'Sword Required'));
     final.nodes.push(new DungeonNode(
       'Bridge Room Chest', 33, 74, DungeonNodeStatus.CLOSED_CHEST,

@@ -525,10 +525,10 @@ export class LightWorld {
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
           return items.canInvertedEastDeathMountain() && items.moonPearl && items.book && items.hammer
-            && items.sword >= 2;
+            && (items.sword >= 2 || (items.hammer && config.weapons === 'swordless'));
         }
         return items.book && items.canWestDeathMountain() && (items.mirror || (items.hammer && items.hookshot)) 
-          && (items.sword >= 2 || (items.hammer && config.mode === 'swordless'));
+          && (items.sword >= 2 || (items.hammer && config.weapons === 'swordless'));
       },
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
@@ -536,15 +536,14 @@ export class LightWorld {
         }
         return items.book && items.canWestDeathMountain() && (items.mirror || (items.hammer && items.hookshot));
       },
-      [l[76]],
-      '',
+      [l[76]], '',
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
           return items.canInvertedEastDeathMountain(true) && items.moonPearl && items.book && items.hammer
-            && items.sword >= 2;
+            && (items.sword >= 2 || (items.hammer && config.weapons === 'swordless'));
         }
         return items.book && items.canWestDeathMountain(true) && (items.mirror || (items.hammer && items.hookshot)) 
-          && (items.sword >= 2 || (items.hammer && config.mode === 'swordless'));
+          && (items.sword >= 2 || (items.hammer && config.weapons === 'swordless'));
       },
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
@@ -712,7 +711,7 @@ export class LightWorld {
         'Bombos Tablet', 11, 92.2,
         function(items:Items, config:Config) {
           return items.book && items.canInvertedLW() 
-            && (items.sword >= 2 || (items.hammer && config.mode === 'swordless'));
+            && (items.sword >= 2 || (items.hammer && config.weapons === 'swordless'));
         },
         function(items:Items, config:Config) {
           return items.book && items.canInvertedLW();

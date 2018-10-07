@@ -2,11 +2,26 @@
   max-width: 300px;
 }
 
+.fa-question-circle {
+  vertical-align: super;
+  font-size: 12px;
+}
+
+.question-mark {
+  cursor: pointer;
+}
+
 .super-text {
   vertical-align: super;
 }
 
-:host-context(.dark-theme) .control-label, .super-text {
+.support-text {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+:host-context(.dark-theme) .control-label, :host-context(.dark-theme) .super-text, :host-context(.dark-theme) h3, :host-context(.dark-theme) p {
   color: var(--dark-text-color);
 }
 

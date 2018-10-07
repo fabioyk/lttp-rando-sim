@@ -36,7 +36,8 @@ export class GameService {
   
   lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
   dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
-    
+  
+  prizesToReplace:any = {};
 
   constructor(private _itemNamesService: ItemNamesService) { }
 
@@ -62,7 +63,7 @@ export class GameService {
       this.lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
       this.dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
     }
-    this.config.variation = logObj.variation === '0' ? 'none' : 'key-sanity';
+    this.config.variation = logObj.variation === '0' ? 'none' : 'keysanity';
     this.config.vtSeedNumber = logObj.seed;
     this.config.canGlitch = canGlitch;
     this.config.isFullMap = isFullMap;
@@ -268,6 +269,8 @@ export class GameService {
         if (location.item[0].charAt(0) === '=') {
           location.mapNode.status += ' hint';
         }
+        location.item = this.checkReplacePrizes(location.item);
+        location.mapNode.prize = this.checkReplacePrizes(location.mapNode.prize);
       });
       this.overworldData.dwLocations.forEach((location) => {
         if (location.item[0] === 'warp') {
@@ -310,7 +313,9 @@ export class GameService {
           if (location.item[0].charAt(0) === '=') {
             location.mapNode.status += ' hint';
           }
-        }
+        }        
+        location.item = this.checkReplacePrizes(location.item);
+        location.mapNode.prize = this.checkReplacePrizes(location.mapNode.prize);
       });
 
       if (world === 'light-world') {
@@ -376,6 +381,14 @@ export class GameService {
         })
       }
     }  
+    this.dungeonsData.forEach((dungeon) => {
+      dungeon.dungeonMaps.forEach((map) => {        
+        map.nodes.forEach((eachNode) => {
+          eachNode.content = this.checkReplacePrizes([eachNode.content])[0];
+          eachNode.mapNode.prize = this.checkReplacePrizes(eachNode.mapNode.prize);
+        });
+      });
+    });
   }
 
   getAccessibleDungeons(items:Items, world:string, region:string=''):MapNode[] {
@@ -487,6 +500,30 @@ export class GameService {
     }
     console.log('Map not found');
     return [null, null];
+  }
+
+  addItemReplacement(original:string) {
+    let originalItem = this._itemNamesService.getItemByLongName(original);
+    if (!this.prizesToReplace[originalItem.id]) {
+      let replacementItem;
+      if (originalItem.shortName === 'lamp') {
+        replacementItem = this._itemNamesService.getItemByShortName('5rupees');
+      } else {
+        replacementItem = this._itemNamesService.getItemByShortName('20rupees');
+      }    
+      this.prizesToReplace[originalItem.id] = replacementItem.id.toString();
+    }
+  }
+
+  checkReplacePrizes(prizeList:string[]) {
+    return prizeList.map(eachVal => {
+      if (this.prizesToReplace[eachVal]) {
+        console.log('replaced',eachVal,this.prizesToReplace[eachVal]);
+        return this.prizesToReplace[eachVal];
+      } else {
+        return eachVal;
+      }
+    });
   }
 
 }

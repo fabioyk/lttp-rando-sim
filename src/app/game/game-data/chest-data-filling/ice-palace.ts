@@ -32,10 +32,10 @@ export class IcePalace {
     entrance.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.hasMeltyPower() && (items.moonPearl || config.mode === 'inverted');
+      return items.hasMeltyPower(config) && (items.moonPearl || config.mode === 'inverted');
     }, 'ip-first-fork', 'Fire Rod or Bombos Required', [-1], 0,
     function(items:Items, config:Config) {
-      return items.hasMeltyPower();
+      return items.hasMeltyPower(config);
     }));
     entrance.nodes.push(new DungeonNode(
       'Hint Tile', 50, 20, DungeonNodeStatus.HINT,

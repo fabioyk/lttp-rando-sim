@@ -321,7 +321,7 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       '', 90, 50, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.mirror && items.flippers;
+        return true;
     }, 'sp-entry'));
     m.nodes.push(new DungeonNode(
       '', 81, 34, DungeonNodeStatus.OPEN_DOOR,
@@ -746,8 +746,14 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       'Triforce Room', 50, 12, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.sword >= 2 && items.hasFiresource();
-    }, 'Ganon'));
+      return config.goal !== 'pedestal' && config.goal !== 'triforce'
+        && (config.goal !== 'alldungeons' || (items.pendantCourage && items.pendantPower && items.pendantWisdom && items.agahnim))
+        && (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer && items.hasSilvers() && items.hasBow())) 
+        && items.hasFiresource();
+    }, 'Ganon', 
+    (config.goal === 'pedestal' || config.goal === 'triforce') ? 'Ganon is unbeatable in this goal'
+    : (config.goal === 'alldungeons' ? 'All Pendants and Agahnim Required' :
+     (config.weapons !== 'swordless' ? 'Master Sword Required' : 'Hammer and Silvers Required'))));
     m.nodes.push(new DungeonNode(
       '', 49, 87, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
@@ -830,7 +836,7 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       '', 76.5, 57, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.somaria && items.moonPearl && items.isTROpened;
+      return items.moonPearl && items.isTROpened;
     }, 'tr-entry'));
     m.nodes.push(new DungeonNode(
       '', 46, 37, DungeonNodeStatus.MIRROR,

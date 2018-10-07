@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MainMenuComponent } from './main-menu/main-menu.component';
-import { AlertModule, TabsModule, ButtonsModule, TooltipModule } from "ngx-bootstrap";
+import { AlertModule, ButtonsModule, TooltipModule, PopoverModule, AccordionModule } from "ngx-bootstrap";
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 
@@ -14,6 +14,8 @@ import { RouterModule } from '@angular/router';
     AlertModule.forRoot(),
     ButtonsModule.forRoot(),
     TooltipModule.forRoot(),
+    PopoverModule.forRoot(),
+    AccordionModule.forRoot(),
     RouterModule
   ],
   declarations: [MainMenuComponent],

@@ -16,6 +16,7 @@ export class Config {
   noLogic: boolean;
 
   hints: string[];
+  silversHint: string;
 
   constructor() {
     this.canGlitch = false;
@@ -29,11 +30,13 @@ export class Config {
     this.logic = 'normal';
     this.goal = 'ganon';
     this.mode = 'standard';
+
     this.weapons = 'randomized';
     this.isFullMap = false;
 
     this.hints = [];
-
+    this.silversHint = '';
+    
     this.noLogic = false;
   }
 }

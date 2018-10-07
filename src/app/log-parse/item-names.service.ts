@@ -103,6 +103,11 @@ export class ItemNamesService {
       shortName: '10bombs',
       longName: 'Ten Bombs'
     });
+    this.itemNames.push({
+      id: 20,
+      shortName: '20rupeesb',
+      longName: 'Twenty Rupees'
+    });
 
     // Trackable Items (100~149)
     this.itemNames.push({
@@ -552,6 +557,18 @@ export class ItemNamesService {
       shortName: 'compass-12',
       longName: 'Ganons Tower Compass'
     });
+
+    // Extra (271~299)
+    this.itemNames.push({
+      id: 270,
+      shortName: 'triforce',
+      longName: 'Triforce'
+    });
+    this.itemNames.push({
+      id: 271,
+      shortName: 'triforce-piece',
+      longName: 'Triforce Piece'
+    });
     
     // Dungeon Nodes (300+)
     this.itemNames.push({
@@ -702,8 +719,22 @@ export class ItemNamesService {
               break;
           }
           shortName = 'shield' + (items.shield + modifier);
-          break;
+          break;        
       }
+    }
+
+    if (res.shortName === 'halfMagic') {
+      switch(items.halfMagic + modifier) {
+        case 1:
+          longName = 'Half Magic';
+          shortName = 'halfMagic';
+          break;
+        case 2:
+          longName = 'Quarter Magic';
+          shortName = 'quarterMagic';
+          break;          
+      }
+
     }
 
     if (res.shortName === 'bow') {

@@ -335,7 +335,7 @@ export class LightWorldMap {
     m.nodes.push(new DungeonNode(
       'Bombos Tablet', 11, 45, DungeonNodeStatus.BOOK_CHECKABLE_ITEM,
     function(items:Items, config:Config) {
-        return items.sword >= 2;
+        return (items.sword >= 2 || (items.hammer && config.weapons === 'swordless'));
     }, l[33], '', [1]));
     lwData.dungeonMaps.push(m);
 
@@ -1079,7 +1079,7 @@ export class LightWorldMap {
     m.nodes.push(new DungeonNode(
       'Ether Tablet', 18, 31, DungeonNodeStatus.BOOK_CHECKABLE_ITEM,
     function(items:Items, config:Config) {
-      return items.sword >= 2;
+      return (items.sword >= 2 || (items.hammer && config.weapons === 'swordless'));
     }, l[76]));
     m.nodes.push(new DungeonNode(
       'Spectacle Rock Item', 53, 60, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,

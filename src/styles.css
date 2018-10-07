@@ -61,3 +61,15 @@ a {
   background-color: var(--dark-background-light-color);
   color: var(--dark-text-color);
 }
+
+.popover-content {
+  color: black;
+}
+
+.dark-theme * .text-muted {
+  color: white;
+}
+
+.panel-body {
+  padding-bottom: 0;
+}

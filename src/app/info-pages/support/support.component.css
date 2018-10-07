@@ -1,0 +1,7 @@
+.golden {
+  color: #f96854;
+}
+
+:host-context(.dark-theme) h3, :host-context(.dark-theme) p {
+  color: var(--dark-text-color);
+}

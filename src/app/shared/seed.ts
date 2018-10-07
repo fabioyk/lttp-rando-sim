@@ -8,5 +8,6 @@ export class Seed {
   weapons: string;
   data: string;
   hints: string[];
+  silversHint: string;
   error:string;
 }

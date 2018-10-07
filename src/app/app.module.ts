@@ -16,6 +16,10 @@ import { HttpModule } from '@angular/http';
 import { ItemNamesService } from './log-parse/item-names.service';
 import { WindowRefService } from "./shared/window-ref.service";
 import { FormsModule } from '@angular/forms';
+import { AboutComponent } from './info-pages/about/about.component';
+import { InfoPagesModule } from './info-pages/info-pages.module';
+import { SupportComponent } from './info-pages/support/support.component';
+import { ChangelogComponent } from './info-pages/changelog/changelog.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     BrowserModule, 
     GameModule,
     MainMenuModule,
+    InfoPagesModule,
     SharedModule,
     HttpModule,
     RouterModule.forRoot([
@@ -38,7 +43,10 @@ import { FormsModule } from '@angular/forms';
       { path: 'open', component: GameComponent },  
       { path: 'keysanity', component: GameComponent },  
       { path: 'standard-rando', component: GameComponent }, 
-      { path: 'inverted', component: GameComponent}
+      { path: 'inverted', component: GameComponent},
+      { path: 'about', component: AboutComponent },
+      { path: 'support', component: SupportComponent },
+      { path: 'changelog', component: ChangelogComponent },
     ])
   ],
   providers: [GameService, SeedApiService, ItemNamesService, WindowRefService],

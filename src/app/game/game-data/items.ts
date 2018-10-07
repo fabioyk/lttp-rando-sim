@@ -33,7 +33,7 @@ export class Items {
   boots = false;
   glove = 0;
   flippers = false;
-  halfMagic = false;
+  halfMagic = 0;
 
   crystal1 = false;
   crystal2 = false;
@@ -123,6 +123,7 @@ export class Items {
   }
   preEachDun = [];
   gtChestCount = 0;
+  startingHearts = 3;
 
   startingItemCount = [];
 
@@ -208,8 +209,9 @@ export class Items {
       case 'hookshot': this.hookshot = true; this.stats.preHook = this.stats.totalCount; break;
       case 'moonPearl': this.moonPearl = true; this.stats.prePearl = this.stats.totalCount; break;
       case 'silvers': this.bow += 1; break;
+      case 'halfMagic': this.halfMagic++; break;
       case 'tunic': this.tunic++; break;
-      case 'glove': this.glove++; 
+      case 'glove': this.glove++;
         if (this.glove === 1) this.stats.preGlove = this.stats.totalCount;
         if (this.glove === 2) this.stats.preMitts = this.stats.totalCount; 
         break;
@@ -339,8 +341,8 @@ export class Items {
   hasSilvers() {
     return this.bow >= 3;
   }
-  hasMeltyPower() {
-    return this.fireRod || (this.bombos && this.sword);
+  hasMeltyPower(config:Config) {
+    return this.fireRod || (this.bombos && (this.sword || config.weapons === 'swordless'));
   }
   hasBeamReflection(config:Config) {
     return this.cape || this.byrna || this.shield === 3 || config.canGlitch;
@@ -450,6 +452,10 @@ export class Items {
     } else {
       return false;
     }
+  }
+
+  get totalHealth() {
+    return this.startingHearts + this.stats.heartContainers + Math.floor(this.stats.heartPieces / 4);
   }
   
 }

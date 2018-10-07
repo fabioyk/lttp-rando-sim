@@ -1,0 +1,7 @@
+h3 {
+  margin-bottom: 30px;
+}
+
+:host-context(.dark-theme) h3 {
+  color: var(--dark-text-color);
+}

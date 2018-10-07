@@ -23,7 +23,7 @@ export class MapComponent implements OnInit {
   @Output() addedItem = new EventEmitter<[MapNode, string, string]>();
   @Output() viewItem = new EventEmitter<[MapNode, string, string]>();
   @Output() cantItem = new EventEmitter<[MapNode, string, boolean]>();
-  @Output() hintCheck = new EventEmitter<[MapNode, string, string]>();
+  @Output() hintCheck = new EventEmitter<[string, string, string]>();
   @Output() finishedDungeon = new EventEmitter<[string, string]>();
   @Output() onGameFinished = new EventEmitter<string>();
   tooltip:string;
@@ -95,14 +95,14 @@ export class MapComponent implements OnInit {
       } else if (nodeClicked.prize[0] === 'tr-ledge') {
         this.changeDungeon('tr-inverted-ledge');
       } else if (nodeClicked.prize[0].charAt(0) === '=') {
-        this.hintCheck.emit([nodeClicked, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);        
-      } else if (nodeClicked.status !== 'opened' && (!nodeClicked.originalNode.canView || nodeClicked.isFaded)) {        
+        this.hintCheck.emit([nodeClicked.tooltip, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);        
+      } else if (nodeClicked.status !== 'opened' && !nodeClicked.originalNode.isOpened && (!nodeClicked.originalNode.canView || nodeClicked.isFaded)) {        
         this.addPrizes(nodeClicked, this.currentMap);
         if (nodeClicked.originalNode) {
           nodeClicked.originalNode.isOpened = true;
         }
         nodeClicked.status = 'opened'
-        if (nodeClicked.tooltip === 'Ganon') {
+        if (nodeClicked.tooltip === 'Ganon' || nodeClicked.prize[0] === '270') {
           this.onGameFinished.emit('');
         }        
       } else if (nodeClicked.status !== 'opened' && nodeClicked.originalNode.canView) {
@@ -124,19 +124,19 @@ export class MapComponent implements OnInit {
         nodeClicked.status = 'getable';
       } else {
         nodeClicked.status = 'g-getable';
-      }      
+      }
       this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
     } else if (nodeClicked.status.indexOf('getable') > -1) {      
       if (!nodeClicked.originalNode.isOpened && nodeClicked.status.indexOf('unreachable') === -1) {
         if (nodeClicked.prize[0].charAt(0) === '=') {
-          this.hintCheck.emit([nodeClicked, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);
+          this.hintCheck.emit([nodeClicked.tooltip, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);
         } else {
           this.addPrizes(nodeClicked, this.currentMap);
           if (nodeClicked.originalNode) {
             nodeClicked.originalNode.isOpened = true;
           }
           nodeClicked.status = 'opened'
-          if (nodeClicked.tooltip === 'Ganon') {
+          if (nodeClicked.tooltip === 'Ganon' || nodeClicked.prize[0] === '270') {
             this.onGameFinished.emit('');
           }
         }        
@@ -253,7 +253,7 @@ export class MapComponent implements OnInit {
           if (this.items.spFlooded && dungeonNode.prize[0].substr(0, 2) === 'dw') {
             this.unfloodSwamp();
           }
-          if (dungeonNode.prize[0] === 'Ganon') {
+          if (dungeonNode.prize[0] === 'Ganon' || dungeonNode.prize[0] === 'Triforce') {
             this.addPrizes(dungeonNode, this.currentDungeon.name);
             this.onGameFinished.emit('');            
           } else if (dungeonNode.prize[0] !== 'exit' && dungeonNode.prize[0].split('-')[0] !== this.currentDungeonMap.id.split('-')[0]) {            
@@ -468,7 +468,7 @@ export class MapComponent implements OnInit {
           dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
           break;
         case DungeonNodeStatus.HINT:
-          this.hintCheck.emit([dungeonNode, this.currentDungeon.name, this.config.hints[+dungeonNode.prize[0]]]);          
+          this.hintCheck.emit([dungeonNode.tooltip, this.currentDungeon.name, this.config.hints[+dungeonNode.prize[0]]]);          
           break;
       }
     } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()
@@ -599,7 +599,10 @@ export class MapComponent implements OnInit {
     }
   }
 
-  defeatDungeon(isAgaTower:boolean) {    
+  defeatDungeon(isAgaTower:boolean) {
+    if (this.currentDungeon.name === 'Ganons Tower') {
+      this.hintCheck.emit(['Ganon', this.currentMap, this.config.silversHint]);
+    }
     this.finishedDungeon.emit([this.currentDungeon.dungeonPrize, this.currentDungeon.name]);    
     this.currentDungeonItems.isBossDefeated = true;
     this.currentDungeonItems.checkThisMap();
@@ -808,7 +811,7 @@ export class MapComponent implements OnInit {
         }
       });
     } else {
-      if (this.config.variation !== 'key-sanity') {
+      if (this.config.variation !== 'keysanity') {
         if (mapName === 'lw') {
           this.items.lwMapOpen = true;
           this.gameService.dungeonsData.forEach((dunData, i) => {
@@ -894,10 +897,10 @@ export class MapComponent implements OnInit {
     if (this.config.isFullMap) {
       if (world === 'light-world') {
         return this.currentDungeonMap.id.split('-')[0] === 'lw'          
-          && !this.currentDungeonMap.isIndoors && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'key-sanity');
+          && !this.currentDungeonMap.isIndoors && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'keysanity');
       } else if (world === 'dark-world') {
         return this.currentDungeonMap.id.split('-')[0] === 'dw' 
-          && !this.currentDungeonMap.isIndoors  && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'key-sanity');
+          && !this.currentDungeonMap.isIndoors  && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'keysanity');
       } else if (world === 'green-pendant') {
         var foundGreen = false;
         this.items.dungeonItemsArray.forEach((eachDunItems) => {
@@ -916,7 +919,7 @@ export class MapComponent implements OnInit {
         return this.currentDungeonMap.id === 'dw-bomb-shop' && foundReds < 2;        
       }
     }
-    if (this.config.variation !== 'key-sanity') {
+    if (this.config.variation !== 'keysanity') {
       return this.currentMap === world;
     } else {      
       if (this.currentMap === world) {
