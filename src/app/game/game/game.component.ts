@@ -187,9 +187,9 @@ export class GameComponent implements OnInit {
         case 'keysanity': this.seedDescription += 'Keysanity '; break;
       }
       switch(this.config.mode) {
-        case 'standard': this.seedDescription += 'Standard '; break;
         case 'open': this.seedDescription += 'Open '; break;
         case 'inverted': this.seedDescription += 'Inverted '; break;
+        default: this.seedDescription += 'Standard '; break;
       }      
       switch(this.config.weapons) {
         case 'uncle': this.seedDescription += 'Uncle Assured '; break;
