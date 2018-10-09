@@ -518,7 +518,6 @@ export class GameService {
   checkReplacePrizes(prizeList:string[]) {
     return prizeList.map(eachVal => {
       if (this.prizesToReplace[eachVal]) {
-        console.log('replaced',eachVal,this.prizesToReplace[eachVal]);
         return this.prizesToReplace[eachVal];
       } else {
         return eachVal;
