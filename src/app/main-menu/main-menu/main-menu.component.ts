@@ -168,7 +168,6 @@ export class MainMenuComponent implements OnInit {
 
     this._seedService.getSeed(this.lockedMode, qParams)
       .subscribe((seed) => {
-        console.log('got it');
         if (!seed || seed.error) {
           this.errorMessage = seed.error;
           this.shouldDisablePlay = false;
