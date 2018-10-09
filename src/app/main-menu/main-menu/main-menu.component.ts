@@ -78,6 +78,8 @@ export class MainMenuComponent implements OnInit {
               break;
           }
         }
+      }, error => {
+        this.errorMessage = error;
       });
     setTimeout(() => {
       this.preloadMap();
@@ -132,26 +134,54 @@ export class MainMenuComponent implements OnInit {
     } 
     if (this.lockedMap === 'yes') {
       queryParams.fullMap = true;
-    } 
-    this._router.navigate(['/' + this.modeSelected], {queryParams: queryParams});
+    }   
 
     this.preloadedMap = null;
     this.preloadedIcons = null;
     this.preloadedBosses = null;
 
-    // no more seed generation on main menu since it's all random
-    // this._seedService.getSeed(this.lockedMode, this.seedNum, this.dailySeed)
-    //   .subscribe((seed) => {
-    //     if (!seed || seed.error) {
-    //       this.errorMessage = seed.error;
-    //       this.shouldDisablePlay = false;
-    //     } else {
-          
-    //     }
-    //     this.preloadedMap = null;
-    //     this.preloadedIcons = null;
-    //     this.preloadedBosses = null;
-    //   });
+    var qParams:any = {};
+    var canGlitch = false;
+    if (queryParams.minorGlitches) {
+      canGlitch = true;
+    }
+    if (queryParams.swords) {
+      qParams.swords = queryParams.swords;
+    } else {
+      qParams.swords = 'randomized';
+    }
+    if (queryParams.goal) {
+      qParams.goal = queryParams.goal;
+    } else {
+      qParams.goal = 'ganon';
+    }
+    if (queryParams.diff) {
+      qParams.diff = queryParams.diff;
+    } else {
+      qParams.diff = 'normal';
+    }
+    if (queryParams.variation) {
+      qParams.variation = queryParams.variation;
+    } else {
+      qParams.variation = 'none';
+    }
+
+    this._seedService.getSeed(this.lockedMode, qParams)
+      .subscribe((seed) => {
+        console.log('got it');
+        if (!seed || seed.error) {
+          this.errorMessage = seed.error;
+          this.shouldDisablePlay = false;
+        } else {
+          this._router.navigate(['/' + this.modeSelected], {queryParams: queryParams});
+        }
+        this.preloadedMap = null;
+        this.preloadedIcons = null;
+        this.preloadedBosses = null;       
+      }, error => {
+        this.errorMessage = error;
+        this.shouldDisablePlay = false;
+      })
   }
 
   onIsInverted(isInverted:boolean) {

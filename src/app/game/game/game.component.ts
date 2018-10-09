@@ -107,14 +107,16 @@ export class GameComponent implements OnInit {
           }
         }
         localStorage.setItem('glitchSelected', canGlitch ? 'yes' : 'no');
-        //if (params.seed && +params.seed === this._seedService.lastSeedNum) {
-          //this.gameInit(this._seedService.lastSeedData, this._seedService.lastSeedNum, canGlitch, fullMap, );
-        //} else {
+        if (this._seedService.lastSeed && Date.now() - this._seedService.lastSeedTimestamp < 2000 
+          && this._seedService.lastSeedParams) {
+          this.gameInit(this._seedService.lastSeed.data, this._seedService.lastSeedParams, canGlitch, fullMap, 
+            this._seedService.lastSeed.hints, this._seedService.lastSeed.silversHint);
+        } else {
           this._seedService.getSeed(gameMode, qParams)
             .subscribe((seed) => {
               this.gameInit(seed.data, qParams, canGlitch, fullMap, seed.hints, seed.silversHint);
             });
-        //}
+        }
       }
     );    
   }

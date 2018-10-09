@@ -16,8 +16,9 @@ import { environment } from 'environments/environment';
 @Injectable()
 export class SeedApiService {  
   private _apiUrl = 'https://lttp-rando-seed-api.glitch.me/';
-  public lastSeedData:string;
-  public lastSeedNum:number;
+  public lastSeedTimestamp:number;
+  public lastSeedParams:any;
+  public lastSeed:Seed;
   private webVersion = '3.2';
 
   constructor(private _http: Http) {
@@ -64,13 +65,12 @@ export class SeedApiService {
     //     .catch(this.handleError);
     // }
     
-    
-    
     return this._http.get(queryUrl)
       .map((response: Response) => {
         var seed = <Seed> response.json();
-        this.lastSeedData = seed.data;
-        this.lastSeedNum = seed.seed;        
+        this.lastSeedTimestamp = Date.now();
+        this.lastSeedParams = queryParams;
+        this.lastSeed = seed;
         return seed;
       })
       .catch(this.handleError);
@@ -89,7 +89,7 @@ export class SeedApiService {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error.json().error || 'Server error');
+    return Observable.throw(error.json().error || 'Z3RSim seems to be offline. Please try again later.');
   }
 
 }
