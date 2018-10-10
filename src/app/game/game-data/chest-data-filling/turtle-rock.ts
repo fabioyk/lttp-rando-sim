@@ -230,7 +230,8 @@ export class TurtleRock {
       'Big Chest', 50, 39.5, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return items.somaria || items.hookshot;
-    }, l[190]));
+    }, l[190], 'Somaria or Hookshot Required', [-1], 0, 
+      DungeonNode.noReqs ));
     trData.dungeonMaps.push(bc);
 
     var bigDoor = new DungeonMapData('tr-big-door', 'Big Door Room');
