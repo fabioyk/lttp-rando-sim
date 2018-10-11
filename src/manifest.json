@@ -1,0 +1,13 @@
+{
+  "name": "Z3R Simulator",
+  "short_name": "Z3RSim",
+  "icons": [
+    {
+      "src": "assets/dungeon-tracker-icons/chest6.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
+  ],
+  "display": "fullscreen",
+  "orientation": "portrait"
+}
