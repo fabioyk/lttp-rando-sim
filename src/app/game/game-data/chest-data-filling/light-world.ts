@@ -378,7 +378,7 @@ export class LightWorld {
       [l[50], l[51]],
       '',
       function(items:Items, config:Config) {
-        return (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl));
+        return ((config.mode !== 'inverted' && (items.moonPearl || items.boots)) || (items.canInvertedLW() && items.moonPearl));
       }
     ));
 

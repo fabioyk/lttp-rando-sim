@@ -38,4 +38,5 @@ export class DungeonNodeStatus {
   static OPEN_DOOR_PUSH_BLOCK = 37;
 
   static HINT = 38;
+  static DEFEATED_BOSS = 39;
 }

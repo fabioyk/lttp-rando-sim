@@ -25,6 +25,7 @@ import { LightWorldMap } from './chest-data-filling/light-world-map';
 import { DarkWorldMap } from './chest-data-filling/dark-world-map';
 import { DungeonMapData } from './dungeon-map-data';
 import { HyruleCastle } from './chest-data-filling/hyrule-castle';
+import { DungeonNode } from './dungeon-node';
 
 @Injectable()
 export class GameService {
@@ -41,7 +42,7 @@ export class GameService {
 
   constructor(private _itemNamesService: ItemNamesService) { }
 
-  loadSeed(log:string, seedNumber:number, canGlitch:boolean, isFullMap:boolean) {
+  loadSeed(log:string, seedNumber:number, canGlitch:boolean, isFullMap:boolean, isEnemizer:boolean, bosses:number[]) {
     var spoilerLogManager = new SpoilerLog();
     var logObj = spoilerLogManager.convertShortToNormal(log, seedNumber);
 
@@ -66,7 +67,10 @@ export class GameService {
     this.config.variation = logObj.variation === '0' ? 'none' : 'keysanity';
     this.config.vtSeedNumber = logObj.seed;
     this.config.canGlitch = canGlitch;
-    this.config.isFullMap = isFullMap;
+    this.config.isFullMap = isFullMap;    
+    this.config.isEnemizer = isEnemizer;
+    this.config.bosses = bosses;
+    this.prizesToReplace = {};
 
 
     //console.log('Loaded up seed '+this.config.vtSeedNumber);
@@ -88,6 +92,38 @@ export class GameService {
     this.dungeonsData.push(MiseryMire.setup(logObj.locations, this.config));
     this.dungeonsData.push(TurtleRock.setup(logObj.locations, this.config));
     this.dungeonsData.push(GanonsTower.setup(logObj.locations, this.config));
+
+    if (isEnemizer) {
+      this.dungeonsData.forEach((eachDun, index) => {
+        // Not aga tower or GT
+        if (index !== 3 && index !== 11) {
+          eachDun.dungeonMaps[eachDun.dungeonMaps.length-1].nodes.forEach(eachNode => {
+            if (eachNode.status === DungeonNodeStatus.BOSS) {
+              let myIndex = index;
+              if (myIndex > 3) {
+                myIndex--;
+              }
+              eachNode.canOpen = DungeonNode.bossReqs[bosses[myIndex]];
+              eachNode.canGlitch = DungeonNode.glitchedBossReqs[bosses[myIndex]];
+            }
+          });
+        }
+
+        // GT bosses
+        if (index === 11) {
+          let currentBoss = 10;
+          eachDun.dungeonMaps.forEach(eachMap => {
+            eachMap.nodes.forEach(eachNode => {
+              if (eachNode.status === DungeonNodeStatus.BOSS && currentBoss <= 12) {
+                eachNode.canOpen = DungeonNode.bossReqs[bosses[currentBoss]];
+                eachNode.canGlitch = DungeonNode.glitchedBossReqs[bosses[currentBoss]];
+                currentBoss++;
+              }
+            });
+          });
+        } 
+      });
+    }
 
     if (isFullMap) {
       this.dungeonsData.push(LightWorldMap.setup(logObj.locations, this.config));
@@ -173,26 +209,26 @@ export class GameService {
       dungeon.dungeonMaps.forEach((map) => {
         map.nodes.forEach((eachNode, index) => {
           if (eachNode.name === '' && transitions.indexOf(+eachNode.status) > -1) {
-              var target = eachNode.content;
-              var found = false;
-              dungeon.dungeonMaps.forEach((eachMap) => {
-                if (eachMap.id === target) {
-                  eachNode.name = eachMap.name;
-                  found = true;
-                }
-              });
-              if (!found) {
-                this.dungeonsData.forEach(dunData => {
-                  if (!found) {
-                    dunData.dungeonMaps.forEach(dunMap => {
-                      if (dunMap.id === target) {
-                        eachNode.name = dunMap.name;
-                        found = true;
-                      }
-                    }) 
-                  }                  
-                })
+            var target = eachNode.content;
+            var found = false;
+            dungeon.dungeonMaps.forEach((eachMap) => {
+              if (eachMap.id === target) {
+                eachNode.name = eachMap.name;
+                found = true;
               }
+            });
+            if (!found) {
+              this.dungeonsData.forEach(dunData => {
+                if (!found) {
+                  dunData.dungeonMaps.forEach(dunMap => {
+                    if (dunMap.id === target) {
+                      eachNode.name = dunMap.name;
+                      found = true;
+                    }
+                  }) 
+                }                  
+              })
+            }
           }
           eachNode.mapNode = {
             x: eachNode.x ? eachNode.x : index * 10 + 15,

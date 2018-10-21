@@ -71,6 +71,12 @@ export class Items {
   isFluteActivated = false;
   isTROpened = false;
 
+  iceArmosDefeated = false;
+  lanmo2Defeated = false;
+  moldorms2Defeated = false;
+
+  triforcePieces = 0;
+
   // 0: start. 1: uncle sword get. 2: zelda cell get. 3: sewers. 4: zelda rescued
   gameState = 0;
 
@@ -122,6 +128,8 @@ export class Items {
     rupeeCount: 0
   }
   preEachDun = [];
+  preEachPendant:any = {};
+  preEachMedallion:any = {};
   gtChestCount = 0;
   startingHearts = 3;
 
@@ -133,7 +141,7 @@ export class Items {
 
   }
   
-  setup(isKeysanity:boolean, dungeonsData:DungeonData[], isFullMap:boolean) {
+  setup(isKeysanity:boolean, dungeonsData:DungeonData[], isFullMap:boolean, bosses:number[]) {
     this.isKeysanity = isKeysanity;
 
     if (!isKeysanity) {
@@ -147,16 +155,29 @@ export class Items {
 
     DungeonData.dungeonNames.forEach((dunName, index) => {
       if (index === 0) {
-        this.dungeonItemsArray.push(new DungeonItems('Hyrule Castle', this.startingItemCount[0], ''));
+        this.dungeonItemsArray.push(new DungeonItems('Hyrule Castle', this.startingItemCount[0], '', -1));
+      } else if (DungeonData.crystalDungeonNames.includes(dunName)) {
+        this.dungeonItemsArray.push(new DungeonItems(dunName, this.startingItemCount[index], 
+          dungeonsData[index-1].dungeonPrize, bosses[DungeonData.crystalDungeonNames.indexOf(dunName)]));
       } else {
-        this.dungeonItemsArray.push(new DungeonItems(dunName, this.startingItemCount[index], dungeonsData[index-1].dungeonPrize));        
+        this.dungeonItemsArray.push(new DungeonItems(dunName, this.startingItemCount[index], 
+          dungeonsData[index-1].dungeonPrize, -1));
       }
     })
 
     this.stats.startTime = Date.now();
     this.preEachDun = [0, 0, 0, 0, 0, 0, 0];
     this.visitedDungeon = [false, false, false, false, false, false, false, false, false, false];
-
+    this.preEachPendant = {
+      pendantCourage: 0,
+      pendantPower: 0,
+      pendantWisdom: 0
+    }
+    this.preEachMedallion = {
+      bombos: 0,
+      ether: 0,
+      quake: 0
+    }
     
   }
 
@@ -189,6 +210,8 @@ export class Items {
       }
       if (itemName.indexOf('crystal') > -1) {
         this.preEachDun[+itemName.charAt(7)-1] = this.stats.totalCount;
+      } else if (itemName.indexOf('pendant') > -1) {
+        this.preEachPendant[itemName] = this.stats.totalCount;
       }
     }
 
@@ -226,13 +249,16 @@ export class Items {
       case 'tt-bomb': this.ttBombableFloor = true; break;
       case 'Ganon': this.ganon = true; this.stats.preGanon = this.stats.totalCount; break;
       case 'switch': this.crystalSwitch = !this.crystalSwitch; break;
-      case 'ip-switch-room': this.ipBlockPushed = true; break;      
+      case 'ip-switch-room': this.ipBlockPushed = true; break;   
+      case 'triforcePieces': this.triforcePieces++; break;
+      case 'bombos': this.bombos = true; this.preEachMedallion.bombos = this.stats.totalCount; break;
+      case 'ether': this.ether = true; this.preEachMedallion.ether = this.stats.totalCount; break;
+      case 'quake': this.quake = true; this.preEachMedallion.quake = this.stats.totalCount; break;
       default:
         if (this[itemName] !== undefined) {
           this[itemName] = true;
         }        
-    }    
-
+    }
     var dungeonItemNames = ['smallKey', 'bigKey', 'map', 'compass'];
     dungeonItemNames.forEach((dunItem) => {
       if (itemName.indexOf(dunItem) > -1) {
@@ -361,6 +387,14 @@ export class Items {
       }
     }
     return false;    
+  }
+  hasMagicBars(bars:number) {
+    let count = 1;
+    count += this.bottle;
+    if (this.halfMagic > 0) {
+      count *= (this.halfMagic * 2);
+    }
+    return count >= bars;
   }
 
 

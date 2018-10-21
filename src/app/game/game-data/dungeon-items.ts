@@ -1,3 +1,5 @@
+import { DungeonData } from "./dungeon-data";
+
 export class DungeonItems {
   dungeonName:string;
   hasBigKey:boolean;
@@ -8,6 +10,8 @@ export class DungeonItems {
   itemsLeft:number;
   isBossDefeated: boolean;
   dungeonPrize:string;
+  bossId:number;
+  dungeonId:number;
 
   static UNKNOWN = 0;
   static CRYSTAL = 1;
@@ -17,7 +21,7 @@ export class DungeonItems {
   static SOME_CRYSTAL = 5;
   static SOME_PENDANT = 6;
 
-  constructor(dungeonName:string, itemCount:number, dungeonPrize:string) {
+  constructor(dungeonName:string, itemCount:number, dungeonPrize:string, bossId:number) {
     this.dungeonName = dungeonName;
     this.hasBigKey = false;
     this.smallKeys = 0;
@@ -27,6 +31,8 @@ export class DungeonItems {
     this.isBossDefeated = false;
     this.mapPrizeStatus = DungeonItems.UNKNOWN;
     this.dungeonPrize = dungeonPrize;
+    this.bossId = bossId;
+    this.dungeonId = DungeonData.crystalDungeonNames.indexOf(dungeonName);
   }
 
   dunCount() {

@@ -8,15 +8,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand"><span class="not-selectable title stylized-font" (click)="redirect('')">
-            Z3R Simulator <span class="version-text">v3.2</span>
+        <a class="navbar-brand" (click)="redirect('')"><span class="not-selectable title stylized-font">
+            Z3R Simulator <span class="version-text">v3.3</span>
           </span> </a>
       </div>
   
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a (click)="redirect('')">Generate Seed</a></li>
+          <li (click)="redirect('')"><a>Generate Seed</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a type="button" 
@@ -25,7 +25,7 @@
           <li><a (click)="openModal(howToTemplate)">How To Play</a></li>
           <li><a (click)="redirect('changelog')">Changelog</a></li>
           <li><a (click)="redirect('support')">Support Us</a></li>
-          <li><a (click)="redirect('about')">About</a></li>          
+          <li><a (click)="redirect('about')">About</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

@@ -311,15 +311,7 @@ export class MiseryMire {
     function(items:Items, config:Config) {
         return items.hammer || items.sword || items.bow;
     }, 'mm-vitty', 'Weapon Required'));
-    mmData.dungeonMaps.push(beforeVit);
-
-    var vittyRoom = new DungeonMapData('mm-vitty', 'Vitreous Room');
-    vittyRoom.nodes.push(new DungeonNode(
-      'Vitreous', 50, 52, DungeonNodeStatus.BOSS,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[184]));
-    mmData.dungeonMaps.push(vittyRoom);
+    mmData.dungeonMaps.push(beforeVit);   
 
     var bridgeRoom = new DungeonMapData('mm-two-bridges', 'Bridge Room');
     // 1 left side, 0 right side
@@ -347,6 +339,14 @@ export class MiseryMire {
       return items.currentRegionInMap === 0 || items.hookshot;
     }, l[181], 'Hookshot Required', [0, 1]));
     mmData.dungeonMaps.push(bridgeRoom);
+
+    var vittyRoom = new DungeonMapData('mm-vitty', 'Vitreous Room');
+    vittyRoom.nodes.push(new DungeonNode(
+      'Vitreous', 50, 52, DungeonNodeStatus.BOSS,
+    function(items:Items, config:Config) {
+        return true;
+    }, l[184]));
+    mmData.dungeonMaps.push(vittyRoom);
 
     mmData.startingMap = entrance;
 

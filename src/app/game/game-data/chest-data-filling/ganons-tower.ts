@@ -33,8 +33,8 @@ export class GanonsTower {
     entrance.nodes.push(new DungeonNode(
       '', 50, 9.5, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hasBow() && items.hasFiresource();
-    }, 'gt-upstairs', 'Bow and Fire Source Required'));
+        return config.isEnemizer || items.hasBow();
+    }, 'gt-lanmo2', 'Bow Required'));
     entrance.nodes.push(new DungeonNode(
       '', 75, 14, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -193,16 +193,35 @@ export class GanonsTower {
 
     var iceArmos = new DungeonMapData('gt-armos', 'Ice Armos Room');
     iceArmos.nodes.push(new DungeonNode(
+      'Ice Armos', 50, 50, DungeonNodeStatus.BOSS,
+      DungeonNode.bossReqs[0], 'Ice Armos', '', [-1], 0,
+      DungeonNode.glitchedBossReqs[0]));
+    iceArmos.nodes.push(new DungeonNode(
       '', 13, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return true;
-    }, 'gt-bc'));
+        return items.iceArmosDefeated;
+    }, 'gt-bc', 'Boss Defeated Required'));
     iceArmos.nodes.push(new DungeonNode(
       '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return true;
-    }, 'gt-bk'));
+        return items.iceArmosDefeated;
+    }, 'gt-bk', 'Boss Defeated Required'));
     gtData.dungeonMaps.push(iceArmos);
+
+    var lanmo2 = new DungeonMapData('gt-lanmo2', 'Ice Armos Room');
+    lanmo2.nodes.push(new DungeonNode(
+      'Lanmolas 2', 50, 50, DungeonNodeStatus.BOSS,
+      DungeonNode.bossReqs[1], 'Lanmolas 2', '', [-1], 0,
+      DungeonNode.glitchedBossReqs[1]));
+    lanmo2.nodes.push(new DungeonNode(
+      '', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
+    DungeonNode.noReqs, 'gt-entry'));
+    lanmo2.nodes.push(new DungeonNode(
+      '', 50, 19, DungeonNodeStatus.OPEN_DOOR,
+    function(items:Items, config:Config) {
+        return items.lanmo2Defeated;
+    }, 'gt-upstairs', 'Boss Defeated Required'));
+    gtData.dungeonMaps.push(lanmo2);
 
     var bkRoom = new DungeonMapData('gt-bk', 'Big Key Room');
     bkRoom.nodes.push(new DungeonNode(
@@ -454,17 +473,21 @@ export class GanonsTower {
 
     var moldorm2 = new DungeonMapData('gt-moldorm', 'Moldorm Room');
     moldorm2.nodes.push(new DungeonNode(
+      'Moldorm 2', 50, 50, DungeonNodeStatus.BOSS,
+      DungeonNode.bossReqs[2], 'Moldorm 2', '', [-1], 0, 
+      DungeonNode.glitchedBossReqs[2]));
+    moldorm2.nodes.push(new DungeonNode(
       'Moldorm Chest', 56.5, 73.5, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hookshot;
-    }, l[225], 'Hookshot Required', [-1], 0, 
-    function(items:Items, config:Config) {
-      return items.boots;
+        return items.hookshot && items.moldorms2Defeated;
+      }, l[225], 'Hookshot and Boss Defeated Required', [-1], 0, 
+      function(items:Items, config:Config) {
+        return items.moldorms2Defeated && items.boots;
     }));
     moldorm2.nodes.push(new DungeonNode(
       '', 7, 77, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hookshot;
+        return items.hookshot && items.moldorms2Defeated;
     }, 'gt-aga2', 'Hookshot Required', [-1], 0, 
     function(items:Items, config:Config) {
       return items.boots;
@@ -475,7 +498,7 @@ export class GanonsTower {
     aga2.nodes.push(new DungeonNode(
       'Agahnim 2', 50, 56, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
-        return true;
+        return items.sword || items.hammer || items.net;
     }, 'Agahnim 2'));
     gtData.dungeonMaps.push(aga2);
 

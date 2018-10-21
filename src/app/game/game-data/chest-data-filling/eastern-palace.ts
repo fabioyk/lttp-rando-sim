@@ -93,7 +93,7 @@ export class EasternPalace {
         return true;
     }, '1'));
     tileRoom.nodes.push(new DungeonNode(
-      '', 78, 53.5, DungeonNodeStatus.OPEN_DOOR,
+      '', 79, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
     }, 'ep-bc'));
@@ -113,10 +113,18 @@ export class EasternPalace {
     bigChestRoom.nodes.push(new DungeonNode(
       '', 50, 10, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
+      if (config.isEnemizer) {
+        return items.lamp;
+      } else {
         return items.hasBow() && items.lamp;
-    }, 'ep-armos', 'Bow' + (config.canGlitch ? '' : ' and Lamp') + ' Required', [-1], 0, 
+      }
+    }, 'ep-armos', (config.isEnemizer ? 'Lamp' : ('Bow' + (config.canGlitch ? '' : ' and Lamp')))  + ' Required', [-1], 0, 
     function(items:Items, config:Config) {
-      return items.hasBow();
+      if (config.isEnemizer) {
+        return true;
+      } else {
+        return items.hasBow();
+      }      
     }));
     bigChestRoom.nodes.push(new DungeonNode(
       '', 91, 27, DungeonNodeStatus.OPEN_DOOR,

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Items } from '../game-data/items';
 import { Config } from '../game-data/config';
 import { GameService } from '../game-data/game-service.service';
+import { ItemNamesService } from '../../log-parse/item-names.service';
 
 @Component({
   selector: 'app-end-stats',
@@ -56,7 +57,8 @@ export class EndStatsComponent implements OnInit {
     }
   }
 
-  constructor(private _gameService:GameService) { }
+  constructor(private _gameService:GameService,
+              private _itemNamesService:ItemNamesService) { }
 
   ngOnInit() {
   }
@@ -159,6 +161,7 @@ export class EndStatsComponent implements OnInit {
 
   generateItemProgressTable() {
     var res = [];
+    var medallionsAdded = [];
     res.push(['boots', 'Boots', this.items.stats.preBoots]);
     res.push(['mirror', 'Mirror', this.items.stats.preMirror]);
     res.push(['flute', 'Flute', this.items.stats.preFlute]);
@@ -175,16 +178,45 @@ export class EndStatsComponent implements OnInit {
     res.push(['lamp', 'Lamp', this.items.stats.preLamp]);
     res.push(['moonPearl', 'Moon Pearl', this.items.stats.prePearl]);
     res.push(['agahnim', 'Dark World Access', this.items.stats.preDW]);
-    res.push(['bigKey', 'Ganons Tower Big Key', this.items.stats.totalItemsPreGTBK]);
-    res.push(['Ganon', 'Ganon', this.items.stats.preGanon]);
+    
+    if (this.config.goal === 'pedestal' || this.config.goal === 'dungeons') {
+      var dunPrizes = this._gameService.getDungeonPrizes();
 
-    var dunPrizes = this._gameService.getDungeonPrizes();
+      Object.keys(dunPrizes).forEach((dunName) => {
+        if (dunPrizes[dunName].indexOf('Pendant') > -1) {
+          let pendantName = this._itemNamesService.getItemByLongName(dunPrizes[dunName]).shortName;
+          res.push([pendantName, dunName, this.items.preEachPendant[pendantName]]);
 
-    Object.keys(dunPrizes).forEach((dunName) => {
-      if (dunPrizes[dunName].indexOf('Crystal') > -1) {
-        res.push(['crystal', dunName, this.items.preEachDun[+dunPrizes[dunName].charAt(8)-1]]);    
-      }
-    });
+          if ((dunName === 'Misery Mire' && !medallionsAdded.includes(this.config.mmMedallion))
+            || (dunName === 'Turtle Rock' && !medallionsAdded.includes(this.config.trMedallion))) {
+            let medallionData = this._itemNamesService.getItemByShortName(this.config.mmMedallion);
+            medallionsAdded.push(medallionData.shortName);
+            res.push([medallionData.shortName, medallionData.longName, this.items.preEachMedallion[medallionData.shortName]]);
+          }
+        }
+      });
+
+      res.push(['triforce', 'Master Sword Pedestal', this.items.stats.totalCount]);
+    }
+    if (this.config.goal === 'ganon' || this.config.goal === 'dungeons') {
+      var dunPrizes = this._gameService.getDungeonPrizes();
+
+      Object.keys(dunPrizes).forEach((dunName) => {
+        if (dunPrizes[dunName].indexOf('Crystal') > -1) {
+          res.push(['crystal', dunName, this.items.preEachDun[+dunPrizes[dunName].charAt(8)-1]]);    
+
+          if ((dunName === 'Misery Mire' && !medallionsAdded.includes(this.config.mmMedallion))
+            || (dunName === 'Turtle Rock' && !medallionsAdded.includes(this.config.trMedallion))) {
+            let medallionData = this._itemNamesService.getItemByShortName(this.config.mmMedallion);
+            medallionsAdded.push(medallionData.shortName);
+            res.push([medallionData.shortName, medallionData.longName, this.items.preEachMedallion[medallionData.shortName]]);
+          }
+        }
+      });
+      res.push(['bigKey', 'Ganons Tower Big Key', this.items.stats.totalItemsPreGTBK]);
+      res.push(['Ganon', 'Ganon', this.items.stats.preGanon]);
+    }
+    
 
     res.sort((a, b) => {
       if (a[2] === 0) return 1;

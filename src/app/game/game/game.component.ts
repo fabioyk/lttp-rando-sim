@@ -94,6 +94,11 @@ export class GameComponent implements OnInit {
         } else {
           qParams.variation = 'none';
         }
+        if (params.enemizer) {
+          qParams.enemizer = params.enemizer;
+        } else {
+          qParams.enemizer = 'none';
+        }
 
         var fullMap = false;
         if (params.fullMap) {
@@ -110,11 +115,12 @@ export class GameComponent implements OnInit {
         if (this._seedService.lastSeed && Date.now() - this._seedService.lastSeedTimestamp < 2000 
           && this._seedService.lastSeedParams) {
           this.gameInit(this._seedService.lastSeed.data, this._seedService.lastSeedParams, canGlitch, fullMap, 
-            this._seedService.lastSeed.hints, this._seedService.lastSeed.silversHint);
+            this._seedService.lastSeed.hints, this._seedService.lastSeed.silversHint, this._seedService.lastSeedParams.enemizer !== 'none', 
+            this._seedService.lastSeed.bosses);
         } else {
           this._seedService.getSeed(gameMode, qParams)
             .subscribe((seed) => {
-              this.gameInit(seed.data, qParams, canGlitch, fullMap, seed.hints, seed.silversHint);
+              this.gameInit(seed.data, qParams, canGlitch, fullMap, seed.hints, seed.silversHint, qParams.enemizer !== 'none', seed.bosses);
             });
         }
       }
@@ -133,9 +139,9 @@ export class GameComponent implements OnInit {
 
   /// GAMEPLAY
 
-  gameInit(seedData:string, qParams:any, canGlitch:boolean, isFullMap:boolean, hints:string[], silversHint) {
-    if (seedData) {      
-      this.gameService.loadSeed(seedData, 123456, canGlitch, isFullMap);
+  gameInit(seedData:string, qParams:any, canGlitch:boolean, isFullMap:boolean, hints:string[], silversHint, isEnemizer:boolean, bosses:number[]) {
+    if (seedData) {
+      this.gameService.loadSeed(seedData, 123456, canGlitch, isFullMap, isEnemizer, bosses);  
       this.items = new Items();
       this.config = this.gameService.config;
       this.config.isFullMap = isFullMap;
@@ -161,7 +167,7 @@ export class GameComponent implements OnInit {
         DungeonData.lwDungeons = ['Eastern Palace', 'Desert Palace', 'Tower of Hera'];        
       }
       
-      this.items.setup(this.config.variation === 'keysanity', this.gameService.dungeonsData, isFullMap);      
+      this.items.setup(this.config.variation === 'keysanity', this.gameService.dungeonsData, isFullMap, this.config.bosses);      
       if (this.config.mode.indexOf('standard') === -1 || !isFullMap) {
         this.items.gameState = 4;
       }
@@ -197,10 +203,13 @@ export class GameComponent implements OnInit {
         case 'uncle': this.seedDescription += 'Uncle Assured '; break;
         case 'swordless': this.seedDescription += 'Swordless '; break;
       }
+      if (this.config.isEnemizer) {
+        this.seedDescription += 'Enemizer ';
+      }
       switch(this.config.goal) {
         case 'pedestal': this.seedDescription += 'Pedestal '; break;
         case 'dungeons': this.seedDescription += 'All Dungeons '; break;
-        case 'triforce-hunt': this.seedDescription += 'Triforce Hunt '; break;
+        case 'triforce': this.seedDescription += 'Triforce Hunt '; break;
       }
       switch(this.config.canGlitch) {
         case true: this.seedDescription += ' NMG)'; break;
@@ -213,8 +222,22 @@ export class GameComponent implements OnInit {
 
   onAddedItem([mapNode, map, region], type:string) {
     mapNode.prize.forEach((prize, i) => {
-      if (type !== 'view') {        
-        this.items.add(this._itemNamesService.getItemById(prize).shortName, map);
+      if (type !== 'view') {
+        let prizeData = this._itemNamesService.getItemById(prize);
+        this.items.add(prizeData.shortName, map);
+        if (this.config.difficulty === 'easy') {
+          if ((prizeData.longName === 'Progressive Sword' && this.items.sword === 4)
+              || (prizeData.longName === 'Progressive Shield' && this.items.shield === 3)
+              || (prizeData.longName === 'Progressive Armor' && this.items.tunic === 3)
+              || (prizeData.longName === 'Bottle' && this.items.bottle === 4)
+              || (prizeData.longName === 'Lamp' && this.items.lamp)) {
+            this.gameService.addItemReplacement(prizeData.longName);
+          } else if (this.items.totalHealth >= 20) {
+            this.gameService.addItemReplacement('Heart Container');
+            this.gameService.addItemReplacement('Heart Container (refill)');
+            this.gameService.addItemReplacement('Piece of Heart');
+          }
+        }
       }
       var itemData = this._itemNamesService.convertItemName(prize, type, this.items);
       this.itemLog.unshift({
@@ -225,29 +248,10 @@ export class GameComponent implements OnInit {
         region: map,
         type: type
       });
-      if (type !== 'view' && this.config.difficulty === 'easy') {
-        if (this.items.sword === 4) {
-          this.gameService.addItemReplacement('Progressive Sword');
-        }
-        if (this.items.shield === 3) {
-          this.gameService.addItemReplacement('Progressive Shield');
-        }
-        if (this.items.tunic === 3) {
-          this.gameService.addItemReplacement('Progressive Armor');
-        }
-        if (this.items.bottle === 4) {
-          this.gameService.addItemReplacement('Bottle');
-        }
-        if (this.items.totalHealth >= 20) {
-          this.gameService.addItemReplacement('Heart Container');
-          this.gameService.addItemReplacement('Heart Container (refill)');
-        }
-        if (this.items.lamp) {
-          this.gameService.addItemReplacement('Lamp');
-        }
-        this.gameService.updateData(this.items, map, region);
-      }
     });
+    if (this.items.triforcePieces >= 20) {
+      this.onGameFinished();
+    }
     this.gameService.updateData(this.items, map, region);
   }
 

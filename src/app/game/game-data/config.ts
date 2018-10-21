@@ -18,6 +18,10 @@ export class Config {
   hints: string[];
   silversHint: string;
 
+  isEnemizer: boolean;
+  bosses: number[];
+  checkedBosses: boolean[];
+
   constructor() {
     this.canGlitch = false;
 
@@ -36,6 +40,10 @@ export class Config {
 
     this.hints = [];
     this.silversHint = '';
+
+    this.isEnemizer = false;
+    this.bosses = [];
+    this.checkedBosses = [false, false, false, false, false, false, false, false, false, false];
     
     this.noLogic = false;
   }
