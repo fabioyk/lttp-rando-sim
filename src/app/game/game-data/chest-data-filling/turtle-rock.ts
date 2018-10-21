@@ -331,8 +331,8 @@ export class TurtleRock {
     beforeTri.nodes.push(new DungeonNode(
       '', 38.2, 9.5, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return items.fireRod && items.iceRod && (items.sword || items.hammer);
-    }, 'tr-trinexx', 'Fire Rod, Ice Rod and Weapon Required'));
+        return items.somaria;
+    }, 'tr-trinexx', 'Cane of Somaria Required'));
     trData.dungeonMaps.push(beforeTri);
 
     var invertedLedge = new DungeonMapData('tr-inverted-ledge', 'Turtle Rock Other Entrances');
