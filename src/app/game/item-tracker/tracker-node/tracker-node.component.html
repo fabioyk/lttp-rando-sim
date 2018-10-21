@@ -1,7 +1,10 @@
 <div class='node' *ngIf='isItem'
   [ngStyle]="{'background-image': getBgImg()}"
   [ngClass]="isTransparent()">  
-  <span class='counter not-selectable outline-text' *ngIf='itemName === "health"'>{{items.totalHealth}}</span>
+  <span class='counter not-selectable outline-text' 
+    *ngIf='itemName === "health"'>{{items.totalHealth}}</span>
+  <span class='counter counter-smaller not-selectable outline-text' 
+    *ngIf='itemName === "triforcePieces"'>{{+items.triforcePieces}}/20</span>
 </div>
 <span class='not-selectable outline-text mm-medallion-text' 
     *ngIf='isItem && (itemName === "bombos" || itemName === "ether" || itemName === "quake")'
@@ -10,17 +13,14 @@
   <span class='not-selectable outline-text tr-medallion-text' 
     *ngIf='isItem && (itemName === "bombos" || itemName === "ether" || itemName === "quake")'
     [ngClass]="checkTrMedallion()">TR</span>
-<div class='dungeon-node' 
-    *ngIf='!isItem'
-    >
-  <div    
-    >
+<div class='dungeon-node' *ngIf='!isItem'>
+  <div>
     <figure
       [ngStyle]="{'background-image': getDungeonBg()}"
       [ngClass]="getDungeonBeatenClass()">
-</figure>
-    <div class='dungeon-medallion'
-      [ngStyle]="{'background-image': getDungeonMedallionBg()}">
+    </figure>
+    <div class='dungeon-initials'
+      [ngStyle]="{'background-image': getDungeonInitials()}">
     </div>    
     <div class='dungeon-prize'
       [ngClass]='isAgaTowerOrGt ? "invisible" : ""'

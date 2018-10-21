@@ -1,4 +1,4 @@
-.node, .dungeon-node-bg, .dungeon-chest, .dungeon-prize, .dungeon-medallion {
+.node, .dungeon-node-bg, .dungeon-chest, .dungeon-prize {
   background-size: cover;
 }
 
@@ -7,6 +7,11 @@
   bottom: -2px;
   right: 7px;
   font-size: 22px;
+}
+
+.counter-smaller {
+  font-size: 17px;
+  bottom: -7px;
 }
 
 .node, .dungeon-node-bg, .dungeon-chest {
@@ -31,11 +36,16 @@ div {
   position: absolute;
 }
 
-.dungeon-prize, .dungeon-medallion {
+.dungeon-prize, .dungeon-initials {
   position: relative;  
   top: 25%;
   width: 50%;
   padding-top: 50%;
+}
+
+.dungeon-initials {
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .dungeon-prize {
@@ -106,6 +116,10 @@ div {
     bottom: 4px;
     right: 4px;
   }
+
+  .counter-smaller {
+    font-size: 17px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -113,6 +127,11 @@ div {
     font-size: 10px;
     bottom: -4px;
     right: 1px;
+  }
+
+  .counter-smaller {
+    font-size: 8px;
+    right: 0px;
   }
 
   .dungeon-chest {

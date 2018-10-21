@@ -17,15 +17,19 @@ export class ItemTrackerComponent implements OnInit {
 
   constructor(private _gameService:GameService) { }
 
-  ngOnInit() {
-    
+  ngOnInit() {    
     this.itemsToTrack = 
-    ['tunic', 'sword', 'shield', 'moonPearl', 'health', 
-     'bow', 'boomerang', 'hookshot', 'mushroom', 'powder', 
-     'fireRod', 'iceRod', 'bombos', 'ether', 'quake', 
-     'lamp', 'hammer', 'flute', 'shovel', 'book', 
-     'bottle', 'somaria', 'byrna', 'cape', 'mirror', 
-     'boots', 'glove', 'flippers', 'halfMagic', 'agahnim'];
+      ['tunic', 'sword', 'shield', 'moonPearl', 'health', 
+      'bow', 'boomerang', 'hookshot', 'mushroom', 'powder', 
+      'fireRod', 'iceRod', 'bombos', 'ether', 'quake', 
+      'lamp', 'hammer', 'fluteShovel', 'net', 'book', 
+      'bottle', 'somaria', 'byrna', 'cape', 'mirror', 
+      'boots', 'glove', 'flippers', 'halfMagic', 'agahnim'];
+
+    if (this.config.goal === 'triforce') {
+      this.itemsToTrack[8] = 'powderMush';
+      this.itemsToTrack[9] = 'triforcePieces';
+    }
   }
 
   getDungeons() {

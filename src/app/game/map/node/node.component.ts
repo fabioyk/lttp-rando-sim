@@ -60,15 +60,58 @@ export class NodeComponent implements OnInit {
   }
 
   getDungeonBg() {
-    if (this.nodeType === 'dungeon') {
-      var duns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 
+    var duns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 
       'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower', 'Ganons Tower'];
-  
-      return 'url("./assets/dungeon-tracker-icons/boss' + duns.indexOf(this.nodeInfo.tooltip) + '2.png")';
+    if (this.nodeType === 'dungeon') {
+      if (this.config.isEnemizer && this.nodeInfo.tooltip !== 'Aga Tower' && this.nodeInfo.tooltip !== 'Ganons Tower') {
+        if (this.config.checkedBosses[duns.indexOf(this.nodeInfo.tooltip)]) {
+          return 'url("./assets/dungeon-tracker-icons/boss' + this.config.bosses[duns.indexOf(this.nodeInfo.tooltip)] + '2.png")';
+        } else {
+          return 'url("./assets/dungeon-tracker-icons/boss.png")';
+        }
+      } else {        
+        return 'url("./assets/dungeon-tracker-icons/boss' + duns.indexOf(this.nodeInfo.tooltip) + '2.png")';
+      }
     } else if (this.isIconShown()) {
       var itemId = this.nodeInfo.prize[0];
       var newShortName = this.itemNamesService.convertItemName(itemId, 'view', this.items)[0];
       return 'url("./assets/item-icons/' + newShortName.split('-')[0] + '.png")';      
+    } else if (+this.nodeInfo.status == DungeonNodeStatus.BOSS) {
+      if (this.dungeonItems.dungeonName === 'Aga Tower') {
+        return 'url("./assets/dungeon-tracker-icons/boss102.png")';
+      }
+      if (this.dungeonItems.dungeonName === 'Ganons Tower') {
+        if (this.config.isEnemizer) {
+          switch(this.nodeInfo.tooltip) {
+            case 'Ice Armos':
+              return 'url("./assets/dungeon-tracker-icons/boss' + this.config.bosses[10] + '2.png")';
+            case 'Lanmolas 2':
+              return 'url("./assets/dungeon-tracker-icons/boss' + this.config.bosses[11] + '2.png")';
+            case 'Moldorm 2':
+              return 'url("./assets/dungeon-tracker-icons/boss' + this.config.bosses[12] + '2.png")';
+            case 'Agahnim 2':
+              return 'url("./assets/dungeon-tracker-icons/boss102.png")';
+          }
+        } else {
+          switch(this.nodeInfo.tooltip) {
+            case 'Ice Armos':
+              return 'url("./assets/dungeon-tracker-icons/boss02.png")';
+            case 'Lanmolas 2':
+              return 'url("./assets/dungeon-tracker-icons/boss12.png")';
+            case 'Moldorm 2':
+              return 'url("./assets/dungeon-tracker-icons/boss22.png")';
+            case 'Agahnim 2':
+              return 'url("./assets/dungeon-tracker-icons/boss102.png")';
+          }
+        }
+      } else {
+        if (this.config.isEnemizer) {
+          return 'url("./assets/dungeon-tracker-icons/boss' + this.config.bosses[this.dungeonItems.dungeonId] + '2.png")';        
+        } else {
+          return 'url("./assets/dungeon-tracker-icons/boss' + duns.indexOf(this.dungeonItems.dungeonName) + '2.png")';
+        }
+      }
+      
     }
   }
 
@@ -218,7 +261,9 @@ export class NodeComponent implements OnInit {
         case DungeonNodeStatus.OPEN_BIG_CHEST:
           return 'open-big-chest';
         case DungeonNodeStatus.BOSS:
-          return 'closed-chest';
+          return 'boss';
+        case DungeonNodeStatus.DEFEATED_BOSS:
+          return 'defeated-boss';
         case DungeonNodeStatus.GROUND_KEY:
           return 'spare-key';
         case DungeonNodeStatus.EMPTY:

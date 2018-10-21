@@ -10,7 +10,7 @@ export class SwampPalace {
     var spData = new DungeonData('Swamp Palace', l[149],
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return items.moonPearl && items.canInvertedLW();
+          return true;
         }
         return items.moonPearl && items.canSouthDarkWorld(config.canGlitch);
       }, 47, 91
@@ -25,12 +25,14 @@ export class SwampPalace {
     entrance.nodes.push(new DungeonNode(
       'Entrance Chest', 36, 21, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.flippers && items.mirror;
+        return items.flippers && items.mirror 
+          && (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl));
     }, l[139]));
     entrance.nodes.push(new DungeonNode(
       '', 25, 9.5, DungeonNodeStatus.SK_LOCKED,
     function(items:Items, config:Config) {
-        return items.flippers && items.mirror;
+        return items.flippers && items.mirror
+          && (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl));
     }, 'sp-tall-room'));
     entrance.nodes.push(new DungeonNode(
       'Hint Tile', 60, 41, DungeonNodeStatus.HINT,

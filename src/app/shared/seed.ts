@@ -9,5 +9,6 @@ export class Seed {
   data: string;
   hints: string[];
   silversHint: string;
+  bosses: number[];
   error:string;
 }

@@ -221,6 +221,16 @@ export class MapComponent implements OnInit {
         this.currentDungeonMap = nextPlace;
         this.currentDungeonMap.preloadImages(this.currentDungeon.name);
         this.changeMap(nextPlace.id);
+        if (this.config.isEnemizer) {
+          this.currentDungeonMap.nodes.forEach(eachNode => {
+            if (eachNode.status === DungeonNodeStatus.BOSS) {
+              if (!this.config.checkedBosses[this.currentDungeonItems.dungeonId]) {
+                this.config.checkedBosses[this.currentDungeonItems.dungeonId] = true;         
+              }
+            }
+          });
+        }
+        
       }
     }    
   }
@@ -330,15 +340,29 @@ export class MapComponent implements OnInit {
           dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();
           break;
         case DungeonNodeStatus.BOSS:
-          if (this.currentDungeon.name === 'Aga Tower' || this.currentDungeon.name === 'Ganons Tower') {
-            this.currentRegion = 'ow';
-            if (this.currentDungeon.name === 'Aga Tower') {
-              this.items.agahnim = 1; // Meh fix, but works for now
+          if (this.currentDungeon.name === 'Ganons Tower' && dungeonNode.tooltip !== 'Agahnim 2') {
+            switch(dungeonNode.tooltip) {
+              case 'Ice Armos':
+                this.items.iceArmosDefeated = true;
+                break;
+              case 'Lanmolas 2':
+                this.items.lanmo2Defeated = true;
+                break;
+              case 'Moldorm 2':
+                this.items.moldorms2Defeated = true;
+                break;
             }
-          }
-          this.addPrizes(dungeonNode, this.currentDungeon.name);
-          dungeonNode.originalNode.status = DungeonNodeStatus.OPEN_CHEST.toString();          
-          this.defeatDungeon(this.currentDungeon.name === 'Aga Tower');
+          } else {
+            if (this.currentDungeon.name === 'Aga Tower' || this.currentDungeon.name === 'Ganons Tower') {
+              this.currentRegion = 'ow';
+              if (this.currentDungeon.name === 'Aga Tower') {
+                this.items.agahnim = 1; // Meh fix, but works for now
+              }
+            }
+            this.addPrizes(dungeonNode, this.currentDungeon.name);
+            this.defeatDungeon(this.currentDungeon.name === 'Aga Tower');
+          } 
+          dungeonNode.originalNode.status = DungeonNodeStatus.DEFEATED_BOSS.toString();          
           break;
         case DungeonNodeStatus.GROUND_KEY:
           this.items.add('smallKey-'+DungeonData.allDungeonNames.indexOf(this.currentDungeon.name), this.currentDungeon.name, true);
@@ -941,7 +965,9 @@ export class MapComponent implements OnInit {
             foundReds++;
           }
         });
-        return foundReds < 2 && this.currentMap === 'dark-world' && this.items.canSouthDarkWorld(this.config.canGlitch) && this.currentRegion === 'ow';
+        return foundReds < 2 && this.items.canSouthDarkWorld(this.config.canGlitch) && this.currentRegion === 'ow'
+          && ((this.config.mode !== 'inverted' && this.currentMap === 'dark-world')
+            || (this.config.mode === 'inverted' && this.currentMap === 'light-world' && this.items.canInvertedLW()));
       }
     }
 

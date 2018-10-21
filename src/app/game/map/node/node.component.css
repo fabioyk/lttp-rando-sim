@@ -51,7 +51,7 @@
 .view, .view-state {
   background-color: gold;
 }
-.cleared, .opened, .opened-state, .dungeon-cleared, .unavailable-open-state, .dungeon-unavailable-cleared {
+.cleared, .opened, .opened-state, .dungeon-cleared, .unavailable-open-state, .dungeon-unavailable-cleared, .defeated-boss {
   background-color: grey;
 }
 
@@ -218,6 +218,11 @@
 }
 .lw-flute1 {
   background-image: url('/assets/node-icons/mountain_cave.png');  
+}
+.boss, .defeated-boss {
+  width: 9%;
+  height: 9%;
+  margin: -4.5% -4.5%;
 }
 .invisible {
   opacity: 0;

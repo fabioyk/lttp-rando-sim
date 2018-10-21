@@ -29,6 +29,9 @@ export class TrackerNodeComponent implements OnInit {
   isMmMedallionShown:boolean;
   isTrMedallionShown:boolean;
 
+  duns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 
+      'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower', 'Ganons Tower'];
+
   constructor(private _itemNamesService:ItemNamesService) { }
 
   ngOnInit() {
@@ -45,7 +48,25 @@ export class TrackerNodeComponent implements OnInit {
   }
 
   getBgImg() {
-    if (this.value === true || this.value === false) {
+    if (this.itemName === 'fluteShovel') {
+      if ((this.items.shovel && this.items.flute) || (!this.items.shovel && !this.items.flute)) {
+        return 'url("./assets/item-icons/allflute.png")';
+      } else if (this.items.shovel) {
+        return 'url("./assets/item-icons/shovel.png")';  
+      } else {
+        return 'url("./assets/item-icons/flute.png")';
+      }
+    } else if (this.itemName === 'powderMush') {
+      if ((this.items.powder && this.items.mushroom) || (!this.items.powder && !this.items.mushroom)) {
+        return 'url("./assets/item-icons/allpowder.png")';
+      } else if (this.items.powder) {
+        return 'url("./assets/item-icons/powder.png")';  
+      } else {
+        return 'url("./assets/item-icons/mushroom.png")';
+      }
+    } else if (this.itemName === 'triforcePieces') {
+      return 'url("./assets/item-icons/triforcePieces.png")';  
+    } else if (typeof this.items[this.itemName] === 'boolean') {
       if (this.itemName === 'boots' && this.config.noLogic) {
         return 'url("./assets/item-icons/boots_go.png")';  
       }
@@ -56,10 +77,15 @@ export class TrackerNodeComponent implements OnInit {
   }
 
   getDungeonBg() {
-    var duns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Palace of Darkness', 'Swamp Palace', 
-      'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower', 'Ganons Tower'];
-
-    return 'url("./assets/dungeon-tracker-icons/boss' + duns.indexOf(this.dungeonData.name) + '2.png")';
+    if (this.config.isEnemizer && this.dungeonData.name !== 'Aga Tower' && this.dungeonData.name !== 'Ganons Tower') {
+      if (this.config.checkedBosses[this.duns.indexOf(this.dungeonData.name)]) {
+        return 'url("./assets/dungeon-tracker-icons/boss' + this.config.bosses[this.duns.indexOf(this.dungeonData.name)] + '2.png")';
+      } else {
+        return 'url("./assets/dungeon-tracker-icons/boss.png")';
+      }
+    } else {
+      return 'url("./assets/dungeon-tracker-icons/boss' + this.duns.indexOf(this.dungeonData.name) + '2.png")';
+    }    
   }
 
   checkMmMedallion() {
@@ -122,17 +148,8 @@ export class TrackerNodeComponent implements OnInit {
     }
   }
 
-  getDungeonMedallionBg() {
-    // if (this.isMedallionDungeon()) {
-    //   if (!this.shouldShowMedallion()) {
-    //     return 'url("./assets/dungeon-tracker-icons/medallion0.png")';
-    //   } else {
-    //     var medallions = ['bombos', 'ether', 'quake'];
-    //     return 'url("./assets/dungeon-tracker-icons/medallion' + (medallions.indexOf(this.medallionName) + 1) + '.png")';
-    //   }
-    // } else {
-      return '';
-    //}    
+  getDungeonInitials() {
+    return 'url("./assets/dungeon-tracker-icons/initials' + this.duns.indexOf(this.dungeonData.name) + '.png")';
   }
 
   getBigKeyIconClass() {
@@ -160,7 +177,9 @@ export class TrackerNodeComponent implements OnInit {
   }
 
   isTransparent() {
-    if (this.itemName !== 'health' && ((typeof this.value === 'boolean' && !this.value) || (this.value === 0))) {
+    if ((this.itemName === 'fluteShovel' && !this.items.shovel && !this.items.flute) 
+        || (this.itemName === 'powderMush' && !this.items.powder && !this.items.mushroom)
+        || (this.itemName !== 'health' && this.itemName !== 'triforcePieces' && ((typeof this.value === 'boolean' && !this.value) || (this.value === 0)))) {
       return 'off';
     }
   }

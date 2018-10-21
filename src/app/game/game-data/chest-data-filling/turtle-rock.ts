@@ -335,14 +335,6 @@ export class TurtleRock {
     }, 'tr-trinexx', 'Fire Rod, Ice Rod and Weapon Required'));
     trData.dungeonMaps.push(beforeTri);
 
-    var trinexx = new DungeonMapData('tr-trinexx', 'Trinexx Room');
-    trinexx.nodes.push(new DungeonNode(
-      'Trinexx', 50, 50, DungeonNodeStatus.BOSS,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[197]));
-    trData.dungeonMaps.push(trinexx);
-
     var invertedLedge = new DungeonMapData('tr-inverted-ledge', 'Turtle Rock Other Entrances');
     invertedLedge.nodes.push(new DungeonNode(
       '', 75, 37, DungeonNodeStatus.OPEN_DOOR,
@@ -369,6 +361,14 @@ export class TurtleRock {
       '', 48.5, 94, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'exit'));
     trData.dungeonMaps.push(invertedLedge);
+
+    var trinexx = new DungeonMapData('tr-trinexx', 'Trinexx Room');
+    trinexx.nodes.push(new DungeonNode(
+      'Trinexx', 50, 50, DungeonNodeStatus.BOSS,
+    function(items:Items, config:Config) {
+        return true;
+    }, l[197]));
+    trData.dungeonMaps.push(trinexx);
 
     trData.startingMap = newEntrance;
 

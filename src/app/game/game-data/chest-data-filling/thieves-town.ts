@@ -55,8 +55,12 @@ export class ThievesTown {
     stalfoCorridor.nodes.push(new DungeonNode(
       'Blind', 50, 9.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
+      if (config.isEnemizer) {
+        return true;
+      } else {
         return items.ttBlindDelivered && items.ttBombableFloor
-            && (items.sword || items.hammer || items.somaria || items.byrna);
+          && (items.sword || items.hammer || items.somaria || items.byrna);
+      }        
     }, 'tt-blind', 'Floor Destroyed, Blind Rescued and a Weapon Required'));
     stalfoCorridor.nodes.push(new DungeonNode(
       '', 33, 77, DungeonNodeStatus.SK_LOCKED,
@@ -153,11 +157,13 @@ export class ThievesTown {
     function(items:Items, config:Config) {
         return true;
     }, l[165]));
-    blindCell.nodes.push(new DungeonNode(
-      '', 51, 22, DungeonNodeStatus.BLIND_RESCUE,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'blind'));
+    if (!config.isEnemizer) {
+      blindCell.nodes.push(new DungeonNode(
+        '', 51, 22, DungeonNodeStatus.BLIND_RESCUE,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'blind'));
+    }    
     ttData.dungeonMaps.push(blindCell);
 
     var bigChest = new DungeonMapData('tt-bc', 'Big Chest');
@@ -184,11 +190,13 @@ export class ThievesTown {
     function(items:Items, config:Config) {
         return true;
     }, l[159]));
-    bombableFloor.nodes.push(new DungeonNode(
-      'Bomb the Floor', 50, 38, DungeonNodeStatus.TT_BOMB_FLOOR,
-    function(items:Items, config:Config) {
-        return true;
-    }, 'tt-bomb'));
+    if (!config.isEnemizer) {
+      bombableFloor.nodes.push(new DungeonNode(
+        'Bomb the Floor', 50, 38, DungeonNodeStatus.TT_BOMB_FLOOR,
+      function(items:Items, config:Config) {
+          return true;
+      }, 'tt-bomb'));
+    }    
     ttData.dungeonMaps.push(bombableFloor);
 
     var blindRoom = new DungeonMapData('tt-blind', 'Blind Room');

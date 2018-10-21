@@ -566,7 +566,7 @@ export class ItemNamesService {
     });
     this.itemNames.push({
       id: 271,
-      shortName: 'triforce-piece',
+      shortName: 'triforcePieces',
       longName: 'Triforce Piece'
     });
     

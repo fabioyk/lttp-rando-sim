@@ -17,6 +17,7 @@ export class MainMenuComponent implements OnInit {
   diffSelected = 'normal';  
   glitchSelected = 'yes';
   variationSelected = 'none';
+  enemizerSelected = 'none';
   mapSelected = 'no';
   seedNum = '';
   errorMessage = '';
@@ -55,6 +56,11 @@ export class MainMenuComponent implements OnInit {
       this.mapSelected = localStorage.getItem('mapSelected');
     } else {
       localStorage.setItem('mapSelected', this.mapSelected);      
+    }
+    if (localStorage.getItem('enemizerSelected')) {
+      this.enemizerSelected = localStorage.getItem('enemizerSelected');
+    } else {
+      localStorage.setItem('enemizerSelected', this.enemizerSelected);
     }
     if (this.modeSelected === 'inverted') {
       this.mapSelected = 'no';
@@ -113,7 +119,8 @@ export class MainMenuComponent implements OnInit {
     localStorage.setItem('diffSelected', this.diffSelected);
     localStorage.setItem('variationSelected', this.variationSelected);
     localStorage.setItem('glitchSelected', this.glitchSelected);
-    localStorage.setItem('mapSelected', this.mapSelected);    
+    localStorage.setItem('mapSelected', this.mapSelected);
+    localStorage.setItem('enemizerSelected', this.enemizerSelected);
 
     var queryParams:any = {  
     };
@@ -134,7 +141,10 @@ export class MainMenuComponent implements OnInit {
     } 
     if (this.lockedMap === 'yes') {
       queryParams.fullMap = true;
-    }   
+    }
+    if (this.enemizerSelected !== 'none') {
+      queryParams.enemizer = this.enemizerSelected;
+    }  
 
     this.preloadedMap = null;
     this.preloadedIcons = null;
@@ -164,6 +174,11 @@ export class MainMenuComponent implements OnInit {
       qParams.variation = queryParams.variation;
     } else {
       qParams.variation = 'none';
+    }
+    if (queryParams.enemizer) {
+      qParams.enemizer = queryParams.enemizer;
+    } else {
+      qParams.enemizer = 'none';
     }
 
     this._seedService.getSeed(this.lockedMode, qParams)
