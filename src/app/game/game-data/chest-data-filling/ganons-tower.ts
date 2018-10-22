@@ -208,7 +208,7 @@ export class GanonsTower {
     }, 'gt-bk', 'Boss Defeated Required'));
     gtData.dungeonMaps.push(iceArmos);
 
-    var lanmo2 = new DungeonMapData('gt-lanmo2', 'Ice Armos Room');
+    var lanmo2 = new DungeonMapData('gt-lanmo2', 'Lanmolas 2 Room');
     lanmo2.nodes.push(new DungeonNode(
       'Lanmolas 2', 50, 50, DungeonNodeStatus.BOSS,
       DungeonNode.bossReqs[1], 'Lanmolas 2', '', [-1], 0,
