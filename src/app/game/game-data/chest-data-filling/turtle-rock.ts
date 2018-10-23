@@ -365,9 +365,8 @@ export class TurtleRock {
     var trinexx = new DungeonMapData('tr-trinexx', 'Trinexx Room');
     trinexx.nodes.push(new DungeonNode(
       'Trinexx', 50, 50, DungeonNodeStatus.BOSS,
-    function(items:Items, config:Config) {
-        return true;
-    }, l[197]));
+      DungeonNode.bossReqs[9], l[197], 'Ice Rod and Fire Rod Required', [-1], 0, 
+      DungeonNode.glitchedBossReqs[9]));
     trData.dungeonMaps.push(trinexx);
 
     trData.startingMap = newEntrance;
