@@ -99,7 +99,7 @@ export class TowerHera {
     upstairs.nodes.push(new DungeonNode(
       'Moldorm Room', 13, 25, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.sword || items.hammer;
+        return true;
     }, 'toh-moldorm', 'Sword or Hammer Required'));
     tohData.dungeonMaps.push(upstairs);
 
@@ -107,7 +107,7 @@ export class TowerHera {
     moldormRoom.nodes.push(new DungeonNode(
       'Moldorm', 50, 50, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
-        return true;
+        return items.sword || items.hammer;
     }, l[93]));
     moldormRoom.nodes.push(new DungeonNode(
       '', 72, 67, DungeonNodeStatus.HOLE,
