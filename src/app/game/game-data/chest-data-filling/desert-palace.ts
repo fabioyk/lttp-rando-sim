@@ -156,10 +156,8 @@ export class DesertPalace {
     }, 'dp-first-tile'));
     bigDoor.nodes.push(new DungeonNode(
       'Lanmolas Room', 26, 35, DungeonNodeStatus.BK_LOCKED,
-    function(items:Items, config:Config) {
-        return items.hasFiresource()
-          && (items.sword || items.hammer || items.hasBow() || items.fireRod || items.iceRod
-            || items.byrna || items.somaria);
+    function(items:Items, config:Config) {      
+      return true;
     }, 'dp-lanmo', 'Fire Source and Weapon Required',
       [-1], 0, function(items:Items, config:Config) {
         return items.hasFiresource()
@@ -170,7 +168,9 @@ export class DesertPalace {
     lanmoRoom.nodes.push(new DungeonNode(
       'Lanmolas', 50, 50, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
-        return true;
+      return (items.hasFiresource()
+        && (items.sword || items.hammer || items.hasBow() || items.fireRod || items.iceRod
+          || items.byrna || items.somaria));
     }, l[72]));
     dpData.dungeonMaps.push(lanmoRoom);
 

@@ -232,18 +232,18 @@ export class IcePalace {
     mapRoom.nodes.push(new DungeonNode(
       'Map Chest', 72, 72, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hammer;
-    }, l[170], 'Hammer Required'));
+        return items.hammer && items.glove;
+    }, l[170], 'Hammer and Glove Required'));
     mapRoom.nodes.push(new DungeonNode(
       'Small Key', 50, 50, DungeonNodeStatus.GROUND_KEY,
     function(items:Items, config:Config) {
-        return items.hammer;
-    }, '', 'Hammer Required'));
+        return items.hammer && items.glove;
+    }, '', 'Hammer and Glove Required'));
     mapRoom.nodes.push(new DungeonNode(
       'Big Key Room', 88, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.hammer;
-    }, 'ip-bk', 'Hammer Required'));
+        return items.hammer && items.glove;
+    }, 'ip-bk', 'Hammer and Glove Required'));
     ipData.dungeonMaps.push(mapRoom);
 
     var bkRoom = new DungeonMapData('ip-bk', 'Big Key Room');
@@ -417,7 +417,7 @@ export class IcePalace {
     preKhold.nodes.push(new DungeonNode(
       '', 25, 76.5, DungeonNodeStatus.HOLE,
     function(items:Items, config:Config) {
-        return items.hammer;
+        return items.hammer && items.glove;
     }, 'ip-khold', 'Hammer Required'));
     ipData.dungeonMaps.push(preKhold);
 

@@ -309,8 +309,8 @@ export class MiseryMire {
     beforeVit.nodes.push(new DungeonNode(
       '', 25, 35, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return items.hammer || items.sword || items.bow;
-    }, 'mm-vitty', 'Weapon Required'));
+        return true;
+    }, 'mm-vitty'));
     mmData.dungeonMaps.push(beforeVit);   
 
     var bridgeRoom = new DungeonMapData('mm-two-bridges', 'Bridge Room');
@@ -344,7 +344,7 @@ export class MiseryMire {
     vittyRoom.nodes.push(new DungeonNode(
       'Vitreous', 50, 52, DungeonNodeStatus.BOSS,
     function(items:Items, config:Config) {
-        return true;
+      return items.hammer || items.sword || items.hasBow();
     }, l[184]));
     mmData.dungeonMaps.push(vittyRoom);
 
