@@ -394,10 +394,12 @@ export class MapComponent implements OnInit {
           dungeonNode.originalNode.status = DungeonNodeStatus.TT_BOMB_FLOOR_DONE.toString();
           break;
         case DungeonNodeStatus.PORTAL:
-          var name = this.currentDungeonMap.id.split('-');
+          var name = this.currentDungeonMap.id.split('-');   
+          console.log(this.currentDungeonMap);
           if (name[1] === 'trportal' && !this.items.isTROpened 
-            && this.items[this.config.trMedallion] && this.items.sword || (this.config.weapons === 'swordless')) {
+            && this.items[this.config.trMedallion] && (this.items.sword || this.config.weapons === 'swordless')) {
             this.items.isTROpened = true;
+            console.log('tr opened');
           }
           name[0] = 'dw';
           this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;          
