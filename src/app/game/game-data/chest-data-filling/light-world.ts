@@ -48,7 +48,7 @@ export class LightWorld {
       null,
       [l[4], l[47]], '',
       function(items:Items, config:Config) {
-        return config.mode === 'inverted' && items.mirror;
+        return config.mode === 'inverted' && items.mirror && items.canInvertedLW();
       }
     ));    
 
