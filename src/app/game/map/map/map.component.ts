@@ -486,6 +486,9 @@ export class MapComponent implements OnInit {
         case DungeonNodeStatus.PEDESTAL:
           this.addPrizes(dungeonNode, this.currentDungeon.name);
           dungeonNode.originalNode.status = DungeonNodeStatus.EMPTY.toString();
+          if (this.config.goal === 'pedestal') {
+            this.onGameFinished.emit('');
+          }
           break;
         case DungeonNodeStatus.DUCK:
           this.items.isFluteActivated = true;
