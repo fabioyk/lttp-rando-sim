@@ -286,7 +286,7 @@ export class GameService {
           } else if (location.location !== 'Ether Tablet' && location.location !== 'Bombos Tablet' && (location.mapNode.status === 'now-g-getable' 
             || ((location.mapNode.status === 'viewable' || location.mapNode.status === 'g-viewable')
               && this.config.canGlitch && location.canGlitch && location.canGlitch(items, this.config))
-            || (location.canViewGlitch && this.config.canGlitch && location.canGlitch && location.canGlitch(items, this.config) && location.mapNode.status === 'unavailable'))) {
+            || (this.config.canGlitch && location.canViewGlitch && this.config.canGlitch && location.canGlitch && location.canGlitch(items, this.config) && location.mapNode.status === 'unavailable'))) {
               if (location.mapNode.isFaded) {
                 location.mapNode.status = 'g-getable';
               } else {
@@ -296,7 +296,7 @@ export class GameService {
             location.mapNode.status = 'g-getable';
           } else if (location.canView && location.canView(items, this.config)) {
             location.mapNode.status = 'viewable';
-          } else if (location.canViewGlitch && location.canViewGlitch(items, this.config)) {
+          } else if (this.config.canGlitch && location.canViewGlitch && location.canViewGlitch(items, this.config)) {
             location.mapNode.status = 'g-viewable';
           } else {
             location.mapNode.status = 'unavailable';
@@ -329,7 +329,7 @@ export class GameService {
             status += ' now-getable';
           } else if (location.location !== 'Bombos Tablet' && location.location !== 'Ether Tablet'
             && (location.mapNode.status.indexOf('now-g-getable') > -1 
-              || (location.canViewGlitch && location.mapNode.status.indexOf('unavailable') > -1
+              || (this.config.canGlitch && location.canViewGlitch && location.mapNode.status.indexOf('unavailable') > -1
                   && (this.config.canGlitch && location.canGlitch && location.canGlitch(items, this.config))))) {
             status += ' now-g-getable';
           } else if (!location.canGet || location.canGet(items, this.config)) {
@@ -338,7 +338,7 @@ export class GameService {
             status += ' g-getable';
           } else if (location.canView && location.canView(items, this.config)) {
             status += ' viewable';
-          } else if (location.canViewGlitch && location.canViewGlitch(items, this.config)) {
+          } else if (this.config.canGlitch && location.canViewGlitch && location.canViewGlitch(items, this.config)) {
             status += ' g-viewable';
           } else {
             status += ' unavailable';
