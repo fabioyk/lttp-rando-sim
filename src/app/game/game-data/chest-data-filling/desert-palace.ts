@@ -157,7 +157,7 @@ export class DesertPalace {
     bigDoor.nodes.push(new DungeonNode(
       'Lanmolas Room', 26, 35, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {      
-      return true;
+      return items.hasFiresource();
     }, 'dp-lanmo', 'Fire Source and Weapon Required',
       [-1], 0, function(items:Items, config:Config) {
         return items.hasFiresource()
