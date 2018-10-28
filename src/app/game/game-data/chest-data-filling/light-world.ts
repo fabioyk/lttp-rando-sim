@@ -657,9 +657,20 @@ export class LightWorld {
       itemLocations.push(new ItemLocation(
         'Ganon', 21, 40.8,
         function(items:Items, config:Config) {
-          return items.canNorthEastDarkWorld() && items.agahnim2 && items.crystal1 &&
-            items.crystal2 && items.crystal3 && items.crystal4 && items.crystal5 && items.crystal6
-            && items.crystal7 && items.sword >= 2 && (items.lamp || items.fireRod);
+          switch(config.goal) {
+            case 'pedestal': return false;
+            case 'triforce': return false;
+            case 'dungeons':
+              if (!items.pendantCourage || !items.pendantPower || !items.pendantWisdom 
+                  || !items.agahnim) {
+                return false;
+              }
+            case 'ganon':
+              return items.canInvertedLW() && items.moonPearl && items.agahnim2 && items.crystal1 &&
+                items.crystal2 && items.crystal3 && items.crystal4 && items.crystal5 && items.crystal6
+                && items.crystal7 && (items.lamp || items.fireRod)
+                && (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer && items.hasSilvers() && items.hasBow()) );
+          }
         },
         null,
         ['Ganon'],
