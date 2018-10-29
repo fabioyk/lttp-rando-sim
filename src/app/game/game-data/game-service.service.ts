@@ -541,13 +541,8 @@ export class GameService {
   addItemReplacement(original:string) {
     let originalItem = this._itemNamesService.getItemByLongName(original);
     if (!this.prizesToReplace[originalItem.id]) {
-      let replacementItem;
-      if (originalItem.shortName === 'lamp') {
-        replacementItem = this._itemNamesService.getItemByShortName('5rupees');
-      } else {
-        replacementItem = this._itemNamesService.getItemByShortName('20rupees');
-      }    
-      this.prizesToReplace[originalItem.id] = replacementItem.id.toString();
+      // Replace with 5 rupees
+      this.prizesToReplace[originalItem.id] = '7';
     }
   }
 

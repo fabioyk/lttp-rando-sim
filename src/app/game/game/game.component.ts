@@ -166,6 +166,13 @@ export class GameComponent implements OnInit {
       if (this.config.mode === 'inverted') {
         DungeonData.lwDungeons = ['Eastern Palace', 'Desert Palace', 'Tower of Hera'];        
       }
+
+      if (this.config.difficulty === 'hard' || this.config.difficulty === 'insane') {
+        this.gameService.addItemReplacement('Progressive Armor');
+      }
+      if (this.config.difficulty === 'insane') {
+        this.gameService.addItemReplacement('Progressive Shield');
+      }  
       
       this.items.setup(this.config.variation === 'keysanity', this.gameService.dungeonsData, isFullMap, this.config.bosses);      
       if (this.config.mode.indexOf('standard') === -1 || !isFullMap) {
@@ -237,6 +244,13 @@ export class GameComponent implements OnInit {
             this.gameService.addItemReplacement('Heart Container (refill)');
             this.gameService.addItemReplacement('Piece of Heart');
           }
+        } else if ((this.config.difficulty === 'hard' && ((prizeData.longName === 'Progressive Sword' && this.items.sword === 3)
+              || (prizeData.longName === 'Progressive Shield' && this.items.shield === 2)
+              || (prizeData.longName === 'Progressive Armor' && this.items.tunic === 2)))
+            || (this.config.difficulty === 'expert' && ((prizeData.longName === 'Progressive Sword' && this.items.sword === 2)
+              || (prizeData.longName === 'Progressive Shield' && this.items.shield === 1)))
+            || (this.config.difficulty === 'insane' && (prizeData.longName === 'Progressive Sword' && this.items.sword === 2))) {
+          this.gameService.addItemReplacement(prizeData.longName);          
         }
       }
       var itemData = this._itemNamesService.convertItemName(prize, type, this.items);
