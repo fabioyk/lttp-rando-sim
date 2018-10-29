@@ -15,14 +15,13 @@ export class LogSearchPipe implements PipeTransform {
     if (!items || !filterObj) {
       return items;
     }
-
     const importantActions = ['blind', 'tt-bomb', 'switch', 'flood', 'ip-switch-room', 'hintTile'];
 
     return items.filter(item => {
       if (importantActions.indexOf(item.shortName) > -1 && filterObj.searchQuery === '') {
         return true;
       }
-      if (filterObj.onlyImportantShown && item.longName.indexOf('Agahnim') === -1 && item.longName.indexOf('Ganon') === -1 && !ItemNamesService.isTrackableItem(+item.item) && (item.type !== 'view' && item.type !== 'cant')) {
+      if (filterObj.onlyImportantShown && item.longName.indexOf('Agahnim') === -1 && item.longName.indexOf('Ganon') === -1 && item.item !== 'hint' && !ItemNamesService.isTrackableItem(+item.item) && (item.type !== 'view' && item.type !== 'cant')) {
         return false;
       } 
       if (filterObj.searchQuery != '') {        
@@ -33,6 +32,9 @@ export class LogSearchPipe implements PipeTransform {
           return true;
         }
         if (this._itemNamesService.getItemById(item.item).longName.toLowerCase().indexOf(filterObj.searchQuery.toLowerCase()) > -1) {
+          return true;
+        }
+        if (item.item.toLowerCase().indexOf(filterObj.searchQuery.toLowerCase()) > -1) {
           return true;
         }
         return false;
