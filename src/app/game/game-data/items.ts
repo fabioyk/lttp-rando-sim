@@ -371,7 +371,7 @@ export class Items {
     return this.fireRod || (this.bombos && (this.sword || config.weapons === 'swordless'));
   }
   hasBeamReflection(config:Config) {
-    return this.cape || this.byrna || this.shield === 3 || config.canGlitch;
+    return this.cape || this.byrna || this.shield === 3;
   }
   hasInvincibilityItem(config:Config) {
     return this.cape || this.byrna || config.canGlitch;

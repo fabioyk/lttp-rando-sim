@@ -708,7 +708,7 @@ export class LightWorld {
       itemLocations.push(new ItemLocation(
         'Other Turtle Rock Entrances', 42.5, 9.3,
         function(items:Items, config:Config) {
-          return items.canInvertedEastDeathMountain() && items.moonPearl;
+          return items.canInvertedEastDeathMountain();
         },
         null,
         ['tr-ledge'],

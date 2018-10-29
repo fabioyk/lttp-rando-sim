@@ -297,22 +297,22 @@ export class TurtleRock {
       'Laser Bridge Chest 1', 64, 24, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasBeamReflection(config);
-    }, l[196], 'Invincibility Item Required'));
+    }, l[196], 'Invincibility Item Required', [-1], 0, DungeonNode.noReqs));
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 2', 36, 36, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasBeamReflection(config);
-    }, l[195], 'Invincibility Item Required'));
+    }, l[195], 'Invincibility Item Required', [-1], 0, DungeonNode.noReqs));
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 3', 64, 48, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasBeamReflection(config);
-    }, l[194], 'Invincibility Item Required'));
+    }, l[194], 'Invincibility Item Required', [-1], 0, DungeonNode.noReqs));
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 4', 36, 60, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
         return items.hasBeamReflection(config);
-    }, l[193], 'Invincibility Item Required'));
+    }, l[193], 'Invincibility Item Required', [-1], 0, DungeonNode.noReqs));
     if (config.mode === 'inverted') {
       laserBridge.nodes.push(new DungeonNode(
         '', 50, 95, DungeonNodeStatus.OPEN_DOOR,
@@ -345,10 +345,12 @@ export class TurtleRock {
       '', 75, 44, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.mirror;
-    }, 'tr-bc', 'Mirror Required', [-1], 0,
+    }, 'tr-bc', 'Mirror Required'));
+    invertedLedge.nodes.push(new DungeonNode(
+      '', 38, 44, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return items.mirror
-    }));
+      return items.mirror;
+    }, 'tr-double-pokey', 'Mirror Required'));
     invertedLedge.nodes.push(new DungeonNode(
       '', 56, 56, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
