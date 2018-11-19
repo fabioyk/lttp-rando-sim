@@ -630,6 +630,8 @@ export class MapComponent implements OnInit {
   defeatDungeon(isAgaTower:boolean) {
     if (this.currentDungeon.name === 'Ganons Tower') {
       this.hintCheck.emit(['Ganon', this.currentMap, this.config.silversHint]);
+    } else if (this.currentDungeon.name === 'Turtle Rock') {
+      this.items.isTROpened = true;
     }
     this.finishedDungeon.emit([this.currentDungeon.dungeonPrize, this.currentDungeon.name]);    
     this.currentDungeonItems.isBossDefeated = true;

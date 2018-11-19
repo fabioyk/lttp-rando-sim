@@ -10,7 +10,7 @@ export class TurtleRock {
     var trData = new DungeonData('Turtle Rock', l[198],
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return items.canInvertedEastDarkDeathMountain(config.canGlitch) && (items.sword || config.weapons === 'swordless') && items.hasMedallion('tr', config);
+          return items.isTROpened || (items.canInvertedEastDarkDeathMountain(config.canGlitch) && (items.sword || config.weapons === 'swordless') && items.hasMedallion('tr', config));
         }
         return (items.moonPearl && items.canDarkEastDeathMountain(config.canGlitch)) && (items.sword || config.weapons === 'swordless')
             && items.hasMedallion('tr', config) && items.hammer;
