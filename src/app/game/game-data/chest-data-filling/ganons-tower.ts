@@ -33,7 +33,7 @@ export class GanonsTower {
     entrance.nodes.push(new DungeonNode(
       '', 50, 9.5, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-        return config.isEnemizer || items.hasBow();
+        return (config.isEnemizer && config.mode !== 'standard') || items.hasBow();
     }, 'gt-lanmo2', 'Bow Required'));
     entrance.nodes.push(new DungeonNode(
       '', 75, 14, DungeonNodeStatus.OPEN_DOOR,

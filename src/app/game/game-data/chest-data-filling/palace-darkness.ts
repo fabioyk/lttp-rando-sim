@@ -66,7 +66,7 @@ export class PalaceDarkness {
     hintRoom.nodes.push(new DungeonNode(
       'Right Side', 50, 87, DungeonNodeStatus.OPEN_DOOR,
       function(items:Items, config:Config) {        
-        return items.hasBow() || config.isEnemizer;
+        return items.hasBow() || (config.isEnemizer && config.mode !== 'standard');
       }, 'pod-right', 'Bow Required', [-1], 0,
       function(items:Items, config:Config) {
         return items.hasBottle();

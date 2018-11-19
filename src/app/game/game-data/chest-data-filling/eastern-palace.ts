@@ -113,14 +113,14 @@ export class EasternPalace {
     bigChestRoom.nodes.push(new DungeonNode(
       '', 50, 10, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-      if (config.isEnemizer) {
+      if ((config.isEnemizer && config.mode !== 'standard')) {
         return items.lamp;
       } else {
         return items.hasBow() && items.lamp;
       }
-    }, 'ep-armos', (config.isEnemizer ? 'Lamp' : ('Bow' + (config.canGlitch ? '' : ' and Lamp')))  + ' Required', [-1], 0, 
+    }, 'ep-armos', ((config.isEnemizer && config.mode !== 'standard') ? 'Lamp' : ('Bow' + (config.canGlitch ? '' : ' and Lamp')))  + ' Required', [-1], 0, 
     function(items:Items, config:Config) {
-      if (config.isEnemizer) {
+      if ((config.isEnemizer && config.mode !== 'standard')) {
         return true;
       } else {
         return items.hasBow();
