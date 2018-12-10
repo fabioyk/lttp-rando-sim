@@ -16,7 +16,6 @@ export class LogSearchPipe implements PipeTransform {
       return items;
     }
     const importantActions = ['blind', 'tt-bomb', 'switch', 'flood', 'ip-switch-room', 'hintTile'];
-console.log(items);
     return items.filter(item => {
       if (importantActions.includes(item.shortName) && filterObj.searchQuery === '') {
         return true;
