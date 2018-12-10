@@ -769,7 +769,7 @@ export class DarkWorldMap {
       '', 37, 50, DungeonNodeStatus.BIG_BOMB,
     function(items:Items, config:Config) {
       return items.crystal5 && items.crystal6;
-    }, ''));
+    }, '', 'Crystals 5 and 6 required'));
     dwData.dungeonMaps.push(m);
 
     // DM
