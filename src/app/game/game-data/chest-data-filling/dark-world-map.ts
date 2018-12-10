@@ -747,12 +747,12 @@ export class DarkWorldMap {
       'Triforce Room', 50, 12, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return config.goal !== 'pedestal' && config.goal !== 'triforce'
-        && (config.goal !== 'alldungeons' || (items.pendantCourage && items.pendantPower && items.pendantWisdom && items.agahnim))
+        && (config.goal !== 'dungeons' || (items.pendantCourage && items.pendantPower && items.pendantWisdom && items.agahnim))
         && (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer && items.hasSilvers() && items.hasBow())) 
         && items.hasFiresource();
     }, 'Ganon', 
     (config.goal === 'pedestal' || config.goal === 'triforce') ? 'Ganon is unbeatable in this goal'
-    : (config.goal === 'alldungeons' ? 'All Pendants and Agahnim Required' :
+    : (config.goal === 'dungeons' ? 'All Pendants and Agahnim Required' :
      (config.weapons !== 'swordless' ? 'Master Sword Required' : 'Hammer and Silvers Required'))));
     m.nodes.push(new DungeonNode(
       '', 49, 87, DungeonNodeStatus.HOLE,
