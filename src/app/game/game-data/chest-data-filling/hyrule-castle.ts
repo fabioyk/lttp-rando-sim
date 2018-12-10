@@ -19,7 +19,7 @@ export class HyruleCastle {
       '', 50, 88, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return true;
-    }, 'lw-hyrule-castle'));
+    }, 'lw-hyrule-castle', '', [-1], 2));
     entry.nodes.push(new DungeonNode(
       '', 11, 52, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
