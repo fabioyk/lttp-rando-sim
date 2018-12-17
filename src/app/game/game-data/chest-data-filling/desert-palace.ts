@@ -124,7 +124,7 @@ export class DesertPalace {
         return true;
     }, 'dp-entry'));
     bcRoom.nodes.push(new DungeonNode(
-      'Big Key Chest', 50, 49, DungeonNodeStatus.BIG_CHEST,
+      'Big Chest', 50, 49, DungeonNodeStatus.BIG_CHEST,
     function(items:Items, config:Config) {
         return true;
     }, l[67]));
