@@ -732,7 +732,7 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       '', 50, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.moonPearl;
+        return true;
     }, 'dw-desert'));
     m.nodes.push(new DungeonNode(
       'Mire Shed Chest 1', 46, 26, DungeonNodeStatus.CLOSED_CHEST,
