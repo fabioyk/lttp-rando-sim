@@ -150,19 +150,19 @@ export class Items {
     this.dungeonItemsShuffle = dungeonItems;
     switch(dungeonItems) {
       case 'standard': 
-        this.startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21]; 
+        this.startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 20]; 
         this.dungeonItemIndex = 0;
         break;
       case 'mc': 
-        this.startingItemCount = [7, 5, 4, 4, 1, 7, 8, 4, 6, 5, 4, 8, 23]; 
+        this.startingItemCount = [7, 5, 4, 4, 1, 7, 8, 4, 6, 5, 4, 8, 22]; 
         this.dungeonItemIndex = 2;
         break;
       case 'mcs': 
-        this.startingItemCount = [8, 5, 5, 5, 3, 13, 9, 7, 7, 7, 7, 12, 27]; 
+        this.startingItemCount = [8, 5, 5, 5, 3, 13, 9, 7, 7, 7, 7, 12, 26]; 
         this.dungeonItemIndex = 3;
         break;
       case 'full': 
-        this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 28]; 
+        this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 27]; 
         this.dungeonItemIndex = 4;
         break;
     }
