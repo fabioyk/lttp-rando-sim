@@ -19,7 +19,7 @@ export class SeedApiService {
   public lastSeedTimestamp:number;
   public lastSeedParams:any;
   public lastSeed:Seed;
-  private webVersion = '4.0';
+  private webVersion = '4.1';
 
   constructor(private _http: Http) {
     if (environment.production) {
