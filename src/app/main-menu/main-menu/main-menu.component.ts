@@ -22,7 +22,7 @@ export class MainMenuComponent implements OnInit {
   accessibilitySelected = 'items'; 
   openTowerSelected = '7';
   openGanonSelected = '7';
-  hintsSelected = "false";
+  hintsSelected = 'off';
   mapSelected = 'no';
   seedNum = '';
   errorMessage = '';
