@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { isDevMode } from '@angular/core';
 import { Items } from '../../game-data/items';
 import { GameService } from '../../game-data/game-service.service';
@@ -10,6 +10,7 @@ import { DungeonNodeStatus } from '../../game-data/dungeon-node-status.enum';
 import { DungeonItems } from '../../game-data/dungeon-items';
 import { ItemNamesService } from '../../../log-parse/item-names.service';
 import { DungeonNode } from '../../game-data/dungeon-node';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-map',
@@ -26,6 +27,8 @@ export class MapComponent implements OnInit {
   @Output() hintCheck = new EventEmitter<[string, string, string]>();
   @Output() finishedDungeon = new EventEmitter<[string, string]>();
   @Output() onGameFinished = new EventEmitter<string>();
+  modalRef: BsModalRef; 
+  clipboardMessage:string;
   tooltip:string;
   isDev = false;
   hasUsedMirror = false;
@@ -51,6 +54,7 @@ export class MapComponent implements OnInit {
   dungeonFinishRegion:number;
 
   constructor(private gameService:GameService,
+              private _modalService: BsModalService,
               private itemNameService:ItemNamesService) { }
 
   ngOnInit() {    
@@ -69,7 +73,7 @@ export class MapComponent implements OnInit {
       this.otherWorld = 'dark-world';
     }
     this.clearTooltip();
-
+    this.clipboardMessage = '';
     this.preloadMapsAndIcons();
   }
 
@@ -1078,6 +1082,24 @@ export class MapComponent implements OnInit {
           return 'You need to defeat all of Ganon\'s bosses';
       }
     }
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this._modalService.show(template);
+  }
+
+  copyClipboard() {
+    let anyNav:any;
+    anyNav = window.navigator;
+    anyNav.clipboard.writeText(this.config.data).then(() => {
+      this.clipboardMessage = 'Copied!';
+    }, () => {
+      this.clipboardMessage = 'Failed to copy';
+    });
+  }
+  closeModal() {
+    this.modalRef.hide();
+    this.clipboardMessage = '';
   }
 
   preloadMapsAndIcons() {

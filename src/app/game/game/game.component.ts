@@ -128,7 +128,7 @@ export class GameComponent implements OnInit {
     if (seedData) {
       this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap, isEnemizer, bosses, hints.length > 0);  
       this.items = new Items();
-      this.config = this.gameService.config;
+      this.config = this.gameService.config;      
       this.config.isFullMap = isFullMap;
       this.config.isMystery = this.gameMode === 'mystery';
       if (hints) {

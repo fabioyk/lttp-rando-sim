@@ -92,7 +92,31 @@
   <button class='btn btn-warning' (click)='checkMedallion("tr")' *ngIf='!items.trMedallionChecked && canViewTRMedallion() && !currentDungeon'>
     Check <img class="icon" src="/assets/dungeon-tracker-icons/boss92.png"><img class="icon" src="/assets/dungeon-tracker-icons/medallion0.png">
   </button>  
+
+  <button class='btn btn-danger aligned-right' (click)='openModal(reportTemplate)'>
+    Report Seed
+  </button>
 </div>
+
+<ng-template #reportTemplate>
+  <div>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Report this Seed</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>
+        If you think this seed is uncompletable or has any issue, please go to our 
+        <a href="https://discord.gg/nPJpFQB" target="_blank">Discord server</a> and report directly to Kyong with
+        the code below:
+      </p>
+      <button class="btn btn-info" (click)='copyClipboard()'>Copy to Clipboard</button>
+      <p>{{clipboardMessage}}</p>
+    </div>
+  </div>
+</ng-template>
 
 <div *ngIf='isDev'>
   <br>

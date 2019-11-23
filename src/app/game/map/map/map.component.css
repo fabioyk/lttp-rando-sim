@@ -8,6 +8,10 @@
   background-color: black;
 }
 
+.aligned-right {
+  float:right;
+}
+
 app-dungeon-items {
   position: absolute;
   top: 0;

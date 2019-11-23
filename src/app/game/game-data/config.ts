@@ -2,6 +2,7 @@ export class Config {
   trMedallion: string;
   mmMedallion: string;
   
+  data: string;
   vtSeedNumber: number;
   difficulty: string;
   logic: string;

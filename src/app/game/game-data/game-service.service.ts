@@ -181,6 +181,8 @@ export class GameService {
     } else {
       this.overworldData = new OverworldData(logObj.locations, this.config);
     }
+
+    this.config.data = log;
     
     this.setupData(this.config.isFullMap);
 
