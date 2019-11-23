@@ -1,8 +1,7 @@
 export class Seed {
-  seed: number;
+  seed: string;
   logic: string;
   variation: string;
-  difficulty: string;
   goal: string;
   mode: string;
   weapons: string;
@@ -10,5 +9,7 @@ export class Seed {
   hints: string[];
   silversHint: string;
   bosses: number[];
+  reqTower: string;
+  reqGanon: string;
   error:string;
 }

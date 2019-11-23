@@ -19,7 +19,7 @@ export class SeedApiService {
   public lastSeedTimestamp:number;
   public lastSeedParams:any;
   public lastSeed:Seed;
-  private webVersion = '3.3';
+  private webVersion = '4.0';
 
   constructor(private _http: Http) {
     if (environment.production) {
@@ -33,13 +33,20 @@ export class SeedApiService {
     this._http.get(this._apiUrl);
   }
 
-  getSeed(mode:String, queryParams:any, isDailySeed:boolean=false):Observable<Seed> {
+  getSeed(mode:String, queryParams:any, isDailySeed:boolean=false, isPrebuiltSeed:boolean=false):Observable<Seed> {
     let queryUrl;
-    
-    if (isDailySeed) {
+
+    if (isPrebuiltSeed) {
+      queryUrl = this._apiUrl + 'api/tseed?v='+this.webVersion;
+      Object.keys(queryParams).forEach(key => {
+        queryUrl += '&' + key + '=' + queryParams[key];
+      });
+    } else if (isDailySeed) {
       queryUrl = this._apiUrl + 'api/daily?v='+this.webVersion+'&mode=' + mode;
+    } else if (mode === 'mystery') {
+      queryUrl = this._apiUrl + 'api/seed?v='+this.webVersion+'&mode=mystery';
     } else {
-      queryUrl = this._apiUrl + 'api/seed?v='+this.webVersion+'&mode=' + mode;
+      queryUrl = this._apiUrl + 'api/seed?v='+this.webVersion;
       Object.keys(queryParams).forEach(key => {
         queryUrl += '&' + key + '=' + queryParams[key];
       });

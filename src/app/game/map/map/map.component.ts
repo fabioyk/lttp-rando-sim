@@ -55,8 +55,8 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {    
     this.isDev = isDevMode();    
-    if (this.config.isFullMap) {      
-      [this.currentDungeonMap, this.currentDungeon] = this.gameService.getMap(this.currentMap);      
+    if (this.config.isFullMap) {
+      [this.currentDungeonMap, this.currentDungeon] = this.gameService.getMap(this.currentMap);
       this.currentDungeonMap.preloadImages(this.currentDungeon.name);      
       this.changeMap(this.currentDungeonMap.id);
       this.currentDungeonItems = this.items.getDungeonItems(this.currentDungeon.name);      
@@ -94,6 +94,10 @@ export class MapComponent implements OnInit {
         this.changeMap(this.otherWorld);
       } else if (nodeClicked.prize[0] === 'tr-ledge') {
         this.changeDungeon('tr-inverted-ledge');
+      } else if (nodeClicked.prize[0] === 'gt-requirement') {
+        this.hintCheck.emit(['sign', 'Ganon\'s Tower Entry', this.getSignpostText('tower')]);
+      } else if (nodeClicked.prize[0] === 'ganon-requirement') {
+        this.hintCheck.emit(['sign', 'Ganon Vulnerability', this.getSignpostText('ganon')]);
       } else if (nodeClicked.prize[0].charAt(0) === '=') {
         this.hintCheck.emit([nodeClicked.tooltip, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);        
       } else if (nodeClicked.status !== 'opened' && !nodeClicked.originalNode.isOpened && (!nodeClicked.originalNode.canView || nodeClicked.isFaded)) {        
@@ -128,7 +132,11 @@ export class MapComponent implements OnInit {
       this.gameService.updateData(this.items, this.currentMap, this.currentRegion);
     } else if (nodeClicked.status.indexOf('getable') > -1) {      
       if (!nodeClicked.originalNode.isOpened && nodeClicked.status.indexOf('unreachable') === -1) {
-        if (nodeClicked.prize[0].charAt(0) === '=') {
+        if (nodeClicked.prize[0] === 'gt-requirement') {
+          this.hintCheck.emit(['sign', 'Ganon\'s Tower Entry', this.getSignpostText('tower')]);
+        } else if (nodeClicked.prize[0] === 'ganon-requirement') {
+          this.hintCheck.emit(['sign', 'Ganon Vulnerability', this.getSignpostText('ganon')]);
+        } else if (nodeClicked.prize[0].charAt(0) === '=') {
           this.hintCheck.emit([nodeClicked.tooltip, this.currentMap, this.config.hints[+nodeClicked.prize[0].substr(1)]]);
         } else {
           this.addPrizes(nodeClicked, this.currentMap);
@@ -398,7 +406,6 @@ export class MapComponent implements OnInit {
           if (name[1] === 'trportal' && !this.items.isTROpened 
             && this.items[this.config.trMedallion] && (this.items.sword || this.config.weapons === 'swordless')) {
             this.items.isTROpened = true;
-            console.log('tr opened');
           }
           name[0] = 'dw';
           this.items.currentRegionInMap = dungeonNode.originalNode.destinationSection;          
@@ -497,6 +504,13 @@ export class MapComponent implements OnInit {
           break;
         case DungeonNodeStatus.HINT:
           this.hintCheck.emit([dungeonNode.tooltip, this.currentDungeon.name, this.config.hints[+dungeonNode.prize[0]]]);          
+          break;
+        case DungeonNodeStatus.SIGNPOST:
+          if (this.currentDungeonMap.name === 'Ganons Tower Entrance') {
+            this.hintCheck.emit(['sign', 'Ganon\'s Tower Entry', this.getSignpostText('tower')]);  
+          } else {
+            this.hintCheck.emit(['sign', 'Ganon Vulnerability', this.getSignpostText('ganon')]);
+          }          
           break;
       }
     } else if (dungeonNode.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST.toString()
@@ -841,7 +855,7 @@ export class MapComponent implements OnInit {
         }
       });
     } else {
-      if (this.config.variation !== 'keysanity') {
+      if (this.config.dungeonItems === 'standard') {
         if (mapName === 'lw') {
           this.items.lwMapOpen = true;
           this.gameService.dungeonsData.forEach((dunData, i) => {
@@ -927,10 +941,10 @@ export class MapComponent implements OnInit {
     if (this.config.isFullMap) {
       if (world === 'light-world') {
         return this.currentDungeonMap.id.split('-')[0] === 'lw'          
-          && !this.currentDungeonMap.isIndoors && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'keysanity');
+          && !this.currentDungeonMap.isIndoors && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.dungeonItems !== 'full');
       } else if (world === 'dark-world') {
         return this.currentDungeonMap.id.split('-')[0] === 'dw' 
-          && !this.currentDungeonMap.isIndoors  && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.variation !== 'keysanity');
+          && !this.currentDungeonMap.isIndoors  && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.dungeonItems !== 'full');
       } else if (world === 'green-pendant') {
         var foundGreen = false;
         this.items.dungeonItemsArray.forEach((eachDunItems) => {
@@ -949,7 +963,7 @@ export class MapComponent implements OnInit {
         return this.currentDungeonMap.id === 'dw-bomb-shop' && foundReds < 2;        
       }
     }
-    if (this.config.variation !== 'keysanity') {
+    if (this.config.dungeonItems === 'standard') {
       return this.currentMap === world;
     } else {      
       if (this.currentMap === world) {
@@ -1047,6 +1061,23 @@ export class MapComponent implements OnInit {
     if (this.isDev) {
       console.log(event.offsetX/555*100, event.offsetY/555*100);
     }    
+  }
+
+  getSignpostText(type:string) {
+    if (type === 'tower') {
+      return 'You need ' + this.config.towerCrystals + ' crystals to enter';
+    } else {
+      switch(this.config.goal) {
+        case 'ganon':
+          return 'You need ' + this.config.ganonCrystals + ' crystals and have defeated Agahnim 2';
+        case 'fast_ganon':
+          return 'You only need ' + this.config.ganonCrystals + ' crystals to beat Ganon';
+        case 'pedestal':
+          return 'You need to get to the pedestal';
+        case 'dungeons':
+          return 'You need to defeat all of Ganon\'s bosses';
+      }
+    }
   }
 
   preloadMapsAndIcons() {

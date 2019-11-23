@@ -87,11 +87,13 @@ export class EasternPalace {
     function(items:Items, config:Config) {
         return true;
     }, 'ep-compass'));    
-    tileRoom.nodes.push(new DungeonNode(
-      'Hint Tile', 50, 41, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-        return true;
-    }, '1'));
+    if (config.hintsEnabled) {
+      tileRoom.nodes.push(new DungeonNode(
+        'Hint Tile', 50, 41, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+          return true;
+      }, '1'));
+    }
     tileRoom.nodes.push(new DungeonNode(
       '', 79, 53.5, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -113,14 +115,14 @@ export class EasternPalace {
     bigChestRoom.nodes.push(new DungeonNode(
       '', 50, 10, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
-      if ((config.isEnemizer && config.mode !== 'standard')) {
-        return items.lamp;
+      if (config.isEnemizer) {
+        return items.lamp || (config.advancedItems && items.fireRod);
       } else {
-        return items.hasBow() && items.lamp;
+        return items.hasBow() && (items.lamp || (config.advancedItems && items.fireRod));
       }
     }, 'ep-armos', ((config.isEnemizer && config.mode !== 'standard') ? 'Lamp' : ('Bow' + (config.canGlitch ? '' : ' and Lamp')))  + ' Required', [-1], 0, 
     function(items:Items, config:Config) {
-      if ((config.isEnemizer && config.mode !== 'standard')) {
+      if (config.isEnemizer) {
         return true;
       } else {
         return items.hasBow();

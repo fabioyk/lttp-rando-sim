@@ -10,16 +10,20 @@ export class LightWorld {
       'Master Sword Pedestal', 2.5, 3.2,
       function(items:Items, config:Config) {
         return items.pendantCourage && items.pendantPower && items.pendantWisdom
-          && (config.mode !== 'inverted' || items.canInvertedLW());
+          && (config.mode !== 'inverted' || items.canInvertedLW()) && (items.book || config.advancedItems);
       },
       function(items:Items, config:Config) {
         return items.book && (config.mode !== 'inverted' || items.canInvertedLW());
       },
-      [l[0]]
+      [l[0]], '',
+      function(items:Items, config:Config) {
+        return items.pendantCourage && items.pendantPower && items.pendantWisdom
+          && (config.mode !== 'inverted' || items.canInvertedLW());
+      }
     ));
 
     itemLocations.push(new ItemLocation(
-      'Hyrule Secret Passage', 29.8, 41.8,
+      'Hyrule Secret Passage', 30, 40.8,
       function(items:Items, config:Config) {
         return (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl));
       },
@@ -353,7 +357,7 @@ export class LightWorld {
       [l[48]],
       '',
       function(items:Items, config:Config) {
-        return items.boots && (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl));
+        return (items.boots || items.canAncillaFF()) && (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl));
       },
       function(items:Items, config:Config) {
         return (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl));
@@ -431,7 +435,7 @@ export class LightWorld {
         if (config.mode === 'inverted') {
           return (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl)) && items.lamp;
         }
-        return config.mode.indexOf('standard') > -1 ? true : items.lamp;
+        return config.mode.indexOf('standard') > -1 ? true : (items.lamp || (config.advancedItems && items.fireRod));
       },
       null,
       [l[56]],
@@ -490,35 +494,37 @@ export class LightWorld {
       }
     ));
 
-    itemLocations.push(new ItemLocation(
-      'Spectacle Rock Hint', 23.3, 14.8,
-      function(items:Items, config:Config) {
-        if (config.mode === 'inverted') {
-          return items.canInvertedEastDarkDeathMountain();
+    if (config.hintsEnabled) {
+      itemLocations.push(new ItemLocation(
+        'Spectacle Rock Hint', 23.3, 14.8,
+        function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return items.canInvertedEastDarkDeathMountain();
+          }
+          return items.canWestDeathMountain();
+        },
+        function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return items.canInvertedEastDarkDeathMountain();
+          }
+          return items.canWestDeathMountain();
+        },
+        ['=13'],
+        '',
+        function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return items.canInvertedEastDarkDeathMountain(true);
+          }
+          return items.canWestDeathMountain(true);
+        },
+        function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return items.canInvertedEastDarkDeathMountain(true);
+          }
+          return items.canWestDeathMountain(true);
         }
-        return items.canWestDeathMountain();
-      },
-      function(items:Items, config:Config) {
-        if (config.mode === 'inverted') {
-          return items.canInvertedEastDarkDeathMountain();
-        }
-        return items.canWestDeathMountain();
-      },
-      ['=13'],
-      '',
-      function(items:Items, config:Config) {
-        if (config.mode === 'inverted') {
-          return items.canInvertedEastDarkDeathMountain(true);
-        }
-        return items.canWestDeathMountain(true);
-      },
-      function(items:Items, config:Config) {
-        if (config.mode === 'inverted') {
-          return items.canInvertedEastDarkDeathMountain(true);
-        }
-        return items.canWestDeathMountain(true);
-      }
-    ));
+      ));
+    }
 
     itemLocations.push(new ItemLocation(
       'Ether Tablet', 21, 3,
@@ -655,21 +661,37 @@ export class LightWorld {
 
     if (config.mode === 'inverted') {
       itemLocations.push(new ItemLocation(
+        'Ganon\'s Tower Accessibility', 22, 46,
+        function(items:Items, config:Config) {
+          return items.canInvertedLW() && items.moonPearl;
+        },
+        null,
+        ['gt-requirement']
+      ));
+
+      itemLocations.push(new ItemLocation(
+        'Ganon\'s Vulnerability', 27.8, 46,
+        function(items:Items, config:Config) {
+          return items.canInvertedLW() && items.moonPearl;
+        },
+        null,
+        ['ganon-requirement']
+      ));
+
+      itemLocations.push(new ItemLocation(
         'Ganon', 21, 40.8,
         function(items:Items, config:Config) {
           switch(config.goal) {
             case 'pedestal': return false;
             case 'triforce': return false;
             case 'dungeons':
-              if (!items.pendantCourage || !items.pendantPower || !items.pendantWisdom 
-                  || !items.agahnim) {
-                return false;
-              }
+              return items.stats.bosses === 11;
             case 'ganon':
-              return items.canInvertedLW() && items.moonPearl && items.agahnim2 && items.crystal1 &&
-                items.crystal2 && items.crystal3 && items.crystal4 && items.crystal5 && items.crystal6
-                && items.crystal7 && (items.lamp || items.fireRod)
+              return items.canInvertedLW() && items.moonPearl && items.agahnim2 && items.canDamageGanon(config) && (items.lamp || items.fireRod)
                 && (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer && items.hasSilvers() && items.hasBow()) );
+            case 'fast_ganon':
+                return items.canInvertedLW() && items.moonPearl && items.canDamageGanon(config) && (items.lamp || items.fireRod)
+                  && (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer && items.hasSilvers() && items.hasBow()) );
           }
         },
         null,

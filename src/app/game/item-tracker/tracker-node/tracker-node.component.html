@@ -27,7 +27,7 @@
       [ngStyle]="{'background-image': getDungeonPrizeBg()}">
     </div>
   </div>
-  <div class='dungeon-keys' *ngIf='config.variation === "keysanity"'>
+  <div class='dungeon-keys' *ngIf='config.dungeonItems === "mcs" || config.dungeonItems === "full" || config.isMystery'>
     <div class='big-key-icon'
       [ngClass]="getBigKeyIconClass()">
 

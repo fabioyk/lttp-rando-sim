@@ -40,10 +40,10 @@ import { ChangelogComponent } from './info-pages/changelog/changelog.component';
     RouterModule.forRoot([
       { path: '', component: MainMenuComponent },
       { path: 'standard', component: GameComponent },
-      { path: 'open', component: GameComponent },  
-      { path: 'keysanity', component: GameComponent },  
-      { path: 'standard-rando', component: GameComponent }, 
+      { path: 'open', component: GameComponent },      
       { path: 'inverted', component: GameComponent},
+      { path: 'qual', component: GameComponent },
+      { path: 'mystery', component: GameComponent },
       { path: 'about', component: AboutComponent },
       { path: 'support', component: SupportComponent },
       { path: 'changelog', component: ChangelogComponent },

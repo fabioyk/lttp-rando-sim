@@ -4,12 +4,20 @@ export class Config {
   
   vtSeedNumber: number;
   difficulty: string;
-  variation: string;
   logic: string;
   goal: string;
   mode: string;
   weapons: string;
-  
+  advancedItems: boolean;
+  dungeonItems: string;
+  accessibility: string;
+  towerCrystals: number;
+  ganonCrystals: number;
+  towerCrystalsRequested: string;
+  ganonCrystalsRequested: string;
+  hintsEnabled: boolean;
+  isMystery: boolean;
+
   canGlitch: boolean;
   isFullMap: boolean;
 
@@ -30,13 +38,13 @@ export class Config {
 
     this.vtSeedNumber = 0;
     this.difficulty = 'normal';
-    this.variation = 'none';
     this.logic = 'normal';
     this.goal = 'ganon';
     this.mode = 'standard';
 
     this.weapons = 'randomized';
     this.isFullMap = false;
+    this.isMystery = false;
 
     this.hints = [];
     this.silversHint = '';

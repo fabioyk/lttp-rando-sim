@@ -74,11 +74,13 @@ export class DesertPalace {
     function(items:Items, config:Config) {
         return items.boots;
     }, l[69], 'Boots Required'));
-    torch.nodes.push(new DungeonNode(
-      'Hint Tile', 50, 19, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-        return true;
-    }, '2'));
+    if (config.hintsEnabled) {
+      torch.nodes.push(new DungeonNode(
+        'Hint Tile', 50, 19, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+          return true;
+      }, '2'));
+    }
     dpData.dungeonMaps.push(torch);
 
     var map = new DungeonMapData('dp-map', 'Map Room');

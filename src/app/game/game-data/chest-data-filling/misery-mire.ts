@@ -11,9 +11,11 @@ export class MiseryMire {
       function(items:Items, config:Config) {
         return (items.moonPearl || config.mode === 'inverted') && items.canMire(config) 
           && items.hasMedallion('mm', config) && (items.sword || config.weapons === 'swordless')
-          && (items.boots || items.hookshot);
+          && ((items.boots && config.advancedItems) || items.hookshot);
       }, 11.6, 82.9
     );
+
+    // TODO add a entry map?
 
     var entrance = new DungeonMapData('mm-entry', 'Misery Mire Main Lobby');
     entrance.nodes.push(new DungeonNode(
@@ -238,11 +240,13 @@ export class MiseryMire {
     function(items:Items, config:Config) {
         return true;
     }, 'mm-bk'));
-    tileRoom.nodes.push(new DungeonNode(
-      'Hint Tile', 36, 33, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-        return true;
-    }, '11'));
+    if (config.hintsEnabled) {
+      tileRoom.nodes.push(new DungeonNode(
+        'Hint Tile', 36, 33, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+          return true;
+      }, '11'));
+    }
     mmData.dungeonMaps.push(tileRoom);
 
     var bkRoom = new DungeonMapData('mm-bk', 'Big Key Room');

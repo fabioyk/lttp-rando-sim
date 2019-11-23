@@ -58,18 +58,20 @@ export class PalaceDarkness {
     function(items:Items, config:Config) {
         return true;
     }, 'pod-entry'));
-    hintRoom.nodes.push(new DungeonNode(
-      'Hint Tile', 50, 20, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-        return true;
-    }, '5'));
+    if (config.hintsEnabled) {
+      hintRoom.nodes.push(new DungeonNode(
+        'Hint Tile', 50, 20, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+          return true;
+      }, '5'));
+    }
     hintRoom.nodes.push(new DungeonNode(
       'Right Side', 50, 87, DungeonNodeStatus.OPEN_DOOR,
       function(items:Items, config:Config) {        
         return items.hasBow() || (config.isEnemizer && config.mode !== 'standard');
       }, 'pod-right', 'Bow Required', [-1], 0,
       function(items:Items, config:Config) {
-        return items.hasBottle();
+        return true;
       }));
     podData.dungeonMaps.push(hintRoom);
 
@@ -237,13 +239,13 @@ export class PalaceDarkness {
     compass.nodes.push(new DungeonNode(
       '', 31, 20, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.lamp;
+        return items.lamp || (config.advancedItems && items.fireRod);
     }, 'pod-basement', 'Lamp Required', [-1], 0, 
     DungeonNode.noReqs));
     compass.nodes.push(new DungeonNode(
       '', 69, 20, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.lamp;
+        return items.lamp || (config.advancedItems && items.fireRod);
     }, 'pod-basement', 'Lamp Required', [-1], 0, 
     DungeonNode.noReqs));
     compass.nodes.push(new DungeonNode(

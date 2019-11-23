@@ -28,11 +28,13 @@ export class TurtleRock {
     function(items:Items, config:Config) {
         return items.somaria;
     }, 'tr-hall'));
-    newEntrance.nodes.push(new DungeonNode(
-      'Hint Tile', 36, 78.5, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-        return true;
-    }, '12'));
+    if (config.hintsEnabled) {
+      newEntrance.nodes.push(new DungeonNode(
+        'Hint Tile', 36, 78.5, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+          return true;
+      }, '12'));
+    }
     trData.dungeonMaps.push(newEntrance);
 
     var entrance = new DungeonMapData('tr-hall', 'Main Lobby');
@@ -296,22 +298,22 @@ export class TurtleRock {
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 1', 64, 24, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasBeamReflection(config);
+        return items.hasBeamReflection(config) || config.advancedItems;
     }, l[196], 'Invincibility Item Required', [-1], 0, DungeonNode.noReqs));
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 2', 36, 36, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasBeamReflection(config);
+        return items.hasBeamReflection(config) || config.advancedItems;
     }, l[195], 'Invincibility Item Required', [-1], 0, DungeonNode.noReqs));
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 3', 64, 48, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasBeamReflection(config);
+        return items.hasBeamReflection(config) || config.advancedItems;
     }, l[194], 'Invincibility Item Required', [-1], 0, DungeonNode.noReqs));
     laserBridge.nodes.push(new DungeonNode(
       'Laser Bridge Chest 4', 36, 60, DungeonNodeStatus.CLOSED_CHEST,
     function(items:Items, config:Config) {
-        return items.hasBeamReflection(config);
+        return items.hasBeamReflection(config) || config.advancedItems;
     }, l[193], 'Invincibility Item Required', [-1], 0, DungeonNode.noReqs));
     if (config.mode === 'inverted') {
       laserBridge.nodes.push(new DungeonNode(

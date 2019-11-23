@@ -16,7 +16,7 @@
   <div>
     <app-tracker-node
       class='col-xs-2'
-      [ngClass]='config.variation === "keysanity" ? "col-xs-2" : "col-xs-5ths"'
+      [ngClass]='((config.dungeonItems !== "standard" && config.dungeonItems !== "mc") || config.isMystery) ? "col-xs-2" : "col-xs-5ths"'
       *ngFor='let dungeonData of getDungeons()'
       [isItem]='false'
       [items]='items'

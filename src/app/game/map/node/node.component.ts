@@ -118,6 +118,7 @@ export class NodeComponent implements OnInit {
   isIconShown() {    
     return !this.nodeInfo.originalNode.isOpened 
       && this.nodeInfo.prize[0].charAt(0) !== '='
+      && !this.nodeInfo.prize[0].includes('requirement')      
       && (this.nodeInfo.isFaded 
         || (this.nodeInfo.originalNode.canView 
           && this.nodeInfo.tooltip.indexOf('Tablet') === -1 
@@ -138,7 +139,8 @@ export class NodeComponent implements OnInit {
       var oneOfViewable = +this.nodeInfo.status === DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
         || +this.nodeInfo.status === DungeonNodeStatus.PEDESTAL
         || +this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM;
-      if ((!this.nodeInfo.originalNode.canOpen(this.items, this.config) || oneOfViewable) 
+
+      if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
           && +this.nodeInfo.status !== DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
             && (!this.items.book || (this.items.book && +this.nodeInfo.status !== DungeonNodeStatus.PEDESTAL
               && +this.nodeInfo.status !== DungeonNodeStatus.BOOK_CHECKABLE_ITEM))
@@ -229,6 +231,8 @@ export class NodeComponent implements OnInit {
       }
       if (this.nodeInfo.prize[0].charAt(0) === '=') {
         res += ' big-hint-tile';
+      } else if (this.nodeInfo.prize[0].includes('requirement')) {
+        res += ' sign';
       }
       if (this.nodeInfo.status.indexOf('invisible') > -1 && !this.config.noLogic) {
         res += ' invisible';
@@ -312,6 +316,8 @@ export class NodeComponent implements OnInit {
           return 'water-warp';
         case DungeonNodeStatus.HINT:
           return 'hint-tile';
+        case DungeonNodeStatus.SIGNPOST:
+          return 'sign';
         case DungeonNodeStatus.SQ_OPTION:
           var res = 'sq-item ' + this.nodeInfo.prize[0];
           if (this.nodeInfo.prize[0] === 'lw-flute1' && !this.nodeInfo.originalNode.canOpen(this.items, this.config)) {
@@ -319,7 +325,7 @@ export class NodeComponent implements OnInit {
           }
           return res;          
         default:
-          console.log(this.nodeInfo.status);
+          console.log('Node Status not found: '+this.nodeInfo.status);
           return '';
       }
     } else {

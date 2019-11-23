@@ -34,11 +34,13 @@ export class SwampPalace {
         return items.flippers && items.mirror
           && (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl));
     }, 'sp-tall-room'));
-    entrance.nodes.push(new DungeonNode(
-      'Hint Tile', 60, 41, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-        return true;
-    }, '6'));
+    if (config.hintsEnabled) {
+      entrance.nodes.push(new DungeonNode(
+        'Hint Tile', 60, 41, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+          return true;
+      }, '6'));
+    }
     spData.dungeonMaps.push(entrance);
 
     var tallRoom = new DungeonMapData('sp-tall-room', 'Key Pot Corridor');

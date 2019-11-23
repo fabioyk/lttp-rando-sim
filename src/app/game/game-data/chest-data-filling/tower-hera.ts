@@ -42,11 +42,23 @@ export class TowerHera {
     function(items:Items, config:Config) {
         return true;
     }, 'toh-upstairs'));
-    entrance.nodes.push(new DungeonNode(
-      'Hint Tile', 50, 46, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-        return true;
-    }, '3'));
+    if (config.canGlitch) {
+      entrance.nodes.push(new DungeonNode(
+        '', 36, 18, DungeonNodeStatus.OPEN_DOOR,
+      function(items:Items, config:Config) {
+          return false;
+      }, 'toh-upstairs', '', [-1], 0,
+      function(items:Items, config:Config) {
+        return items.hookshot;
+      }));
+    }    
+    if (config.hintsEnabled) {
+      entrance.nodes.push(new DungeonNode(
+        'Hint Tile', 50, 46, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+          return true;
+      }, '3'));
+    }
     tohData.dungeonMaps.push(entrance);
 
     var skRoom = new DungeonMapData('toh-sk', 'Left Room');
@@ -91,11 +103,13 @@ export class TowerHera {
     function(items:Items, config:Config) {
         return true;
     }, l[92]));
-    upstairs.nodes.push(new DungeonNode(
-      'Hint Tile', 50, 51, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-        return true;
-    }, '4'));
+    if (config.hintsEnabled) {
+      upstairs.nodes.push(new DungeonNode(
+        'Hint Tile', 50, 51, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+          return true;
+      }, '4'));
+    }
     upstairs.nodes.push(new DungeonNode(
       'Moldorm Room', 13, 25, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {

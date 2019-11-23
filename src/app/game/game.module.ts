@@ -28,7 +28,6 @@ import { TpLogRedirectComponent } from './tp-log-redirect/tp-log-redirect.compon
     RouterModule.forChild([
       { path: 'standard', component: GameComponent },
       { path: 'open', component: GameComponent },
-      { path: 'keysanity', component: GameComponent },
       { path: 'standard-rando', component: GameComponent },    
       { path: 'log', component: TpLogComponent }  
     ])

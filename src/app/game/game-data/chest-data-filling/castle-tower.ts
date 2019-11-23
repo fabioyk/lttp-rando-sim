@@ -62,9 +62,11 @@ export class CastleTower {
     tile.nodes.push(new DungeonNode(
       '', 13, 53, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'ct-top'));
-    tile.nodes.push(new DungeonNode(
-      'Hint Tile', 28, 20, DungeonNodeStatus.HINT,
-    DungeonNode.noReqs, '0'));
+    if (config.hintsEnabled) {
+      tile.nodes.push(new DungeonNode(
+        'Hint Tile', 28, 20, DungeonNodeStatus.HINT,
+      DungeonNode.noReqs, '0'));
+    }    
     ctData.dungeonMaps.push(tile);
 
     var top = new DungeonMapData('ct-top', 'Top of the Tower');

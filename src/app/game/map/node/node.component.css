@@ -171,7 +171,6 @@
 }
 .mirror {
   border-radius: 50%;
-  background-color: lightgreen;
   background-image: url('/assets/item-icons/mirror.png');      
 }
 .frog {
@@ -194,6 +193,9 @@
 }
 .big-hint-tile {
   background-image: url('/assets/item-icons/hintTile.png');      
+}
+.sign {
+  background-image: url('/assets/item-icons/sign.png');
 }
 .duck {
   background-image: url('/assets/node-icons/duck.png');      

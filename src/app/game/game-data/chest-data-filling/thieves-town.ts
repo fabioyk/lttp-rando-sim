@@ -103,11 +103,13 @@ export class ThievesTown {
     function(items:Items, config:Config) {
         return true;
     }, 'tt-bombable-floor'));
-    hellway.nodes.push(new DungeonNode(
-      'Hint Tile', 34, 20.5, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-        return true;
-    }, '7'));
+    if (config.hintsEnabled) {
+      hellway.nodes.push(new DungeonNode(
+        'Hint Tile', 34, 20.5, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+          return true;
+      }, '7'));
+    }
     ttData.dungeonMaps.push(hellway);
 
     var fork = new DungeonMapData('tt-fork', 'Conveyor Belt Circle');

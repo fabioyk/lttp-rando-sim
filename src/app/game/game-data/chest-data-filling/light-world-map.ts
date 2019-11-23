@@ -109,7 +109,8 @@ export class LightWorldMap {
       '', 89, 96, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'lw-lake-hylea', 'Flippers Required'));
+    }, 'lw-lake-hylea', 'Flippers Required', [-1], 0,
+    function(items:Items, config:Config) { return items.canAncillaFF(); }));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-south-house-portal', 'South of Link\'s House');
@@ -137,9 +138,7 @@ export class LightWorldMap {
     function(items:Items, config:Config) {
         return items.flippers;
     }, 'lw-east-sanctuary', 'Flippers Required', [-1], 0, 
-    function(items:Items, config:Config) {
-      return true;
-    }));
+    DungeonNode.noReqs));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-south-grove', 'South of Grove');
@@ -229,9 +228,7 @@ export class LightWorldMap {
     function(items:Items, config:Config) {
         return items.flippers;
     }, 'lw-south-house-portal', 'Flippers Required', [-1], 0, 
-    function(items:Items, config:Config) {
-      return true;
-    }));
+    DungeonNode.noReqs));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-small-shop', 'Northwest of Lake Hylea'); 
@@ -240,12 +237,15 @@ export class LightWorldMap {
       '', 45, 4, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
       return items.flippers || items.currentRegionInMap !== 3; 
-    }, 'lw-octorok-field'));
+    }, 'lw-octorok-field', '', [-1], 0,
+    function(items:Items, config:Config) { return items.canAncillaFF(); }));
     m.nodes.push(new DungeonNode(
       '', 91, 93, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-        return items.flippers || (items.currentRegionInMap !== 3 && items.currentRegionInMap !== 0);
-    }, 'lw-lake-hylea', 'Flippers Required'));
+        return items.flippers ||
+         (items.currentRegionInMap !== 3 && items.currentRegionInMap !== 0);
+    }, 'lw-lake-hylea', 'Flippers Required', [-1], 0,
+    function(items:Items, config:Config) { return items.canAncillaFF(); }));
     m.nodes.push(new DungeonNode(
       'Lake Hylea Island', 79, 60, DungeonNodeStatus.VIEWABLE_CLOSED_CHEST,
     function(items:Items, config:Config) {
@@ -308,7 +308,8 @@ export class LightWorldMap {
       '', 86, 56, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.flippers;
-    }, 'lw-lake-hylea', 'Flippers Required'));
+    }, 'lw-lake-hylea', 'Flippers Required', [-1], 0,
+    function(items:Items, config:Config) { return items.canAncillaFF(); }));
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-flute7', 'Dam Entrance');
@@ -385,7 +386,8 @@ export class LightWorldMap {
       '', 23, 50, DungeonNodeStatus.WATER_WARP,
     function(items:Items, config:Config) {
       return items.flippers;
-    }, 'lw-flute8', 'Flippers Required'));
+    }, 'lw-flute8', 'Flippers Required', [-1], 0,
+    function(items:Items, config:Config) { return items.canAncillaFF(); }));
     m.nodes.push(new DungeonNode(
       '', 56, 42, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -749,7 +751,7 @@ export class LightWorldMap {
         return items.flippers;
     }, l[48], 'Flippers Required', [-1], 0, 
     function(items:Items, config:Config) {
-      return items.boots;
+      return items.boots || items.canAncillaFF();
     }));
     lwData.dungeonMaps.push(m);
 
@@ -1057,11 +1059,13 @@ export class LightWorldMap {
     function(items:Items, config:Config) {
       return items.currentRegionInMap === 1;
     }, l[75]));
-    m.nodes.push(new DungeonNode(
-      'Hint Tile', 36, 31, DungeonNodeStatus.HINT,
-    function(items:Items, config:Config) {
-      return items.currentRegionInMap === 1;
-    }, '13'));
+    if (config.hintsEnabled) {
+      m.nodes.push(new DungeonNode(
+        'Hint Tile', 36, 31, DungeonNodeStatus.HINT,
+      function(items:Items, config:Config) {
+        return items.currentRegionInMap === 1;
+      }, '13'));
+    }
     lwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('lw-hera', 'Tower of Hera Entrance');

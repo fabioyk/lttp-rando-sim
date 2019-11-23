@@ -39,4 +39,5 @@ export class DungeonNodeStatus {
 
   static HINT = 38;
   static DEFEATED_BOSS = 39;
+  static SIGNPOST = 40;
 }

@@ -49,4 +49,18 @@
         </table>
     </div>
   </accordion-group>
+  <accordion-group heading='Seed Info'>
+      <div *ngFor='let data of getSeedDataTables()'>
+          <table class='table table-striped'>
+            <tr *ngFor='let line of data[1]'>
+              <td class='col-xs-6'>
+                {{line[0]}}
+              </td>
+              <td class='col-xs-6'>
+                {{line[1]}}
+              </td>
+            </tr>
+          </table>
+      </div>
+    </accordion-group>
 </accordion>

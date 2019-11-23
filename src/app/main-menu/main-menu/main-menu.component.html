@@ -1,7 +1,231 @@
-<h3>Generate Seed</h3>
-<form class="form-horizontal">
+<div class="btn-group btn-group-justified mode-select-radio" role="group">
+  <label class="btn btn-default" [(ngModel)]="generationType" name="open-gen-button"
+    btnRadio="open">Open Mode</label>
+  <label class="btn btn-default" [(ngModel)]="generationType" name="custom-gen-button"
+    btnRadio="custom">Custom Generation</label>
+  <label class="btn btn-default" [(ngModel)]="generationType" name="custom-gen-button"
+    btnRadio="mystery">Mystery Seed</label>
+</div>
+
+<form class="form-horizontal" *ngIf="generationType == 'open'">
   <div class="form-group">
-    <label for="game-mode" class="col-sm-4 control-label">State 
+      <label for="placement-mode" class="col-sm-4 control-label">Item Placement 
+      </label>
+      <p class="col-sm-4 seed-type-descriptor">Advanced 
+        <span class="question-mark" container="body" 
+        popover="Some dark rooms with firerod are in logic, Skull Woods pinball chest may have an item,
+        TR laser bridge doesn't require an invulnerability item, etc">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </span></p>
+  </div>
+  <div class="form-group">
+      <label for="placement-mode" class="col-sm-4 control-label">Dungeons Items 
+      </label>
+      <p class="col-sm-4 seed-type-descriptor">Standard 
+          <span class="question-mark" container="body" 
+          popover="All keys and dungeon items are inside their own dungeons">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          </span>
+      </p>
+  </div>
+  <div class="form-group">
+      <label for="placement-mode" class="col-sm-4 control-label">Accessibility 
+      </label>
+      <p class="col-sm-4 seed-type-descriptor">100% Inventory 
+          <span class="question-mark" container="body" 
+          popover="All bosses and inventory items are accessible. Not all keys may be reachable">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          </span>
+      </p>
+  </div>
+  <div class="form-group">
+      <label for="placement-mode" class="col-sm-4 control-label">Goal
+      </label>
+      <p class="col-sm-4 seed-type-descriptor">Defeat Ganon 
+          <span class="question-mark" container="body" 
+          popover="You must defeat Agahnim 2 and collect the required crystal amount to be able to beat Ganon">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          </span>
+      </p>
+  </div>
+  <div class="form-group">
+      <label for="placement-mode" class="col-sm-4 control-label">Open Tower
+      </label>
+      <p class="col-sm-4 seed-type-descriptor">7 Crystals 
+          <span class="question-mark" container="body" 
+          popover="7 Crystals are required to be able to enter Ganons Tower">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          </span>
+      </p>
+  </div>
+  <div class="form-group">
+      <label for="placement-mode" class="col-sm-4 control-label">Ganon Vulnerable 
+      </label>
+      <p class="col-sm-4 seed-type-descriptor">7 Crystals 
+          <span class="question-mark" container="body" 
+          popover="7 Crystals are required to be able to damage Ganon">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          </span>
+      </p>
+  </div>
+  <div class="form-group">
+      <label for="placement-mode" class="col-sm-4 control-label">World State 
+      </label>
+      <p class="col-sm-4 seed-type-descriptor">Open 
+          <span class="question-mark" container="body" 
+          popover="Game starts with the escape prologue done and you may use Link's House or the Sanctuary as spawn points">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          </span>
+      </p>
+  </div>
+  <div class="form-group">
+      <label for="placement-mode" class="col-sm-4 control-label">Hints
+      </label>
+      <p class="col-sm-4 seed-type-descriptor">Off 
+          <span class="question-mark" container="body" 
+          popover="All hint tiles are disabled">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          </span>
+      </p>
+  </div>
+  <div class="form-group">
+      <label for="placement-mode" class="col-sm-4 control-label">Swords
+      </label>
+      <p class="col-sm-4 seed-type-descriptor">Randomized 
+          <span class="question-mark" container="body" 
+          popover="You start without a sword, all 4 swords are shuffled in the world">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          </span>
+      </p>
+  </div>
+
+  <div class="form-group">
+    <label for="map-mode" class="col-sm-4 control-label">Overworld 
+      <span class="question-mark" container="body" popover="Do you want to travel the overworld screen by screen?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="map-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="mapSelected" name="simple-map-button"
+        btnRadio="no">Simple</label>
+      <label class="btn btn-default" [(ngModel)]="mapSelected" name="full-map-button"
+        btnRadio="yes" [ngStyle]="{'display': isAdvancedOWEnabled}">Advanced</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="seed-num-input" class="col-sm-4 control-label">Seed</label>
+    <div class="col-sm-8 form-inline">
+        <input type="text" name="seedSelect" class="form-control" id="seed-num-input"
+        placeholder="Random" maxlength="20" [(ngModel)]="seedNum" [disabled]='dailySeed'
+        (keyup.enter)="onSubmit()">        
+    </div>    
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <button class="btn btn-primary" (click)="onSubmit()" 
+        type="button" [disabled]='shouldDisablePlay'>Play</button>      
+    </div>
+  </div>
+  <alert type="danger" *ngIf="errorMessage">
+    {{errorMessage}}
+  </alert>
+</form>
+
+<form class="form-horizontal" *ngIf="generationType === 'custom'">
+  <div class="form-group">
+    <label for="placement-mode" class="col-sm-4 control-label">Item Placement 
+      <span class="question-mark" container="body" popover="Changes logical restrictions for a more casual or advanced experience">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>    
+    <div class="btn-group" id="placement-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="itemPlacementSelected" name="basic-place-button"
+        btnRadio="basic">Basic</label>
+      <label class="btn btn-default" [(ngModel)]="itemPlacementSelected" name="advanced-place-button"
+        btnRadio="advanced">Advanced</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="var-mode" class="col-sm-4 control-label">Dungeon Items
+      <span class="question-mark" container="body" popover="Which dungeon items get shuffled into the rest of the world?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="var-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="dungeonItemsSelected" name="no-di-button"
+        btnRadio="standard">Standard</label>
+      <label class="btn btn-default" [(ngModel)]="dungeonItemsSelected" name="mc-button"
+        btnRadio="mc">Maps/Compasses</label>
+      <label class="btn btn-default" [(ngModel)]="dungeonItemsSelected" name="mcs-button"
+        btnRadio="mcs">Maps/Compasses/Small Keys</label>
+      <label class="btn btn-default" [(ngModel)]="dungeonItemsSelected" name="keysanity-button"
+        btnRadio="full">Keysanity</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="access-mode" class="col-sm-4 control-label">Accessibility
+      <span class="question-mark" container="body" popover="Is every chest accessible?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="access-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="accessibilitySelected" name="full-inv-button"
+        btnRadio="items">100% Inventory</label>
+      <label class="btn btn-default" [(ngModel)]="accessibilitySelected" name="full-loc-button"
+        btnRadio="locations">100% Locations</label>
+      <label class="btn btn-default" [(ngModel)]="accessibilitySelected" name="beatable-button"
+        btnRadio="none">Beatable Only</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="goal-mode" class="col-sm-4 control-label">Goal
+      <span class="question-mark" container="body" popover="Fast Ganon means you don't need to beat Agahnim 2 to fight Ganon">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="goal-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="goalSelected" name="ganon-button"
+        btnRadio="ganon">Defeat Ganon</label>
+      <label class="btn btn-default" [(ngModel)]="goalSelected" name="fast-ganon-button"
+        btnRadio="fast_ganon">Fast Ganon</label>
+      <label class="btn btn-default" [(ngModel)]="goalSelected" name="alldungeons-button"
+        btnRadio="dungeons">All Dungeons</label>
+      <label class="btn btn-default" [(ngModel)]="goalSelected" name="pedestal-button"
+        btnRadio="pedestal">Master Sword Pedestal</label>
+      <label class="btn btn-default" [(ngModel)]="goalSelected" name="triforce-button"
+        btnRadio="triforce-hunt">Triforce Hunt</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="open-tower-mode" class="col-sm-4 control-label">Open Tower
+      <span class="question-mark" container="body" popover="How many crystals do you need to open Ganon's Tower?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span>
+    </label>
+    <div class="btn-group" id="game-mode" class="col-sm-8">
+      <select id="open-tower-mode" class="form-control" name="tower-select" [(ngModel)]="openTowerSelected">
+        <option *ngFor="let op of openCrystalOptions" [value]="op.id">{{ op.label }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="open-ganon-mode" class="col-sm-4 control-label">Ganon Vulnerable
+      <span class="question-mark" container="body" popover="How many crystals do you need to damage Ganon?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span>
+    </label>
+    <div class="btn-group" id="game-mode" class="col-sm-8">
+      <select id="open-ganon-mode" class="form-control" name="ganon-select" [(ngModel)]="openGanonSelected">
+        <option *ngFor="let op of openCrystalOptions" [value]="op.id">{{ op.label }}</option>
+      </select>
+    </div>
+  </div>
+
+  
+  <div class="form-group">
+    <label for="game-mode" class="col-sm-4 control-label">World State 
       <span class="question-mark" container="body" popover="Do we rescue Zelda? Do we start in the Light World?">
         <i class="fa fa-question-circle" aria-hidden="true"></i>
       </span></label>    
@@ -16,96 +240,52 @@
   </div>
 
   <div class="form-group">
+    <label for="enemy-mode" class="col-sm-4 control-label">Boss Shuffle
+      <span class="question-mark" container="body" popover="Shuffle bosses? Allow repeat bosses?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="enemy-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="enemizerSelected" name="no-enemy-button"
+        btnRadio="none">None</label>
+      <label class="btn btn-default" [(ngModel)]="enemizerSelected" name="simple-button"
+        btnRadio="simple">Simple</label>
+      <label class="btn btn-default" [(ngModel)]="enemizerSelected" name="full-button"
+        btnRadio="full">Full</label>
+      <label class="btn btn-default" [(ngModel)]="enemizerSelected" name="chaos-button"
+        btnRadio="random">Random</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="hints-mode" class="col-sm-4 control-label">Hints
+      <span class="question-mark" container="body" popover="Enable hint tiles?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="hints-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="hintsSelected" name="with-hints-button"
+        btnRadio="on">On</label>
+      <label class="btn btn-default" [(ngModel)]="hintsSelected" name="no-hints-button"
+        btnRadio="off">Off</label>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="swords-mode" class="col-sm-4 control-label">Swords
-      <span class="question-mark" container="body" popover="Does uncle give us a sword? Can we get swords at all?">
+      <span class="question-mark" container="body" popover="Do we start with a sword? Can we get swords at all?">
         <i class="fa fa-question-circle" aria-hidden="true"></i>
       </span></label>
     <div class="btn-group" id="swords-mode" class="col-sm-8">
       <label class="btn btn-default" [(ngModel)]="swordsSelected" name="randomized-button"
         btnRadio="randomized">Randomized</label>
-      <label class="btn btn-default" [(ngModel)]="swordsSelected" name="uncle-button"
-        btnRadio="uncle">Uncle Assured</label>
+      <label class="btn btn-default" [(ngModel)]="swordsSelected" name="assured-button"
+        btnRadio="assured">Assured</label>
+      <!--<label class="btn btn-default" [(ngModel)]="swordsSelected" name="assured-button"
+        btnRadio="vanilla">Vanilla</label> 
+        
+        Vanilla swords is currently bugged, with one less sword in the pool
+       -->
       <label class="btn btn-default" [(ngModel)]="swordsSelected" name="swordless-button"
         btnRadio="swordless">Swordless</label>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="goal-mode" class="col-sm-4 control-label">Goal
-      <span class="question-mark" container="body" popover="7 Crystals? 3 Pendants? Everything including Agahnim?">
-        <i class="fa fa-question-circle" aria-hidden="true"></i>
-      </span></label>
-    <div class="btn-group" id="goal-mode" class="col-sm-8">
-      <label class="btn btn-default" [(ngModel)]="goalSelected" name="ganon-button"
-        btnRadio="ganon">Defeat Ganon</label>
-      <label class="btn btn-default" [(ngModel)]="goalSelected" name="alldungeons-button"
-        btnRadio="dungeons">All Dungeons</label>
-      <label class="btn btn-default" [(ngModel)]="goalSelected" name="pedestal-button"
-        btnRadio="pedestal">Master Sword Pedestal</label>
-      <label class="btn btn-default" [(ngModel)]="goalSelected" name="triforce-button"
-        btnRadio="triforce">Triforce Hunt</label>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="diff-mode" class="col-sm-4 control-label">Difficulty
-      <span class="question-mark" container="body" popover="How many safeties, hearts and swords are going to be available?">
-        <i class="fa fa-question-circle" aria-hidden="true"></i>
-      </span></label>
-    <div class="btn-group" id="diff-mode" class="col-sm-8">
-      <label class="btn btn-default" [(ngModel)]="diffSelected" name="easy-button"
-        btnRadio="easy">Easy</label>
-      <label class="btn btn-default" [(ngModel)]="diffSelected" name="normal-button"
-        btnRadio="normal">Normal</label>
-      <label class="btn btn-default" [(ngModel)]="diffSelected" name="hard-button"
-        btnRadio="hard">Hard</label>
-      <label class="btn btn-default" [(ngModel)]="diffSelected" name="expert-button"
-        btnRadio="expert">Expert</label>
-      <label class="btn btn-default" [(ngModel)]="diffSelected" name="insane-button"
-        btnRadio="insane">Insane</label>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="var-mode" class="col-sm-4 control-label">Variation
-      <span class="question-mark" container="body" popover="Keys stay inside dungeons or not?">
-        <i class="fa fa-question-circle" aria-hidden="true"></i>
-      </span></label>
-    <div class="btn-group" id="var-mode" class="col-sm-8">
-      <label class="btn btn-default" [(ngModel)]="variationSelected" name="no-var-button"
-        btnRadio="none">None</label>
-      <label class="btn btn-default" [(ngModel)]="variationSelected" name="keysanity-button"
-        btnRadio="keysanity">Keysanity</label>
-    </div>
-  </div>
-
-  <div class="form-group">
-      <label for="enemy-mode" class="col-sm-4 control-label">Enemizer
-        <span class="question-mark" container="body" popover="Shuffle bosses? Allow repeat bosses?">
-          <i class="fa fa-question-circle" aria-hidden="true"></i>
-        </span></label>
-      <div class="btn-group" id="enemy-mode" class="col-sm-8">
-        <label class="btn btn-default" [(ngModel)]="enemizerSelected" name="no-enemy-button"
-          btnRadio="none">Disabled</label>
-        <label class="btn btn-default" [(ngModel)]="enemizerSelected" name="simple-button"
-          btnRadio="simple">Simple</label>
-        <label class="btn btn-default" [(ngModel)]="enemizerSelected" name="full-button"
-          btnRadio="full">Full</label>
-        <label class="btn btn-default" [(ngModel)]="enemizerSelected" name="chaos-button"
-          btnRadio="chaos">Chaos</label>
-      </div>
-    </div>
-
-  <div class="form-group">
-    <label for="seq-break" class="col-sm-4 control-label">Minor Glitches and Sequence Breaking
-      <span class="question-mark" container="body" popover="Glitches are never required, but should you be able to use them?">
-        <i class="fa fa-question-circle" aria-hidden="true"></i>
-      </span></label>
-    <div class="btn-group" id="seq-break" class="col-sm-8">
-      <label class="btn btn-default" [(ngModel)]="glitchSelected" name="no-breaking-button"
-        btnRadio="no">Not Allowed</label>
-      <label class="btn btn-default" [(ngModel)]="glitchSelected" name="yes-breaking-button"
-        btnRadio="yes">Allowed</label>
     </div>
   </div>
   
@@ -121,21 +301,7 @@
         btnRadio="yes" [ngStyle]="{'display': isAdvancedOWEnabled}">Advanced</label>
     </div>
   </div>
-<!--
-  <div class="form-group">
-    <label for="seed-num-input" class="col-sm-4 control-label">Seed</label>
-    <div class="col-sm-8 form-inline">
-        <input type="text" name="seedSelect" class="form-control" id="seed-num-input"
-        placeholder="Random" maxlength="10" [(ngModel)]="seedNum" [disabled]='dailySeed'
-        (keyup.enter)="onSubmit()">
-        <button type="button" class="btn btn-default" 
-          [(ngModel)]="dailySeed" (click)='onDailySeedClick()'
-          name="dailyButton" btnCheckbox>Daily Seed</button> 
-          <abbr class="super-text not-selectable"
-            tooltip="A new seed every day! Resets at Midnight UTC / 7PM EST">?</abbr>
-    </div>    
-  </div>
-  -->
+    
   <div class="form-group">
     <div class="col-sm-offset-4 col-sm-8">
       <button class="btn btn-primary" (click)="onSubmit()" 
@@ -147,41 +313,82 @@
   </alert>
 </form>
 
+<form class="form-horizontal" *ngIf="generationType === 'mystery'">
+  <div class="mystery-info">
+    <p>With Mystery Seeds you won't know the settings of the seed before playing. Any combination of settings is possible</p>
+    <p>You will be thrown into the game and by opening chests and reading the handy signposts you'll be able to
+      guess what the settings are and complete the seed
+    </p>
+    <p>The seed isn't generated completely randomly, it follows the Weighted ruleset, as seen <a href="https://github.com/tcprescott/sahasrahbot/blob/master/weights/weighted.yaml">here</a>.</p>
+    <p>All settings currently unavailable on Z3RSim like Entrance Shuffle are evenly distributed in the other options.</p>
+    <p>All seeds use the Keysanity interface</p>
+    <p>The sign that indicates how many crystals you need to beat Ganon will also inform you if it's a Fast Ganon goal:</p>
+    <p>You need x crystals and have defeated Agahnim 2: Defeat Ganon Goal </p>
+    <p>You only need x crystals to beat Ganon: Fast Ganon Goal</p>
+  </div>
+  <div class="form-group">
+    <label for="map-mode" class="col-sm-4 control-label">Overworld
+      <span class="question-mark" container="body" popover="Do you want to travel the overworld screen by screen?">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+      </span></label>
+    <div class="btn-group" id="map-mode" class="col-sm-8">
+      <label class="btn btn-default" [(ngModel)]="mapSelected" name="simple-map-button"
+        btnRadio="no">Simple</label>
+      <label class="btn btn-default" [(ngModel)]="mapSelected" name="full-map-button"
+        btnRadio="yes" [ngStyle]="{'display': isAdvancedOWEnabled}">Advanced (won't work if Inverted)</label>
+    </div>
+  </div>
+    
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <button class="btn btn-primary" (click)="onSubmit()" 
+        type="button" [disabled]='shouldDisablePlay'>Play</button>      
+    </div>
+  </div>
+  <alert type="danger" *ngIf="errorMessage">
+    {{errorMessage}}
+  </alert>
+</form>
+
+
+
 <div class="container support-text">
-    <p>After popular request, we've added ways for you to support Z3RSim directly. Check it out at our <a (click)="redirect('support')">Support Us</a> page!</p>
+    <!-- <p>After popular request, we've added ways for you to support Z3RSim directly. Check it out at our <a (click)="redirect('support')">Support Us</a> page!</p> -->
 </div>
 
+
 <accordion>
-  <accordion-group heading="v3.3 Changelog - Enemizer and Triforce" isOpen=true isDisabled=true>
+  <accordion-group heading="v4 Changelog - v31 Tourney Prep" isOpen=true isDisabled=true>
     <dl>
-      <dt>Enemizer</dt>
-      <dd>You can now apply Boss Shuffle Enemizer on top of any other setting. A quick explanation of Enemizer Modes:</dd>
-      <dd>- Disabled: Vanilla bosses</dd>
-      <dd>- Simple: The 10 Pendant and Crystal bosses + the 3 Ganon's Tower bosses are shuffled between themselves.</dd>
-      <dd>- Full: Similar to Simple, but 3 bosses chosen at random are duplicated</dd>
-      <dd>- Chaos: All bosses are chosen completely at random</dd>
-      <dd>Agahnim and Ganon is always vanilla</dd>
-      <dd>Enemies are also technically randomized, since that's what we usually play Enemizer for. Which means no Mimics.</dd>
-      <dd>- Right Side Palace of Darkness doesn't require the Bow. The boss still requires the Bow, because of the eye statue on the way.</dd>
-      <dd>- The way to the boss in Eastern Palace doesn't require the Bow</dd>
-      <dd>- The way to upstairs Ganon's Tower doesn't require the Bow (yes, you could have a bowless seed)</dd>
-      <dd>- You can go straight to the boss in Thieves Town without bombing the floor or going to the cell.</dd>
-      <dt>Triforce Hunt</dt>
-      <dd>Another option for the Goal. In Triforce Hunt we have 30 Triforce Pieces scattered around the world. When you collect your 20th piece, you instantly win.</dd>
-      <dd>Just like Pedestal Goal, in this one you cannot defeat Ganon.</dd>
-      <dd>You can get Triforce Piece hints</dd>
-      <dt>Added Dungeon Labels</dt>
-      <dd>With the introduction of Enemizer, labels indicating which dungeon is which were added.</dd>
-      <dt>Added Bug Net to the Tracker</dt>
-      <dd>With Swordless being a thing, the Bug Net can be a required item (Cape + Lamp + Bug Net + Non Hammer Weapon for Aga Tower), so it was added to the tracker</dd>
-      <dt>Shovel/Flute and Mushroom/Powder</dt>
-      <dd>The dual items were consolidated to save space for the Bug Net and Triforce Piece counter</dd>
-      <dt>Better End Stats</dt>
-      <dd>A few adjustments, mostly to the Item Info section</dd>
-      <dd>Medallions are shown when required to enter Misery Mire or Turtle Rock if that dungeon is required for the goal</dd>
-      <dd>Pendants are shown on Pedestal and All Dungeon goals</dd>
-      <dt>Fixes to Easy Mode</dt>
-      <dd>Swords and Lamps were going poof when playing more than one seed in a row, the issue is fixed now</dd>
+      <dt>v31</dt>
+      <dd>v31 Logic has been implemented, including:</dd>
+      <dd>- Basic/Advanced Item Placement logic</dd>
+      <dd>- Item Acessibility</dd>
+      <dd>- Different Dungeon Item Shuffles</dd>
+      <dd>- Fast Ganon mode, where Agahnim 2 is not required</dd>
+      <dd>- Different conditions to enter Ganon's Tower or damage Ganon, with signs indicating what they are in the seed</dd>
+      <dd>- Assured Swords, where you start with a Fighter Sword</dd>
+      <dd>- Toggleable Hints</dd>
+      <dd>- and more, probably, there are too many new stuff</dd>
+      <dt>Tourney Qualifier Style Open Seeds</dt>
+      <dd>70,000 seeds were generated and are available to be played directly through our Open Seed menu</dd>
+      <dd>These seeds follow the same settings as the tourney qualifiers ending this week, the classic Open Mode 7/7 without anything super fancy</dd>      
+      <dd>Since these seeds are pre-generated, with the same URL you can replay the same seed, or share with other people</dd>
+      <dd>As a reminder, these seeds are not compatible with the randomizer website, they're separate things</dd>
+      <dd>If you're interested in playing Open seeds, these are the recommended way of doing it</dd>
+      <dt>Mystery Seeds</dt>
+      <dd>With all these additions and ways of checking these settings in game, the mystery mode was created</dd>
+      <dd>Play seeds without knowing what their settings are, having to explore the game to discover what you need to do to beat the game</dd>
+      <dd>For more information, read the Mystery Seed generation tab</dd>
+      <dt>Minor Glitches Updates</dt>
+      <dd>First of all, all seeds are now played in the Minor Glitch allowed mode, as this mode was much more popular and with the new Advanced logic and some of the new possible glitches, this sounded like the best course of action right now</dd>
+      <dd>A multitude of minor glitches have been added, including:</dd>
+      <dd>- Mimic Clip, allowing the mimics in Right Side PoD and upstairs GT to be done without any equipment</dd>
+      <dd>- Hera Pot, allowing you to skip the Big Door in Tower of Hera using Hookshot</dd>
+      <dd>- Moldorm Bounce, allowing you to get past Moldorm 2 with a Sword</dd>
+      <dd>- Qirn Jump, allowing you to fake flippers in the river between West and East dark world from the left side</dd>
+      <dd>- Splash Delete Fake Flippers, allowing you to do fake flippers using certain items instead of requiring a screen transition</dd>
+      <dd>As always, it's recommended to judge by yourself if you should be using these during your playthroughs here, but having the knowledge that it's possible is a good thing</dd>      
     </dl>
   </accordion-group>
 </accordion>

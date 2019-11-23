@@ -34,7 +34,7 @@ export class ItemTrackerComponent implements OnInit {
 
   getDungeons() {
     var blacklist;
-    if (this.config.variation !== 'keysanity') {    
+    if (!this.config.isMystery && (this.config.dungeonItems === 'standard' || this.config.dungeonItems === 'mc')) {
       blacklist = ['Aga Tower', 'Ganons Tower', 'Light World', 'Dark World', 'Hyrule Castle'];
     } else {
       blacklist = ['Light World', 'Dark World', 'Hyrule Castle'];      

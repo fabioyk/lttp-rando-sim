@@ -6,29 +6,33 @@ export class DarkWorld {
   static setup(l:string[], config:Config):ItemLocation[] {
     var itemLocations:ItemLocation[] = [];
 
-    itemLocations.push(new ItemLocation(
-      'SE Dark World Hint', 95, 78,
-      function(items:Items, config:Config) {
-        if (config.mode === 'inverted') {
-          return items.flippers && items.glove;
+    if (config.hintsEnabled) {
+      itemLocations.push(new ItemLocation(
+        'SE Dark World Hint', 95, 78,
+        function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return items.flippers && items.glove;
+          }
+          return (items.canNorthEastDarkWorld() || items.canNorthWestDarkWorld()) && items.flippers && items.glove && items.moonPearl;
+        },
+        null,
+        ['=14'],
+        '',
+        function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return items.glove && ((items.flute && items.canInvertedLW())
+                || (items.canInvertedNEDW(true) && (items.hammer || items.glove))
+                || (items.canInvertedLW() && items.mirror)
+                || items.boots
+                || items.canAncillaFF());
+          }
+          return items.glove && items.moonPearl && (
+            items.canNorthEastDarkWorld(true)
+            || (items.canNorthWestDarkWorld(true) && items.boots)
+            || items.canAncillaFF());          
         }
-        return (items.canNorthEastDarkWorld() || items.canNorthWestDarkWorld()) && items.flippers && items.glove && items.moonPearl;
-      },
-      null,
-      ['=14'],
-      '',
-      function(items:Items, config:Config) {
-        if (config.mode === 'inverted') {
-          return items.glove && ((items.flute && items.canInvertedLW())
-              || (items.canInvertedNEDW(true) && (items.hammer || items.glove))
-              || (items.canInvertedLW() && items.mirror)
-              || items.boots);
-        }
-        return items.glove && items.moonPearl && (
-          items.canNorthEastDarkWorld(true)
-          || (items.canNorthWestDarkWorld(true) && items.boots));          
-      }
-    ));
+      ));
+    }
 
     itemLocations.push(new ItemLocation(
       'Superbunny Cave', 92.8, 14.7,
@@ -53,9 +57,9 @@ export class DarkWorld {
       'Hookshot Cave (bottom chest)', 91.6, 8.6,
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return items.canInvertedEastDarkDeathMountain() && items.glove && (items.hookshot || items.boots);
+          return items.canInvertedEastDarkDeathMountain() && items.glove && (items.hookshot || (items.boots && config.advancedItems));
         }
-        return items.canDarkEastDeathMountain() && items.moonPearl && (items.hookshot || items.boots);
+        return items.canDarkEastDeathMountain() && items.moonPearl && (items.hookshot || (items.boots && config.advancedItems));
       },
       null,
       [l[102]],
@@ -236,15 +240,22 @@ export class DarkWorld {
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
           return items.glove && items.cape && items.moonPearl && items.mirror &&
-            items.canInvertedLW();
+            items.canInvertedLW() && (items.hookshot || config.advancedItems);
         }
-        return items.canNorthWestDarkWorld() && items.glove && items.cape;
+        return items.canNorthWestDarkWorld() && items.glove && items.cape && (items.hookshot || config.advancedItems);
       },
-      function(items:Items, config:Config) {        
+      function(items:Items, config:Config) {
         return items.canNorthWestDarkWorld() || config.mode === 'inverted';
       },
       [l[112]],
-      'ow'
+      'ow',
+      function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.glove && items.cape && items.moonPearl && items.mirror &&
+            items.canInvertedLW();
+        }
+        return items.canNorthWestDarkWorld() && items.glove && items.cape && (items.hookshot || config.advancedItems);
+      }
     ));
 
     itemLocations.push(new ItemLocation(
@@ -294,20 +305,39 @@ export class DarkWorld {
 
     if (config.mode !== 'inverted') {
       itemLocations.push(new ItemLocation(
+        'Ganon\'s Tower Accessibility', 73.5, 4.5,
+        function(items:Items, config:Config) {
+          return items.canDarkEastDeathMountain();
+        },
+        null,
+        ['gt-requirement']
+      ));
+
+      itemLocations.push(new ItemLocation(
+        'Ganon\'s Vulnerability', 72, 42,
+        function(items:Items, config:Config) {
+          return items.canNorthEastDarkWorld();
+        },
+        null,
+        ['ganon-requirement'],'',
+        function(items:Items, config:Config) {
+          return items.canNorthEastDarkWorld(true);
+        }
+      ));
+
+      itemLocations.push(new ItemLocation(
         'Ganon', 75, 40.8,
         function(items:Items, config:Config) {
           switch(config.goal) {
             case 'pedestal': return false;
             case 'triforce': return false;
             case 'dungeons':
-              if (!items.pendantCourage || !items.pendantPower || !items.pendantWisdom 
-                  || !items.agahnim) {
-                return false;
-              }
+              return items.stats.bosses === 11;              
             case 'ganon':
-              return items.canNorthEastDarkWorld() && items.agahnim2 && items.crystal1 &&
-                items.crystal2 && items.crystal3 && items.crystal4 && items.crystal5 && items.crystal6
-                && items.crystal7 && (items.lamp || items.fireRod)
+              return items.canNorthEastDarkWorld() && items.agahnim2 && items.canDamageGanon(config) && (items.lamp || items.fireRod)
+                && (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer && items.hasSilvers() && items.hasBow()) );
+            case 'fast_ganon':
+                return items.canNorthEastDarkWorld() && items.canDamageGanon(config) && (items.lamp || items.fireRod)
                 && (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer && items.hasSilvers() && items.hasBow()) );
           }
         },
@@ -323,11 +353,18 @@ export class DarkWorld {
             return (items.glove === 2 || items.mirror)
               && items.canInvertedLW();
           }
-          return items.canNorthWestDarkWorld() && items.glove === 2;
+          return items.canNorthWestDarkWorld() && items.glove === 2 && (items.mirror || config.advancedItems);
         },
         null,
         [l[113]],
-        'ow'
+        'ow',
+        function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return (items.glove === 2 || items.mirror)
+              && items.canInvertedLW();
+          }
+          return items.canNorthWestDarkWorld() && items.glove === 2;
+        }
       ));
   
       itemLocations.push(new ItemLocation(
@@ -337,11 +374,18 @@ export class DarkWorld {
             return (items.glove === 2 || items.mirror)
               && items.canInvertedLW();
           }
-          return items.canNorthWestDarkWorld() && items.glove === 2;
+          return items.canNorthWestDarkWorld() && items.glove === 2 && (items.mirror || config.advancedItems);
         },
         null,
         [l[114]],
-        'ow'
+        'ow',
+        function(items:Items, config:Config) {
+          if (config.mode === 'inverted') {
+            return (items.glove === 2 || items.mirror)
+              && items.canInvertedLW();
+          }
+          return items.canNorthWestDarkWorld() && items.glove === 2
+        }
       ));
 
       itemLocations.push(new ItemLocation(

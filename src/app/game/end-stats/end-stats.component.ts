@@ -79,13 +79,13 @@ export class EndStatsComponent implements OnInit {
   }
   generateItemCompletionTable() {
     var res = [];
-    res.push(['Y Items', this.getYItemCount() + '/27']);
-    res.push(['A Items', this.getOtherItemCount() + '/' + this.totals[this.config.difficulty].aItems]);
+    res.push(['Y Items', this.getYItemCount() + '/27']);    
     res.push(['Swords', this.items.sword + '/' + this.totals[this.config.difficulty].swords]);
     res.push(['Shields', this.items.shield + '/' + this.totals[this.config.difficulty].shields]);
     res.push(['Mails', this.items.tunic + '/' + this.totals[this.config.difficulty].mails]);
     res.push(['Heart Pieces', this.items.stats.heartPieces + '/' + this.totals[this.config.difficulty].pieces]);
     res.push(['Heart Containers', this.items.stats.heartContainers + '/' + + this.totals[this.config.difficulty].containers]);
+    res.push(['Other Items', this.getOtherItemCount() + '/' + this.totals[this.config.difficulty].aItems]);
     return res;
   }
   generateDungeonCompletionTable() {
@@ -100,6 +100,54 @@ export class EndStatsComponent implements OnInit {
     res.push(['Bosses', this.items.stats.bosses + '/13']);
     return res;
   }
+  generateSeedDataTable() {
+    var res = [];
+    res.push(['Item Placement', this.config.advancedItems ? 'Advanced' : 'Basic']);
+    let dungeonItemsText;
+    switch(this.config.dungeonItems) {
+      case 'standard': dungeonItemsText = 'Standard'; break;
+      case 'mc': dungeonItemsText = 'Maps/Compasses'; break;
+      case 'mcs': dungeonItemsText = 'Maps/Compasses/Small Keys'; break;
+      case 'full': dungeonItemsText = 'Keysanity'; break;
+    }
+    res.push(['Dungeon Item Shuffle', dungeonItemsText]);
+    let accessibilityText;
+    switch(this.config.accessibility) {
+      case 'item': accessibilityText = '100% Inventory'; break;
+      case 'locations': accessibilityText = '100% Locations'; break;
+      case 'none': accessibilityText = 'Beatable'; break;
+    }
+    res.push(['Accessibility', accessibilityText]);
+    let goalText;
+    switch(this.config.goal) {
+      case 'ganon': goalText = 'Defeat Ganon'; break;
+      case 'fast_ganon': goalText = 'Fast Ganon'; break;
+      case 'dungeons': goalText = 'All Dungeons'; break;
+      case 'pedestal': goalText = 'Master Sword Pedestal'; break;
+      case 'triforce': goalText = 'Triforce Hunt'; break;
+    }
+    res.push(['Goal', goalText]);
+    res.push(['Open Tower', this.config.towerCrystals]);
+    res.push(['Ganon Vulnerable', this.config.ganonCrystals]);
+    let worldText;
+    switch(this.config.mode) {
+      case 'standard': worldText = 'Standard'; break;
+      case 'open': worldText = 'Open'; break;
+      case 'inverted': worldText = 'Inverted'; break;
+    }
+    res.push(['World State', worldText]);
+    res.push(['Enemizer', this.config.isEnemizer ? 'On' : 'Off']);
+    res.push(['Hints', this.config.hintsEnabled ? 'On' : 'Off']);
+    let weaponsText;
+    switch(this.config.weapons) {
+      case 'randomized': weaponsText = 'Randomized'; break;
+      case 'assured': weaponsText = 'Assured'; break;
+      case 'vanilla': weaponsText = 'Vanilla'; break;
+      case 'swordless': weaponsText = 'Swordless'; break;
+    }
+    res.push(['Swords', weaponsText]);
+    return res;
+  }
 
   getDungeonInfoTables() {
     var res = [];
@@ -112,6 +160,12 @@ export class EndStatsComponent implements OnInit {
   getItemInfoTables() {
     var res = [];
     res.push(['Locations Pre Items', this.generateItemProgressTable()]);
+    return res;
+  }
+
+  getSeedDataTables() {
+    var res = [];
+    res.push(['Seed Information', this.generateSeedDataTable()]);
     return res;
   }
 
@@ -187,11 +241,15 @@ export class EndStatsComponent implements OnInit {
           let pendantName = this._itemNamesService.getItemByLongName(dunPrizes[dunName]).shortName;
           res.push([pendantName, dunName, this.items.preEachPendant[pendantName]]);
 
-          if ((dunName === 'Misery Mire' && !medallionsAdded.includes(this.config.mmMedallion))
-            || (dunName === 'Turtle Rock' && !medallionsAdded.includes(this.config.trMedallion))) {
-            let medallionData = this._itemNamesService.getItemByShortName(this.config.mmMedallion);
-            medallionsAdded.push(medallionData.shortName);
-            res.push([medallionData.shortName, medallionData.longName, this.items.preEachMedallion[medallionData.shortName]]);
+          let medallion;
+          if (dunName === 'Misery Mire' && !medallionsAdded.includes(this.config.mmMedallion)) {
+            medallion = this._itemNamesService.getItemByShortName(this.config.mmMedallion);
+          } else if (dunName === 'Turtle Rock' && !medallionsAdded.includes(this.config.trMedallion)) {
+            medallion = this._itemNamesService.getItemByShortName(this.config.trMedallion);
+          }
+          if (medallion) {
+            medallionsAdded.push(medallion.shortName);
+            res.push([medallion.shortName, medallion.longName, this.items.preEachMedallion[medallion.shortName]]);
           }
         }
       });
@@ -249,7 +307,7 @@ export class EndStatsComponent implements OnInit {
     counter += this.items.bottle;
     counter += this.items.boomerang;
 
-    if (this.items.bow > 1) {
+    if (this.items.hasBow()) {
       counter++;
     }    
 

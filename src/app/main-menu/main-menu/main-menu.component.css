@@ -21,6 +21,19 @@
   text-align: center;
 }
 
+.mystery-info {
+  text-align: center;
+}
+
+.seed-type-descriptor {
+  margin-bottom: 0;
+  padding-top: 7px;
+}
+
+.mode-select-radio {
+  margin-bottom: 10px;
+}
+
 :host-context(.dark-theme) .control-label, :host-context(.dark-theme) .super-text, :host-context(.dark-theme) h3, :host-context(.dark-theme) p {
   color: var(--dark-text-color);
 }

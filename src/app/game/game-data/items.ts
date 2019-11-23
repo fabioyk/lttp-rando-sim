@@ -82,7 +82,7 @@ export class Items {
 
   currentRegionInMap = 0;
 
-  isKeysanity:boolean;
+  dungeonItemsShuffle:string;
 
   dungeonItemsArray:DungeonItems[] = [];
 
@@ -137,21 +137,42 @@ export class Items {
 
   visitedDungeon = [];
 
+  crystalList = ['crystal1', 'crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal6', 'crystal7'];
+
+  dungeonItemNames = ['map', 'compass', 'smallKey', 'bigKey'];
+  dungeonItemIndex = 0;
+
   constructor() {
 
   }
   
-  setup(isKeysanity:boolean, dungeonsData:DungeonData[], isFullMap:boolean, bosses:number[]) {
-    this.isKeysanity = isKeysanity;
-
-    if (!isKeysanity) {
-      this.startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21];      
-    } else {
-      this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 28];
+  setup(dungeonItems:string, isMystery:boolean, dungeonsData:DungeonData[], isFullMap:boolean, bosses:number[], isInverted:boolean) {
+    this.dungeonItemsShuffle = dungeonItems;
+    switch(dungeonItems) {
+      case 'standard': 
+        this.startingItemCount = [6, 3, 2, 2, 1, 5, 6, 2, 4, 3, 2, 6, 21]; 
+        this.dungeonItemIndex = 0;
+        break;
+      case 'mc': 
+        this.startingItemCount = [7, 5, 4, 4, 1, 7, 8, 4, 6, 5, 4, 8, 23]; 
+        this.dungeonItemIndex = 2;
+        break;
+      case 'mcs': 
+        this.startingItemCount = [8, 5, 5, 5, 3, 13, 9, 7, 7, 7, 7, 12, 27]; 
+        this.dungeonItemIndex = 3;
+        break;
+      case 'full': 
+        this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 28]; 
+        this.dungeonItemIndex = 4;
+        break;
     }
-    if (isFullMap) {
+    if (isMystery) {
+      this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 28]; 
+      this.dungeonItemIndex = 4;
+    }
+    if (isFullMap || isInverted) {
       this.startingItemCount[11]--;
-    }
+    }   
 
     DungeonData.dungeonNames.forEach((dunName, index) => {
       if (index === 0) {
@@ -217,7 +238,12 @@ export class Items {
 
     switch(itemName) {
       case 'bottle': this.bottle++; break;
-      case 'bow': this.bow += 2; this.stats.preBow = this.stats.totalCount; break;
+      case 'bow': 
+        if (this.bow === 0) {
+          this.stats.preBow = this.stats.totalCount;
+        }
+        this.bow++;        
+        break;
       case 'boomerang': this.boomerang++; break;
       case 'magicBoomerang': this.boomerang += 2; break;
       case 'mirror': this.mirror = true; this.stats.preMirror = this.stats.totalCount; break;
@@ -259,8 +285,7 @@ export class Items {
           this[itemName] = true;
         }        
     }
-    var dungeonItemNames = ['smallKey', 'bigKey', 'map', 'compass'];
-    dungeonItemNames.forEach((dunItem) => {
+    this.dungeonItemNames.forEach((dunItem) => {
       if (itemName.indexOf(dunItem) > -1) {
         this.addDungeonItem(itemName);
       }
@@ -289,22 +314,16 @@ export class Items {
     const dungeonStuff = ['flood', 'blind', 'tt-bomb', 'switch', 'ip-switch-room'];
     if (!isGroundKey && itemName.indexOf('crystal') === -1 && itemName.indexOf('pendant') === -1 
         && itemName.indexOf('Agahnim 2') === -1 && itemName.indexOf('Ganon') === -1
-        && dungeonStuff.indexOf(itemName) === -1 && DungeonData.dungeonsWithDunItemsCount.indexOf(region) > -1) {      
-      if (!this.isKeysanity) {
-        const dungeonItemsNames = ['bigKey', 'smallKey', 'map', 'compass'];
-        var isDunItem = false;
-        dungeonItemNames.forEach((dunItemName) => {
-          if (itemName.indexOf(dunItemName) > -1) {
-            isDunItem = true;          
-          }
-        });
-        if (!isDunItem) {
-          this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;      
-          
+        && dungeonStuff.indexOf(itemName) === -1 && DungeonData.dungeonsWithDunItemsCount.indexOf(region) > -1) {
+      var isDunItem = false;
+      this.dungeonItemNames.forEach((dunItemName, i) => {        
+        if (itemName.indexOf(dunItemName) > -1 && i >= this.dungeonItemIndex) {
+          isDunItem = true;          
         }
-      } else {
+      });
+      if (!isDunItem) {
         this.dungeonItemsArray[DungeonData.dungeonNames.indexOf(region)].itemsLeft--;
-      }      
+      }   
     }
 
     if (itemName.indexOf('rupee') > -1) {
@@ -356,7 +375,7 @@ export class Items {
     return this.bottle > 0;
   }
   hasBow() {
-    return this.bow >= 2;
+    return this.bow >= 1;
   }
   hasFiresource() {
     return this.lamp || this.fireRod;
@@ -365,7 +384,7 @@ export class Items {
     return this.halfMagic || this.bottle > 0 || config.canGlitch;
   }
   hasSilvers() {
-    return this.bow >= 3;
+    return this.bow >= 2;
   }
   hasMeltyPower(config:Config) {
     return this.fireRod || (this.bombos && (this.sword || config.weapons === 'swordless'));
@@ -413,7 +432,7 @@ export class Items {
   canNorthEastDarkWorld(isGlitched:boolean = false) {
     return this.agahnim
       || (this.hammer && this.glove && this.moonPearl)
-      || (this.glove === 2 && (this.flippers || (this.boots && isGlitched)) && this.moonPearl);
+      || (this.glove === 2 && (this.flippers || isGlitched) && this.moonPearl);
   }
   canNorthWestDarkWorld(isGlitched:boolean = false) {
     return (this.canNorthEastDarkWorld(isGlitched)
@@ -454,6 +473,39 @@ export class Items {
       || (isGlitched && this.boots);
   }
 
+  canEnterGT(config:Config) {
+    var count = 0;
+    this.crystalList.forEach(cr => {
+      if (this[cr]) {
+        count++;
+      }
+    });
+
+    return count >= config.towerCrystals;
+  }
+  canDamageGanon(config:Config) {
+    var count = 0;
+    if (config.goal === 'pedestal' || config.goal === 'triforce') {
+      return false;
+    }    
+    this.crystalList.forEach(cr => {
+      if (this[cr]) {
+        count++;
+      }
+    });
+
+    if (config.goal === 'dungeons') {
+      return this.pendantCourage && this.pendantPower && this.pendantWisdom &&
+        this.agahnim && this.agahnim2 && count === 7;
+    } else {
+      return count >= config.ganonCrystals;
+    }    
+  }
+
+  canAncillaFF() {
+    return this.hasBow() || this.somaria || this.boomerang >= 2 || this.iceRod;
+  }
+
   getDungeonItems(dungeon:string):DungeonItems {
     return this.dungeonItemsArray[DungeonData.allDungeonNames.indexOf(dungeon)];
   }
@@ -466,15 +518,13 @@ export class Items {
   }
   visitDungeon(dunName:string):void {
     var dunIndex = DungeonData.crystalDungeonNames.indexOf(dunName);
-    if (dunIndex > -1 && !this.isKeysanity) {
+    if (dunIndex > -1 && this.dungeonItemsShuffle === 'standard') {
       this.visitedDungeon[dunIndex] = true;
       var dunFullListIndex = DungeonData.allDungeonNames.indexOf(dunName);
       if (this.dungeonItemsArray[dunFullListIndex].mapPrizeStatus === DungeonItems.UNKNOWN) {
         this.dungeonItemsArray[dunFullListIndex].listenThisMap();
       }
     }
-
-    
   }
   hasVisitedDungeon(dunName:string):boolean {
     const trackedDunList = ['Eastern Palace', 'Desert Palace',

@@ -42,20 +42,31 @@ export class GameService {
 
   constructor(private _itemNamesService: ItemNamesService) { }
 
-  loadSeed(log:string, seedNumber:number, canGlitch:boolean, isFullMap:boolean, isEnemizer:boolean, bosses:number[]) {
+  loadSeed(log:string, seedNumber:string, canGlitch:boolean, isFullMap:boolean, isEnemizer:boolean, bosses:number[], hasHints:boolean) {
     var spoilerLogManager = new SpoilerLog();
     var logObj = spoilerLogManager.convertShortToNormal(log, seedNumber);
 
     this.config = new Config();
 
-    this.config.difficulty = logObj.difficulty;
-    this.config.goal = logObj.goal === '0' ? 'ganon' : 'other';
+    switch(logObj.itemPool) {
+      case '0': this.config.difficulty = 'normal'; break;
+      case '1': this.config.difficulty = 'easy'; break;
+      case '2': this.config.difficulty = 'hard'; break;
+      case '3': this.config.difficulty = 'expert'; break;
+      case '4': this.config.difficulty = 'insane'; break;
+    }
+    switch(logObj.goal) {
+      case '0': this.config.goal = 'ganon'; break;
+      case '1': this.config.goal = 'dungeons'; break;
+      case '2': this.config.goal = 'pedestal'; break;
+      case '3': this.config.goal = 'triforce'; break;
+      case '4': this.config.goal = 'fast_ganon'; break;
+    }
     this.config.logic = logObj.logic;
     switch(logObj.mode) {
       case '0': this.config.mode = 'standard'; break;
       case '1': this.config.mode = 'open'; break;
-      case '2': this.config.mode = 'standard-rando'; break;
-      case '3': this.config.mode = 'inverted'; break;
+      case '2': this.config.mode = 'inverted'; break;
     }    
     if (this.config.mode === 'inverted') {
       this.lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Ganons Tower'];
@@ -63,18 +74,56 @@ export class GameService {
     } else {
       this.lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
       this.dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
-    }
-    this.config.variation = logObj.variation === '0' ? 'none' : 'keysanity';
+    }    
     this.config.vtSeedNumber = logObj.seed;
     this.config.canGlitch = canGlitch;
-    this.config.isFullMap = isFullMap;    
     this.config.isEnemizer = isEnemizer;
     this.config.bosses = bosses;
-    this.prizesToReplace = {};
-
-
-    //console.log('Loaded up seed '+this.config.vtSeedNumber);
+    this.config.advancedItems = logObj.placement === '1';
+    this.config.isFullMap = isFullMap;
+    switch(logObj.dungeonItems) {
+      case '0':
+        this.config.dungeonItems = 'standard'; break;
+      case '1':
+        this.config.dungeonItems = 'mc'; break;
+      case '2':
+        this.config.dungeonItems = 'mcs'; break;
+      case '3':
+        this.config.dungeonItems = 'full'; break;
+    }
+    switch(logObj.accessibility) {
+      case '0':
+        this.config.accessibility = 'item'; break;
+      case '1':
+        this.config.accessibility = 'locations'; break;
+      case '2':
+        this.config.accessibility = 'none'; break;
+    }
+    switch(logObj.weapons) {
+      case '0':
+        this.config.weapons = 'randomized'; break;
+      case '1':
+        this.config.weapons = 'assured'; break;
+      case '2':
+        this.config.weapons = 'vanilla'; break;
+      case '3':
+        this.config.weapons = 'swordless'; break;
+    }
+    if (seedNumber !== '') {
+      this.config.ganonCrystals = 7;
+      this.config.towerCrystals = 7;
+    } else {
+      this.config.ganonCrystals = +logObj.crystalsGanon;
+      this.config.towerCrystals = +logObj.crystalsTower;
+    }    
+    this.config.hintsEnabled = hasHints;
     
+    if (this.config.mode == 'inverted') {
+      this.config.isFullMap = false;
+    }
+        
+    this.prizesToReplace = {};
+    //console.log('Loaded up seed '+this.config.vtSeedNumber);    
     const medallions = ['bombos', 'ether', 'quake'];
     this.config.mmMedallion = medallions[logObj.mmMedallion];
     this.config.trMedallion = medallions[logObj.trMedallion];
@@ -125,7 +174,7 @@ export class GameService {
       });
     }
 
-    if (isFullMap) {
+    if (this.config.isFullMap) {
       this.dungeonsData.push(LightWorldMap.setup(logObj.locations, this.config));
       this.dungeonsData.push(DarkWorldMap.setup(logObj.locations, this.config));
       this.dungeonsData.push(HyruleCastle.setup(logObj.locations, this.config));
@@ -133,7 +182,7 @@ export class GameService {
       this.overworldData = new OverworldData(logObj.locations, this.config);
     }
     
-    this.setupData(isFullMap);
+    this.setupData(this.config.isFullMap);
 
     var itemList = logObj.locations;
   }
@@ -157,7 +206,10 @@ export class GameService {
         }
         if (location.item[0].charAt(0) === '=') {
           status += ' hint';
+        } else if (location.item[0].includes('requirement')) {
+          status += ' sign';
         }
+
         location.mapNode = {
           x: location.x*2,
           y: location.y,
@@ -184,6 +236,8 @@ export class GameService {
         }
         if (location.item[0].charAt(0) === '=') {
           status += ' hint';
+        } else if (location.item[0].includes('requirement')) {
+          status += ' sign';
         }
         location.mapNode = {
           x: (location.x-50)*2,
@@ -304,6 +358,8 @@ export class GameService {
         }
         if (location.item[0].charAt(0) === '=') {
           location.mapNode.status += ' hint';
+        } else if (location.item[0].includes('requirement')) {
+          status += ' sign';
         }
         location.item = this.checkReplacePrizes(location.item);
         location.mapNode.prize = this.checkReplacePrizes(location.mapNode.prize);
@@ -348,6 +404,8 @@ export class GameService {
 
           if (location.item[0].charAt(0) === '=') {
             location.mapNode.status += ' hint';
+          } else if (location.item[0].includes('requirement')) {
+            status += ' sign';
           }
         }        
         location.item = this.checkReplacePrizes(location.item);

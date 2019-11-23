@@ -67,6 +67,7 @@ export class ItemNames {
   'Progressive Glove' = 151;
   'Progressive Shield' = 152;
   'Progressive Sword' = 153;
+  'Progressive Bow' = 154;
 
   // Dungeon Items (200~203)
   'Desert Palace Big Key' = 200;

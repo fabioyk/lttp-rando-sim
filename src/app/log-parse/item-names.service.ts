@@ -127,7 +127,7 @@ export class ItemNamesService {
     });
     this.itemNames.push({
       id: 103,
-      shortName: 'bow',
+      shortName: 'n-bow',
       longName: 'Bow'
     });
     this.itemNames.push({
@@ -316,6 +316,11 @@ export class ItemNamesService {
       id: 153,
       shortName: 'sword',
       longName: 'Progressive Sword'
+    });
+    this.itemNames.push({
+      id: 154,
+      shortName: 'bow',
+      longName: 'Progressive Bow'
     });
 
     // Dungeon Items (200~250)
@@ -719,7 +724,18 @@ export class ItemNamesService {
               break;
           }
           shortName = 'shield' + (items.shield + modifier);
-          break;        
+          break;
+        case 'bow':
+            switch(items.bow + modifier) {
+              case 1:
+                longName = 'Bow';
+                break;
+              case 2:
+                longName = 'Silver Arrows';
+                break;
+            }
+            shortName = 'bow' + (items.bow + modifier);
+            break;
       }
     }
 
@@ -737,12 +753,12 @@ export class ItemNamesService {
 
     }
 
-    if (res.shortName === 'bow') {
-      shortName = 'bow' + (items.bow + modifier*2);
-    }
-    if (res.shortName === 'silvers') {
-      shortName = 'bow1';
-    }
+    // if (res.shortName === 'bow') {
+    //   shortName = 'bow' + (items.bow + modifier*2);
+    // }
+    // if (res.shortName === 'silvers') {
+    //   shortName = 'bow1';
+    // }
     if (res.shortName === 'boomerang') {
       shortName = 'boomerang1';
     }

@@ -13,9 +13,7 @@ export class GanonsTower {
       function(items:Items, config:Config) {
         return ((config.mode !== 'inverted' && items.canDarkEastDeathMountain(config.canGlitch))
               || (config.mode === 'inverted' && items.canInvertedLW()))
-            && items.crystal1 && items.crystal2 && items.crystal3
-            && items.crystal4 && items.crystal5 && items.crystal6
-            && items.crystal7;
+            && items.canEnterGT(config);
       }, xs[config.mode === 'inverted' ? 0 : 1], ys[config.mode === 'inverted' ? 0 : 1]
     );
 
@@ -34,7 +32,10 @@ export class GanonsTower {
       '', 50, 9.5, DungeonNodeStatus.BK_LOCKED,
     function(items:Items, config:Config) {
         return (config.isEnemizer && config.mode !== 'standard') || items.hasBow();
-    }, 'gt-lanmo2', 'Bow Required'));
+    }, 'gt-lanmo2', 'Bow Required', [-1], 0,
+    function(items:Items, config:Config) {
+      return true;
+    }));
     entrance.nodes.push(new DungeonNode(
       '', 75, 14, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -482,7 +483,7 @@ export class GanonsTower {
         return items.hookshot && items.moldorms2Defeated;
       }, l[225], 'Hookshot and Boss Defeated Required', [-1], 0, 
       function(items:Items, config:Config) {
-        return items.moldorms2Defeated && items.boots;
+        return items.boots || items.sword;
     }));
     moldorm2.nodes.push(new DungeonNode(
       '', 7, 77, DungeonNodeStatus.BK_LOCKED,

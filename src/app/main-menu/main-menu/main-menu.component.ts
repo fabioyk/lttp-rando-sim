@@ -10,18 +10,24 @@ import { Seed } from '../../shared/seed';
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent implements OnInit {
+  generationType = 'open'
+
   shouldDisablePlay = false;
   modeSelected = 'standard';
   swordsSelected = 'randomized';
   goalSelected = 'ganon';
-  diffSelected = 'normal';  
-  glitchSelected = 'yes';
-  variationSelected = 'none';
+  dungeonItemsSelected = 'standard';
   enemizerSelected = 'none';
+  itemPlacementSelected = 'advanced';  
+  accessibilitySelected = 'items'; 
+  openTowerSelected = '7';
+  openGanonSelected = '7';
+  hintsSelected = "false";
   mapSelected = 'no';
   seedNum = '';
   errorMessage = '';
   dailySeed = false;
+  autoSeed = true;
   isAdvancedOWEnabled = 'inline-block';
 
   preloadedMap;
@@ -32,25 +38,36 @@ export class MainMenuComponent implements OnInit {
   lockedGlitch;
   lockedMap;
 
+  openCrystalOptions = [
+    { id: '0', label: '0 Crystals'},
+    { id: '1', label: '1 Crystal'},
+    { id: '2', label: '2 Crystals'},
+    { id: '3', label: '3 Crystals'},
+    { id: '4', label: '4 Crystals'},
+    { id: '5', label: '5 Crystals'},
+    { id: '6', label: '6 Crystals'},
+    { id: '7', label: '7 Crystals'},
+    { id: 'random', label: 'Random'},
+  ]
+
   constructor(private _seedService: SeedApiService,
               private _router: Router,
               private _route: ActivatedRoute) { }
 
   ngOnInit() {
+    if (localStorage.getItem('defaultTab')) {
+      this.generationType = localStorage.getItem('defaultTab');
+    } else {
+      this.generationType = 'open';
+    }
     if (localStorage.getItem('swordsSelected')) {
       this.modeSelected = localStorage.getItem('modeSelected');
       this.swordsSelected = localStorage.getItem('swordsSelected');
       this.goalSelected = localStorage.getItem('goalSelected');
-      this.diffSelected = localStorage.getItem('diffSelected');
-      this.glitchSelected = localStorage.getItem('glitchSelected');
-      this.variationSelected = localStorage.getItem('variationSelected');
     } else {
       localStorage.setItem('modeSelected', this.modeSelected);
       localStorage.setItem('swordsSelected', this.swordsSelected);
       localStorage.setItem('goalSelected', this.goalSelected);
-      localStorage.setItem('diffSelected', this.diffSelected);
-      localStorage.setItem('glitchSelected', this.glitchSelected);
-      localStorage.setItem('variationSelected', this.variationSelected);
     }
     if (localStorage.getItem('mapSelected')) {
       this.mapSelected = localStorage.getItem('mapSelected');
@@ -62,6 +79,15 @@ export class MainMenuComponent implements OnInit {
     } else {
       localStorage.setItem('enemizerSelected', this.enemizerSelected);
     }
+    if (localStorage.getItem('dungeonItemsSelected')) {
+      this.dungeonItemsSelected = localStorage.getItem('dungeonItemsSelected');
+      this.itemPlacementSelected = localStorage.getItem('itemPlacementSelected');
+      this.accessibilitySelected = localStorage.getItem('accessibilitySelected');
+      this.openTowerSelected = localStorage.getItem('openTowerSelected');
+      this.openGanonSelected = localStorage.getItem('openGanonSelected');
+      this.hintsSelected = localStorage.getItem('hintsSelected');
+    }
+
     if (this.modeSelected === 'inverted') {
       this.mapSelected = 'no';
       this.isAdvancedOWEnabled = 'none';
@@ -109,79 +135,81 @@ export class MainMenuComponent implements OnInit {
   onSubmit() {
     this.shouldDisablePlay = true;
     this.lockedMode = this.modeSelected;
-    this.lockedGlitch = this.glitchSelected;
     this.lockedMap = this.mapSelected;
     this.errorMessage = '';
+    var qParams:any = {};
+    var queryParams:any = {};
 
-    localStorage.setItem('modeSelected', this.modeSelected);
-    localStorage.setItem('swordsSelected', this.swordsSelected);
-    localStorage.setItem('goalSelected', this.goalSelected);
-    localStorage.setItem('diffSelected', this.diffSelected);
-    localStorage.setItem('variationSelected', this.variationSelected);
-    localStorage.setItem('glitchSelected', this.glitchSelected);
-    localStorage.setItem('mapSelected', this.mapSelected);
-    localStorage.setItem('enemizerSelected', this.enemizerSelected);
+    localStorage.setItem('defaultTab', this.generationType);
 
-    var queryParams:any = {  
-    };
-    if (this.swordsSelected !== 'randomized') {
-      queryParams.swords = this.swordsSelected;
-    }
-    if (this.goalSelected !== 'ganon') {
-      queryParams.goal = this.goalSelected;
-    }
-    if (this.diffSelected !== 'normal') {
-      queryParams.diff = this.diffSelected;
-    }
-    if (this.variationSelected !== 'none') {
-      queryParams.variation = this.variationSelected;
-    }
-    if (this.lockedGlitch === 'yes') {
-      queryParams.minorGlitches = true;
-    } 
     if (this.lockedMap === 'yes') {
       queryParams.fullMap = true;
     }
-    if (this.enemizerSelected !== 'none') {
-      queryParams.enemizer = this.enemizerSelected;
-    }  
+    
+    if (this.generationType === 'custom') {
+      localStorage.setItem('modeSelected', this.modeSelected);
+      localStorage.setItem('swordsSelected', this.swordsSelected);
+      localStorage.setItem('goalSelected', this.goalSelected);
+      localStorage.setItem('mapSelected', this.mapSelected);
+      localStorage.setItem('enemizerSelected', this.enemizerSelected);
+      localStorage.setItem('dungeonItemsSelected', this.dungeonItemsSelected);
+      localStorage.setItem('itemPlacementSelected', this.itemPlacementSelected);
+      localStorage.setItem('accessibilitySelected', this.accessibilitySelected);
+      localStorage.setItem('openTowerSelected', this.openTowerSelected);
+      localStorage.setItem('openGanonSelected', this.openGanonSelected);
+      localStorage.setItem('hintsSelected', this.hintsSelected);      
+  
+      this.preloadedMap = null;
+      this.preloadedIcons = null;
+      this.preloadedBosses = null;
 
-    this.preloadedMap = null;
-    this.preloadedIcons = null;
-    this.preloadedBosses = null;
+      // QueryParams (url params)
+      if (this.itemPlacementSelected !== 'advanced') {
+        queryParams.placement = this.itemPlacementSelected;
+      }
+      if (this.dungeonItemsSelected !== 'standard') {
+        queryParams.dItems = this.dungeonItemsSelected;
+      }
+      if (this.accessibilitySelected !== 'items') {
+        queryParams.accessibility = this.accessibilitySelected;
+      }
+      if (this.goalSelected !== 'ganon') {
+        queryParams.goal = this.goalSelected;
+      }
+      if (this.openTowerSelected !== '7') {
+        queryParams.tower = this.openTowerSelected;
+      }
+      if (this.openGanonSelected !== '7') {
+        queryParams.ganon = this.openGanonSelected;
+      }
+      if (this.enemizerSelected !== 'none') {
+        queryParams.enemizer = this.enemizerSelected;
+      }
+      if (this.hintsSelected !== 'off') {
+        queryParams.hints = this.hintsSelected;
+      }
+      if (this.swordsSelected !== 'randomized') {
+        queryParams.swords = this.swordsSelected;
+      }
+      
+      if (this.lockedMap === 'yes') {
+        queryParams.fullMap = true;
+      }
+       
 
-    var qParams:any = {};
-    var canGlitch = false;
-    if (queryParams.minorGlitches) {
-      canGlitch = true;
-    }
-    if (queryParams.swords) {
-      qParams.swords = queryParams.swords;
-    } else {
-      qParams.swords = 'randomized';
-    }
-    if (queryParams.goal) {
-      qParams.goal = queryParams.goal;
-    } else {
-      qParams.goal = 'ganon';
-    }
-    if (queryParams.diff) {
-      qParams.diff = queryParams.diff;
-    } else {
-      qParams.diff = 'normal';
-    }
-    if (queryParams.variation) {
-      qParams.variation = queryParams.variation;
-    } else {
-      qParams.variation = 'none';
-    }
-    if (queryParams.enemizer) {
-      qParams.enemizer = queryParams.enemizer;
-    } else {
-      qParams.enemizer = 'none';
-    }
+      // qParams (API params)
+      qParams.item_placement = this.itemPlacementSelected;
+      qParams.dungeon_items = this.dungeonItemsSelected;
+      qParams.accessibility = this.accessibilitySelected;
+      qParams.goal = this.goalSelected;
+      qParams.entry_crystals_tower = this.openTowerSelected;
+      qParams.entry_crystals_ganon = this.openGanonSelected;
+      qParams.mode = this.modeSelected;
+      qParams.enemizer = this.enemizerSelected;
+      qParams.hints = this.hintsSelected;
+      qParams.weapons = this.swordsSelected;
 
-    this._seedService.getSeed(this.lockedMode, qParams)
+      this._seedService.getSeed(this.lockedMode, qParams)
       .subscribe((seed) => {
         if (!seed || seed.error) {
           this.errorMessage = seed.error;
@@ -196,6 +224,50 @@ export class MainMenuComponent implements OnInit {
         this.errorMessage = error;
         this.shouldDisablePlay = false;
       })
+    } else if (this.generationType === 'open') {      
+      if (this.seedNum) {
+        qParams.seed = this.seedNum;
+      }      
+      qParams.enemizer = 'none';
+      this.errorMessage = 'The seed may take a few seconds to load. If it doesn\'t after 10s please reload the page and try again.';   
+
+      this._seedService.getSeed(this.lockedMode, qParams, false, true)
+      .subscribe((seed) => {
+        if (!seed || seed.error) {
+          this.errorMessage = seed.error;
+          this.shouldDisablePlay = false;
+        } else {
+          if (this.autoSeed) {
+            queryParams.seed = seed.seed;
+            this._router.navigate(['/qual'], {queryParams: queryParams});
+          } else {
+            this._router.navigate(['/' + this.modeSelected], {queryParams: queryParams});
+          }          
+        }
+        this.preloadedMap = null;
+        this.preloadedIcons = null;
+        this.preloadedBosses = null;       
+      }, error => {
+        this.errorMessage = error;
+        this.shouldDisablePlay = false;
+      })
+    } else if (this.generationType === 'mystery') {
+      this._seedService.getSeed('mystery', qParams)
+      .subscribe((seed) => {
+        if (!seed || seed.error) {
+          this.errorMessage = seed.error;
+          this.shouldDisablePlay = false;
+        } else {
+          this._router.navigate(['/mystery'], {queryParams: queryParams});
+        }
+        this.preloadedMap = null;
+        this.preloadedIcons = null;
+        this.preloadedBosses = null;       
+      }, error => {
+        this.errorMessage = error;
+        this.shouldDisablePlay = false;
+      })
+    }
   }
 
   onIsInverted(isInverted:boolean) {
