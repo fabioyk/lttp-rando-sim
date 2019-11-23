@@ -20,7 +20,7 @@ export class SpoilerLog {
     obj.weapons = log.substr(buffer+8, 1);
     obj.mmMedallion = log.substr(buffer+9, 1);
     obj.trMedallion = log.substr(buffer+10, 1);
-    var locStr = log.substr(buffer+19);
+    var locStr = log.substr(buffer+20);
     var locArr = [];
     for (var i = 0; i < locStr.length / 3; i++) {
       locArr.push((+locStr.substr(i*3, 3)).toString());
@@ -29,7 +29,7 @@ export class SpoilerLog {
 
     return obj;
   }
-
+  
   formatNumber(num:number, len:number) {
     return '0'.repeat(len - num.toString().length) + num.toString();
   }
