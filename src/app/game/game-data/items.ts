@@ -494,12 +494,19 @@ export class Items {
       }
     });
 
+    let checker;
     if (config.goal === 'dungeons') {
-      return this.pendantCourage && this.pendantPower && this.pendantWisdom &&
+      checker = this.pendantCourage && this.pendantPower && this.pendantWisdom &&
         this.agahnim && this.agahnim2 && count === 7;
     } else {
-      return count >= config.ganonCrystals;
-    }    
+      checker = count >= config.ganonCrystals;
+    }
+    if (checker) {
+      return (this.lamp || this.fireRod)
+      && (this.sword >= 2 || (config.weapons === 'swordless' && this.hammer && this.hasSilvers() && this.hasBow()));
+    } else {
+      return false;
+    }
   }
 
   canAncillaFF() {

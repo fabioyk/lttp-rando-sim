@@ -332,13 +332,11 @@ export class DarkWorld {
             case 'pedestal': return false;
             case 'triforce': return false;
             case 'dungeons':
-              return items.stats.bosses === 11;              
+              return items.canNorthEastDarkWorld() && items.canDamageGanon(config);
             case 'ganon':
-              return items.canNorthEastDarkWorld() && items.agahnim2 && items.canDamageGanon(config) && (items.lamp || items.fireRod)
-                && (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer && items.hasSilvers() && items.hasBow()) );
+              return items.canNorthEastDarkWorld() && items.agahnim2 && items.canDamageGanon(config);
             case 'fast_ganon':
-                return items.canNorthEastDarkWorld() && items.canDamageGanon(config) && (items.lamp || items.fireRod)
-                && (items.sword >= 2 || (config.weapons === 'swordless' && items.hammer && items.hasSilvers() && items.hasBow()) );
+              return items.canNorthEastDarkWorld() && items.canDamageGanon(config);
           }
         },
         null,

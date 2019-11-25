@@ -72,6 +72,10 @@ export class GameComponent implements OnInit {
       params => {
         var qParams:any = {};
         var canGlitch = true;
+
+        if (params.seeddata) {
+          
+        }
         
         qParams.item_placement = params.item_placement ? params.item_placement : 'advanced';        
         qParams.dungeon_items = params.dItems ? params.dItems : 'standard';
@@ -95,20 +99,23 @@ export class GameComponent implements OnInit {
           fullMap = true;          
         }
 
-        if (this._seedService.lastSeed && Date.now() - this._seedService.lastSeedTimestamp < 2000 
+        if (params.seeddata) {
+          this.gameInit(params.seeddata, true, fullMap, [], '', false, [], params.seeddata.charAt(24), params.seeddata.charAt(25));
+        } else if (this._seedService.lastSeed && Date.now() - this._seedService.lastSeedTimestamp < 2000 
           && this._seedService.lastSeedParams) {
-          this.gameInit(this._seedService.lastSeed.data, this._seedService.lastSeedParams, canGlitch, fullMap, 
+          this.gameInit(this._seedService.lastSeed.data, canGlitch, fullMap, 
             this._seedService.lastSeed.hints, this._seedService.lastSeed.silversHint, this._seedService.lastSeedParams.enemizer !== 'none', 
             this._seedService.lastSeed.bosses, this._seedService.lastSeed.reqTower, this._seedService.lastSeed.reqGanon, this._seedService.lastSeed.seed);
         } else {
           this._seedService.getSeed(this.gameMode, qParams, false, this.gameMode === 'quals')
             .subscribe((seed) => {              
-              this.gameInit(seed.data, qParams, canGlitch, fullMap, seed.hints, seed.silversHint, 
+              this.gameInit(seed.data, canGlitch, fullMap, seed.hints, seed.silversHint, 
                 qParams.enemizer !== 'none', seed.bosses, seed.reqTower, seed.reqGanon, seed.seed);
             });
         }
       }
-    );    
+    );
+
   }
 
   onCreditWarp() {
@@ -123,7 +130,7 @@ export class GameComponent implements OnInit {
 
   /// GAMEPLAY
 
-  gameInit(seedData:string, qParams:any, canGlitch:boolean, isFullMap:boolean, hints:string[], 
+  gameInit(seedData:string, canGlitch:boolean, isFullMap:boolean, hints:string[], 
     silversHint, isEnemizer:boolean, bosses:number[], reqTower:string, reqGanon:string, seedNumber:string="") {
     if (seedData) {
       this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap, isEnemizer, bosses, hints.length > 0);  
