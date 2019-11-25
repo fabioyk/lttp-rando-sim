@@ -222,6 +222,7 @@ export class EndStatsComponent implements OnInit {
     res.push(['glove2', 'Titan Mitts', this.items.stats.preMitts]);
     res.push(['glove1', 'Power Gloves', this.items.stats.preGlove]);
     res.push(['bow', 'Bow', this.items.stats.preBow]);
+    res.push(['bow2', 'Silver Arrows', this.items.stats.preSilvers]);
     res.push(['hammer', 'Hammer', this.items.stats.preHammer]);
     res.push(['sword2', 'Master Sword', this.items.stats.preMS]);
     res.push(['fireRod', 'Fire Rod', this.items.stats.preFireRod]);

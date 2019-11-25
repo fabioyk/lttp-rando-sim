@@ -112,6 +112,7 @@ export class Items {
     preGlove: 0,
     preMitts: 0,
     preBow: 0,
+    preSilvers: 0,
     prePearl: 0,
     preHammer: 0,
     preMS: 0,
@@ -241,6 +242,8 @@ export class Items {
       case 'bow': 
         if (this.bow === 0) {
           this.stats.preBow = this.stats.totalCount;
+        } else {
+          this.stats.preSilvers = this.stats.totalCount;
         }
         this.bow++;        
         break;
