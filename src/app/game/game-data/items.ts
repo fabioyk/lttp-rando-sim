@@ -167,7 +167,7 @@ export class Items {
         break;
     }
     if (isMystery) {
-      this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 28]; 
+      this.startingItemCount = [8, 6, 6, 6, 3, 14, 10, 8, 8, 8, 8, 13, 27]; 
       this.dungeonItemIndex = 4;
     }
     if (isFullMap || isInverted) {
