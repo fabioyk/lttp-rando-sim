@@ -142,10 +142,14 @@ export class NodeComponent implements OnInit {
 
       if (!this.nodeInfo.originalNode.canOpen(this.items, this.config) 
           && +this.nodeInfo.status !== DungeonNodeStatus.VIEWABLE_CLOSED_CHEST
-            && (!this.items.book || (this.items.book && +this.nodeInfo.status !== DungeonNodeStatus.PEDESTAL
+          && (!this.items.book || (this.items.book && +this.nodeInfo.status !== DungeonNodeStatus.PEDESTAL
               && +this.nodeInfo.status !== DungeonNodeStatus.BOOK_CHECKABLE_ITEM))
           && (!this.config.canGlitch || !this.nodeInfo.originalNode.canGlitch 
               || !this.nodeInfo.originalNode.canGlitch(this.items, this.config))) {
+        return 'dungeon-unavailable';
+      }
+      if (+this.nodeInfo.status === DungeonNodeStatus.BOOK_CHECKABLE_ITEM &&
+          !this.items.book) {
         return 'dungeon-unavailable';
       }
       if (viewable && !this.nodeInfo.originalNode.canOpen(this.items, this.config)
