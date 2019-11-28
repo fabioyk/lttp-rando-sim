@@ -473,7 +473,7 @@ export class Items {
   }
   canInvertedNEDW(isGlitched:boolean = false) {
     return this.hammer || this.flippers || (this.mirror && this.canInvertedLW())
-      || (isGlitched && this.boots);
+      || isGlitched;
   }
 
   canEnterGT(config:Config) {
