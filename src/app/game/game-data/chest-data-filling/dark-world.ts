@@ -192,7 +192,10 @@ export class DarkWorld {
       },
       null,
       [l[108]],
-      'ow'
+      'ow',
+      function(items:Items, config:Config) {
+        return items.canNorthWestDarkWorld(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
@@ -202,7 +205,10 @@ export class DarkWorld {
       },
       null,
       [l[109]],
-      'ow'
+      'ow', 
+      function(items:Items, config:Config) {
+        return items.canNorthWestDarkWorld(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
@@ -212,7 +218,10 @@ export class DarkWorld {
       },
       null,
       [l[110]],
-      'ow'
+      'ow',
+      function(items:Items, config:Config) {
+        return items.canNorthWestDarkWorld(true);
+      },
     ));
 
     itemLocations.push(new ItemLocation(
@@ -254,7 +263,10 @@ export class DarkWorld {
           return items.glove && items.cape && items.moonPearl && items.mirror &&
             items.canInvertedLW();
         }
-        return items.canNorthWestDarkWorld() && items.glove && items.cape && (items.hookshot || config.advancedItems);
+        return items.canNorthWestDarkWorld(true) && items.glove && items.cape && (items.hookshot || config.advancedItems);
+      },
+      function(items:Items, config:Config) {
+        return items.canNorthWestDarkWorld(true) || config.mode === 'inverted';
       }
     ));
 
@@ -265,7 +277,10 @@ export class DarkWorld {
       },
       null,
       [l[115], l[116], l[117], l[118], l[120]],
-      'ow'
+      'ow',
+      function(items:Items, config:Config) {
+        return items.canSouthDarkWorld(true);
+      }
     ));
 
     itemLocations.push(new ItemLocation(
@@ -275,7 +290,10 @@ export class DarkWorld {
       },
       null,
       [l[119]],
-      'ow'
+      'ow',
+      function(items:Items, config:Config) {
+        return items.canSouthDarkWorld(true);
+      }
     ));
 
     itemLocations.push(new ItemLocation(
@@ -287,7 +305,13 @@ export class DarkWorld {
         return items.canSouthDarkWorld() || config.mode === 'inverted';
       },
       [l[121]],
-      'ow'
+      'ow',
+      function(items:Items, config:Config) {
+        return items.canSouthDarkWorld(true);
+      },
+      function(items:Items, config:Config) {
+        return items.canSouthDarkWorld(true);
+      }
     ));
 
     itemLocations.push(new ItemLocation(
@@ -396,7 +420,14 @@ export class DarkWorld {
           return items.book && items.mirror && items.canSouthDarkWorld();
         },
         [l[33]],
-        'ow'
+        'ow',
+        function(items:Items, config:Config) {
+          return items.book && items.mirror && items.canSouthDarkWorld(true) 
+            && (items.sword >= 2 || (items.hammer && config.weapons === 'swordless'));
+        },
+        function(items:Items, config:Config) {
+          return items.book && items.mirror && items.canSouthDarkWorld(true);
+        },
       ));
 
       itemLocations.push(new ItemLocation(
@@ -420,7 +451,13 @@ export class DarkWorld {
           return items.mirror && items.canSouthDarkWorld();
         },
         [l[37]],
-        'ow'
+        'ow',
+        function(items:Items, config:Config) {
+          return items.mirror && items.canSouthDarkWorld(true);
+        },
+        function(items:Items, config:Config) {
+          return items.mirror && items.canSouthDarkWorld(true);
+        },
       ));
 
       itemLocations.push(new ItemLocation(
@@ -432,7 +469,13 @@ export class DarkWorld {
           return items.mirror && items.moonPearl && items.canNorthWestDarkWorld();
         },
         [l[38]],
-        'ow'
+        'ow',
+        function(items:Items, config:Config) {
+          return items.mirror && items.moonPearl && items.canNorthWestDarkWorld(true);
+        },
+        function(items:Items, config:Config) {
+          return items.mirror && items.moonPearl && items.canNorthWestDarkWorld(true);
+        },
       ));
     }
 

@@ -267,7 +267,7 @@ export class GameService {
               
             if (location.mapNode.isFaded || location.mapNode.status === 'g-getable') {
               location.mapNode.status = 'getable';
-            } else {
+            } else {              
               location.mapNode.status = 'now-getable';
             }          
           } else if (!location.canGet || location.canGet(items, this.config)) {
@@ -311,30 +311,28 @@ export class GameService {
           // if (location.region.indexOf(region) === -1 && this.config.mode !== 'inverted') {
           //   status = 'unreachable';
           // }
-          if (location.location !== 'Bombos Tablet' && location.location !== 'Ether Tablet' 
-            && (location.mapNode.status.indexOf('now-getable') > -1 
+          if (!location.mapNode.isFaded && this.config.canGlitch && location.canViewGlitch && location.canViewGlitch(items, this.config)
+            && !location.canGet(items, this.config) && !location.canView(items, this.config)) {
+            status += ' g-viewable';
+          } else if (location.mapNode.status.indexOf('now-getable') > -1 
               || (location.canView && (location.mapNode.status.indexOf('unavailable') > -1 
                 || location.mapNode.status.indexOf('viewable') > -1 )
-              && location.canGet(items, this.config)))
+              && location.canGet(items, this.config))
             || (location.mapNode.status.indexOf('now-g-getable') > -1 && location.canGet(items, this.config))) {
             status += ' now-getable';
-          } else if (location.location !== 'Bombos Tablet' && location.location !== 'Ether Tablet'
-            && (location.mapNode.status.indexOf('now-g-getable') > -1 
-              || (this.config.canGlitch && location.canViewGlitch && location.mapNode.status.indexOf('unavailable') > -1
-                  && (this.config.canGlitch && location.canGlitch && location.canGlitch(items, this.config))))) {
+          } else if (location.mapNode.status.indexOf('now-g-getable') > -1 
+              || (!location.mapNode.isFaded && this.config.canGlitch && location.canViewGlitch && this.config.canGlitch && location.canGlitch 
+                && location.canGlitch(items, this.config) && location.mapNode.status === 'unavailable')) {
             status += ' now-g-getable';
           } else if (!location.canGet || location.canGet(items, this.config)) {
             status += ' getable';
           } else if (this.config.canGlitch && location.canGlitch && location.canGlitch(items, this.config)) {
-            status += ' g-getable';
-          } else if (location.canView && location.canView(items, this.config)) {
+            status += ' g-getable';            
+          } else if (location.canView && location.canView(items, this.config)) {            
             status += ' viewable';
-          } else if (this.config.canGlitch && location.canViewGlitch && location.canViewGlitch(items, this.config)) {
-            status += ' g-viewable';
           } else {
             status += ' unavailable';
           }
-  
           location.mapNode.status = status;
 
           if (location.item[0].charAt(0) === '=') {

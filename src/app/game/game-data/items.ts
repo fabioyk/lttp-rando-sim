@@ -438,18 +438,17 @@ export class Items {
       || (this.glove === 2 && (this.flippers || isGlitched) && this.moonPearl);
   }
   canNorthWestDarkWorld(isGlitched:boolean = false) {
-    return (this.canNorthEastDarkWorld(isGlitched)
-        && (this.hookshot && (this.hammer || this.glove || this.flippers))
+    return ((this.canNorthEastDarkWorld(isGlitched)
+        && (this.hookshot && (this.hammer || this.glove || this.flippers || (isGlitched && this.canAncillaFF()))))
         || (this.hammer && this.glove)
         || this.glove === 2)
       && this.moonPearl;
   }
   canSouthDarkWorld(isGlitched:boolean = false) {
     return this.moonPearl
-      && ((this.canNorthEastDarkWorld(isGlitched) && (this.hammer
-        || (this.hookshot && (this.flippers || this.glove))))
-        || (this.hammer && this.glove)
-        || this.glove === 2);
+      && ((this.hammer && this.glove)
+        || this.glove === 2
+        || this.canNorthWestDarkWorld(isGlitched));
   }
   canMire(config):boolean {
     if (config.mode === 'inverted') {

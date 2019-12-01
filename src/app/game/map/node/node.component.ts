@@ -220,7 +220,7 @@ export class NodeComponent implements OnInit {
         res += ' opened';
       } else if (this.nodeInfo.status.indexOf('now-getable') > -1) {
         res += ' open';
-      } else if (this.nodeInfo.status.indexOf('g-getable') > -1) {
+      } else if (this.nodeInfo.status.indexOf('g-') > -1) {
         res += ' glitched-open';
       } else if (this.nodeInfo.status.indexOf('viewable') > -1) {
         res += ' view';
