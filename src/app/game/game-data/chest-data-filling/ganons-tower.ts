@@ -483,7 +483,7 @@ export class GanonsTower {
         return items.hookshot && items.moldorms2Defeated;
       }, l[225], 'Hookshot and Boss Defeated Required', [-1], 0, 
       function(items:Items, config:Config) {
-        return items.boots || items.sword;
+        return items.moldorms2Defeated && items.boots;
     }));
     moldorm2.nodes.push(new DungeonNode(
       '', 7, 77, DungeonNodeStatus.BK_LOCKED,
@@ -491,7 +491,7 @@ export class GanonsTower {
         return items.hookshot && items.moldorms2Defeated;
     }, 'gt-aga2', 'Hookshot Required', [-1], 0, 
     function(items:Items, config:Config) {
-      return items.boots;
+      return items.boots || (items.sword && !config.isEnemizer);
     }));
     gtData.dungeonMaps.push(moldorm2);
 
