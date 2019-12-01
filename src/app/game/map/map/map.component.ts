@@ -945,10 +945,10 @@ export class MapComponent implements OnInit {
     if (this.config.isFullMap) {
       if (world === 'light-world') {
         return this.currentDungeonMap.id.split('-')[0] === 'lw'          
-          && !this.currentDungeonMap.isIndoors && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.dungeonItems !== 'full');
+          && !this.currentDungeonMap.isIndoors && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.dungeonItems === 'standard');
       } else if (world === 'dark-world') {
         return this.currentDungeonMap.id.split('-')[0] === 'dw' 
-          && !this.currentDungeonMap.isIndoors  && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.dungeonItems !== 'full');
+          && !this.currentDungeonMap.isIndoors  && (this.getAvailableDungeonMapIndexes().length > 0 || this.config.dungeonItems === 'standard');
       } else if (world === 'green-pendant') {
         var foundGreen = false;
         this.items.dungeonItemsArray.forEach((eachDunItems) => {
