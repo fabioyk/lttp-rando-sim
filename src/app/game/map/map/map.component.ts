@@ -980,7 +980,8 @@ export class MapComponent implements OnInit {
             foundGreen = true;
           }
         });
-        return !foundGreen && this.currentMap === 'light-world';
+        return !foundGreen && this.currentMap === 'light-world' &&
+          (this.config.mode !== 'inverted' || (this.items.canInvertedLW()));
       }
       if (world === 'red-crystals') {
         var foundReds = 0;
