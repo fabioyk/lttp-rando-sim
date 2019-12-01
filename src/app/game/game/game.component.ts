@@ -103,7 +103,6 @@ export class GameComponent implements OnInit {
           this.gameInit(params.seeddata, true, fullMap, [], '', [], params.seeddata.charAt(24), params.seeddata.charAt(25));
         } else if (this._seedService.lastSeed && Date.now() - this._seedService.lastSeedTimestamp < 2000 
           && this._seedService.lastSeedParams) {
-            console.log(this._seedService.lastSeedParams);
           this.gameInit(this._seedService.lastSeed.data, canGlitch, fullMap, 
             this._seedService.lastSeed.hints, this._seedService.lastSeed.silversHint, 
             this._seedService.lastSeed.bosses, this._seedService.lastSeed.reqTower, this._seedService.lastSeed.reqGanon, this._seedService.lastSeed.seed);
