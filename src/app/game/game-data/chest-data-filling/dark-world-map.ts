@@ -198,9 +198,11 @@ export class DarkWorldMap {
     m.nodes.push(new DungeonNode(
       '', 70, 38, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
-      return (items.currentRegionInMap === 0 && (items.flippers || items.glove || items.hammer || items.canAncillaFF())) || items.flippers;
+      return (items.currentRegionInMap === 0 && (items.flippers || items.glove || items.hammer)) || items.flippers;
     }, 'dw-flute2', '', [-1], 0, 
-    DungeonNode.noReqs));
+    function(items:Items, config:Config) {
+      return (items.currentRegionInMap === 0 && items.canAncillaFF()) || items.currentRegionInMap === 1;
+    }));
     m.nodes.push(new DungeonNode(
       '', 52, 14, DungeonNodeStatus.WATER_WARP,
     function(items:Items, config:Config) {

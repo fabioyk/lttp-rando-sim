@@ -1,11 +1,11 @@
+import { SeedMetadata } from "./seed-metadata";
+
 export class Config {
   trMedallion: string;
   mmMedallion: string;
   
   data: string;
-  vtSeedNumber: number;
-  difficulty: string;
-  logic: string;
+  vtSeedNumber: string;
   goal: string;
   mode: string;
   weapons: string;
@@ -31,27 +31,31 @@ export class Config {
   bosses: number[];
   checkedBosses: boolean[];
 
-  constructor() {
-    this.canGlitch = false;
+  constructor(seedNumber:string, seedMetaData:SeedMetadata, bosses: number[], 
+      canGlitch:boolean, isFullMap:boolean) {
+    this.canGlitch = canGlitch;
+    this.vtSeedNumber = seedNumber;
+    this.advancedItems = seedMetaData.item_placement === 'advanced';
+    this.dungeonItems = seedMetaData.dungeon_items;
+    this.accessibility = seedMetaData.accessibility;
+    this.goal = seedMetaData.goal;
+    this.ganonCrystals = +seedMetaData.entry_crystals_ganon;
+    this.towerCrystals = +seedMetaData.entry_crystals_tower;
+    this.mode = seedMetaData.mode;
+    this.isEnemizer = seedMetaData.enemizer !== 'none';
+    this.weapons = seedMetaData.weapons;
+    this.mmMedallion = seedMetaData.mmMedallion;
+    this.trMedallion = seedMetaData.trMedallion;
+    this.canGlitch = canGlitch;
+    this.bosses = bosses;
 
-    this.trMedallion = 'ether';
-    this.mmMedallion = 'ether';
+    this.isFullMap = isFullMap;
 
-    this.vtSeedNumber = 0;
-    this.difficulty = 'normal';
-    this.logic = 'normal';
-    this.goal = 'ganon';
-    this.mode = 'standard';
-
-    this.weapons = 'randomized';
-    this.isFullMap = false;
     this.isMystery = false;
 
     this.hints = [];
     this.silversHint = '';
 
-    this.isEnemizer = false;
-    this.bosses = [];
     this.checkedBosses = [false, false, false, false, false, false, false, false, false, false];
     
     this.noLogic = false;

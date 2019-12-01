@@ -1,31 +1,63 @@
-export class SpoilerLog {
-  private seedNumLength = 9;
-  private regionOrder = ['Light World', 'Hyrule Castle', 'Eastern Palace', 'Desert Palace', 'Death Mountain',
-                         'Tower Of Hera', 'Castle Tower', 'Dark World', 'Dark Palace', 'Swamp Palace',
-                         'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower']
+import { SeedMetadata } from "./seed-metadata";
 
-  public convertShortToNormal(log:string, seedNumber:string) {
-    var obj:any = {};
+export class SpoilerLog {
+  public static collectSeedMetadata(log:string):SeedMetadata {
+    var obj:SeedMetadata = new SeedMetadata();
     
-    var buffer = 20;
-    obj.seed = seedNumber;
-    obj.placement = log.substr(buffer, 1);
-    obj.dungeonItems = log.substr(buffer+1, 1);
-    obj.accessibility = log.substr(buffer+2, 1);
-    obj.goal = log.substr(buffer+3, 1);
-    obj.crystalsTower = log.substr(buffer+4, 1);
-    obj.crystalsGanon = log.substr(buffer+5, 1);
-    obj.mode = log.substr(buffer+6, 1);
-    obj.bossShuffle = log.substr(buffer+7, 1);
-    obj.weapons = log.substr(buffer+8, 1);
-    obj.mmMedallion = log.substr(buffer+9, 1);
-    obj.trMedallion = log.substr(buffer+10, 1);
-    var locStr = log.substr(buffer+20);
-    var locArr = [];
-    for (var i = 0; i < locStr.length / 3; i++) {
-      locArr.push((+locStr.substr(i*3, 3)).toString());
+    var buffer = 20; // seed length
+
+    obj.seed = log.substr(0, buffer);
+    switch (log.substr(buffer, 1)) {
+      case '0': obj.item_placement = 'basic'; break;
+      case '1': obj.item_placement = 'advanced'; break;
     }
-    obj.locations = locArr;
+    switch (log.substr(buffer+1, 1)) {
+      case '0': obj.dungeon_items = 'standard'; break;
+      case '1': obj.dungeon_items = 'mc'; break;
+      case '2': obj.dungeon_items = 'mcs'; break;
+      case '3': obj.dungeon_items = 'full'; break;
+    }
+    switch (log.substr(buffer+2, 1)) {
+      case '0': obj.accessibility = 'items'; break;
+      case '1': obj.accessibility = 'locations'; break;
+      case '2': obj.accessibility = 'none'; break;
+    }    
+    switch (log.substr(buffer+3, 1)) {
+      case '0': obj.goal = 'ganon'; break;
+      case '1': obj.goal = 'dungeons'; break;
+      case '2': obj.goal = 'pedestal'; break;
+      case '3': obj.goal = 'triforce-hunt'; break;
+      case '4': obj.goal = 'fast_ganon'; break;
+    }
+    obj.entry_crystals_tower = log.substr(buffer+4, 1);
+    obj.entry_crystals_ganon = log.substr(buffer+5, 1);
+    switch (log.substr(buffer+6, 1)) {
+      case '0': obj.mode = 'standard'; break;
+      case '1': obj.mode = 'open'; break;
+      case '2': obj.mode = 'inverted'; break;
+    }
+    switch (log.substr(buffer+7, 1)) {
+      case '0': obj.enemizer = 'none'; break;
+      case '1': obj.enemizer = 'simple'; break;
+      case '2': obj.enemizer = 'full'; break;
+      case '3': obj.enemizer = 'random'; break;
+    }
+    switch (log.substr(buffer+8, 1)) {
+      case '0': obj.weapons = 'randomized'; break;
+      case '1': obj.weapons = 'assured'; break;
+      case '2': obj.weapons = 'vanilla'; break;
+      case '3': obj.weapons = 'swordless'; break;
+    }
+    switch (log.substr(buffer+9, 1)) {
+      case '0': obj.mmMedallion = 'bombos'; break;
+      case '1': obj.mmMedallion = 'ether'; break;
+      case '2': obj.mmMedallion = 'quake'; break;
+    }
+    switch (log.substr(buffer+10, 1)) {
+      case '0': obj.trMedallion = 'bombos'; break;
+      case '1': obj.trMedallion = 'ether'; break;
+      case '2': obj.trMedallion = 'quake'; break;
+    }    
 
     return obj;
   }

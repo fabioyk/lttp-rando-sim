@@ -76,7 +76,9 @@ export class SeedApiService {
       .map((response: Response) => {
         var seed = <Seed> response.json();
         this.lastSeedTimestamp = Date.now();
-        this.lastSeedParams = queryParams;
+        this.lastSeedParams = {
+          
+        };
         this.lastSeed = seed;
         return seed;
       })

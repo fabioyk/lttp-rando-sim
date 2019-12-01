@@ -100,17 +100,18 @@ export class GameComponent implements OnInit {
         }
 
         if (params.seeddata) {
-          this.gameInit(params.seeddata, true, fullMap, [], '', false, [], params.seeddata.charAt(24), params.seeddata.charAt(25));
+          this.gameInit(params.seeddata, true, fullMap, [], '', [], params.seeddata.charAt(24), params.seeddata.charAt(25));
         } else if (this._seedService.lastSeed && Date.now() - this._seedService.lastSeedTimestamp < 2000 
           && this._seedService.lastSeedParams) {
+            console.log(this._seedService.lastSeedParams);
           this.gameInit(this._seedService.lastSeed.data, canGlitch, fullMap, 
-            this._seedService.lastSeed.hints, this._seedService.lastSeed.silversHint, this._seedService.lastSeedParams.enemizer !== 'none', 
+            this._seedService.lastSeed.hints, this._seedService.lastSeed.silversHint, 
             this._seedService.lastSeed.bosses, this._seedService.lastSeed.reqTower, this._seedService.lastSeed.reqGanon, this._seedService.lastSeed.seed);
         } else {
           this._seedService.getSeed(this.gameMode, qParams, false, this.gameMode === 'quals')
             .subscribe((seed) => {              
               this.gameInit(seed.data, canGlitch, fullMap, seed.hints, seed.silversHint, 
-                qParams.enemizer !== 'none', seed.bosses, seed.reqTower, seed.reqGanon, seed.seed);
+                seed.bosses, seed.reqTower, seed.reqGanon, seed.seed);
             });
         }
       }
@@ -131,9 +132,9 @@ export class GameComponent implements OnInit {
   /// GAMEPLAY
 
   gameInit(seedData:string, canGlitch:boolean, isFullMap:boolean, hints:string[], 
-    silversHint, isEnemizer:boolean, bosses:number[], reqTower:string, reqGanon:string, seedNumber:string="") {
+    silversHint, bosses:number[], reqTower:string, reqGanon:string, seedNumber:string="") {
     if (seedData) {
-      this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap, isEnemizer, bosses, hints.length > 0);  
+      this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap, bosses);  
       this.items = new Items();
       this.config = this.gameService.config;      
       this.config.isFullMap = isFullMap;
@@ -253,7 +254,7 @@ export class GameComponent implements OnInit {
       if (type !== 'view') {
         let prizeData = this._itemNamesService.getItemById(prize);
         this.items.add(prizeData.shortName, map);
-        if (this.config.difficulty === 'easy') {
+        /*if (this.config.difficulty === 'easy') {
           if ((prizeData.longName === 'Progressive Sword' && this.items.sword === 4)
               || (prizeData.longName === 'Progressive Shield' && this.items.shield === 3)
               || (prizeData.longName === 'Progressive Armor' && this.items.tunic === 3)
@@ -272,7 +273,7 @@ export class GameComponent implements OnInit {
               || (prizeData.longName === 'Progressive Shield' && this.items.shield === 1)))
             || (this.config.difficulty === 'insane' && (prizeData.longName === 'Progressive Sword' && this.items.sword === 2))) {
           this.gameService.addItemReplacement(prizeData.longName);          
-        }
+        }*/
       }
       var itemData = this._itemNamesService.convertItemName(prize, type, this.items);
       this.itemLog.unshift({

@@ -42,107 +42,42 @@ export class GameService {
 
   constructor(private _itemNamesService: ItemNamesService) { }
 
-  loadSeed(log:string, seedNumber:string, canGlitch:boolean, isFullMap:boolean, isEnemizer:boolean, bosses:number[], hasHints:boolean) {
-    var spoilerLogManager = new SpoilerLog();
-    var logObj = spoilerLogManager.convertShortToNormal(log, seedNumber);
+  loadSeed(log:string, seedNumber:string, canGlitch:boolean, isFullMap:boolean, 
+      bosses:number[]) {
+    var seedMetaData = SpoilerLog.collectSeedMetadata(log);
 
-    this.config = new Config();
+    this.config = new Config(seedNumber, seedMetaData, bosses, canGlitch, isFullMap);
 
-    switch(logObj.itemPool) {
-      case '0': this.config.difficulty = 'normal'; break;
-      case '1': this.config.difficulty = 'easy'; break;
-      case '2': this.config.difficulty = 'hard'; break;
-      case '3': this.config.difficulty = 'expert'; break;
-      case '4': this.config.difficulty = 'insane'; break;
-    }
-    switch(logObj.goal) {
-      case '0': this.config.goal = 'ganon'; break;
-      case '1': this.config.goal = 'dungeons'; break;
-      case '2': this.config.goal = 'pedestal'; break;
-      case '3': this.config.goal = 'triforce'; break;
-      case '4': this.config.goal = 'fast_ganon'; break;
-    }
-    this.config.logic = logObj.logic;
-    switch(logObj.mode) {
-      case '0': this.config.mode = 'standard'; break;
-      case '1': this.config.mode = 'open'; break;
-      case '2': this.config.mode = 'inverted'; break;
-    }    
-    if (this.config.mode === 'inverted') {
+    if (seedMetaData.mode === 'inverted') {
       this.lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Ganons Tower'];
       this.dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower'];
     } else {
       this.lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Aga Tower'];
       this.dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Ganons Tower'];
-    }    
-    this.config.vtSeedNumber = logObj.seed;
-    this.config.canGlitch = canGlitch;
-    this.config.isEnemizer = isEnemizer;
-    this.config.bosses = bosses;
-    this.config.advancedItems = logObj.placement === '1';
-    this.config.isFullMap = isFullMap;
-    switch(logObj.dungeonItems) {
-      case '0':
-        this.config.dungeonItems = 'standard'; break;
-      case '1':
-        this.config.dungeonItems = 'mc'; break;
-      case '2':
-        this.config.dungeonItems = 'mcs'; break;
-      case '3':
-        this.config.dungeonItems = 'full'; break;
     }
-    switch(logObj.accessibility) {
-      case '0':
-        this.config.accessibility = 'item'; break;
-      case '1':
-        this.config.accessibility = 'locations'; break;
-      case '2':
-        this.config.accessibility = 'none'; break;
+
+    var locStr = log.substr(40);
+    var locArr = [];
+    for (var i = 0; i < locStr.length / 3; i++) {
+      locArr.push((+locStr.substr(i*3, 3)).toString());
     }
-    switch(logObj.weapons) {
-      case '0':
-        this.config.weapons = 'randomized'; break;
-      case '1':
-        this.config.weapons = 'assured'; break;
-      case '2':
-        this.config.weapons = 'vanilla'; break;
-      case '3':
-        this.config.weapons = 'swordless'; break;
-    }
-    if (seedNumber !== '') {
-      this.config.ganonCrystals = 7;
-      this.config.towerCrystals = 7;
-    } else {
-      this.config.ganonCrystals = +logObj.crystalsGanon;
-      this.config.towerCrystals = +logObj.crystalsTower;
-    }    
-    this.config.hintsEnabled = hasHints;
-    
-    if (this.config.mode == 'inverted') {
-      this.config.isFullMap = false;
-    }
-        
-    this.prizesToReplace = {};
-    //console.log('Loaded up seed '+this.config.vtSeedNumber);    
-    const medallions = ['bombos', 'ether', 'quake'];
-    this.config.mmMedallion = medallions[logObj.mmMedallion];
-    this.config.trMedallion = medallions[logObj.trMedallion];
+    let locations = locArr;
 
     this.dungeonsData = [];
-    this.dungeonsData.push(EasternPalace.setup(logObj.locations, this.config));
-    this.dungeonsData.push(DesertPalace.setup(logObj.locations, this.config));
-    this.dungeonsData.push(TowerHera.setup(logObj.locations, this.config));
-    this.dungeonsData.push(CastleTower.setup(logObj.locations, this.config));
-    this.dungeonsData.push(PalaceDarkness.setup(logObj.locations, this.config));
-    this.dungeonsData.push(SwampPalace.setup(logObj.locations, this.config));
-    this.dungeonsData.push(SkullWoods.setup(logObj.locations, this.config));
-    this.dungeonsData.push(ThievesTown.setup(logObj.locations, this.config));
-    this.dungeonsData.push(IcePalace.setup(logObj.locations, this.config));
-    this.dungeonsData.push(MiseryMire.setup(logObj.locations, this.config));
-    this.dungeonsData.push(TurtleRock.setup(logObj.locations, this.config));
-    this.dungeonsData.push(GanonsTower.setup(logObj.locations, this.config));
+    this.dungeonsData.push(EasternPalace.setup(locations, this.config));
+    this.dungeonsData.push(DesertPalace.setup(locations, this.config));
+    this.dungeonsData.push(TowerHera.setup(locations, this.config));
+    this.dungeonsData.push(CastleTower.setup(locations, this.config));
+    this.dungeonsData.push(PalaceDarkness.setup(locations, this.config));
+    this.dungeonsData.push(SwampPalace.setup(locations, this.config));
+    this.dungeonsData.push(SkullWoods.setup(locations, this.config));
+    this.dungeonsData.push(ThievesTown.setup(locations, this.config));
+    this.dungeonsData.push(IcePalace.setup(locations, this.config));
+    this.dungeonsData.push(MiseryMire.setup(locations, this.config));
+    this.dungeonsData.push(TurtleRock.setup(locations, this.config));
+    this.dungeonsData.push(GanonsTower.setup(locations, this.config));
 
-    if (isEnemizer) {
+    if (this.config.isEnemizer) {
       this.dungeonsData.forEach((eachDun, index) => {
         // Not aga tower or GT
         if (index !== 3 && index !== 11) {
@@ -175,18 +110,16 @@ export class GameService {
     }
 
     if (this.config.isFullMap) {
-      this.dungeonsData.push(LightWorldMap.setup(logObj.locations, this.config));
-      this.dungeonsData.push(DarkWorldMap.setup(logObj.locations, this.config));
-      this.dungeonsData.push(HyruleCastle.setup(logObj.locations, this.config));
+      this.dungeonsData.push(LightWorldMap.setup(locations, this.config));
+      this.dungeonsData.push(DarkWorldMap.setup(locations, this.config));
+      this.dungeonsData.push(HyruleCastle.setup(locations, this.config));
     } else {
-      this.overworldData = new OverworldData(logObj.locations, this.config);
+      this.overworldData = new OverworldData(locations, this.config);
     }
 
     this.config.data = log;
     
     this.setupData(this.config.isFullMap);
-
-    var itemList = logObj.locations;
   }
 
   setupData(isFullMap:boolean) {

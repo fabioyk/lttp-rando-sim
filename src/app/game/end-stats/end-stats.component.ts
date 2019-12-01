@@ -80,12 +80,12 @@ export class EndStatsComponent implements OnInit {
   generateItemCompletionTable() {
     var res = [];
     res.push(['Y Items', this.getYItemCount() + '/27']);    
-    res.push(['Swords', this.items.sword + '/' + this.totals[this.config.difficulty].swords]);
-    res.push(['Shields', this.items.shield + '/' + this.totals[this.config.difficulty].shields]);
-    res.push(['Mails', this.items.tunic + '/' + this.totals[this.config.difficulty].mails]);
-    res.push(['Heart Pieces', this.items.stats.heartPieces + '/' + this.totals[this.config.difficulty].pieces]);
-    res.push(['Heart Containers', this.items.stats.heartContainers + '/' + + this.totals[this.config.difficulty].containers]);
-    res.push(['Other Items', this.getOtherItemCount() + '/' + this.totals[this.config.difficulty].aItems]);
+    res.push(['Swords', this.items.sword + '/' + this.totals.normal.swords]);
+    res.push(['Shields', this.items.shield + '/' + this.totals.normal.shields]);
+    res.push(['Mails', this.items.tunic + '/' + this.totals.normal.mails]);
+    res.push(['Heart Pieces', this.items.stats.heartPieces + '/' + this.totals.normal.pieces]);
+    res.push(['Heart Containers', this.items.stats.heartContainers + '/' + + this.totals.normal.containers]);
+    res.push(['Other Items', this.getOtherItemCount() + '/' + this.totals.normal.aItems]);
     return res;
   }
   generateDungeonCompletionTable() {
