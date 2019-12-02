@@ -138,6 +138,10 @@ export class GameComponent implements OnInit {
       this.config = this.gameService.config;      
       this.config.isFullMap = isFullMap;
       this.config.isMystery = this.gameMode === 'mystery';
+      if (this.gameMode === 'quals') {
+        this.config.ganonCrystals = 7;
+        this.config.towerCrystals = 7;
+      }
       if (hints) {
         this.config.hints = this.shuffleArray(hints);
       }
