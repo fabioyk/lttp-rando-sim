@@ -331,7 +331,7 @@ export class DarkWorld {
       itemLocations.push(new ItemLocation(
         'Ganon\'s Tower Accessibility', 73.5, 4.5,
         function(items:Items, config:Config) {
-          return items.canDarkEastDeathMountain();
+          return items.canDarkEastDeathMountain() && items.moonPearl;
         },
         null,
         ['gt-requirement']
@@ -340,7 +340,7 @@ export class DarkWorld {
       itemLocations.push(new ItemLocation(
         'Ganon\'s Vulnerability', 72, 42,
         function(items:Items, config:Config) {
-          return items.canNorthEastDarkWorld();
+          return items.canNorthEastDarkWorld() && items.moonPearl;
         },
         null,
         ['ganon-requirement'],'',

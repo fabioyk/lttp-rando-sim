@@ -164,7 +164,9 @@ export class DarkWorldMap {
     }, 'dw-ganon'));
     m.nodes.push(new DungeonNode(
       'Ganon\'s Vulnerability', 36.75, 21, DungeonNodeStatus.SIGNPOST,
-    DungeonNode.noReqs, 'ganon-requirement'));
+    function(items:Items, config:Config) {
+      return items.moonPearl;
+    }, 'ganon-requirement'));
     m.nodes.push(new DungeonNode(
       '', 37, 44, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
@@ -806,7 +808,9 @@ export class DarkWorldMap {
     }, 'gt-entry'));
     m.nodes.push(new DungeonNode(
       'Ganon\'s Tower Accessibility', 67.5, 44.5, DungeonNodeStatus.SIGNPOST,
-    DungeonNode.noReqs, 'gt-requirement'));
+    function(items:Items, config:Config) {
+      return items.moonPearl;
+    }, 'gt-requirement'));
     m.nodes.push(new DungeonNode(
       '', 94, 37, DungeonNodeStatus.OPEN_DOOR,
     DungeonNode.noReqs, 'dw-trportal', '', [-1], 1));
