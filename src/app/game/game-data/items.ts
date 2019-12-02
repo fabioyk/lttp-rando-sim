@@ -448,7 +448,8 @@ export class Items {
     return this.moonPearl
       && ((this.hammer && this.glove)
         || this.glove === 2
-        || this.canNorthWestDarkWorld(isGlitched));
+        || this.canNorthWestDarkWorld(isGlitched)
+        || (this.hammer && this.agahnim));
   }
   canMire(config):boolean {
     if (config.mode === 'inverted') {
