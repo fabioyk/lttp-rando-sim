@@ -334,7 +334,10 @@ export class DarkWorld {
           return items.canDarkEastDeathMountain() && items.moonPearl;
         },
         null,
-        ['gt-requirement']
+        ['gt-requirement'], '',
+        function(items:Items, config:Config) {
+          return items.canDarkEastDeathMountain(true) && items.moonPearl;
+        }
       ));
 
       itemLocations.push(new ItemLocation(
@@ -345,7 +348,7 @@ export class DarkWorld {
         null,
         ['ganon-requirement'],'',
         function(items:Items, config:Config) {
-          return items.canNorthEastDarkWorld(true);
+          return items.canNorthEastDarkWorld(true) && items.moonPearl;
         }
       ));
 
