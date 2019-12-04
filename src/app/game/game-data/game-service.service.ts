@@ -49,6 +49,7 @@ export class GameService {
     this.config = new Config(seedNumber, seedMetaData, bosses, canGlitch, isFullMap);
 
     if (seedMetaData.mode === 'inverted') {
+      this.config.isFullMap = false;
       this.lwDuns = ['Eastern Palace', 'Desert Palace', 'Tower of Hera', 'Ganons Tower'];
       this.dwDuns = ['Palace of Darkness', 'Swamp Palace', 'Skull Woods', 'Thieves Town', 'Ice Palace', 'Misery Mire', 'Turtle Rock', 'Aga Tower'];
     } else {

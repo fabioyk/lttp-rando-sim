@@ -41,7 +41,6 @@ export class Config {
     this.goal = seedMetaData.goal;
     this.ganonCrystals = +seedMetaData.entry_crystals_ganon;
     this.towerCrystals = +seedMetaData.entry_crystals_tower;
-    console.log(seedMetaData);
     this.mode = seedMetaData.mode;
     this.isEnemizer = seedMetaData.enemizer !== 'none';
     this.weapons = seedMetaData.weapons;
