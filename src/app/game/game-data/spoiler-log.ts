@@ -26,7 +26,7 @@ export class SpoilerLog {
       case '0': obj.goal = 'ganon'; break;
       case '1': obj.goal = 'dungeons'; break;
       case '2': obj.goal = 'pedestal'; break;
-      case '3': obj.goal = 'triforce-hunt'; break;
+      case '3': obj.goal = 'triforce'; break;
       case '4': obj.goal = 'fast_ganon'; break;
     }
     obj.entry_crystals_tower = log.substr(buffer+4, 1);
