@@ -43,10 +43,15 @@ export class GameService {
   constructor(private _itemNamesService: ItemNamesService) { }
 
   loadSeed(log:string, seedNumber:string, canGlitch:boolean, isFullMap:boolean, 
-      bosses:number[]) {
+      bosses:number[], hints:string[]) {
     var seedMetaData = SpoilerLog.collectSeedMetadata(log);
 
     this.config = new Config(seedNumber, seedMetaData, bosses, canGlitch, isFullMap);
+
+    if (hints && hints.length > 0) {
+      this.config.hints = this.shuffleArray(hints);
+      this.config.hintsEnabled = true;
+    }
 
     if (seedMetaData.mode === 'inverted') {
       this.config.isFullMap = false;
@@ -546,6 +551,25 @@ export class GameService {
         return eachVal;
       }
     });
+  }
+
+  shuffleArray(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
   }
 
 }

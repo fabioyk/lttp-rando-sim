@@ -133,7 +133,8 @@ export class GameComponent implements OnInit {
   gameInit(seedData:string, canGlitch:boolean, isFullMap:boolean, hints:string[], 
     silversHint, bosses:number[], reqTower:string, reqGanon:string, seedNumber:string="") {
     if (seedData) {
-      this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap, bosses);  
+      this.gameService.loadSeed(seedData, seedNumber, canGlitch, isFullMap, bosses, hints);  
+      
       this.items = new Items();
       this.config = this.gameService.config;      
       this.config.isFullMap = isFullMap;
@@ -141,9 +142,6 @@ export class GameComponent implements OnInit {
       if (this.gameMode === 'quals') {
         this.config.ganonCrystals = 7;
         this.config.towerCrystals = 7;
-      }
-      if (hints) {
-        this.config.hints = this.shuffleArray(hints);
       }
       this.config.silversHint = silversHint;
       let startingMap = 'light-world';      
@@ -391,25 +389,6 @@ export class GameComponent implements OnInit {
       this.preloadedMaps[i] = new Image();
       this.preloadedMaps[i].src = 'assets/maps/' + eachDungeon.name + '/' + eachDungeon.startingMap.id + '.png';
     });
-  }
-
-  shuffleArray(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-  
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-  
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-  
-    return array;
   }
 
   /// FINISHED
