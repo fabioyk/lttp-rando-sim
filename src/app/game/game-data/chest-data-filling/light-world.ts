@@ -189,6 +189,9 @@ export class LightWorld {
       [l[30]],
       '',
       function(items:Items, config:Config) {
+        if (config.mode === 'inverted') {
+          return items.canInvertedLW() && items.moonPearl && items.hammer && items.somaria && items.mushroom;
+        }
         return items.somaria && items.mushroom && (items.hammer || (items.moonPearl && items.mirror && items.glove === 2));
       }
     ));
@@ -433,7 +436,7 @@ export class LightWorld {
       'Escape Dark Room Chest', 24.9, 45.8,
       function(items:Items, config:Config) {
         if (config.mode === 'inverted') {
-          return (config.mode !== 'inverted' || (items.canInvertedLW() && items.moonPearl)) && items.lamp;
+          return (items.canInvertedLW() && items.moonPearl) && (items.lamp || (config.advancedItems && items.fireRod));
         }
         return config.mode.indexOf('standard') > -1 ? true : (items.lamp || (config.advancedItems && items.fireRod));
       },
