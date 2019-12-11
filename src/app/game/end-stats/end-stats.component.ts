@@ -113,7 +113,7 @@ export class EndStatsComponent implements OnInit {
     res.push(['Dungeon Item Shuffle', dungeonItemsText]);
     let accessibilityText;
     switch(this.config.accessibility) {
-      case 'item': accessibilityText = '100% Inventory'; break;
+      case 'items': accessibilityText = '100% Inventory'; break;
       case 'locations': accessibilityText = '100% Locations'; break;
       case 'none': accessibilityText = 'Beatable'; break;
     }
