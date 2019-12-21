@@ -500,7 +500,7 @@ export class Items {
     let checker;
     if (config.goal === 'dungeons') {
       checker = this.pendantCourage && this.pendantPower && this.pendantWisdom &&
-        this.agahnim && this.agahnim2 && count === 7;
+        this.agahnim && this.agahnim2 && count >= 7;
     } else {
       checker = count >= config.ganonCrystals;
     }

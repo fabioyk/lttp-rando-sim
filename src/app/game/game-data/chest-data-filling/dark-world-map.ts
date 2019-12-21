@@ -62,7 +62,8 @@ export class DarkWorldMap {
       '', 89, 96, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.flippers && (items.hammer || items.currentRegionInMap === 1);
-    }, 'dw-lake-hylea', 'Flippers Required', [-1], 0, function(items:Items, config:Config) { return items.canAncillaFF(); }));
+    }, 'dw-lake-hylea', 'Flippers Required', [-1], 0, 
+      function(items:Items, config:Config) { return items.canAncillaFF() && (items.hammer || items.currentRegionInMap === 1); }));
     m.nodes.push(new DungeonNode(
       'Mirror', 17, 90, DungeonNodeStatus.MIRROR,
     function(items:Items, config:Config) {
@@ -77,7 +78,8 @@ export class DarkWorldMap {
       '', 40, 72, DungeonNodeStatus.OPEN_DOOR,
     function(items:Items, config:Config) {
         return items.flippers && (items.hammer || items.currentRegionInMap === 1);
-    }, 'dw-hobo-entrance', 'Flippers Required', [-1], 1, function(items:Items, config:Config) { return items.canAncillaFF(); }));
+    }, 'dw-hobo-entrance', 'Flippers Required', [-1], 1, 
+      function(items:Items, config:Config) { return items.canAncillaFF() && (items.hammer || items.currentRegionInMap === 1); }));
     dwData.dungeonMaps.push(m);
 
     m = new DungeonMapData('dw-hobo-entrance', 'Hobo Portal');
