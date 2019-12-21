@@ -51,7 +51,7 @@ export class DesertPalace {
       entrance.nodes.push(new DungeonNode(
         'Desert Final Section', 7, 76, DungeonNodeStatus.OPEN_DOOR,
       function(items:Items, config:Config) {
-          return items.glove;
+          return items.glove && (config.mode !== 'inverted' || items.moonPearl);
       }, 'dp-first-tile', 'Power Gloves Required'));
     } else {
       entrance.nodes.push(new DungeonNode(
